@@ -565,11 +565,11 @@ void RenderManager::UpdateBillboard(int sceneID)
 
 void RenderManager::RenderTextOnScreen(string text , Color color, float size, float x, float y)
 {
-	Mesh* mesh = meshList[GEO_TEXT];
+	Mesh *mesh = meshList[GEO_TEXT];
 
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
-	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	ortho.SetToOrtho(-80, 80, -60, 60, -10, 10);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
@@ -588,11 +588,12 @@ void RenderManager::RenderTextOnScreen(string text , Color color, float size, fl
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
 		Mtx44 characterSpacing;
-		characterSpacing.SetToTranslation(i * 1.0f + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation(i * 0.5f + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
 		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 		mesh->Render((unsigned)text[i] * 6, 6);
+		//mesh->Render();
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
@@ -601,3 +602,4 @@ void RenderManager::RenderTextOnScreen(string text , Color color, float size, fl
 	projectionStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
 }
+

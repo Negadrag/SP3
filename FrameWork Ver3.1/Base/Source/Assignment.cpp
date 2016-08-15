@@ -58,6 +58,8 @@ void Assignment::Update(double dt)
 
 void Assignment::Render()
 {
+	string s = "dick";
+	RenderManager::GetInstance()->RenderTextOnScreen(s, Color(1, 1, 1), 5, 21, 3);
 }
 
 void Assignment::Exit()
