@@ -93,6 +93,21 @@ void Assignment::Render()
 		
 	}
 
+	double x, y;
+	Application::GetCursorPos(&x, &y);
+	float w = Application::GetWindowWidth();
+	float h = Application::GetWindowHeight();
+
+	float worldX = x / w * 100;
+	float worldY = (h - y) / h * 100 * (camera.aspectRatio.y / camera.aspectRatio.x); // 0.05 = 1 unit
+
+	int selectedUnitX = Math::Clamp((worldX - 15.f) / 5.35f,0.f,(float)testMap.i_columns - 1);
+	int selectedUnitY = Math::Clamp((worldY - 2.75f) / 5.25f, 0.f, (float)testMap.i_rows - 1);
+
+	std::cout << worldX << "," << worldY << std::endl;
+
+	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(selectedUnitX, selectedUnitY, 0), Vector3(0.1, 0.1, 0.1), Vector3(90, 0, 0), false, false);
+
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
 	{
 		for (int j = 0; j < testMap.i_columns; ++j) // x - axis

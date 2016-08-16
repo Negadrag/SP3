@@ -260,5 +260,8 @@
     <ClInclude Include="Source\Enemy.h">
       <Filter>Header Files\ObjectClasses</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CursorControl.h">
+      <Filter>Header Files\ObjectClasses</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

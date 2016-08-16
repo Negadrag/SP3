@@ -51,6 +51,7 @@
     <ClInclude Include="Source\Camera2.h" />
     <ClInclude Include="Source\Camera3.h" />
     <ClInclude Include="Source\CaptureGame.h" />
+    <ClInclude Include="Source\CursorControl.h" />
     <ClInclude Include="Source\DepthFBO.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />

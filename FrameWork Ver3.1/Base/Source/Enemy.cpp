@@ -5,6 +5,7 @@ Enemy::Enemy()
 	i_movSpeed = 1;
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
+	this->pos.Set(0, 0, 0);
 }
 
 Enemy::Enemy(Vector3 pos, Node* root)
@@ -12,6 +13,7 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	i_movSpeed = 1;
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
+	this->pos.Set(0, 0, 0);
 }
 
 Enemy::~Enemy()
@@ -60,7 +62,7 @@ void Enemy::Update(double dt)
 {
 	if (nxtTile != nullptr)
 	{
-		moveTo(nxtTile->coords, dt);
+		MoveTo(nxtTile->coords, dt);
 		if ((nxtTile->coords - Vector2(pos.x, pos.y)).Length() < 0.2f)
 		{
 			nxtTile = nxtTile->next;
