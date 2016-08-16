@@ -3,12 +3,15 @@
 
 Vector2::Vector2( float a, float b )
 {
-	x = 0;
-	y = 0;
+	this->x = a;
+	this->y = b;
 }
 
 Vector2::Vector2( const Vector2 &rhs )
 {
+	this->x = rhs.x;
+	this->y = rhs.y;
+
 }
 
 void Vector2::Set( float a, float b )

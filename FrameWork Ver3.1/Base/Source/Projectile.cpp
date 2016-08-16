@@ -26,14 +26,16 @@ void Projectile::Update(double dt)
 	//{
 
 			d = enemy->pos - this->pos;
-			this->vel = (this->vel + d * 2.25f).Normalize() * p_speed;
+			//this->vel = (this->vel + d *( p_speed / 4.f)).Normalize() * p_speed;
+			this->vel = d.Normalize() * p_speed;
 			rotation.z = Math::RadianToDegree(atan2(this->vel.y, this->vel.x));
 			this->pos += vel * dt;
 			if (enemy->b_isActive == false)
 			{
 				this->b_isActive = false;
 			}
-			if (d.LengthSquared() <= 0.5f * 0.5f)
+			float distanceToCheck = 0.05 * p_speed;
+			if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 			{
 				this->b_isActive = false;
 			}
