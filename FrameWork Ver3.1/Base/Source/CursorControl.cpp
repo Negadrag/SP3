@@ -4,8 +4,8 @@
 
 CursorControl::CursorControl()
 {
-	x = 0;
-	y = 0;
+	checkPositionX = 0;
+	checkPositionY = 0;
 }
 
 CursorControl::~CursorControl()
@@ -21,8 +21,24 @@ void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
 	float h = Application::GetWindowHeight();
 
 	float worldX = x / w * 100;
-	float worldY = (h - y) / h * 100 * (camera.aspectRatio.y / camera.aspectRatio.x); // 0.05 = 1 unit
+	float worldY = (h - y) / h * 100 * (camera.aspectRatio.y / camera.aspectRatio.x);
 
-	this->x = Math::Clamp((worldX - 15.f) / 5.35f, 0.f, (float)tileMap.i_columns - 1);
-	this->y = Math::Clamp((worldY - 2.75f) / 5.25f, 0.f, (float)tileMap.i_rows - 1);
+	float sensitivity = 60.f;
+
+	this->checkPositionX = Math::Clamp((worldX - 15.f) / (sensitivity / (tileMap.i_columns - 1)), 0.f, (float)tileMap.i_columns - 1);
+	this->checkPositionY = Math::Clamp((worldY - 2.75f) / (sensitivity / (tileMap.i_rows - 1)), 0.f, (float)tileMap.i_rows - 1);
+
+
+	static bool bLButtonState = false;
+	if (!bLButtonState && Application::IsMousePressed(0))
+	{
+		bLButtonState = true;
+		std::cout << "LBUTTON DOWN" << std::endl;
+
+	}
+	else if (bLButtonState && !Application::IsMousePressed(0))
+	{
+		bLButtonState = false;
+		std::cout << "LBUTTON UP" << std::endl;
+	}
 }

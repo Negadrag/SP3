@@ -27,7 +27,7 @@ void Projectile::Update(double dt)
 	/*	if (meshID == GEO_ARROW)
 		{*/
 			d = enemy->pos - this->pos;
-			this->vel = (this->vel + d).Normalize() * p_speed;
+			this->vel = (this->vel + d * 2.25f).Normalize() * p_speed;
 			rotation.z = Math::RadianToDegree(atan2(this->vel.y, this->vel.x));
 			this->pos += vel * dt;
 			if (enemy->b_isActive == false)
