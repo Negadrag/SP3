@@ -164,10 +164,12 @@ void RenderManager::InitMesh()
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_RING] = MeshBuilder::GenerateRing("ring", Color(1, 0, 1), 36, 1, 0.5f);
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
-	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(1, 0, 0), 18, 36, 10.f);
+	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(1, 0, 0), 18, 36, 1.f);
 	meshList[GEO_CONE] = MeshBuilder::GenerateCone("cone", Color(0.5f, 1, 0.3f), 36, 10.f, 10.f);
 	meshList[GEO_CONE]->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
 	meshList[GEO_CONE]->material.kSpecular.Set(0.f, 0.f, 0.f);
+
+	meshList[GEO_CUBE] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 
 	//load texture and mesh for skyplane
 	meshList[GEO_SKYPLANE] = MeshBuilder::GenerateSkyPlane("skyplane", Color(1, 1, 1), 128, 500.0f, 300.f, 5.f, 5.f);
@@ -484,6 +486,98 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
+
+}
+
+
+void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight, bool fog) {
+
+	Mesh* mesh = meshList[meshID];
+	Mtx44 MVP, modelView, modelView_inverse_transpose;
+	modelStack.PushMatrix();
+	modelStack.Translate(pos.x, pos.y, pos.z);
+	modelStack.Rotate(rotation.x, 1, 0, 0);
+	modelStack.Rotate(rotation.z, 0, 0, 1);
+	modelStack.Rotate(rotation.y, 0, 1, 0);
+	modelStack.Scale(scale.x, scale.y, scale.z);
+	if (m_renderPass == RENDER_PASS_PRE) {
+		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
+		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP_GPASS], 1, GL_FALSE, &lightDepthMVP.a[0]);
+
+		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
+			if (mesh->textureArray[i] > 0) {
+				glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 1);
+				glActiveTexture(GL_TEXTURE0 + i);
+				glBindTexture(GL_TEXTURE_2D, mesh->textureArray[i]);
+				glUniform1i(m_parameters[U_COLOR_TEXTURE + i], i);
+			}
+			else {
+				glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 0);
+			}
+		}
+		mesh->Render();
+
+		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
+			if (mesh->textureArray[i] > 0) {
+				glBindTexture(GL_TEXTURE_2D, 0);
+			}
+		}
+
+		return;
+	}
+	if (fog == false)
+	{
+		glUniform1i(m_parameters[U_FOG_ENABLED], 0);
+	}
+	else
+	{
+		glUniform1i(m_parameters[U_FOG_ENABLED], 1);
+	}
+
+	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	modelView = viewStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
+	modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
+	glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView_inverse_transpose.a[0]);
+
+	if (enableLight) {
+		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
+
+		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
+		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP], 1, GL_FALSE, &lightDepthMVP.a[0]);
+
+		//Load Material
+		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);
+		glUniform3fv(m_parameters[U_MATERIAL_DIFFUSE], 1, &mesh->material.kDiffuse.r);
+		glUniform3fv(m_parameters[U_MATERIAL_SPECULAR], 1, &mesh->material.kSpecular.r);
+		glUniform1f(m_parameters[U_MATERIAL_SHININESS], mesh->material.kShininess);
+	}
+	else {
+		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	}
+
+	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
+		if (mesh->textureArray[i] > 0) {
+			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 1);
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, mesh->textureArray[i]);
+			glUniform1i(m_parameters[U_COLOR_TEXTURE + i], i);
+		}
+		else {
+			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 0);
+		}
+	}
+
+	mesh->Render();
+
+	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
+		if (mesh->textureArray[i] > 0) {
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+	}
+	modelStack.PopMatrix();
 
 }
 

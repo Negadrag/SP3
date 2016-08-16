@@ -150,6 +150,9 @@
     <ClCompile Include="Source\TileMap.cpp">
       <Filter>Source Files\ObjectClasses\TileMap</Filter>
     </ClCompile>
+    <ClCompile Include="Source\OrthoCamera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Renderable.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Source\TileMap.h">
       <Filter>Header Files\ObjectClasses\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OrthoCamera.h">
+      <Filter>Header Files\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

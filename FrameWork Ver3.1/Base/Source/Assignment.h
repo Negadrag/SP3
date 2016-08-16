@@ -5,12 +5,13 @@
 #include "Mtx44.h"
 #include "Camera3.h"
 #include "TurntableCam.h"
-
+#include "TileMap.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
 #include <vector>
 #include "Terrain.h"
+#include "OrthoCamera.h"
 
 using std::vector;
 
@@ -29,13 +30,16 @@ public:
 
 
 private:
-	Camera3 camera;
-	TurntableCam turntab;
+	//Camera3 camera;
+	//TurntableCam turntab;
+	OrthoCamera camera;
 
 	float windmillRotateAngle;
 
 	Renderable grass;
 	Renderable testball;
+
+	TileMap testMap;
 
 	bool bLightEnabled;
 	Vector3 distance;

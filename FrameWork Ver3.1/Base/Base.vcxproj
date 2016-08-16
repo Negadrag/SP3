@@ -28,6 +28,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Node.cpp" />
+    <ClCompile Include="Source\OrthoCamera.cpp" />
     <ClCompile Include="Source\ParticleGenerator.cpp" />
     <ClCompile Include="Source\Particles.cpp" />
     <ClCompile Include="Source\Renderable.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\Node.h" />
+    <ClInclude Include="Source\OrthoCamera.h" />
     <ClInclude Include="Source\ParticleGenerator.h" />
     <ClInclude Include="Source\Particles.h" />
     <ClInclude Include="Source\Renderable.h" />
