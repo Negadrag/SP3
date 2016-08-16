@@ -12,6 +12,7 @@
 #include <vector>
 #include "Terrain.h"
 #include "OrthoCamera.h"
+#include "Enemy.h"
 
 using std::vector;
 
@@ -45,6 +46,8 @@ private:
 	Vector3 distance;
 	float angle;
 	float fps;
+
+	Enemy testEnemy;
 
 	Terrain terrain;
 };

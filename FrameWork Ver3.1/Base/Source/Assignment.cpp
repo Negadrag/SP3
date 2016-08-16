@@ -23,6 +23,10 @@ void Assignment::Init()
 {
 	testMap.LoadMap(std::fstream("Image//MapDesign.csv"));
 	//this->m_sceneID = 1;
+	
+	testEnemy.nxtTile = testMap.root;
+	testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 0);
+	testEnemy.meshID = GEO_CONE;
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
@@ -79,7 +83,7 @@ void Assignment::Update(double dt)
 
 void Assignment::Render()
 {
-	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(2,2,0), Vector3(0.1, 0.1, 0.1), Vector3(90, 0, 0), false, false);
+	//RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(2,2,0), Vector3(0.1, 0.1, 0.1), Vector3(90, 0, 0), false, false);
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
