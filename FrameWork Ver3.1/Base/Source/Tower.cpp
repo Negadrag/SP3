@@ -109,7 +109,7 @@ void Tower::Update(double dt)
 
 void Tower::Fire()
 {
-	if (enemy->b_isActive == false)
+	if (enemy == nullptr || enemy->b_isActive == false)
 	{
 		return;
 	}

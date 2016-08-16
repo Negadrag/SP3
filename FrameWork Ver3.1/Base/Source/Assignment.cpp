@@ -62,6 +62,7 @@ void Assignment::Init()
 	CTower.scale.Set(1, 1, 1);
 	CTower.enemy = &testEnemy;
 
+	cursor.Init(&towerList, &enemyList);
 }
 
 void Assignment::Update(double dt)
@@ -108,7 +109,7 @@ void Assignment::Render()
 
 	}
 
-	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.x, cursor.y, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
+	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
 	{

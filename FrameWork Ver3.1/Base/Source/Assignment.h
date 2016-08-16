@@ -57,6 +57,9 @@ private:
 
 	ArrowTower ATower;
 	CannonTower CTower;
+
+	vector<Tower*> towerList;
+	vector<Enemy*> enemyList;
 };
 
 #endif

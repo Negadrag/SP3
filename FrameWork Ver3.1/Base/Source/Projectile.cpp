@@ -27,6 +27,10 @@ void Projectile::Update(double dt)
 
 			d = enemy->pos - this->pos;
 			//this->vel = (this->vel + d *( p_speed / 4.f)).Normalize() * p_speed;
+			if (d.IsZero())
+			{
+				return;
+			}
 			this->vel = d.Normalize() * p_speed;
 			rotation.z = Math::RadianToDegree(atan2(this->vel.y, this->vel.x));
 			this->pos += vel * dt;

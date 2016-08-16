@@ -1,6 +1,7 @@
 #include "CursorControl.h"
 #include "Application.h"
 #include "MathUtility.h"
+#include "ArrowTower.h"
 
 CursorControl::CursorControl()
 {
@@ -11,6 +12,12 @@ CursorControl::CursorControl()
 CursorControl::~CursorControl()
 {
 
+}
+
+void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
+{
+	this->towerList = towerList;
+	this->enemyList = enemyList;
 }
 
 void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
@@ -28,17 +35,29 @@ void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
 	this->checkPositionX = Math::Clamp((worldX - 15.f) / (sensitivity / (tileMap.i_columns - 1)), 0.f, (float)tileMap.i_columns - 1);
 	this->checkPositionY = Math::Clamp((worldY - 2.75f) / (sensitivity / (tileMap.i_rows - 1)), 0.f, (float)tileMap.i_rows - 1);
 
-
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		std::cout << "LBUTTON DOWN" << std::endl;
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -1)
+		{
+			SpawnTower();
+			tileMap.screenMap[checkPositionX][checkPositionY] = -2;
+		}
 
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
-		std::cout << "LBUTTON UP" << std::endl;
 	}
+}
+
+bool CursorControl::SpawnTower()
+{
+	Tower *tempTower = new ArrowTower();
+	tempTower->pos.Set(checkPositionX, checkPositionY, 0);
+	tempTower->scale.Set(1, 1, 1);
+	tempTower->enemy = nullptr;
+	towerList->push_back(tempTower);
+	return true;
 }
