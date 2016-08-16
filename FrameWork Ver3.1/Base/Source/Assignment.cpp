@@ -26,7 +26,7 @@ void Assignment::Init()
 	
 	testEnemy.nxtTile = testMap.root;
 	testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 1);
-	testEnemy.meshID = GEO_CONE;
+	testEnemy.meshID = GEO_CUBE2;
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
@@ -79,6 +79,14 @@ void Assignment::Update(double dt)
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
+
+	if (testEnemy.b_isActive == false)
+	{
+		testEnemy.nxtTile = testMap.root;
+		testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 1);
+		testEnemy.b_isActive = true;
+		testEnemy.rotation.z = 89;
+	}
 }
 
 void Assignment::Render()

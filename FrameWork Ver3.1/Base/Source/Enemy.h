@@ -18,8 +18,8 @@ public:
 	int i_damage;
 	int i_slow;// the percentage of movement speed slow
 
-	//to move the enemy to a specific point
-	void MoveTo(Vector3 dest,double dt);
+	//to move the enemy to a specific point handles rotation based on vel as well. Rotation speed set within the function
+	void MoveTo(Vector2 dest,double dt);
 	virtual void Update(double dt);
 private:
 

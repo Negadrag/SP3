@@ -18,33 +18,75 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::MoveTo(Vector3 dest, double dt)
+void Enemy::MoveTo(Vector2 dest, double dt)
 {
-	float rotationSpeed = 90.f;
-	Vector3 view = Vector3(dest.x, dest.y, 0)- Vector3(pos.x, pos.y, 0) ;
+	float rotationSpeed = 360.f;
+	Vector2 view = dest- Vector2(pos.x, pos.y) ;
 	if (view.Length() == Math::EPSILON)
 	{
 		return;
 	}
-	view.Normalize();
+	view.Normalized();
 	float rotationZToBe = Math::RadianToDegree(atan2(view.y,view.x)); // the rotation that we want it to be at;
+	rotationZToBe = round(rotationZToBe);
+	
 
 	if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
 	{
-		if (rotationZToBe > rotation.z )
+		if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
 		{
-			rotation.z += rotationSpeed * dt;
-			if (rotationZToBe < rotation.z)
+			rotationZToBe += 360;
+		}
+		else if (rotationZToBe == -0)
+		{
+			rotationZToBe = 0;
+		}
+		
+		if (abs(rotationZToBe - rotation.z) <180)
+		{
+			if (rotationZToBe > rotation.z)
 			{
-				rotation.z = rotationZToBe;
+
+				rotation.z += rotationSpeed * dt;
+				if (rotationZToBe < rotation.z)
+				{
+					rotation.z = rotationZToBe;
+				}
+
+
+			}
+			else if (rotationZToBe < rotation.z)
+			{
+				rotation.z -= rotationSpeed * dt;
+				if (rotationZToBe > rotation.z)
+				{
+					rotation.z = rotationZToBe;
+				}
 			}
 		}
 		else
 		{
-			rotation.z -= rotationSpeed * dt;
 			if (rotationZToBe > rotation.z)
 			{
-				rotation.z = rotationZToBe;
+
+				rotation.z -= rotationSpeed * dt;
+				if (rotation.z < 0.f) // wind around if negative numbers
+				{
+					rotation.z += 360;
+				}
+				else if (rotation.z == -0.f) // negate negative 0;
+				{
+					rotation.z = 0;
+				}
+
+			}
+			else if (rotationZToBe < rotation.z)
+			{
+				rotation.z += rotationSpeed * dt;
+				if (rotation.z >360.f)
+				{
+					rotation.z -= 360;
+				}
 			}
 		}
 	}
@@ -66,7 +108,7 @@ void Enemy::Update(double dt)
 			}
 
 		}
-		MoveTo(Vector3(nxtTile->coords.x,nxtTile->coords.y), dt);
+		MoveTo(nxtTile->coords, dt);
 		
 	}
 	else

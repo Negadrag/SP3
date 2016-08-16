@@ -196,11 +196,9 @@ void RenderManager::InitMesh()
 	meshList[GEO_TERRAIN]->material.kShininess = 1.0f;
 
 	
-
-	meshList[GEO_WATER] = meshList[GEO_NULL];
-
-	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("SmokeParticle", Color(1, 1, 1), 1.f);
-	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");
+	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
+	meshList[GEO_CUBE2]->textureArray[0] = LoadTGA("Image//Face.tga");
+	
 
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
@@ -208,28 +206,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
 
-	meshList[GEO_CORN] = MeshBuilder::GenerateQuad("Corn Field", Color(1, 1, 1), 1.f);
-	meshList[GEO_CORN]->textureArray[0] = LoadTGA("Image//cornField.tga");
-
-	//sprites
-	meshList[GEO_FIRE] = MeshBuilder::GenerateSpriteAnimation("fireSprite", 4, 4);
-	meshList[GEO_FIRE]->textureArray[0] = LoadTGA("Image//fireSprite.tga");
-	SpriteAnimation* sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIRE]);
-	if (sa)
-	{
-		sa->m_anim = new Animation();
-		sa->m_anim->Set(0, 15, 0, 1.f, true);
-	}
-
-	meshList[GEO_COW] = MeshBuilder::GenerateSpriteAnimation("cowSprite", 3, 4);
-	meshList[GEO_COW]->textureArray[0] = LoadTGA("Image//cow.tga");
-	sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_COW]);
-	if (sa)
-	{
-		sa->m_anim = new Animation();
-		sa->m_anim->Set(0, 9, 0, 1.f, true);
-	}
-
+	
 }
 
 RenderManager* RenderManager::GetInstance()
@@ -257,9 +234,10 @@ void RenderManager::RenderObj(Renderable* obj)
 		Renderable* parent = obj->GetParent();
 		modelStack.PushMatrix();
 		modelStack.Translate(parent->pos.x, parent->pos.y, parent->pos.z);
-		modelStack.Rotate(parent->rotation.x, 1, 0, 0);
 		modelStack.Rotate(parent->rotation.z, 0, 0, 1);
+		modelStack.Rotate(parent->rotation.x, 1, 0, 0);
 		modelStack.Rotate(parent->rotation.y, 0, 1, 0);
+		
 		modelStack.Scale(parent->scale.x, parent->scale.y, parent->scale.z);
 	}
 	modelStack.PushMatrix();
@@ -270,10 +248,11 @@ void RenderManager::RenderObj(Renderable* obj)
 			Vector3 axisOfRotation = forward.Cross(dist);
 			float angleOfRotation = Math::RadianToDegree(acos(forward.Dot(Vector3(dist)) / dist.Length()));
 			modelStack.Rotate(angleOfRotation, axisOfRotation.x, axisOfRotation.y, axisOfRotation.z);
-		} else {	
-			modelStack.Rotate(obj->rotation.x, 1, 0, 0);
+		} else {
 			modelStack.Rotate(obj->rotation.z, 0, 0, 1);
+			modelStack.Rotate(obj->rotation.x, 1, 0, 0);
 			modelStack.Rotate(obj->rotation.y, 0, 1, 0);
+			
 		}
 		modelStack.Scale(obj->scale.x, obj->scale.y, obj->scale.z);
 		RenderMesh(obj->meshID, obj->b_lightEnabled , obj->b_fog);
@@ -608,23 +587,7 @@ void RenderManager::Update(double dt)
 		viewStack.LoadIdentity();
 	}
 	//lights[0].position.Set(-6, 30, 300);
-	// Camera matrix
-
-	SpriteAnimation* sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIRE]);
-	if (sa)
-	{
-		sa->Update(dt);
-		sa->m_anim->animActive = true;
-	}
-
-	sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_COW]);
-	if (sa)
-	{
-		sa->Update(dt);
-		sa->m_anim->animActive = true;
-	}
-
-	
+	// Camera matrix	
 }
 
 void RenderManager::AddRenderable(Renderable* entity)
