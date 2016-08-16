@@ -147,6 +147,9 @@
     <ClCompile Include="Source\Node.cpp">
       <Filter>Source Files\ObjectClasses\TileMap</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TileMap.cpp">
+      <Filter>Source Files\ObjectClasses\TileMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Renderable.h">
@@ -240,6 +243,9 @@
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node.h">
+      <Filter>Header Files\ObjectClasses\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap.h">
       <Filter>Header Files\ObjectClasses\TileMap</Filter>
     </ClInclude>
   </ItemGroup>

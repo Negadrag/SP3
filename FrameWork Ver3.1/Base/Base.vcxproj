@@ -37,6 +37,7 @@
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Terrain.cpp" />
     <ClCompile Include="Source\TestScene.cpp" />
+    <ClCompile Include="Source\TileMap.cpp" />
     <ClCompile Include="Source\TurntableCam.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
@@ -69,6 +70,7 @@
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Terrain.h" />
     <ClInclude Include="Source\TestScene.h" />
+    <ClInclude Include="Source\TileMap.h" />
     <ClInclude Include="Source\TurntableCam.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
