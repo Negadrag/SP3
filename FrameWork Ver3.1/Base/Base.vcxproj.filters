@@ -55,6 +55,12 @@
     <Filter Include="Source Files\ObjectClasses">
       <UniqueIdentifier>{7bddeda2-f7ae-4b9b-9b76-042c69be5012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ObjectClasses\TileMap">
+      <UniqueIdentifier>{744609df-eb72-4176-b19f-8de56dabeb59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ObjectClasses\TileMap">
+      <UniqueIdentifier>{f1327ea4-b7af-40d0-a715-d6ccd87a0a94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Entity.cpp">
@@ -128,6 +134,18 @@
     </ClCompile>
     <ClCompile Include="Source\Terrain.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TurntableCam.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CaptureGame.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node.cpp">
+      <Filter>Source Files\ObjectClasses\TileMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +229,18 @@
     </ClInclude>
     <ClInclude Include="Source\Assignment.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TurntableCam.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CaptureGame.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node.h">
+      <Filter>Header Files\ObjectClasses\TileMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

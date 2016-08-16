@@ -1,11 +1,9 @@
-#ifndef ASSIGNMENT_H
-#define ASSIGNMENT_H
+#ifndef TESTSCENE_H
+#define TESTSCENE_H
 
 #include "Scene.h"
 #include "Mtx44.h"
 #include "Camera3.h"
-#include "TurntableCam.h"
-
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -14,12 +12,12 @@
 
 using std::vector;
 
-class Assignment : public Scene
+class TestScene : public Scene
 {
-	
+
 public:
-	Assignment(int sceneID=0);
-	~Assignment();
+	TestScene(int sceneID = 0);
+	~TestScene();
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -30,12 +28,10 @@ public:
 
 private:
 	Camera3 camera;
-	TurntableCam turntab;
 
 	float windmillRotateAngle;
 
 	Renderable grass;
-	Renderable testball;
 
 	bool bLightEnabled;
 	Vector3 distance;
