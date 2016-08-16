@@ -58,8 +58,8 @@ void Assignment::Update(double dt)
 
 void Assignment::Render()
 {
-	string s = "dick";
-	RenderManager::GetInstance()->RenderTextOnScreen(s, Color(1, 1, 1), 5, 21, 3);
+	RenderManager::GetInstance()->RenderTextOnScreen("fku",Color(1,1,1),5,21,3);
+	RenderManager::GetInstance()->RenderMeshOnScreen(GEO_GRASS_DARKGREEN,false, 5, 4, 10);
 }
 
 void Assignment::Exit()

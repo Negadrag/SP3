@@ -53,7 +53,6 @@ void SceneManager::Render()
 {
 	RenderManager::GetInstance()->RenderGPass(m_currentSceneID);
 	RenderManager::GetInstance()->RenderMain(m_currentSceneID);
-
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{
 		if ((*it)->m_sceneID == m_currentSceneID)

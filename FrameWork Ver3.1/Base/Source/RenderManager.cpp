@@ -563,12 +563,14 @@ void RenderManager::UpdateBillboard(int sceneID)
 	}
 }
 
-void RenderManager::RenderTextOnScreen(string text , Color color, float size, float x, float y)
+void RenderManager::RenderTextOnScreen(std::string text, Color color, float size, float x, float y)
 {
 	Mesh *mesh = meshList[GEO_TEXT];
 
 	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_CULL_FACE);
 	Mtx44 ortho;
+	//ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
 	ortho.SetToOrtho(-80, 80, -60, 60, -10, 10);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
@@ -577,8 +579,10 @@ void RenderManager::RenderTextOnScreen(string text , Color color, float size, fl
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
 	modelStack.Translate(x, y, 0);
+	//modelStack.Translate(0, 0, 0);
 	modelStack.Scale(size, size, size);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
+	//cout << "Text enablked" << m_parameters[U_TEXT_ENABLED] << endl;
 	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
 	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
@@ -603,3 +607,63 @@ void RenderManager::RenderTextOnScreen(string text , Color color, float size, fl
 	glEnable(GL_DEPTH_TEST);
 }
 
+void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, float size, float x, float y)
+{
+	Mesh* mesh = meshList[geo];
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -50, 50);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(x, y, 0);
+	//modelStack.Rotate(15, 0, 1, 0);
+	//modelStack.Rotate(-70, 1, 0, 0);
+	modelStack.Scale(size, size, size);
+
+	Mtx44 MVP, modelView, modelView_inverse_transpose;
+
+	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+	if (lightEnabled)
+	{
+		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
+		modelView = viewStack.Top() * modelStack.Top();
+		glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
+		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
+		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView.a[0]);
+
+		//load material
+		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);
+		glUniform3fv(m_parameters[U_MATERIAL_DIFFUSE], 1, &mesh->material.kDiffuse.r);
+		glUniform3fv(m_parameters[U_MATERIAL_SPECULAR], 1, &mesh->material.kSpecular.r);
+		glUniform1f(m_parameters[U_MATERIAL_SHININESS], mesh->material.kShininess);
+	}
+	else
+	{
+		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	}
+
+	if (mesh->textureArray[0] > 0)
+	{
+		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, mesh->textureArray[0]);
+		glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	}
+	else
+	{
+		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 0);
+	}
+	mesh->Render();
+	if (mesh->textureArray[0] > 0)
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
