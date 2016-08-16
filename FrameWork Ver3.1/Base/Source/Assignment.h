@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include "Mtx44.h"
 #include "Camera3.h"
+#include "TurntableCam.h"
+
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -16,7 +18,7 @@ class Assignment : public Scene
 {
 	
 public:
-	Assignment();
+	Assignment(int sceneID=0);
 	~Assignment();
 
 	virtual void Init();
@@ -28,10 +30,12 @@ public:
 
 private:
 	Camera3 camera;
+	TurntableCam turntab;
 
 	float windmillRotateAngle;
 
 	Renderable grass;
+	Renderable testball;
 
 	bool bLightEnabled;
 	Vector3 distance;

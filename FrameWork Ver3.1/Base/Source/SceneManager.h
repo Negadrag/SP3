@@ -13,7 +13,7 @@ public:
 
 	list<Scene*> sceneList;
 	int m_currentSceneID;
-
+	int m_nxtSceneID;
 	void Init();
 	void Update(double dt);
 	void Render();
@@ -21,13 +21,16 @@ public:
 	void CreateScene(Scene* scene);
 	bool SceneExist(int sceneID);
 	void ReinstanceScene(int sceneID);
-	void ChangeScene(int sceneID);
+	bool ChangeScene(int sceneID,bool freezeScene);
 	void Exit();
 	static SceneManager* GetInstance();
 
 private:
 	SceneManager();
 	static SceneManager* instance;
+
+	float timer;
+	float stgswap_cd;
 protected:
 
 };
