@@ -23,7 +23,7 @@ Vector2 Vector2::operator+( const Vector2& rhs ) const
 }
 
 Vector2 Vector2::operator-( const Vector2& rhs ) const
-{
+ {
 	return Vector2(x - rhs.x,y - rhs.y);
 }
 
@@ -41,6 +41,12 @@ float Vector2::Length( void ) const
 {
 	return sqrt(x * x + y * y);
 }
+
+float Vector2::LengthSquared() const
+{
+	return x*x + y*y;
+}
+
 
 float Vector2::Dot( const Vector2& rhs ) const
 {

@@ -14,6 +14,7 @@
 #include "OrthoCamera.h"
 #include "Enemy.h"
 #include "CursorControl.h"
+#include "ArrowTower.h"
 
 using std::vector;
 
@@ -52,6 +53,8 @@ private:
 	Enemy testEnemy;
 
 	Terrain terrain;
+
+	ArrowTower tower;
 };
 
 #endif

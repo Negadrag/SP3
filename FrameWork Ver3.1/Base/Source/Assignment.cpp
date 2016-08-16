@@ -25,7 +25,7 @@ void Assignment::Init()
 	//this->m_sceneID = 1;
 	
 	testEnemy.nxtTile = testMap.root;
-	testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 0);
+	testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 1);
 	testEnemy.meshID = GEO_CONE;
 
 	Node* currentNode = testMap.root;
@@ -53,6 +53,10 @@ void Assignment::Init()
 	grass.pos.Set(testMap.i_columns / 2, testMap.i_rows / 2, 0);
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
+
+	tower.pos.Set(10, 10, 0);
+	tower.scale.Set(1, 1, 1);
+	tower.enemy = &testEnemy;
 }
 
 void Assignment::Update(double dt)
@@ -86,7 +90,7 @@ void Assignment::Render()
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
 	{
-		RenderManager::GetInstance()->RenderMesh(GEO_SPHERE, Vector3(currentNode->coords.x * testMap.i_tileSize, currentNode->coords.y  * testMap.i_tileSize, 0), Vector3(0.5, 0.5, 0.5), Vector3(0, 0, 0), false, false);
+		RenderManager::GetInstance()->RenderMesh(GEO_SPHERE, Vector3(currentNode->coords.x * testMap.i_tileSize, currentNode->coords.y  * testMap.i_tileSize, 0), Vector3(1,1,1), Vector3(0, 0, 0), false, false);
 		currentNode = currentNode->next;
 		
 	}
@@ -99,7 +103,7 @@ void Assignment::Render()
 		{
 			if (testMap.screenMap[j][i] == 0)
 			{
-				RenderManager::GetInstance()->RenderMesh(GEO_CUBE, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+				RenderManager::GetInstance()->RenderMesh(GEO_CUBE, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(90, 0, 0), true, false);
 			}
 		}
 	}

@@ -61,6 +61,12 @@
     <Filter Include="Header Files\ObjectClasses\TileMap">
       <UniqueIdentifier>{f1327ea4-b7af-40d0-a715-d6ccd87a0a94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectClasses\Tower">
+      <UniqueIdentifier>{0133efe1-e55f-40fc-ab60-f44c285496ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectClasses\Tower">
+      <UniqueIdentifier>{a408d95d-bafb-4d03-9ac1-0cdacd23e65d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Entity.cpp">
@@ -156,8 +162,17 @@
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CursorControl.cpp">
-      <Filter>Source Files\ObjectClasses</Filter>
+    <ClCompile Include="Source\ArrowTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CannonTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,8 +278,17 @@
     <ClInclude Include="Source\Enemy.h">
       <Filter>Header Files\ObjectClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CursorControl.h">
-      <Filter>Header Files\ObjectClasses</Filter>
+    <ClInclude Include="Source\ArrowTower.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tower.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CannonTower.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
