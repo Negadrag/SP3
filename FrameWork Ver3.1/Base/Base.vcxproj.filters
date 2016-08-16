@@ -156,6 +156,9 @@
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CursorControl.cpp">
+      <Filter>Source Files\ObjectClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Renderable.h">

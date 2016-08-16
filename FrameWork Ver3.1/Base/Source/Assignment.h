@@ -13,6 +13,7 @@
 #include "Terrain.h"
 #include "OrthoCamera.h"
 #include "Enemy.h"
+#include "CursorControl.h"
 
 using std::vector;
 
@@ -41,6 +42,7 @@ private:
 	Renderable testball;
 
 	TileMap testMap;
+	CursorControl cursor;
 
 	bool bLightEnabled;
 	Vector3 distance;

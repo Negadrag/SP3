@@ -76,15 +76,13 @@ void Assignment::Update(double dt)
 	
 	fps = (float)(1.f / dt);
 
-
+	cursor.Update(camera, testMap);
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
 }
 
 void Assignment::Render()
 {
-	//RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(2,2,0), Vector3(0.1, 0.1, 0.1), Vector3(90, 0, 0), false, false);
-
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
 	{
@@ -93,20 +91,7 @@ void Assignment::Render()
 		
 	}
 
-	double x, y;
-	Application::GetCursorPos(&x, &y);
-	float w = Application::GetWindowWidth();
-	float h = Application::GetWindowHeight();
-
-	float worldX = x / w * 100;
-	float worldY = (h - y) / h * 100 * (camera.aspectRatio.y / camera.aspectRatio.x); // 0.05 = 1 unit
-
-	int selectedUnitX = Math::Clamp((worldX - 15.f) / 5.35f,0.f,(float)testMap.i_columns - 1);
-	int selectedUnitY = Math::Clamp((worldY - 2.75f) / 5.25f, 0.f, (float)testMap.i_rows - 1);
-
-	std::cout << worldX << "," << worldY << std::endl;
-
-	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(selectedUnitX, selectedUnitY, 0), Vector3(0.1, 0.1, 0.1), Vector3(90, 0, 0), false, false);
+	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.x, cursor.y, 0), Vector3(0.1, 0.1, 0.1), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
 	{
