@@ -8,6 +8,8 @@ class Enemy:public Renderable
 {
 public:
 	virtual ~Enemy();
+	Enemy();
+	Enemy(Vector3 pos, Node* root);
 
 	Node* nxtTile;
 	int i_health;
@@ -17,13 +19,12 @@ public:
 	int i_slow;// the percentage of movement speed slow
 
 	//to move the enemy to a specific point
-	void moveTo(Vector2 dest,double dt);
+	void MoveTo(Vector2 dest,double dt);
 	virtual void Update(double dt);
 private:
 
 protected:
-	Enemy();
-	Enemy(Vector3 pos, Node* root);
+
 };
 
 #endif
