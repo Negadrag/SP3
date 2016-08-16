@@ -149,6 +149,7 @@ public:
 	static RenderManager* GetInstance();
 	void RenderObj(Renderable* obj);
 	void RenderMesh(GEOMETRY_TYPE meshID,bool lightEnabled, bool fog);
+	void RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool lightEnabled, bool fog);
 	void RenderTextOnScreen(string text, Color color, float size, float x, float y);
 	void RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, float size, float x, float y);
 	void RenderGPass(int sceneID = 0);

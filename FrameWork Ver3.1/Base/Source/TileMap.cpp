@@ -23,70 +23,76 @@ TileMap::~TileMap()
 	{
 		delete screenMap;
 	}
+
+	if (root != nullptr)
+	{
+		delete root;
+	}
 }
 
 bool TileMap::LoadMap(std::fstream &file)
 {
-	if (file.is_open())
-	{
-		vector<string> v_rows; // temporary vector to store rows
+	vector<string> v_rows; // temporary vector to store rows
 		
-		while (file.good())
-		{
-			string temp;
-			std::getline(file, temp,'\n');	
-			v_rows.push_back(temp);
-		}
-		file.close();
+	while (file.good())
+	{
+		string temp;
+		std::getline(file, temp,'\n');	
+		v_rows.push_back(temp);
+	}
+	file.close();
 
-		i_columns = v_rows[0].size(); // x-axis
-		i_rows = v_rows.size(); // y-axis
+	i_columns = v_rows[0].size() - 1; // x-axis
+	i_rows = v_rows.size() - 1; // y-axis
 
-		screenMap = new int*[i_columns];
+	screenMap = new int*[i_columns];
+	for (int i = 0; i < i_columns; ++i)
+	{
+		screenMap[i] = new int[i_rows];
+	}
+
+	// Writing the values into the tilemap
+	int k = 0;
+	for (int j = i_rows - 1; j >= 0; --j)
+	{
+		std::stringstream ss(v_rows[j]);
 		for (int i = 0; i < i_columns; ++i)
 		{
-			screenMap[i] = new int[i_rows];
+			string temp2;
+			std::getline(ss, temp2, ',');
+			int temp3 = std::atoi(temp2.c_str());
+			screenMap[i][k] = temp3;
+			std::cout << temp3;
 		}
-
-		// Writing the values into the tilemap
-		int k = 0;
-		for (int j = i_rows - 1; j >= 0; --j)
-		{
-			std::stringstream ss(v_rows[j]);
-			for (int i = 0; i < i_columns; ++i)
-			{
-				string temp2;
-				std::getline(ss, temp2, ',');
-				int temp3 = std::atoi(temp2.c_str());
-				screenMap[i][k] = temp3;
-			}
-			k++;
-		}
-
-		// Starting the recursive node loop
-		for (int j = i_rows - 1; j >= 0; --j) // y axis
-		{
-			for (int i = 0; i < i_columns; ++i) // x axis
-			{
-				if (screenMap[i][j] == 1)
-				{
-					AddNode(root, i, j);
-					FindNextNode(2, i, j);
-					return true;
-				}
-			}
-		}
-		return true;
+		std::cout << std::endl;
+		k++;
 	}
-	return false;
+
+	// Starting the recursive node loop
+	for (int j = i_rows - 1; j >= 0; --j) // y axis
+	{
+		for (int i = 0; i < i_columns; ++i) // x axis
+		{
+			if (screenMap[i][j] == 1)
+			{
+				AddNode(root, i, j);
+				FindNextNode(2, i, j);
+				return true;
+			}
+		}
+	}
+	return true;
 }
 
 void TileMap::AddNode(Node *node, int x, int y)
 {
-	if (node == nullptr)
+	if (root == nullptr)
 	{
-		node = new Node(x, y);
-		std::cout << x << "," << y << std::endl;
+		root = new Node(x, y);
+	}
+	else if (node->next == nullptr)
+	{
+		node->next = new Node(x, y);
 	}
 	else
 	{
