@@ -2,16 +2,27 @@
 
 Enemy::Enemy()
 {
-	f_movSpeed = 3.f;
+	f_movSpeed = 5.f;
+	i_health = 10;
+	i_defence = 0;
+	i_damage = 0;
+	i_slow = 0;
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
+	this->pos.Set(0, 0, 0);
+
 }
 
 Enemy::Enemy(Vector3 pos, Node* root)
 {
-	f_movSpeed = 3.f;
+	f_movSpeed = 5.f;
+	i_health = 10;
+	i_defence = 0;
+	i_damage = 0;
+	i_slow = 0;
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
+	this->pos.Set(0, 0, 0);
 }
 
 Enemy::~Enemy()

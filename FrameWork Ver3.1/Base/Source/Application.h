@@ -21,6 +21,8 @@ public:
 	//Declare variables to store the last and current mouse position
 	static double mouse_last_x, mouse_last_y, mouse_current_x, mouse_current_y, mouse_diff_x, mouse_diff_y;
 	static double camera_yaw, camera_pitch;
+	static bool IsMousePressed(unsigned short key);
+	static void GetCursorPos(double *xpos, double *ypos);
 	static int GetWindowWidth();
 	static int GetWindowHeight();
 
@@ -29,7 +31,7 @@ private:
 	~Application();
 
 	// Declare the window width and height as constant integer
-	const static int m_window_deadzone = 200;
+	const static int m_window_deadzone = 0;
 	const static int m_window_width = 1600;
 	const static int m_window_height = 900;
 	//Declare a window object

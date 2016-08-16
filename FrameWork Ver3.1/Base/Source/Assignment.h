@@ -13,6 +13,9 @@
 #include "Terrain.h"
 #include "OrthoCamera.h"
 #include "Enemy.h"
+#include "CursorControl.h"
+#include "ArrowTower.h"
+#include "CannonTower.h"
 
 using std::vector;
 
@@ -41,6 +44,7 @@ private:
 	Renderable testball;
 
 	TileMap testMap;
+	CursorControl cursor;
 
 	bool bLightEnabled;
 	Vector3 distance;
@@ -50,6 +54,9 @@ private:
 	Enemy testEnemy;
 
 	Terrain terrain;
+
+	ArrowTower ATower;
+	CannonTower CTower;
 };
 
 #endif
