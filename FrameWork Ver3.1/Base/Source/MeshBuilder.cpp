@@ -532,7 +532,7 @@ Mesh* MeshBuilder::GenerateSkyPlane(const std::string &meshName, Color color, in
 	float delta = planeSize / (float)slices;
 	float texdelta = 2.f / (float)slices;
 
-	float heightOffset = ((planeSize / 2.f) * (planeSize / 2.f)) / (0.5 * planeSize * 0.5 * planeSize) * AtmosphereRadius;
+	float heightOffset = ((planeSize / 2.f) * (planeSize / 2.f)) / (0.5f * planeSize * 0.5f * planeSize) * AtmosphereRadius;
 	//float heightOffset = AtmosphereRadius / 2.f;
 	//calculate vertex
 	for (int z = 0; z <= slices; ++z)
@@ -542,8 +542,8 @@ Mesh* MeshBuilder::GenerateSkyPlane(const std::string &meshName, Color color, in
 			float xDist = (-0.5f * planeSize) + ((float)x * delta);
 			float zDist = (-0.5f * planeSize) + ((float)z * delta);
 
-			float xHeight = ( (xDist * xDist) / (0.5 * planeSize * 0.5 * planeSize)) *  AtmosphereRadius;
-			float zHeight =( (zDist * zDist) / (0.5 * planeSize * 0.5 * planeSize) ) * AtmosphereRadius;
+			float xHeight = ( (xDist * xDist) / (0.5f * planeSize * 0.5f * planeSize)) *  AtmosphereRadius;
+			float zHeight =( (zDist * zDist) / (0.5f * planeSize * 0.5f * planeSize) ) * AtmosphereRadius;
 
 			float height = xHeight + zHeight;
 

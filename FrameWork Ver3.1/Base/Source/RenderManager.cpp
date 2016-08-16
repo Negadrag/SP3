@@ -211,6 +211,13 @@ void RenderManager::InitMesh()
 	meshList[GEO_CORN] = MeshBuilder::GenerateQuad("Corn Field", Color(1, 1, 1), 1.f);
 	meshList[GEO_CORN]->textureArray[0] = LoadTGA("Image//cornField.tga");
 
+	//Tower
+	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
+	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//CryptWall.tga");
+	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
+	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
+	meshList[GEO_CANNON] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
+
 	//sprites
 	meshList[GEO_FIRE] = MeshBuilder::GenerateSpriteAnimation("fireSprite", 4, 4);
 	meshList[GEO_FIRE]->textureArray[0] = LoadTGA("Image//fireSprite.tga");

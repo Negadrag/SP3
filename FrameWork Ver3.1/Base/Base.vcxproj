@@ -13,10 +13,12 @@
   <ItemGroup>
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\ArrowTower.cpp" />
     <ClCompile Include="Source\Assignment.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Camera2.cpp" />
     <ClCompile Include="Source\Camera3.cpp" />
+    <ClCompile Include="Source\CannonTower.cpp" />
     <ClCompile Include="Source\CaptureGame.cpp" />
     <ClCompile Include="Source\DepthFBO.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
@@ -32,6 +34,7 @@
     <ClCompile Include="Source\OrthoCamera.cpp" />
     <ClCompile Include="Source\ParticleGenerator.cpp" />
     <ClCompile Include="Source\Particles.cpp" />
+    <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\Renderable.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -40,16 +43,19 @@
     <ClCompile Include="Source\Terrain.cpp" />
     <ClCompile Include="Source\TestScene.cpp" />
     <ClCompile Include="Source\TileMap.cpp" />
+    <ClCompile Include="Source\Tower.cpp" />
     <ClCompile Include="Source\TurntableCam.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\ArrowTower.h" />
     <ClInclude Include="Source\Assignment.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera2.h" />
     <ClInclude Include="Source\Camera3.h" />
+    <ClInclude Include="Source\CannonTower.h" />
     <ClInclude Include="Source\CaptureGame.h" />
     <ClInclude Include="Source\DepthFBO.h" />
     <ClInclude Include="Source\Enemy.h" />
@@ -66,6 +72,7 @@
     <ClInclude Include="Source\OrthoCamera.h" />
     <ClInclude Include="Source\ParticleGenerator.h" />
     <ClInclude Include="Source\Particles.h" />
+    <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\Renderable.h" />
     <ClInclude Include="Source\RenderManager.h" />
     <ClInclude Include="Source\Scene.h" />
@@ -75,6 +82,7 @@
     <ClInclude Include="Source\Terrain.h" />
     <ClInclude Include="Source\TestScene.h" />
     <ClInclude Include="Source\TileMap.h" />
+    <ClInclude Include="Source\Tower.h" />
     <ClInclude Include="Source\TurntableCam.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
