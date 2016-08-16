@@ -51,7 +51,7 @@ void Assignment::Update(double dt)
 	if (Application::IsKeyPressed('N'))
 	{
 		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		SceneManager::GetInstance()->ChangeScene(2, false);
+		SceneManager::GetInstance()->ChangeScene(2, true);
 	}
 
 	

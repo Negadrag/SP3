@@ -19,6 +19,7 @@
     <ClCompile Include="Source\Camera3.cpp" />
     <ClCompile Include="Source\CaptureGame.cpp" />
     <ClCompile Include="Source\DepthFBO.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Source\Camera3.h" />
     <ClInclude Include="Source\CaptureGame.h" />
     <ClInclude Include="Source\DepthFBO.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\Light.h" />

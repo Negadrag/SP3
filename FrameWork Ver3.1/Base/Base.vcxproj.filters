@@ -61,6 +61,12 @@
     <Filter Include="Header Files\ObjectClasses\TileMap">
       <UniqueIdentifier>{f1327ea4-b7af-40d0-a715-d6ccd87a0a94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ObjectClasses\Enemy">
+      <UniqueIdentifier>{11eb08d8-58a7-4322-8adf-c76cf2604ce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ObjectClasses\Enemy">
+      <UniqueIdentifier>{4f5e52a0-5b0b-47e8-add4-86455831f408}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Entity.cpp">
@@ -149,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="Source\TileMap.cpp">
       <Filter>Source Files\ObjectClasses\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="Source\TileMap.h">
       <Filter>Header Files\ObjectClasses\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
