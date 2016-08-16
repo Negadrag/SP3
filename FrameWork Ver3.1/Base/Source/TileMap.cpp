@@ -62,9 +62,7 @@ bool TileMap::LoadMap(std::fstream &file)
 			std::getline(ss, temp2, ',');
 			int temp3 = std::atoi(temp2.c_str());
 			screenMap[i][k] = temp3;
-			std::cout << temp3;
 		}
-		std::cout << std::endl;
 		k++;
 	}
 

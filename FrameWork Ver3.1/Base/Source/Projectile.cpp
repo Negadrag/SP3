@@ -3,7 +3,7 @@
 Projectile::Projectile(GEOMETRY_TYPE ID) :
 vel(0, 0, 0)
 {
-	this->meshID = GEO_ARROW;// ID;
+	this->meshID = ID;// ID;
 
 }
 
@@ -24,8 +24,7 @@ void Projectile::Update(double dt)
 	
 	//if (this->b_isActive)
 	//{
-	/*	if (meshID == GEO_ARROW)
-		{*/
+
 			d = enemy->pos - this->pos;
 			this->vel = (this->vel + d * 2.25f).Normalize() * p_speed;
 			rotation.z = Math::RadianToDegree(atan2(this->vel.y, this->vel.x));
@@ -39,7 +38,6 @@ void Projectile::Update(double dt)
 				this->b_isActive = false;
 			}
 
-		//}
 
 	//}
 

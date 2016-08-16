@@ -93,7 +93,7 @@ void Tower::Update(double dt)
 {
 
 	p_spawnTimer += (float)dt;
-	if (p_spawnTimer >= this->atkSpeed)// p_frequency) && p_projectileCount<p_maxProjectile)
+	if (p_spawnTimer >= 1.f /this->atkSpeed)// p_frequency) && p_projectileCount<p_maxProjectile)
 	{
 		p_spawnTimer = 0.f;
 		Fire();
@@ -114,8 +114,14 @@ void Tower::Fire()
 		return;
 	}
 	Projectile* projectile = GetProjectile();
+	projectile->meshID = this->projectile_meshID;
 	projectile->pos = this->pos + heightOffset;
-	projectile->scale.Set(2, 2, 2);
+
+	if (projectile->meshID == GEO_ARROW)
+		projectile->scale.Set(2, 2, 2);
+	else
+		projectile->scale.Set(0.5f, 0.5f, 0.5f);
+
 	projectile->p_speed = this->p_speed;
 	projectile->enemy = this->enemy;
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
