@@ -13,13 +13,13 @@ public:
 
 	Node* nxtTile;
 	int i_health;
-	int i_movSpeed;
+	float f_movSpeed;
 	int i_defence;//percentage of dmg mitigation
 	int i_damage;
 	int i_slow;// the percentage of movement speed slow
 
 	//to move the enemy to a specific point
-	void MoveTo(Vector2 dest,double dt);
+	void MoveTo(Vector3 dest,double dt);
 	virtual void Update(double dt);
 private:
 

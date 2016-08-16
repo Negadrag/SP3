@@ -2,14 +2,14 @@
 
 Enemy::Enemy()
 {
-	i_movSpeed = 1;
+	f_movSpeed = 3.f;
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
 }
 
 Enemy::Enemy(Vector3 pos, Node* root)
 {
-	i_movSpeed = 1;
+	f_movSpeed = 3.f;
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
 }
@@ -18,18 +18,15 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::MoveTo(Vector2 dest, double dt)
+void Enemy::MoveTo(Vector3 dest, double dt)
 {
 	float rotationSpeed = 90.f;
-	Vector2 view = dest - Vector2(pos.x, pos.y);
-	if (view.Length() == 0)
+	Vector3 view = Vector3(dest.x, dest.y, 0)- Vector3(pos.x, pos.y, 0) ;
+	if (view.Length() == Math::EPSILON)
 	{
-		view = Vector2(1, 0);
+		return;
 	}
-	else
-	{
-		view = view.Normalized();
-	}
+	view.Normalize();
 	float rotationZToBe = Math::RadianToDegree(atan2(view.y,view.x)); // the rotation that we want it to be at;
 
 	if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
@@ -51,8 +48,8 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
-	this->pos.x += view.x * i_movSpeed *dt;
-	this->pos.y += view.y * i_movSpeed *dt;
+	this->pos.x += view.x * f_movSpeed *dt;
+	this->pos.y += view.y * f_movSpeed *dt;
 
 }
 
@@ -60,11 +57,17 @@ void Enemy::Update(double dt)
 {
 	if (nxtTile != nullptr)
 	{
-		moveTo(nxtTile->coords, dt);
-		if ((nxtTile->coords - Vector2(pos.x, pos.y)).Length() < 0.2f)
+		if ((Vector3(nxtTile->coords.x, nxtTile->coords.y, 0) - Vector3(this->pos.x, this->pos.y, 0)).LengthSquared() < 0.1f*0.1f)
 		{
 			nxtTile = nxtTile->next;
+			if (nxtTile == nullptr)
+			{
+				return;
+			}
+
 		}
+		MoveTo(Vector3(nxtTile->coords.x,nxtTile->coords.y), dt);
+		
 	}
 	else
 	{
