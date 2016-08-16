@@ -15,6 +15,7 @@
 #include "Enemy.h"
 #include "CursorControl.h"
 #include "ArrowTower.h"
+#include "CannonTower.h"
 
 using std::vector;
 
@@ -54,7 +55,8 @@ private:
 
 	Terrain terrain;
 
-	ArrowTower tower;
+	ArrowTower ATower;
+	CannonTower CTower;
 };
 
 #endif
