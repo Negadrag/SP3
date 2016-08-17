@@ -4,12 +4,13 @@ CannonTower::CannonTower()
 :Tower()
 {
 	this->meshID = GEO_CANNONTOWER;
-	SetAtkDmg(10);
-	SetRange(3);
+	SetAtkDmg(20);
+	SetRange(5);
 	SetSpdRate(0.5f);
-	this->p_speed = 30.f;
+	this->p_speed = 15.f;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
+	this->strategy = FIRST_ENEMY;
 }
 
 CannonTower::~CannonTower()

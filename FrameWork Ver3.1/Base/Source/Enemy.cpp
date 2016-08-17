@@ -132,3 +132,13 @@ void Enemy::Update(double dt)
 		this->b_isActive = false;
 	}
 }
+
+void Enemy::ReceiveDamage(int damage)
+{
+	int dmg = damage * ((100 - i_defence) / 100);
+	this->i_health -= dmg;
+	if (i_health <= 0)
+	{
+		this->b_isActive = false;
+	}
+}

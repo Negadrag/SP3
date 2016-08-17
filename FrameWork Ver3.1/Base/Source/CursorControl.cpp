@@ -50,6 +50,20 @@ void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
 	{
 		bLButtonState = false;
 	}
+	if (!bLButtonState && Application::IsMousePressed(1))
+	{
+		bLButtonState = true;
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -1)
+		{
+			SpawnTower();
+			tileMap.screenMap[checkPositionX][checkPositionY] = -2;
+		}
+
+	}
+	else if (bLButtonState && !Application::IsMousePressed(1))
+	{
+		bLButtonState = false;
+	}
 }
 
 bool CursorControl::SpawnTower()
@@ -57,7 +71,7 @@ bool CursorControl::SpawnTower()
 	Tower *tempTower = new ArrowTower();
 	tempTower->pos.Set(checkPositionX, checkPositionY, 0);
 	tempTower->scale.Set(1, 1, 1);
-	tempTower->enemyList = nullptr;
+	tempTower->enemyList = this->enemyList;
 	towerList->push_back(tempTower);
 	return true;
 }

@@ -39,7 +39,7 @@ public:
 	~WaveManager();
 
 	bool b_allWaveEnded;
-	
+	float f_waveStartTimer;
 	int i_typeVecIndex;
 
 	void SetRoot(Node* root);
@@ -48,7 +48,7 @@ public:
 	Enemy* SpawnEnemy(ENEMY_TYPE type);
 	void ClearEnemyList();
 	void Update(double dt);
-	vector<Enemy*>& GetEnemyList();
+	vector<Enemy*>* GetEnemyList();
 private:
 	vector<Enemy*> enemyList;
 	vector<Wave> waveList;

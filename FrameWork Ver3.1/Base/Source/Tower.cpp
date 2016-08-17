@@ -129,6 +129,7 @@ void Tower::Fire()
 	projectile->p_speed = this->p_speed;
 	projectile->enemy = enemy;
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
+	projectile->i_damage = this->atkDamage;
 	projectileList.push_back(projectile);
 	//enemy->i_health -= 1;
 	
@@ -146,7 +147,7 @@ void Tower::ClearProjectile()
 vector<Enemy*> Tower::GetEnemyInRange()
 {
 	vector<Enemy*> enemyVec;
-	if (enemyList->size() == 0)
+	if (this->enemyList->size() == 0)
 	{
 		return enemyVec;
 	}
@@ -154,7 +155,11 @@ vector<Enemy*> Tower::GetEnemyInRange()
 	{
 		if ((Vector2(this->pos.x, this->pos.y) - Vector2((*it)->pos.x, (*it)->pos.y)).LengthSquared() <= this->atkRange * this->atkRange)
 		{
-			enemyVec.push_back((*it));
+			if ((*it)->b_isActive == true)
+			{
+				enemyVec.push_back((*it));
+			}
+			
 		}
 	}
 	return enemyVec;
@@ -167,6 +172,7 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 	{
 		return nullptr;
 	}
+
 	if (strategy == FIRST_ENEMY)
 	{
 		Node* furthestNode = (*enemyList.begin())->nxtTile;

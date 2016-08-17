@@ -19,6 +19,7 @@ WaveManager::WaveManager(Node* root)
 	i_currentWave = 0;
 	i_currentRevolution = 0;
 	i_typeVecIndex = 0;
+	f_waveStartTimer = 0.f;
 
 	this->root = root;
 	this->b_allWaveEnded = false;
@@ -85,13 +86,19 @@ void WaveManager::Update(double dt)
 		}
 		else if (WaveEnded(i_currentWave))
 		{
-			ClearEnemyList();
-			i_currentRevolution = 0;
-			i_currentWave++;
-			if (i_currentWave >= waveList.size())
+			f_waveStartTimer += dt;
+			if (f_waveStartTimer >= 5.f)
 			{
-				b_allWaveEnded = true;
+				f_waveStartTimer = 0.f;
+				ClearEnemyList();
+				i_currentRevolution = 0;
+				i_currentWave++;
+				if (i_currentWave >= waveList.size())
+				{
+					b_allWaveEnded = true;
+				}
 			}
+			
 		}
 	}
 }
@@ -132,7 +139,7 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 	return enemy;
 }
 
-vector<Enemy*>& WaveManager::GetEnemyList()
+vector<Enemy*>* WaveManager::GetEnemyList()
 {
-	return enemyList;
+	return &enemyList;
 }

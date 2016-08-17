@@ -4,12 +4,13 @@ ArrowTower::ArrowTower()
 :Tower()
 {
 	this->meshID = GEO_ARROWTOWER;
-	SetAtkDmg(4);
+	SetAtkDmg(10);
 	SetRange(5);
-	SetSpdRate(2.f);
+	SetSpdRate(4.f);
 	this->p_speed = 10.f;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
+	this->strategy = FIRST_ENEMY;
 }
 
 ArrowTower::~ArrowTower()

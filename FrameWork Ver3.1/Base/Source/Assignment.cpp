@@ -61,13 +61,13 @@ void Assignment::Init()
 
 	ATower.pos.Set(5, 6, 0);
 	ATower.scale.Set(1, 1, 1);
-	ATower.enemyList = &wave.GetEnemyList();
+	ATower.enemyList = wave.GetEnemyList();
 
 	CTower.pos.Set(5, 5, 0);
 	CTower.scale.Set(1, 1, 1);
-	CTower.enemyList = &wave.GetEnemyList();
+	CTower.enemyList = wave.GetEnemyList();
 
-	cursor.Init(&towerList, &enemyList);
+	cursor.Init(&towerList, wave.GetEnemyList());
 }
 
 void Assignment::Update(double dt)

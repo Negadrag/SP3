@@ -12,7 +12,7 @@ public:
 	Projectile(Vector3 pos, Vector3 scale);
 	~Projectile();
 
-
+	int i_damage;
 	Vector3 vel;
 	float p_speed;
 	Enemy *enemy;
@@ -20,7 +20,8 @@ public:
 	virtual void Update(double dt);
 private:
 
-	
+protected:
+
 };
 
 #endif
