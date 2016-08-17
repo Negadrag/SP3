@@ -14,7 +14,7 @@ Tower::Tower()
 	this->pos.SetZero();
 	enemyList = nullptr;
 	heightOffset.SetZero();
-	strategy = FIRST_ENEMY;
+	strategy = NEAREST_ENEMY;
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
@@ -32,7 +32,7 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	heightOffset.Set(0, 0, 5);
 	p_speed = 10.0f;
 	enemyList = nullptr;
-	strategy = FIRST_ENEMY;
+	strategy = NEAREST_ENEMY;
 }
 
 Tower::~Tower()
@@ -130,7 +130,7 @@ void Tower::Fire()
 	projectile->enemy = enemy;
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
 	projectileList.push_back(projectile);
-	enemy->i_health -= 1;
+	//enemy->i_health -= 1;
 	
 }
 
@@ -199,6 +199,22 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 					enemy = (*it);
 				}
 			}
+		}
+	}
+
+	else if (strategy == NEAREST_ENEMY)
+	{
+		float shortestDist = FLT_MAX;
+		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
+		{
+
+				float d = (Vector2((*it)->pos.x, (*it)->pos.y) - Vector2(this->pos.x, this->pos.y)).LengthSquared();
+				if (d < shortestDist)
+				{
+					shortestDist = d;
+					enemy = (*it);
+				}
+
 		}
 	}
 	return enemy;

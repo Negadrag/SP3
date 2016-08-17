@@ -12,6 +12,7 @@ public:
 
 	Node* nxtTile;
 	float f_movSpeed;
+	int i_health;
 
 	//to move the enemy to a specific point handles rotation based on vel as well. Rotation speed set within the function
 	void MoveTo(Vector2 dest,double dt);
@@ -19,7 +20,7 @@ public:
 private:
 
 protected:
-	int i_health;
+	//int i_health;
 	
 	int i_defence;//percentage of dmg mitigation
 	int i_damage;
