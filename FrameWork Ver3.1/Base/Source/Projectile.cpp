@@ -31,20 +31,21 @@ void Projectile::Update(double dt)
 			{
 				return;
 			}
-			this->vel = d.Normalize() * p_speed;
+			this->vel = d.Normalized() * p_speed;
 			rotation.z = Math::RadianToDegree(atan2(this->vel.y, this->vel.x));
 			this->pos += vel * dt;
 			if (enemy->b_isActive == false)
 			{
 				this->b_isActive = false;
 			}
-			float distanceToCheck = 0.05 * p_speed;
+			float distanceToCheck = 0.04f * p_speed;
 			if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 			{
 				this->b_isActive = false;
+				//std::cout << d.LengthSquared() << std::endl;
 			}
 
-
+			
 	//}
 
 }

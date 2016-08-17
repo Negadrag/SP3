@@ -195,9 +195,13 @@ void RenderManager::InitMesh()
 	meshList[GEO_TERRAIN]->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	meshList[GEO_TERRAIN]->material.kShininess = 1.0f;
 
-	
-	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
-	meshList[GEO_CUBE2]->textureArray[0] = LoadTGA("Image//Face.tga");
+	//Monster
+	meshList[GEO_BASIC] = MeshBuilder::GenerateOBJ("Basic", "OBJ/BasicMonster.obj");
+	meshList[GEO_BASIC]->textureArray[0] = LoadTGA("Image//BasicMonster.tga");
+	meshList[GEO_SPEED] = MeshBuilder::GenerateOBJ("Speed", "OBJ/SpeedMonster.obj");
+	meshList[GEO_SPEED]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
+	meshList[GEO_TANKY] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
+	meshList[GEO_TANKY]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
 	
 
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
@@ -206,6 +210,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
 
+	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//CryptWall.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");

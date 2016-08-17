@@ -26,7 +26,7 @@ void Assignment::Init()
 
 	testEnemy.nxtTile = testMap.root;
 	testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 1);
-	testEnemy.meshID = GEO_CUBE2;
+	testEnemy.meshID = GEO_TANKY;
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
@@ -97,6 +97,8 @@ void Assignment::Update(double dt)
 		testEnemy.rotation.z = 0;
 		testEnemy.b_isActive = true;
 	}
+
+	std::cout << fps << std::endl;
 }
 
 void Assignment::Render()

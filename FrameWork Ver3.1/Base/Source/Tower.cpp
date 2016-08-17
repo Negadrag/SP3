@@ -93,6 +93,9 @@ void Tower::Update(double dt)
 {
 
 	p_spawnTimer += (float)dt;
+	//Vector3 d = enemy->pos - this->pos;
+
+	//if (meshID == GEO_ARROWTOWER && d <= atkRange)
 	if (p_spawnTimer >= 1.f /this->atkSpeed)// p_frequency) && p_projectileCount<p_maxProjectile)
 	{
 		p_spawnTimer = 0.f;
@@ -126,7 +129,7 @@ void Tower::Fire()
 	projectile->enemy = this->enemy;
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
 	projectileList.push_back(projectile);
-
+	enemy->i_health -= 1;
 	
 }
 

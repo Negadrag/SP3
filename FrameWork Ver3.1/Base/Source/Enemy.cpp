@@ -117,10 +117,8 @@ void Enemy::Update(double dt)
 			{
 				return;
 			}
-
 		}
 		MoveTo(nxtTile->coords, dt);
-		
 	}
 	else
 	{
