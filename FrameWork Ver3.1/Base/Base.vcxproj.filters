@@ -67,6 +67,12 @@
     <Filter Include="Source Files\ObjectClasses\Tower">
       <UniqueIdentifier>{a408d95d-bafb-4d03-9ac1-0cdacd23e65d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectClasses\Enemy">
+      <UniqueIdentifier>{a7140ea0-5ca9-4c35-8012-223ba9855414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectClasses\Enemy">
+      <UniqueIdentifier>{2cf0de6a-3c75-41b9-9009-90c3696d336b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Entity.cpp">
@@ -159,9 +165,6 @@
     <ClCompile Include="Source\OrthoCamera.cpp">
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
-      <Filter>Source Files\ObjectClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ArrowTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
@@ -175,7 +178,16 @@
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
     <ClCompile Include="Source\CursorControl.cpp">
-      <Filter>Source Files\ObjectClasses</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Minion.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WaveManager.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,9 +290,6 @@
     <ClInclude Include="Source\OrthoCamera.h">
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy.h">
-      <Filter>Header Files\ObjectClasses</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ArrowTower.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
@@ -294,7 +303,16 @@
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
     <ClInclude Include="Source\CursorControl.h">
-      <Filter>Header Files\ObjectClasses</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Minion.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WaveManager.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

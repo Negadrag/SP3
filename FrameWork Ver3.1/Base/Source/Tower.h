@@ -20,7 +20,13 @@ public:
 		T_TOWER2,
 		NUM_TOWERUPGRADE
 	};
+	enum STRATEGY
+	{
+		FIRST_ENEMY=0,
 
+		NUM_STRATEGY
+	};
+	STRATEGY strategy;
 	void SetType(GEOMETRY_TYPE meshID);
 	void SetCost(float c);
 	void SetAtkDmg(float ad);
@@ -30,12 +36,15 @@ public:
 	virtual void Update(double dt);
 	void Fire();
 	void ClearProjectile();
+	vector<Enemy*> GetEnemyInRange();
+
+	Enemy* SearchEnemy(vector<Enemy*> enemyVec);
 
 	bool isinRange;
 	vector<Projectile* > projectileList;
 	
 	Vector3 heightOffset;
-	Enemy* enemy;
+	vector<Enemy*>* enemyList;
 private:
 
 protected:

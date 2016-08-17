@@ -5,7 +5,7 @@ ArrowTower::ArrowTower()
 {
 	this->meshID = GEO_ARROWTOWER;
 	SetAtkDmg(4);
-	SetRange(10);
+	SetRange(5);
 	SetSpdRate(2.f);
 	this->p_speed = 10.f;
 	this->projectile_meshID = GEO_ARROW;

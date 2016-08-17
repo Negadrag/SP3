@@ -5,7 +5,7 @@ CannonTower::CannonTower()
 {
 	this->meshID = GEO_CANNONTOWER;
 	SetAtkDmg(10);
-	SetRange(10);
+	SetRange(3);
 	SetSpdRate(0.5f);
 	this->p_speed = 15.f;
 	this->projectile_meshID = GEO_CANNON;
