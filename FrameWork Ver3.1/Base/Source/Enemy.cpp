@@ -10,7 +10,6 @@ Enemy::Enemy()
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos.Set(0, 0, 0);
-
 }
 
 Enemy::Enemy(Vector3 pos, Node* root)
@@ -22,7 +21,8 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	i_slow = 0;
 	this->rotation.Set(90, 0, 0);
 	this->scale.Set(1, 1, 1);
-	this->pos.Set(0, 0, 0);
+	this->pos = pos;
+	this->nxtTile = root;
 }
 
 Enemy::~Enemy()
@@ -32,16 +32,16 @@ Enemy::~Enemy()
 void Enemy::MoveTo(Vector2 dest, double dt)
 {
 	float rotationSpeed = 360.f;
-	Vector2 view = dest- Vector2(pos.x, pos.y) ;
+	Vector3 view = Vector3(dest.x,dest.y,0)- Vector3(pos.x, pos.y,0) ;
 	if (view.Length() == Math::EPSILON)
 	{
 		return;
 	}
-	view.Normalized();
+	view.Normalize();
 	float rotationZToBe = Math::RadianToDegree(atan2(view.y,view.x)); // the rotation that we want it to be at;
+	
 	rotationZToBe = round(rotationZToBe);
 	
-
 	if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
 	{
 		if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
@@ -101,13 +101,15 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
-	this->pos.x += view.x * f_movSpeed *dt;
-	this->pos.y += view.y * f_movSpeed *dt;
-
+	//view = view * f_movSpeed *((float)(100 - i_slow) / 100.f) * dt;
+	view = view * f_movSpeed *dt;
+	this->pos.x += view.x ;
+	this->pos.y += view.y;
 }
 
 void Enemy::Update(double dt)
 {
+	//std::cout << "Updating" << std::endl;
 	if (nxtTile != nullptr)
 	{
 		if ((Vector3(nxtTile->coords.x, nxtTile->coords.y, 0) - Vector3(this->pos.x, this->pos.y, 0)).LengthSquared() < 0.1f*0.1f)
@@ -118,6 +120,11 @@ void Enemy::Update(double dt)
 				return;
 			}
 		}
+		if (f_movSpeed != 3.f || i_slow != 0)
+		{
+			std::cout << f_movSpeed << ", " << i_slow << std::endl;
+		}
+		
 		MoveTo(nxtTile->coords, dt);
 	}
 	else

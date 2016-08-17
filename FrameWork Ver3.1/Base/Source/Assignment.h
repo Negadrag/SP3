@@ -12,7 +12,7 @@
 #include <vector>
 #include "Terrain.h"
 #include "OrthoCamera.h"
-#include "Enemy.h"
+#include "WaveManager.h"
 #include "CursorControl.h"
 #include "ArrowTower.h"
 #include "CannonTower.h"
@@ -51,7 +51,7 @@ private:
 	float angle;
 	float fps;
 
-	Enemy testEnemy;
+	WaveManager wave;
 
 	Terrain terrain;
 

@@ -31,6 +31,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\Minion.cpp" />
     <ClCompile Include="Source\Node.cpp" />
     <ClCompile Include="Source\OrthoCamera.cpp" />
     <ClCompile Include="Source\ParticleGenerator.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Source\Tower.cpp" />
     <ClCompile Include="Source\TurntableCam.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
+    <ClCompile Include="Source\WaveManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
@@ -70,6 +72,7 @@
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
+    <ClInclude Include="Source\Minion.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\OrthoCamera.h" />
     <ClInclude Include="Source\ParticleGenerator.h" />
@@ -88,6 +91,7 @@
     <ClInclude Include="Source\TurntableCam.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
+    <ClInclude Include="Source\WaveManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>

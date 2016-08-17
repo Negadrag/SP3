@@ -57,7 +57,7 @@ bool CursorControl::SpawnTower()
 	Tower *tempTower = new ArrowTower();
 	tempTower->pos.Set(checkPositionX, checkPositionY, 0);
 	tempTower->scale.Set(1, 1, 1);
-	tempTower->enemy = nullptr;
+	tempTower->enemyList = nullptr;
 	towerList->push_back(tempTower);
 	return true;
 }

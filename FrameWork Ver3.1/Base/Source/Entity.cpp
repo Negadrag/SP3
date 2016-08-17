@@ -13,7 +13,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-
+	EntityManager::GetInstance()->RemoveEntity(this);
 }
 
 //init function to init all variables

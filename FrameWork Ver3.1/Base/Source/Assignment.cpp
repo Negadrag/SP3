@@ -24,9 +24,14 @@ void Assignment::Init()
 	testMap.LoadMap(std::fstream("Image//MapDesign.csv"));
 	//this->m_sceneID = 1;
 
-	testEnemy.nxtTile = testMap.root;
-	testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 1);
-	testEnemy.meshID = GEO_TANKY;
+	wave.SetRoot(testMap.root);
+ 	
+	wave.AddWave({ MINION , MINION}, 5, 1);
+	wave.AddWave({ MINION }, 10, 1);
+	wave.AddWave({ MINION }, 10, 5);
+	wave.AddWave({ MINION }, 10, 5);
+	wave.AddWave({ MINION }, 10, 5);
+	wave.AddWave({ MINION }, 10, 5);
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
@@ -54,13 +59,13 @@ void Assignment::Init()
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 
-	ATower.pos.Set(10, 10, 0);
+	ATower.pos.Set(5, 6, 0);
 	ATower.scale.Set(1, 1, 1);
-	ATower.enemy = &testEnemy;
+	ATower.enemyList = &wave.GetEnemyList();
 
 	CTower.pos.Set(5, 5, 0);
 	CTower.scale.Set(1, 1, 1);
-	CTower.enemy = &testEnemy;
+	CTower.enemyList = &wave.GetEnemyList();
 
 	cursor.Init(&towerList, &enemyList);
 }
@@ -83,22 +88,20 @@ void Assignment::Update(double dt)
 		SceneManager::GetInstance()->ChangeScene(2, true);
 	}
 
-
+	wave.Update(dt);
 	fps = (float)(1.f / dt);
 
 	cursor.Update(camera, testMap);
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
-	if (testEnemy.b_isActive == false)
+	/*if (testEnemy.b_isActive == false)
 	{
 		testEnemy.nxtTile = testMap.root;
 		testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 1);
 		testEnemy.rotation.z = 0;
 		testEnemy.b_isActive = true;
-	}
-
-	std::cout << fps << std::endl;
+	}*/
 }
 
 void Assignment::Render()

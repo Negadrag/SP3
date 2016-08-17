@@ -12,8 +12,9 @@ Tower::Tower()
 	p_projectileCount = 0;
 	p_maxProjectile = 0;
 	this->pos.SetZero();
-
+	enemyList = nullptr;
 	heightOffset.SetZero();
+	strategy = FIRST_ENEMY;
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
@@ -30,7 +31,8 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	p_maxProjectile = 0;
 	heightOffset.Set(0, 0, 5);
 	p_speed = 10.0f;
-	
+	enemyList = nullptr;
+	strategy = FIRST_ENEMY;
 }
 
 Tower::~Tower()
@@ -106,12 +108,11 @@ void Tower::Update(double dt)
 		Projectile* projectile = (Projectile*)(*it);
 		projectile->Update(dt);
 	}*/
-
-	
 }
 
 void Tower::Fire()
 {
+	Enemy* enemy = SearchEnemy(GetEnemyInRange());
 	if (enemy == nullptr || enemy->b_isActive == false)
 	{
 		return;
@@ -126,7 +127,7 @@ void Tower::Fire()
 		projectile->scale.Set(0.5f, 0.5f, 0.5f);
 
 	projectile->p_speed = this->p_speed;
-	projectile->enemy = this->enemy;
+	projectile->enemy = enemy;
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
 	projectileList.push_back(projectile);
 	enemy->i_health -= 1;
@@ -140,4 +141,65 @@ void Tower::ClearProjectile()
 		delete(*it);
 	}
 	projectileList.clear();
+}
+
+vector<Enemy*> Tower::GetEnemyInRange()
+{
+	vector<Enemy*> enemyVec;
+	if (enemyList->size() == 0)
+	{
+		return enemyVec;
+	}
+	for (vector<Enemy*>::iterator it = (*enemyList).begin(); it != (*enemyList).end(); ++it)
+	{
+		if ((Vector2(this->pos.x, this->pos.y) - Vector2((*it)->pos.x, (*it)->pos.y)).LengthSquared() <= this->atkRange * this->atkRange)
+		{
+			enemyVec.push_back((*it));
+		}
+	}
+	return enemyVec;
+}
+
+Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
+{
+	Enemy* enemy;
+	if (enemyList.size() == 0)
+	{
+		return nullptr;
+	}
+	if (strategy == FIRST_ENEMY)
+	{
+		Node* furthestNode = (*enemyList.begin())->nxtTile;
+		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
+		{
+			Node* checker = (*it)->nxtTile;
+			bool isAhead = true;
+			while(checker != nullptr)
+			{
+				if (checker == furthestNode)
+				{
+					isAhead = false;
+				}
+				checker = checker->next;
+			}
+			if (isAhead == true)
+			{
+				furthestNode = (*it)->nxtTile;
+			}
+		}
+		float shortestDist = FLT_MAX;
+		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
+		{
+			if ((*it)->nxtTile == furthestNode)
+			{
+				float d = (Vector2((*it)->pos.x, (*it)->pos.y) - furthestNode->coords).LengthSquared();
+				if (d < shortestDist)
+				{
+					shortestDist = d;
+					enemy = (*it);
+				}
+			}
+		}
+	}
+	return enemy;
 }
