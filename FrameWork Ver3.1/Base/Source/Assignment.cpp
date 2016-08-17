@@ -81,6 +81,10 @@ void Assignment::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	if (Application::IsKeyPressed('9'))
+	{
+		ATower.upgrade = true;
+	}
 
 	if (Application::IsKeyPressed('N'))
 	{

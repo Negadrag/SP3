@@ -9,7 +9,12 @@ public:
 	ArrowTower();
 	~ArrowTower();
 
+	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
+	virtual void Fire();
+
+	bool upgrade;
+
 
 private:
 

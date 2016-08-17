@@ -195,6 +195,12 @@
     <ClCompile Include="Source\GameplayCam.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SingleTarget.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SplashTarget.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Renderable.h">
@@ -325,6 +331,12 @@
     </ClInclude>
     <ClInclude Include="Source\GameplayCam.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SingleTarget.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SplashTarget.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

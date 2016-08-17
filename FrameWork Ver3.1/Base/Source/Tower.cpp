@@ -68,6 +68,7 @@ void Tower::SetRange(float r)
 	this->atkRange = r;
 }
 
+
 Projectile* Tower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
@@ -95,19 +96,12 @@ void Tower::Update(double dt)
 {
 
 	p_spawnTimer += (float)dt;
-	//Vector3 d = enemy->pos - this->pos;
-
-	//if (meshID == GEO_ARROWTOWER && d <= atkRange)
 	if (p_spawnTimer >= 1.f /this->atkSpeed)// p_frequency) && p_projectileCount<p_maxProjectile)
 	{
 		p_spawnTimer = 0.f;
 		Fire();
 	}
-	/*for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
-	{
-		Projectile* projectile = (Projectile*)(*it);
-		projectile->Update(dt);
-	}*/
+
 }
 
 void Tower::Fire()
@@ -132,7 +126,6 @@ void Tower::Fire()
 	projectile->i_damage = this->atkDamage;
 	projectileList.push_back(projectile);
 	//enemy->i_health -= 1;
-	
 }
 
 void Tower::ClearProjectile()
@@ -223,5 +216,30 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 
 		}
 	}
+
+	else if (strategy == FURTHER_ENEMY)
+	{
+		float furthestDist = 0;
+		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
+		{
+
+			float d = (Vector2((*it)->pos.x, (*it)->pos.y) - Vector2(this->pos.x, this->pos.y)).LengthSquared();
+			if (d > furthestDist)
+			{
+				furthestDist = d;
+				enemy = (*it);
+			}
+
+		}
+	}
+
+	//else if (strategy == LOWEST_HEALTH)
+	//{
+	//}
+	//else if (strategy == HIGHEST_HEALTH)
+	//{
+	//}
+
+
 	return enemy;
 }

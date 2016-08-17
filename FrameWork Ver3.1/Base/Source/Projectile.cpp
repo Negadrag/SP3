@@ -27,6 +27,7 @@ void Projectile::Update(double dt)
 		if (enemy->b_isActive == false)
 		{
 			this->b_isActive = false;
+			return;
 		}
 
 			d = enemy->pos - this->pos;

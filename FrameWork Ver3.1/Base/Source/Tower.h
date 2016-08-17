@@ -24,20 +24,22 @@ public:
 	{
 		FIRST_ENEMY=0,
 		NEAREST_ENEMY,
+		FURTHER_ENEMY,
 		LOWEST_HEALTH,
-		HEIGHT_HEALTH,
+		HIGHEST_HEALTH,
 
 		NUM_STRATEGY
 	};
 	STRATEGY strategy;
+	TOWERUPGRADE level;
 	void SetType(GEOMETRY_TYPE meshID);
 	void SetCost(float c);
 	void SetAtkDmg(float ad);
 	void SetSpdRate(float sr);
 	void SetRange(float r);
-	Projectile* GetProjectile();
+	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	void Fire();
+	virtual void Fire();
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
 
