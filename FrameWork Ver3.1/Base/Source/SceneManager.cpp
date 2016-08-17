@@ -78,6 +78,7 @@ void SceneManager::Update(double dt)
 		}
 		if (nxtScene->b_frozen == false)
 		{
+			EntityManager::GetInstance()->m_currentSceneID = nxtScene->m_sceneID;
 			nxtScene->Init();
 		}
 		else

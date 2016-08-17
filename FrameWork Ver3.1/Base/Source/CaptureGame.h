@@ -3,13 +3,14 @@
 
 #include "Scene.h"
 #include "Mtx44.h"
-#include "Camera3.h"
+#include "GameplayCam.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
 #include <vector>
 #include "Terrain.h"
 #include "Application.h"
+#include "GameObject.h"
 
 using std::vector;
 
@@ -25,21 +26,49 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+	bool CheckCollision(GameObject* go, GameObject* other, double dt);
+	float CheckCollision2(GameObject* go, GameObject* other);
+	void CollisionResponse(GameObject*go, GameObject*other);
+	//void RenderGO(GameObject *go);
+	void CreateScene();
+	void ClearScene();
 
+	GameObject* FetchGO(GameObject::GAMEOBJECT_TYPE type);
 
 private:
-	Camera3 camera;
+	GameplayCam camera;
 
 	float windmillRotateAngle;
 
 	Renderable grass;
 
+	//Capture Game Objects
+	GameObject* ren_ball;
+	GameObject* ren_wall;
+	GameObject* ren_pillar;
+
 	bool bLightEnabled;
 	Vector3 distance;
 	float angle;
 	float fps;
-
+	bool b_initScene;
 	Terrain terrain;
+
+protected:
+	std::vector<GameObject *> m_goList;
+	float m_speed;
+	Vector3 m_gravity;
+	float m_worldWidth;
+	float m_worldHeight;
+	GameObject *m_ghost;
+	int m_objectCount;
+	float EstimatedTime, TimeTaken;
+	bool timerStarted;
+
+	float m1, m2;
+	Vector3 u1, u2, v1, v2;
+
+
 };
 
 #endif

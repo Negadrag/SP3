@@ -189,6 +189,12 @@
     <ClCompile Include="Source\WaveManager.cpp">
       <Filter>Source Files\ObjectClasses\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameplayCam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Renderable.h">
@@ -313,6 +319,12 @@
     </ClInclude>
     <ClInclude Include="Source\WaveManager.h">
       <Filter>Header Files\ObjectClasses\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameplayCam.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
