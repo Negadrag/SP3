@@ -10,9 +10,7 @@ using std::vector;
 class Tower : public Renderable
 {
 public:
-	Tower();
-	Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset);
-	~Tower();
+	virtual ~Tower();
 
 	enum TOWERUPGRADE
 	{
@@ -50,9 +48,14 @@ public:
 	
 	Vector3 heightOffset;
 	vector<Enemy*>* enemyList;
+
+	string s_name;
 private:
 
 protected:
+	Tower();
+	Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset);
+
 	GEOMETRY_TYPE projectile_meshID;
 	
 	float p_frequency;

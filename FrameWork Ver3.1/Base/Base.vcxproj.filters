@@ -73,6 +73,12 @@
     <Filter Include="Source Files\ObjectClasses\Enemy">
       <UniqueIdentifier>{2cf0de6a-3c75-41b9-9009-90c3696d336b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectClasses\UI">
+      <UniqueIdentifier>{36bbda87-ab7c-4760-979a-ec8a687e1ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectClasses\UI">
+      <UniqueIdentifier>{98138102-6d2e-43a7-bf73-98fd83745412}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Entity.cpp">
@@ -177,9 +183,6 @@
     <ClCompile Include="Source\CannonTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CursorControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Source Files\ObjectClasses\Enemy</Filter>
     </ClCompile>
@@ -200,6 +203,15 @@
     </ClCompile>
     <ClCompile Include="Source\SplashTarget.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI.cpp">
+      <Filter>Source Files\ObjectClasses\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CursorControl.cpp">
+      <Filter>Source Files\ObjectClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUIManager.cpp">
+      <Filter>Source Files\ObjectClasses\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="Source\SplashTarget.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI.h">
+      <Filter>Header Files\ObjectClasses\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIManager.h">
+      <Filter>Header Files\ObjectClasses\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

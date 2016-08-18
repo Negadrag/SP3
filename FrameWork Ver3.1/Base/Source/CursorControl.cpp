@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "MathUtility.h"
 #include "ArrowTower.h"
+#include "CannonTower.h"
 
 CursorControl::CursorControl()
 {
@@ -27,17 +28,15 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 	float w = Application::GetWindowWidth();
 	float h = Application::GetWindowHeight();
 
-	float worldX = x / w - 0.5f;
-	float worldY = 1.f - (y / h) - 0.5f;
+	float worldX = x / w - 0.5f; // -0.5 - 0.5
+	float worldY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
-	worldY = worldY / cos(Math::DegreeToRadian(camera.rotation));
+	worldY = worldY / cos(Math::DegreeToRadian(camera.rotation)); // Slanting the camera by getting the hypotenuse
 
-	float Xunits = 0.5f/ (camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y));
+	float Xunits = 0.5f/ (camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y)); // 1 unit in world space
 	float Yunits = 0.5f / (camera.orthoSize);
 
 	Vector3 center = camera.target;
-
-	std::cout << worldY << std::endl;
 
 	worldCoords.Set(center.x + worldX/Xunits + 0.5f,center.y + worldY/Yunits + 0.5f);
 
@@ -52,7 +51,7 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 		bLButtonState = true;
 		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 		{
-			SpawnTower();
+			SpawnTower(string("Arrow"));
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 		}
 
@@ -68,7 +67,7 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 		bRButtonState = true;
 		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 		{
-			SpawnTower();
+			SpawnTower(string("Cannon"));
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 		}
 
@@ -79,12 +78,29 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 	}
 }
 
-bool CursorControl::SpawnTower()
+bool CursorControl::SpawnTower(string name)
 {
-	Tower *tempTower = new ArrowTower();
+	Tower *tempTower;
+	if (name == string("Arrow"))
+		tempTower = new ArrowTower();
+	else if (name == string("Cannon"))
+		tempTower = new CannonTower();
 	tempTower->pos.Set(checkPositionX, checkPositionY, 0);
 	tempTower->scale.Set(1, 1, 1);
-	tempTower->enemyList = this->enemyList;
+	tempTower->enemyList = enemyList;
 	towerList->push_back(tempTower);
 	return true;
+}
+
+Tower* CursorControl::FindTower(int x, int y)
+{
+	for (vector<Tower*>::iterator it = towerList->begin(); it != towerList->end(); ++it)
+	{
+		Tower* tower = *it;
+		if (tower->pos.x == x && tower->pos.y == y)
+		{
+			return tower;
+		}
+	}
+	return nullptr;
 }

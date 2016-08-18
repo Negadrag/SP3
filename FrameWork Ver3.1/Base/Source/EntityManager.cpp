@@ -30,9 +30,9 @@ void EntityManager::AddEntity(Entity* entity)
 	if (m_currentSceneID >= entityList.size())
 	{
 		list<Entity*> newList;
-		newList.push_back(entity);
+		//newList.push_back(entity);
 		this->entityList.push_back(newList);
-		return;
+		AddEntity(entity);
 	}
 	this->entityList[m_currentSceneID].push_back(entity);
 	
