@@ -20,29 +20,40 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	this->enemyList = enemyList;
 }
 
-void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
+void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 {
 	double x, y;
 	Application::GetCursorPos(&x, &y);
 	float w = Application::GetWindowWidth();
 	float h = Application::GetWindowHeight();
 
-	float worldX = x / w * 100;
-	float worldY = (h - y) / h * 100 * (camera.aspectRatio.y / camera.aspectRatio.x);
+	float worldX = x / w - 0.5f;
+	float worldY = 1.f - (y / h) - 0.5f;
 
-	float sensitivity = 60.f;
+	worldY = worldY / cos(Math::DegreeToRadian(camera.rotation));
 
-	this->checkPositionX = Math::Clamp((worldX - 15.f) / (sensitivity / (tileMap.i_columns - 1)), 0.f, (float)tileMap.i_columns - 1);
-	this->checkPositionY = Math::Clamp((worldY - 2.75f) / (sensitivity / (tileMap.i_rows - 1)), 0.f, (float)tileMap.i_rows - 1);
+	float Xunits = 0.5f/ (camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y));
+	float Yunits = 0.5f / (camera.orthoSize);
 
+	Vector3 center = camera.target;
+
+	std::cout << worldY << std::endl;
+
+	worldCoords.Set(center.x + worldX/Xunits + 0.5f,center.y + worldY/Yunits + 0.5f);
+
+	//std::cout << worldCoords << std::endl;
+
+	checkPositionX = (int)Math::Clamp(worldCoords.x,0.f,(float)tileMap.i_columns - 1.f);
+	checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
+	
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		if (tileMap.screenMap[checkPositionX][checkPositionY] == -1)
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 		{
 			SpawnTower();
-			tileMap.screenMap[checkPositionX][checkPositionY] = -2;
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 		}
 
 	}
@@ -50,19 +61,21 @@ void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
 	{
 		bLButtonState = false;
 	}
-	if (!bLButtonState && Application::IsMousePressed(1))
+
+	static bool bRButtonState = false;
+	if (!bRButtonState && Application::IsMousePressed(1))
 	{
-		bLButtonState = true;
-		if (tileMap.screenMap[checkPositionX][checkPositionY] == -1)
+		bRButtonState = true;
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 		{
 			SpawnTower();
-			tileMap.screenMap[checkPositionX][checkPositionY] = -2;
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 		}
 
 	}
-	else if (bLButtonState && !Application::IsMousePressed(1))
+	else if (bRButtonState && !Application::IsMousePressed(1))
 	{
-		bLButtonState = false;
+		bRButtonState = false;
 	}
 }
 

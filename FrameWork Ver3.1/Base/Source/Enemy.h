@@ -18,6 +18,7 @@ public:
 	void MoveTo(Vector2 dest,double dt);
 	void Update(double dt);
 	void ReceiveDamage(int damage);
+	virtual void UpdateAnim(double dt);
 private:
 
 protected:

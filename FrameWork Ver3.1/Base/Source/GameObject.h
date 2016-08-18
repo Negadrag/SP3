@@ -12,6 +12,13 @@ struct GameObject:public Renderable
 		GO_BALL,
 		GO_CUBE,
 
+		GO_RESOURCE1,	//blue
+		GO_RESOURCE2,	//red
+		GO_RESOURCE3,	//yellow
+		GO_RESOURCE4,	//green
+
+		GO_BONUSPAD,
+
 		GO_BLOCK,
 		GO_WALL,
 		GO_PILLAR,

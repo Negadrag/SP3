@@ -102,19 +102,6 @@ void SceneManager::Update(double dt)
 			(*it)->Update(dt);
 		}
 	}
-
-
-	timer += dt;
-
-	if (Application::IsKeyPressed(VK_SPACE) && timer >= stgswap_cd)
-	{
-		stgswap_cd = timer + 1;
-		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		if (m_currentSceneID == 2)
-			m_currentSceneID = 1;
-		else
-			m_currentSceneID = 2;
-	}
 }
 
 void SceneManager::Render()

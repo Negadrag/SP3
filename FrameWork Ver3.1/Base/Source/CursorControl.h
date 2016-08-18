@@ -1,9 +1,11 @@
 #ifndef CURSORCONTROL_H
 #define CURSORCONTROL_H
 
-#include "Camera.h"
+#include "OrthoCamera.h"
 #include "TileMap.h"
 #include "Tower.h"
+#include "MatrixStack.h"
+#include "RenderManager.h"
 
 class CursorControl
 {
@@ -11,8 +13,9 @@ public:
 	CursorControl();
 	~CursorControl();
 	void Init(vector<Tower*> *towerList,vector<Enemy*> *enemyList);
-	void Update(const Camera &camera, const TileMap &tileMap);
+	void Update(const OrthoCamera &camera, const TileMap &tileMap);
 	int checkPositionX, checkPositionY;
+	Vector3 worldCoords;
 	bool SpawnTower();
 
 	vector<Tower*> *towerList;

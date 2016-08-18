@@ -27,7 +27,17 @@ void CaptureGame::Init()
 	Math::InitRNG();
 
 	m_objectCount = 0;
-	
+	resource1 = 0;
+	resource2 = 0;
+	resource3 = 0;
+	resource4 = 0;
+
+	balls = 20;
+	bonuscount = 0;
+
+	isrunning = false;
+	b_allBallsdespawned = true;
+
 	m_ghost = new GameObject(GameObject::GO_BALL);
 	
 
@@ -36,7 +46,7 @@ void CaptureGame::Init()
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	b_initScene = false;
-
+	f_ballSpawnTimer = 0.f;
 	std::cout << "entered";
 
 }
@@ -52,19 +62,17 @@ void CaptureGame::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (Application::IsKeyPressed('M'))
-	{
-		SceneManager::GetInstance()->ChangeScene(1, false);
-	}
+	//if (b_initScene == false)
+	//{
+	//	
+	//	b_initScene = true;
+	//}
 	
 
 	fps = (float)(1.f / dt);
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
-
-
-
 
 
 	static bool bLButtonState = false;
@@ -93,27 +101,42 @@ void CaptureGame::Update(double dt)
 		x = m_worldWidth * (x / w);
 		y = m_worldHeight * ((h - y) / h);
 
-		GameObject * ball = FetchGO(GameObject::GO_BALL);
-		//ball->type = GameObject::GO_BALL;
-		//ball->pos.Set(0, 0, 0);// = m_ghost->pos;
-		ball->pos.Set(0, 300, 0);
-		ball->vel.Set(0, 0, 0);// *= 0.98f;// = m_ghost->pos - Vector3(x, y, 0);
-		ball->scale.Set(24, 24, 24);
-		ball->mass = 1.f;
-		m_ghost->b_isActive = false;
+		bonuscount = 0;
 
-		GameObject * ball2 = FetchGO(GameObject::GO_BALL);
-		ball2->pos.Set(-40, 300, 0);
-		ball2->vel.Set(0, 0, 0);
-		ball2->scale.Set(24, 24, 24);
-		ball2->mass = 1.f;
+		if (isrunning == false && balls >0 && b_allBallsdespawned == true)
+		{
+			isrunning = true;
+		}
+		
 
 		EstimatedTime = -1;
 		TimeTaken = 0;
 		timerStarted = true;
 
 	}
+	while (balls >= 0 && isrunning == true)
+	{
+		float ranvalx = Math::RandFloatMinMax(-400, 300);
+		float ranvaly = Math::RandFloatMinMax(750, 950);
+		GameObject * ball = FetchGO(GameObject::GO_BALL);
+		//ball->type = GameObject::GO_BALL;
+		//ball->pos.Set(0, 0, 0);// = m_ghost->pos;
+		ball->pos.Set(ranvalx, ranvaly, 0);
+		ball->vel.Set(0, 0, 0);
+		ball->scale.Set(27, 27, 27);
+		ball->mass = 1.f;
 
+		balls--;
+		if (balls <= 0)
+		{
+			isrunning = false;
+		}
+
+	}
+	if (isrunning == false && bonuscount > 0)
+	{
+		balls = bonuscount;
+	}
 
 	/*if (dt >= temp)
 	{
@@ -122,10 +145,14 @@ void CaptureGame::Update(double dt)
 		ball->scale.Set(1.5, 1.5, 1.5);
 		ball->mass = 1.f;
 	}*/
-
+	
+	b_allBallsdespawned = true;
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end();)
 	{
-		
+		if ((*it)->type == GameObject::GO_BALL && (*it)->b_isActive == true)
+		{
+			b_allBallsdespawned = false;
+		}
 		GameObject *go = (GameObject *)*it;
 		if (go->b_isActive)
 		{
@@ -133,7 +160,7 @@ void CaptureGame::Update(double dt)
 			{
 				go->vel += m_gravity;
 				go->pos += go->vel * dt * m_speed;
-				//go->vel *= 0.98;
+				go->vel *= 0.98;
 
 				float radius = go->scale.x;
 
@@ -141,10 +168,13 @@ void CaptureGame::Update(double dt)
 					(go->pos.x < radius && go->vel.x < 0))
 					go->vel.x *= -1;*/
 
-				if ((go->pos.y > 400) ||
-					(go->pos.y < -400))
+				if ((go->pos.y > 1000) ||
+					(go->pos.y < -600))
 				{
-					go->b_isActive = false;//vel.y *= -1;
+					if (go->pos.x >= -100 && go->pos.x <= 100)
+						bonuscount++;
+
+					go->b_isActive = false;
 					delete go;
 					it = m_goList.erase(it);
 					m_objectCount--;
@@ -191,7 +221,14 @@ void CaptureGame::Update(double dt)
 			}
 			++it;
 		}
+		
 	}
+
+	if (Application::IsKeyPressed('M'))
+	{
+		SceneManager::GetInstance()->ChangeScene(1, false);
+	}
+	
 }
 
 void CaptureGame::Render()
@@ -208,6 +245,28 @@ void CaptureGame::Render()
 			RenderGO(go);
 		}
 	}*/
+
+	int spacing = 13;
+	
+	RenderManager::GetInstance()->RenderTextOnScreen("No. of Balls: ", Color(1, 1, 1), 2, 0, 40);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(balls), Color(1, 1, 1), 2, spacing, 40);
+
+
+	RenderManager::GetInstance()->RenderTextOnScreen("Blue Items: ", Color(0, 0.5, 1), 2, 0, 35);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource1), Color(0, 0.5, 1), 2, spacing, 35);
+
+	RenderManager::GetInstance()->RenderTextOnScreen("Red Items: ", Color(1, 0, 0), 2, 0, 20);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource2), Color(1, 0, 0), 2, spacing, 20);
+
+	RenderManager::GetInstance()->RenderTextOnScreen("YellowItems: ", Color(1, 1, 0), 2, 0, 30);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource3), Color(1, 1, 0), 2, spacing, 30);
+
+	RenderManager::GetInstance()->RenderTextOnScreen("Green Items: ", Color(0, 0.7, 0), 2, 0, 25);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource4), Color(0, 0.7, 0), 2, spacing, 25);
+
+
+	RenderManager::GetInstance()->RenderTextOnScreen("BonusCount: ", Color(1, 1, 1), 2, 0, 45);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(bonuscount), Color(1, 1, 1), 2, spacing, 45);
 
 }
 
@@ -249,6 +308,72 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_WALL;
+		go->meshID = GEO_CUBE;
+		go->pos.Set(0, 0, 0);
+		go->scale.Set(105, 15, 15);
+		go->b_isActive = true;
+		//go->normal.Set(0, 1, 0);
+		go->rotation.Set(0, 0, 90);
+		m_goList.push_back(go);
+		m_objectCount++;
+	}
+
+	if (type == GameObject::GO_RESOURCE1)
+	{
+		go = new GameObject();
+		go->type = GameObject::GO_RESOURCE1;
+		go->meshID = GEO_BLUECUBE;
+		go->pos.Set(0, -300, 0);
+		go->scale.Set(105, 15, 15);
+		go->b_isActive = true;
+		go->normal.Set(0, 1, 0);
+		go->rotation.Set(0, 0, 90);
+		m_goList.push_back(go);
+		m_objectCount++;
+	}
+	if (type == GameObject::GO_RESOURCE2)
+	{
+		go = new GameObject();
+		go->type = GameObject::GO_RESOURCE2;
+		go->meshID = GEO_REDCUBE;
+		go->pos.Set(0, -300, 0);
+		go->scale.Set(105, 15, 15);
+		go->b_isActive = true;
+		go->normal.Set(0, 1, 0);
+		go->rotation.Set(0, 0, 90);
+		m_goList.push_back(go);
+		m_objectCount++;
+	}
+	if (type == GameObject::GO_RESOURCE3)
+	{
+		go = new GameObject();
+		go->type = GameObject::GO_RESOURCE3;
+		go->meshID = GEO_YELLOWCUBE;
+		go->pos.Set(0, -300, 0);
+		go->scale.Set(105, 15, 15);
+		go->b_isActive = true;
+		go->normal.Set(0, 1, 0);
+		go->rotation.Set(0, 0, 90);
+		m_goList.push_back(go);
+		m_objectCount++;
+	}
+	if (type == GameObject::GO_RESOURCE4)
+	{
+		go = new GameObject();
+		go->type = GameObject::GO_RESOURCE4;
+		go->meshID = GEO_GREENCUBE;
+		go->pos.Set(0, -300, 0);
+		go->scale.Set(105, 15, 15);
+		go->b_isActive = true;
+		go->normal.Set(0, 1, 0);
+		go->rotation.Set(0, 0, 90);
+		m_goList.push_back(go);
+		m_objectCount++;
+	}
+	if (type == GameObject::GO_BONUSPAD)
+	{
+		go = new GameObject();
+		go->type = GameObject::GO_BONUSPAD;
 		go->meshID = GEO_CUBE;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
@@ -293,6 +418,109 @@ bool CaptureGame::CheckCollision(GameObject* go, GameObject* other, double dt)
 		float h = other->scale.x/2;
 		float l = other->scale.y/2;
 		Vector3 NP = Vector3(-N.y, N.x);
+
+		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
+		break;
+	}
+	case GameObject::GO_RESOURCE1:
+	{
+		Vector3 w0 = other->pos;
+		Vector3 b1 = go->pos;
+		Vector3 N = other->normal;
+
+		Vector3 dir = w0 - b1;
+		if (dir.Dot(N) < 0)
+		{
+			N = -N;
+		}
+		float r = go->scale.x / 2;
+		float h = other->scale.x / 2;
+		float l = other->scale.y / 2;
+		Vector3 NP = Vector3(-N.y, N.x);
+
+		
+		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
+		break;
+	}
+	case GameObject::GO_RESOURCE2:
+	{
+		Vector3 w0 = other->pos;
+		Vector3 b1 = go->pos;
+		Vector3 N = other->normal;
+
+		Vector3 dir = w0 - b1;
+		if (dir.Dot(N) < 0)
+		{
+			N = -N;
+		}
+		float r = go->scale.x / 2;
+		float h = other->scale.x / 2;
+		float l = other->scale.y / 2;
+		Vector3 NP = Vector3(-N.y, N.x);
+
+		
+		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
+		break;
+	}
+	case GameObject::GO_RESOURCE3:
+	{
+		Vector3 w0 = other->pos;
+		Vector3 b1 = go->pos;
+		Vector3 N = other->normal;
+
+		Vector3 dir = w0 - b1;
+		if (dir.Dot(N) < 0)
+		{
+			N = -N;
+		}
+		float r = go->scale.x / 2;
+		float h = other->scale.x / 2;
+		float l = other->scale.y / 2;
+		Vector3 NP = Vector3(-N.y, N.x);
+
+		
+
+		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
+		break;
+	}
+	case GameObject::GO_RESOURCE4:
+	{
+		Vector3 w0 = other->pos;
+		Vector3 b1 = go->pos;
+		Vector3 N = other->normal;
+
+		Vector3 dir = w0 - b1;
+		if (dir.Dot(N) < 0)
+		{
+			N = -N;
+		}
+		float r = go->scale.x / 2;
+		float h = other->scale.x / 2;
+		float l = other->scale.y / 2;
+		Vector3 NP = Vector3(-N.y, N.x);
+
+		
+
+		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
+		break;
+	}
+	case GameObject::GO_BONUSPAD:
+	{
+		Vector3 w0 = other->pos;
+		Vector3 b1 = go->pos;
+		Vector3 N = other->normal;
+
+		Vector3 dir = w0 - b1;
+		if (dir.Dot(N) < 0)
+		{
+			N = -N;
+		}
+		float r = go->scale.x / 2;
+		float h = other->scale.x / 2;
+		float l = other->scale.y / 2;
+		Vector3 NP = Vector3(-N.y, N.x);
+
+
 
 		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
 		break;
@@ -393,12 +621,54 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 		break;
 	
 	case GameObject::GO_WALL:
-		u = go->vel * 0.98;
+		u = go->vel * 0.80;
 		N = other->normal;
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 		break;
 
+	case GameObject::GO_RESOURCE1:
+		u = go->vel * 1.2;
+		N = other->normal;
+		uN = u.Dot(N)*N;
+		go->vel = u - 2 * uN;
+		resource1++;
+		
+		break;
+	case GameObject::GO_RESOURCE2:
+		u = go->vel * 1.2;
+		N = other->normal;
+		uN = u.Dot(N)*N;
+		go->vel = u - 2 * uN;
+		resource2++;
+		
+		break;
+	case GameObject::GO_RESOURCE3:
+		u = go->vel * 1.2;
+		N = other->normal;
+		uN = u.Dot(N)*N;
+		go->vel = u - 2 * uN;
+		resource3++;
+		
+		break;
+	case GameObject::GO_RESOURCE4:
+		u = go->vel * 1.2;
+		N = other->normal;
+		uN = u.Dot(N)*N;
+		go->vel = u - 2 * uN;
+
+		resource4++;
+
+		break;
+	case GameObject::GO_BONUSPAD:
+		u = go->vel * 1.2;
+		N = other->normal;
+		uN = u.Dot(N)*N;
+		go->vel = u - 2 * uN;
+
+		
+
+		break;
 	case GameObject::GO_PILLAR:
 		u1 = go->vel;
 		Vector3 N = (other->pos - go->pos).Normalized();
@@ -422,7 +692,7 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 //		break;
 //
 //	case GameObject::GO_WALL:
-//		ren_wall.meshID = GEO_CUBE;
+//		ren_wall.meshID = GEO_BLUECUBE;
 //		ren_wall.pos.Set(go->pos.x, go->pos.y, go->pos.z);
 //		ren_wall.rotation.Set(0, 0, angle);
 //		ren_wall.scale.Set(go->scale.x, go->scale.y, go->scale.z);
@@ -439,62 +709,170 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 
 void CaptureGame::CreateScene()
 {
-	grass.meshID = GEO_GRASS_DARKGREEN;
+	Mtx44 rotate;
+
+	grass.meshID = GEO_DUNGEONWALL;
 	grass.pos.Set(0, 0, 0);
-	grass.scale.Set(1000, 1000, 1000);
+	grass.scale.Set(2000, 2000, 2000);
 	grass.rotation.Set(-90, 0, 0);
-	grass.rotation.Set(0, 0, 90);
+	grass.rotation.Set(0, 0, 0);
 
 
-	GameObject* ball = FetchGO(GameObject::GO_BALL);
-	ball->pos.Set(0, 1, 0);
+	//GameObject* ball = FetchGO(GameObject::GO_BALL);
+	//ball->pos.Set(0, 1, 0);
 
-	GameObject* ball2 = FetchGO(GameObject::GO_BALL);
-	ball2->pos.Set(-40, 1, 0);
+	//GameObject* ball2 = FetchGO(GameObject::GO_BALL);
+	//ball2->pos.Set(-40, 1, 0);
 
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			GameObject* wall = FetchGO(GameObject::GO_WALL);
-			wall->pos.Set(-300 + (i * 150), 200 + (j * -300), 0);
-			wall->scale.Set(30, 30, 15);
-			wall->rotation.Set(0, 0, 45);
-			Mtx44 rotate;
-			rotate.SetToRotation(-45, 0, 0, 1);
-			wall->normal = rotate* wall->normal;
+			if (i % 2 == 0)
+			{
+				GameObject* wall = FetchGO(GameObject::GO_RESOURCE3);
+				wall->pos.Set(-370 + (i * 150), 250 + (j * -300), 0);
+				wall->scale.Set(30, 30, 15);
+				wall->rotation.Set(0, 0, 55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(-55, 0, 0, 1);
+				wall->normal = rotate* wall->normal;
+				wall->b_lightEnabled = false;
 
-			GameObject* wall2 = FetchGO(GameObject::GO_WALL);
-			wall2->pos.Set(-300 + (i * 150), 200 + (j * -300), 0);
-			wall2->scale.Set(30, 30, 15);
-			wall2->rotation.Set(0, 0, -45);
-			rotate.SetToIdentity();
-			rotate.SetToRotation(45, 0, 0, 1);
-			wall2->normal = rotate* wall2->normal;
+				GameObject* wall2 = FetchGO(GameObject::GO_RESOURCE3);
+				wall2->pos.Set(-370 + (i * 150), 250 + (j * -300), 0);
+				wall2->scale.Set(30, 30, 15);
+				wall2->rotation.Set(0, 0, -55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(55, 0, 0, 1);
+				wall2->normal = rotate* wall2->normal;
+				wall2->b_lightEnabled = false;
+			}
+			else
+			{
+				GameObject* wall = FetchGO(GameObject::GO_RESOURCE1);
+				wall->pos.Set(-370 + (i * 150), 250 + (j * -300), 0);
+				wall->scale.Set(30, 30, 15);
+				wall->rotation.Set(0, 0, 55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(-55, 0, 0, 1);
+				wall->normal = rotate* wall->normal;
+				wall->b_lightEnabled = false;
+
+				GameObject* wall2 = FetchGO(GameObject::GO_RESOURCE1);
+				wall2->pos.Set(-370 + (i * 150), 250 + (j * -300), 0);
+				wall2->scale.Set(30, 30, 15);
+				wall2->rotation.Set(0, 0, -55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(55, 0, 0, 1);
+				wall2->normal = rotate* wall2->normal;
+				wall2->b_lightEnabled = false;
+			}
 		}
 	}
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 2; j++)
 		{
-			GameObject* wall = FetchGO(GameObject::GO_WALL);
-			wall->pos.Set(-230 + (i * 150), 50 + (j * -300), 0);
-			wall->scale.Set(30, 30, 15);
-			wall->rotation.Set(0, 0, 45);
-			Mtx44 rotate;
-			rotate.SetToRotation(-45, 0, 0, 1);
-			wall->normal = rotate* wall->normal;
+			if (i % 2 == 0)
+			{
+				GameObject* wall = FetchGO(GameObject::GO_RESOURCE2);
+				wall->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
+				wall->scale.Set(30, 30, 15);
+				wall->rotation.Set(0, 0, 55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(-55, 0, 0, 1);
+				wall->normal = rotate* wall->normal;
+				wall->b_lightEnabled = false;
 
-			GameObject* wall2 = FetchGO(GameObject::GO_WALL);
-			wall2->pos.Set(-230 + (i * 150), 50 + (j * -300), 0);
-			wall2->scale.Set(30, 30, 15);
-			wall2->rotation.Set(0, 0, -45);
-			rotate.SetToIdentity();
-			rotate.SetToRotation(45, 0, 0, 1);
-			wall2->normal = rotate* wall2->normal;
+				GameObject* wall2 = FetchGO(GameObject::GO_RESOURCE2);
+				wall2->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
+				wall2->scale.Set(30, 30, 15);
+				wall2->rotation.Set(0, 0, -55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(55, 0, 0, 1);
+				wall2->normal = rotate* wall2->normal;
+				wall2->b_lightEnabled = false;
+			}
+			else
+			{
+				GameObject* wall = FetchGO(GameObject::GO_RESOURCE4);
+				wall->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
+				wall->scale.Set(30, 30, 15);
+				wall->rotation.Set(0, 0, 55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(-55, 0, 0, 1);
+				wall->normal = rotate* wall->normal;
+				wall->b_lightEnabled = false;
+
+				GameObject* wall2 = FetchGO(GameObject::GO_RESOURCE4);
+				wall2->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
+				wall2->scale.Set(30, 30, 15);
+				wall2->rotation.Set(0, 0, -55);
+				rotate.SetToIdentity();
+				rotate.SetToRotation(55, 0, 0, 1);
+				wall2->normal = rotate* wall2->normal;
+				wall2->b_lightEnabled = false;
+			}
 		}
 	}
+
+	//left right bounds
+	GameObject* wall = FetchGO(GameObject::GO_WALL);
+	wall->pos.Set(500, 0, 0);
+	wall->scale.Set(50, 2000, 15);
+	wall->normal.Set(1, 0, 0);
+	wall->rotation.Set(0, 0, -180);
+
+	GameObject* wall2 = FetchGO(GameObject::GO_WALL);
+	wall2->pos.Set(-500, 0, 0);
+	wall2->scale.Set(50, 2000, 15);
+	wall2->normal.Set(1, 0, 0);
+	wall2->rotation.Set(0, 0, -180);
+
+	//bottom divider
+
+	GameObject* pad = FetchGO(GameObject::GO_WALL);
+	pad->pos.Set(0, -620, 0);
+	pad->scale.Set(200, 50, 15);
+	pad->rotation.Set(0, 0, 0);
+	
+	GameObject* divider = FetchGO(GameObject::GO_WALL);
+	divider->pos.Set(-100, -620, 0);
+	divider->scale.Set(200, 20, 15);
+	divider->rotation.Set(0, 0, -55);
+	rotate.SetToIdentity();
+	rotate.SetToRotation(55, 0, 0, 1);
+	divider->normal = rotate* divider->normal;
+	
+	GameObject* divider2 = FetchGO(GameObject::GO_WALL);
+	divider2->pos.Set(100, -620, 0);
+	divider2->scale.Set(200, 20, 15);
+	divider2->rotation.Set(0, 0, 55);
+	rotate.SetToIdentity();
+	rotate.SetToRotation(-55, 0, 0, 1);
+	divider2->normal = rotate* divider2->normal;
+			
+		
+	
+			
+
+
+
+	//wall->rotation.Set(0, 0, 45);
+	//Mtx44 rotate;
+	//rotate.SetToRotation(-45, 0, 0, 1);
+	//wall->normal = rotate* wall->normal;
+
+	/*GameObject* wall2 = FetchGO(GameObject::GO_WALL);
+	wall2->pos.Set(-230 + (i * 150), 50 + (j * -300), 0);
+	wall2->scale.Set(30, 30, 15);
+	wall2->rotation.Set(0, 0, -45);
+	rotate.SetToIdentity();
+	rotate.SetToRotation(45, 0, 0, 1);
+	wall2->normal = rotate* wall2->normal;*/
+
 
 
 	/*ren_ball = new GameObject();

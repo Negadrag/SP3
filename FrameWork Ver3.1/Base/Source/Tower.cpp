@@ -187,6 +187,10 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 			}
 		}
 		float shortestDist = FLT_MAX;
+		if (furthestNode == nullptr)
+		{
+			return nullptr;
+		}
 		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 		{
 			if ((*it)->nxtTile == furthestNode)

@@ -171,6 +171,14 @@ void RenderManager::InitMesh()
 	meshList[GEO_CONE]->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
 	meshList[GEO_CONE]->material.kSpecular.Set(0.f, 0.f, 0.f);
 
+	meshList[GEO_BLUECUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0, 1), 1.f);
+	meshList[GEO_REDCUBE] = MeshBuilder::GenerateCube("bluecube", Color(1, 0, 0), 1.f);
+	meshList[GEO_YELLOWCUBE] = MeshBuilder::GenerateCube("bluecube", Color(1, 1, 0), 1.f);
+	meshList[GEO_GREENCUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0.7, 0), 1.f);
+
+	meshList[GEO_DUNGEONWALL] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
+	meshList[GEO_DUNGEONWALL]->textureArray[0] = LoadTGA("Image//dungeonwall.tga");
+
 	meshList[GEO_CUBE] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2]->textureArray[0] = LoadTGA("Image//Face.tga");
@@ -207,6 +215,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_TANKY] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
 	meshList[GEO_TANKY]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
 	
+	meshList[GEO_PATH] = MeshBuilder::GenerateQuad("Path", Color(1, 1, 1), 1.f);
+	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//soil_texture.tga");
 
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
@@ -249,10 +259,12 @@ void RenderManager::RenderObj(Renderable* obj)
 		Renderable* parent = obj->GetParent();
 		modelStack.PushMatrix();
 		modelStack.Translate(parent->pos.x, parent->pos.y, parent->pos.z);
+
 		modelStack.Rotate(parent->rotation.z, 0, 0, 1);
 		modelStack.Rotate(parent->rotation.x, 1, 0, 0);
 		modelStack.Rotate(parent->rotation.y, 0, 1, 0);
 		
+
 		modelStack.Scale(parent->scale.x, parent->scale.y, parent->scale.z);
 	}
 	modelStack.PushMatrix();
@@ -267,7 +279,6 @@ void RenderManager::RenderObj(Renderable* obj)
 			modelStack.Rotate(obj->rotation.z, 0, 0, 1);
 			modelStack.Rotate(obj->rotation.x, 1, 0, 0);
 			modelStack.Rotate(obj->rotation.y, 0, 1, 0);
-			
 		}
 		modelStack.Scale(obj->scale.x, obj->scale.y, obj->scale.z);
 		RenderMesh(obj->meshID, obj->b_lightEnabled , obj->b_fog);
