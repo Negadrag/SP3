@@ -16,8 +16,9 @@ void OrthoCamera::Init(const Vector3& pos, const Vector3& target, const Vector3&
 	this->rotation = rotation;
 	Mtx44 rotAngle;
 	rotAngle.SetToRotation(rotation, 1, 0, 0);
-	Vector3 tempos = rotAngle * pos;
-	this->position = defaultPosition = tempos;
+	Vector3 tempos = pos - target;
+	tempos = rotAngle * tempos;
+	this->position = defaultPosition = target + tempos;
 	this->target = defaultTarget = target;
 	this->up = defaultUp = up;
 	Vector3 view = (target - position).Normalized();

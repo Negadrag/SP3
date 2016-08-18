@@ -30,14 +30,14 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 	float worldX = x / w - 0.5f;
 	float worldY = 1.f - (y / h) - 0.5f;
 
-	//worldY = worldY * cos(Math::DegreeToRadian(camera.rotation));
+	worldY = worldY / cos(Math::DegreeToRadian(camera.rotation));
 
 	float Xunits = 0.5f/ (camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y));
 	float Yunits = 0.5f / (camera.orthoSize);
 
 	Vector3 center = camera.target;
 
-	std::cout << center << std::endl;
+	std::cout << worldY << std::endl;
 
 	worldCoords.Set(center.x + worldX/Xunits + 0.5f,center.y + worldY/Yunits + 0.5f);
 
@@ -60,6 +60,22 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
+	}
+
+	static bool bRButtonState = false;
+	if (!bRButtonState && Application::IsMousePressed(1))
+	{
+		bRButtonState = true;
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
+		{
+			SpawnTower();
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+		}
+
+	}
+	else if (bRButtonState && !Application::IsMousePressed(1))
+	{
+		bRButtonState = false;
 	}
 }
 
