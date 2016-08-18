@@ -37,7 +37,7 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 
 	Vector3 center = camera.target;
 
-	std::cout << worldY << std::endl;
+	//std::cout << worldY << std::endl;
 
 	worldCoords.Set(center.x + worldX/Xunits + 0.5f,center.y + worldY/Yunits + 0.5f);
 
