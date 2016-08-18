@@ -18,7 +18,7 @@ class CaptureGame : public Scene
 {
 
 public:
-	CaptureGame(int sceneID = 0);
+	CaptureGame();
 	~CaptureGame();
 
 	virtual void Init();

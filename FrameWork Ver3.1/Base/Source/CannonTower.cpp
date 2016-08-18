@@ -48,6 +48,7 @@ void CannonTower::Fire()
 	Projectile* projectile = GetProjectile();
 	projectile->meshID = this->projectile_meshID;
 	projectile->pos = this->pos + heightOffset;
+	projectile->i_damage = this->atkDamage;
 
 	if (projectile->meshID == GEO_ARROW)
 		projectile->scale.Set(2, 2, 2);

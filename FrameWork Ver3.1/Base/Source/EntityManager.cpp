@@ -6,6 +6,9 @@ EntityManager* EntityManager::instance = nullptr;
 EntityManager::EntityManager()
 {
 	m_currentSceneID = 0;
+	m_numScene = 0;
+	list<Entity*> temp;
+	entityList.push_back(temp);
 }
 
 EntityManager::~EntityManager()
@@ -24,13 +27,20 @@ EntityManager* EntityManager::GetInstance()
 void EntityManager::AddEntity(Entity* entity)
 {
 	entity->m_sceneID = this->m_currentSceneID;
-	this->entityList.push_back(entity);
+	if (m_currentSceneID >= entityList.size())
+	{
+		list<Entity*> newList;
+		newList.push_back(entity);
+		this->entityList.push_back(newList);
+		return;
+	}
+	this->entityList[m_currentSceneID].push_back(entity);
 	
 }
 
 void EntityManager::RemoveEntity(Entity* entity)
 {
-	this->entityList.remove(entity);
+	this->entityList[entity->m_sceneID].remove(entity);
 }
 
 void EntityManager::UpdateAllEntity(double dt, int sceneID)
@@ -39,15 +49,11 @@ void EntityManager::UpdateAllEntity(double dt, int sceneID)
 	{
 		sceneID = this->m_currentSceneID;
 	}
-	for (list<Entity*>::iterator it = entityList.begin(); it != entityList.end(); ++it)
+	for (list<Entity*>::iterator it = entityList[sceneID].begin(); it != entityList[sceneID].end(); ++it)
 	{
-		if ((*it)->m_sceneID == sceneID)
-		{
 			if ((*it)->b_isActive == true)
 			{
 				(*it)->Update(dt);
 			}
-		}
-
 	}
 }

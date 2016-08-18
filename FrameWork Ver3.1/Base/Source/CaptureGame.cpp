@@ -10,7 +10,7 @@
 #include <sstream>
 #include "SceneManager.h"
 
-CaptureGame::CaptureGame(int sceneId) :Scene(sceneId)
+CaptureGame::CaptureGame() :Scene()
 {
 }
 
@@ -52,10 +52,9 @@ void CaptureGame::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (b_initScene == false)
+	if (Application::IsKeyPressed('M'))
 	{
-		
-		b_initScene = true;
+		SceneManager::GetInstance()->ChangeScene(1, false);
 	}
 	
 
@@ -124,7 +123,6 @@ void CaptureGame::Update(double dt)
 		ball->mass = 1.f;
 	}*/
 
-	std::cout << m_objectCount << std::endl;
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end();)
 	{
 		

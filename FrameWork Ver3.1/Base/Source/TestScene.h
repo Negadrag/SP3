@@ -16,7 +16,7 @@ class TestScene : public Scene
 {
 
 public:
-	TestScene(int sceneID = 0);
+	TestScene();
 	~TestScene();
 
 	virtual void Init();

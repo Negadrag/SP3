@@ -12,7 +12,7 @@ ArrowTower::ArrowTower()
 	this->p_speed = 10.f;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = NEAREST_ENEMY;
+	this->strategy = FIRST_ENEMY;
 	upgrade = false;
 }
 
@@ -57,6 +57,7 @@ void ArrowTower::Fire()
 	Projectile* projectile = GetProjectile();
 	projectile->meshID = this->projectile_meshID;
 	projectile->pos = this->pos + heightOffset;
+	projectile->i_damage = this->atkDamage;
 
 	if (projectile->meshID == GEO_ARROW)
 		projectile->scale.Set(2, 2, 2);
@@ -83,5 +84,5 @@ void ArrowTower::Update(double dt)
 		SetRange(10);
 	}
 
-	std::cout << this->atkDamage << std::endl;
+	//std::cout << this->atkDamage << std::endl;
 }

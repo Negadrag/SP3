@@ -127,7 +127,7 @@ public:
 	};
 
 	~RenderManager();
-	list<Renderable*> renderableList;
+	vector<list<Renderable*>> renderableList;
 
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];

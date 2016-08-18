@@ -23,7 +23,7 @@ class Assignment : public Scene
 {
 	
 public:
-	Assignment(int sceneID=0);
+	Assignment();
 	~Assignment();
 
 	virtual void Init();
@@ -55,8 +55,8 @@ private:
 
 	Terrain terrain;
 
-	ArrowTower ATower;
-	CannonTower CTower;
+	//ArrowTower ATower;
+	//CannonTower CTower;
 
 	vector<Tower*> towerList;
 	vector<Enemy*> enemyList;
