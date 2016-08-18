@@ -11,7 +11,7 @@ CannonTower::CannonTower()
 	this->p_speed = 5.f;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = FURTHER_ENEMY;
+	this->strategy = LOWEST_HEALTH;
 }
 
 Projectile* CannonTower::GetProjectile()
@@ -38,28 +38,6 @@ Projectile* CannonTower::GetProjectile()
 	return projectileList.back();
 }
 
-void CannonTower::Fire()
-{
-	Enemy* enemy = SearchEnemy(GetEnemyInRange());
-	if (enemy == nullptr || enemy->b_isActive == false)
-	{
-		return;
-	}
-	Projectile* projectile = GetProjectile();
-	projectile->meshID = this->projectile_meshID;
-	projectile->pos = this->pos + heightOffset;
-
-	if (projectile->meshID == GEO_ARROW)
-		projectile->scale.Set(2, 2, 2);
-	else
-		projectile->scale.Set(0.5f, 0.5f, 0.5f);
-
-	projectile->p_speed = this->p_speed;
-	projectile->enemy = enemy;
-	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
-	projectileList.push_back(projectile);
-	//enemy->i_health -= 1;
-}
 
 CannonTower::~CannonTower()
 {

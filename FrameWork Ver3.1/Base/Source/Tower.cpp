@@ -233,12 +233,35 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 		}
 	}
 
-	//else if (strategy == LOWEST_HEALTH)
-	//{
-	//}
-	//else if (strategy == HIGHEST_HEALTH)
-	//{
-	//}
+	else if (strategy == LOWEST_HEALTH)
+	{
+		int lowestHP = INT_MAX;
+		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
+		{
+			int hp = (*it)->i_health;
+			if (hp < lowestHP)
+			{
+				lowestHP = hp;
+				enemy = (*it);
+			}
+
+		}
+
+	}
+	else if (strategy == HIGHEST_HEALTH)
+	{
+		int highestHP = 0;
+		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
+		{
+			int hp = (*it)->i_health;
+			if (hp > highestHP)
+			{
+				highestHP = hp;
+				enemy = (*it);
+			}
+
+		}
+	}
 
 
 	return enemy;

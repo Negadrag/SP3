@@ -26,7 +26,7 @@ void Assignment::Init()
 
 	wave.SetRoot(testMap.root);
  	
-	wave.AddWave({ MINION , MINION}, 5, 1);
+	wave.AddWave({ MINION , MINION}, 5, 5);
 	wave.AddWave({ MINION }, 10, 1);
 	wave.AddWave({ MINION }, 10, 5);
 	wave.AddWave({ MINION }, 10, 5);
