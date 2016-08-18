@@ -7,7 +7,7 @@ Enemy::Enemy()
 	i_defence = 0;
 	i_damage = 0;
 	i_slow = 0;
-	this->rotation.Set(90, 0, 0);
+	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos.Set(0, 0, 0);
 }
@@ -19,7 +19,7 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	i_defence = 0;
 	i_damage = 0;
 	i_slow = 0;
-	this->rotation.Set(90, 0, 0);
+	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos = pos;
 	this->nxtTile = root;
@@ -122,11 +122,16 @@ void Enemy::Update(double dt)
 		}
 	
 		MoveTo(nxtTile->coords, dt);
+		UpdateAnim(dt);
 	}
 	else
 	{
 		this->b_isActive = false;
 	}
+}
+
+void Enemy::UpdateAnim(double dt)
+{
 }
 
 void Enemy::ReceiveDamage(int damage)

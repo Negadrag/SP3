@@ -5,7 +5,7 @@ ArrowTower::ArrowTower()
 :Tower()
 {
 	this->level = T_TOWER1;
-	this->meshID = GEO_ARROWTOWER;
+	this->meshID = GEO_POISONTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
 	SetSpdRate(4.f);
@@ -44,31 +44,6 @@ Projectile* ArrowTower::GetProjectile()
 	}
 	projectileList.back()->b_isActive = true;
 	return projectileList.back();
-}
-
-
-void ArrowTower::Fire()
-{
-	Enemy* enemy = SearchEnemy(GetEnemyInRange());
-	if (enemy == nullptr || enemy->b_isActive == false)
-	{
-		return;
-	}
-	Projectile* projectile = GetProjectile();
-	projectile->meshID = this->projectile_meshID;
-	projectile->pos = this->pos + heightOffset;
-	projectile->i_damage = this->atkDamage;
-
-	if (projectile->meshID == GEO_ARROW)
-		projectile->scale.Set(2, 2, 2);
-	else
-		projectile->scale.Set(0.5f, 0.5f, 0.5f);
-
-	projectile->p_speed = this->p_speed;
-	projectile->enemy = enemy;
-	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
-	projectileList.push_back(projectile);
-	//enemy->i_health -= 1;
 }
 
 void ArrowTower::Update(double dt)

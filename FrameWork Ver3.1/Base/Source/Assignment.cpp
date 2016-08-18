@@ -59,7 +59,6 @@ void Assignment::Init()
 	grass.pos.Set(testMap.i_columns / 2, testMap.i_rows / 2, 0);
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
-	grass.b_fog = true;
 
 	/*ATower.pos.Set(5, 6, 0);
 	ATower.scale.Set(1, 1, 1);

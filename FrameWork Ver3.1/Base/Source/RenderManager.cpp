@@ -215,6 +215,8 @@ void RenderManager::InitMesh()
 	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//CryptWall.tga");
+	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
+	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
@@ -246,10 +248,12 @@ void RenderManager::RenderObj(Renderable* obj)
 		Renderable* parent = obj->GetParent();
 		modelStack.PushMatrix();
 		modelStack.Translate(parent->pos.x, parent->pos.y, parent->pos.z);
+
 		modelStack.Rotate(parent->rotation.z, 0, 0, 1);
 		modelStack.Rotate(parent->rotation.x, 1, 0, 0);
 		modelStack.Rotate(parent->rotation.y, 0, 1, 0);
 		
+
 		modelStack.Scale(parent->scale.x, parent->scale.y, parent->scale.z);
 	}
 	modelStack.PushMatrix();
@@ -264,7 +268,6 @@ void RenderManager::RenderObj(Renderable* obj)
 			modelStack.Rotate(obj->rotation.z, 0, 0, 1);
 			modelStack.Rotate(obj->rotation.x, 1, 0, 0);
 			modelStack.Rotate(obj->rotation.y, 0, 1, 0);
-			
 		}
 		modelStack.Scale(obj->scale.x, obj->scale.y, obj->scale.z);
 		RenderMesh(obj->meshID, obj->b_lightEnabled , obj->b_fog);
