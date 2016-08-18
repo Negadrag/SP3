@@ -5,7 +5,7 @@ Renderable::Renderable() :Entity()
 {
 	meshID = GEO_NULL;
 	b_Render = true;
-	b_lightEnabled = false;
+	b_lightEnabled = true;
 	b_billboarded = false;
 	b_3DbillBoard = false;
 	b_shadows = false;

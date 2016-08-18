@@ -120,11 +120,7 @@ void Enemy::Update(double dt)
 				return;
 			}
 		}
-		if (f_movSpeed != 3.f || i_slow != 0)
-		{
-			std::cout << f_movSpeed << ", " << i_slow << std::endl;
-		}
-		
+	
 		MoveTo(nxtTile->coords, dt);
 	}
 	else
@@ -135,7 +131,7 @@ void Enemy::Update(double dt)
 
 void Enemy::ReceiveDamage(int damage)
 {
-	int dmg = damage * ((100 - i_defence) / 100);
+	int dmg = damage * ((100.f - (float)i_defence) / 100.f);
 	this->i_health -= dmg;
 	if (i_health <= 0)
 	{

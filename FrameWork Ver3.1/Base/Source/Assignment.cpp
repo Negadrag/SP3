@@ -11,7 +11,7 @@
 #include "SceneManager.h"
 
 
-Assignment::Assignment(int sceneID) :Scene(sceneID)
+Assignment::Assignment():Scene()
 {
 }
 
@@ -25,13 +25,14 @@ void Assignment::Init()
 	//this->m_sceneID = 1;
 
 	wave.SetRoot(testMap.root);
- 	
-	wave.AddWave({ MINION , MINION}, 5, 5);
-	wave.AddWave({ MINION }, 10, 1);
-	wave.AddWave({ MINION }, 10, 5);
-	wave.AddWave({ MINION }, 10, 5);
-	wave.AddWave({ MINION }, 10, 5);
-	wave.AddWave({ MINION }, 10, 5);
+	wave.AddWave({ MINION }, 0, 1);
+	wave.AddWave({ MINION }, 100, 4);
+	wave.AddWave({ MINION }, 100, 4);
+	wave.AddWave({ MINION }, 100, 4);
+	wave.AddWave({ MINION }, 100, 4);
+	wave.AddWave({ MINION }, 100, 4);
+	wave.AddWave({ MINION }, 100, 4);
+	wave.AddWave({ MINION }, 100, 4);
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
@@ -59,13 +60,13 @@ void Assignment::Init()
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 
-	ATower.pos.Set(5, 6, 0);
+	/*ATower.pos.Set(5, 6, 0);
 	ATower.scale.Set(1, 1, 1);
 	ATower.enemyList = wave.GetEnemyList();
 
 	CTower.pos.Set(5, 5, 0);
 	CTower.scale.Set(1, 1, 1);
-	CTower.enemyList = wave.GetEnemyList();
+	CTower.enemyList = wave.GetEnemyList();*/
 
 	cursor.Init(&towerList, wave.GetEnemyList());
 }
@@ -81,10 +82,10 @@ void Assignment::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (Application::IsKeyPressed('9'))
-	{
-		ATower.upgrade = true;
-	}
+	//if (Application::IsKeyPressed('9'))
+	//{
+	//	ATower.upgrade = true;
+	//}
 
 	if (Application::IsKeyPressed('N'))
 	{
@@ -99,13 +100,7 @@ void Assignment::Update(double dt)
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
-	/*if (testEnemy.b_isActive == false)
-	{
-		testEnemy.nxtTile = testMap.root;
-		testEnemy.pos.Set(testMap.root->coords.x, testMap.root->coords.y, 1);
-		testEnemy.rotation.z = 0;
-		testEnemy.b_isActive = true;
-	}*/
+	
 }
 
 void Assignment::Render()
@@ -124,12 +119,19 @@ void Assignment::Render()
 	{
 		for (int j = 0; j < testMap.i_columns; ++j) // x - axis
 		{
-			if (testMap.screenMap[j][i] == 0)
+			if (testMap.screenMap[j][i] == -1)
 			{
-				RenderManager::GetInstance()->RenderMesh(GEO_CUBE, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(90, 0, 0), true, false);
+				RenderManager::GetInstance()->RenderMesh(GEO_CUBE2, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
 		}
 	}
+	
+
+	//On screen text
+	std::ostringstream ss;
+	ss.precision(5);
+	ss << "FPS: " << fps;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 6);
 }
 
 void Assignment::Exit()

@@ -17,6 +17,8 @@ RenderManager* RenderManager::instance = nullptr;
 RenderManager::RenderManager()
 {
 	m_vertexArrayID = 0;
+	list<Renderable*> temp;
+	renderableList.push_back(temp);
 }
 
 RenderManager::~RenderManager()
@@ -106,9 +108,9 @@ void RenderManager::Init()
 	m_parameters[U_SHADOW_COLOR_TEXTURE2] = glGetUniformLocation(m_gPassShaderID, "colorTexture[2]");
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(304, 40, 247);
+	lights[0].position.Set(-3, -3, 3);
 	lights[0].color.Set(1, 1, 1);
-	lights[0].power = 1.0f;
+	lights[0].power = 1.5f;
 	lights[0].kC = 1.0f;
 	lights[0].kL = 0.01f;
 	lights[0].kQ = 0.001f;
@@ -131,8 +133,8 @@ void RenderManager::Init()
 
 	glUniform3fv(m_parameters[U_FOG_COLOR], 1, &fogColor.r);
 
-	glUniform1f(m_parameters[U_FOG_START], 90.f);
-	glUniform1f(m_parameters[U_FOG_END], 100.f);
+	glUniform1f(m_parameters[U_FOG_START], 0.f);
+	glUniform1f(m_parameters[U_FOG_END], 10.f);
 	glUniform1f(m_parameters[U_FOG_DENSITY], 0.003f);
 
 	glUniform1i(m_parameters[U_FOG_TYPE], 2);
@@ -170,6 +172,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_CONE]->material.kSpecular.Set(0.f, 0.f, 0.f);
 
 	meshList[GEO_CUBE] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
+	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
+	meshList[GEO_CUBE2]->textureArray[0] = LoadTGA("Image//Face.tga");
 
 	//load texture and mesh for skyplane
 	meshList[GEO_SKYPLANE] = MeshBuilder::GenerateSkyPlane("skyplane", Color(1, 1, 1), 128, 500.0f, 300.f, 5.f, 5.f);
@@ -200,15 +204,13 @@ void RenderManager::InitMesh()
 	meshList[GEO_BASIC]->textureArray[0] = LoadTGA("Image//BasicMonster.tga");
 	//meshList[GEO_SPEED] = MeshBuilder::GenerateOBJ("Speed", "OBJ/SpeedMonster.obj");
 	//meshList[GEO_SPEED]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
-	//meshList[GEO_TANKY] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
-	//meshList[GEO_TANKY]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
-	//
+	meshList[GEO_TANKY] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
+	meshList[GEO_TANKY]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
+	
 
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
 
-	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
-	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
 
 	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
@@ -297,24 +299,22 @@ void RenderManager::RenderGPass(int sceneID)
 	//These matrices should change when light position or direction changes
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
 	{
-		m_lightDepthProj.SetToOrtho(-1000, 1000, -1000, 1000, -1000, 1000);
+		float width = camera->orthoSize * camera->aspectRatio.x / camera->aspectRatio.y;
+		m_lightDepthProj.SetToOrtho(-width*2,width*2,-camera->orthoSize*2, camera->orthoSize*2, -camera->farPlane*2, camera->farPlane*2);
 	}
 	else
 	{
 		m_lightDepthProj.SetToPerspective(90, 1.f, 0.1, 20);
 	}
 	m_lightDepthView.SetToLookAt(lights[0].position.x, lights[0].position.y, lights[0].position.z, 0, 0, 0, 0, 1, 0);
-	
-	for (list<Renderable*>::iterator it = renderableList.begin(); it != renderableList.end(); ++it)
+	/*
+	for (list<Renderable*>::iterator it = renderableList[sceneID].begin(); it != renderableList[sceneID].end(); ++it)
 	{
-		if ((*it)->m_sceneID == sceneID)
+		if ((*it)->b_isActive == true && (*it)->b_Render == true && (*it)->b_shadows == true)
 		{
-			if ((*it)->b_isActive == true && (*it)->b_Render == true && (*it)->b_shadows == true)
-			{
-				RenderObj((*it));
-			}
+			RenderObj((*it));
 		}
-	}
+	}*/
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -380,22 +380,14 @@ void RenderManager::RenderMain(int sceneID)
 	
 	glUniform1i(m_parameters[U_FOG_ENABLED], 0);
 
-	for (list<Renderable*>::iterator it = renderableList.begin(); it != renderableList.end(); ++it)
+	for (list<Renderable*>::iterator it = renderableList[sceneID].begin(); it != renderableList[sceneID].end(); ++it)
 	{
-		if ((*it)->m_sceneID == sceneID)
-		{
 			if ((*it)->b_isActive == true && (*it)->b_Render == true)
 			{
 				RenderObj((*it));
 			}
-		}
 	}
 
-	modelStack.PushMatrix();
-		modelStack.Translate(lights[0].position.x, lights[0].position.y, lights[0].position.z);
-		modelStack.Scale(1, 1, 1);
-		RenderMesh(GEO_LIGHTBALL, false,false);
-	modelStack.PopMatrix();
 }
 
 void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) {
@@ -604,12 +596,18 @@ void RenderManager::Update(double dt)
 
 void RenderManager::AddRenderable(Renderable* entity)
 {
-	this->renderableList.push_back(entity);
+	if (entity->m_sceneID >= renderableList.size())
+	{
+		list<Renderable*> newList;
+		newList.push_back(entity);
+		renderableList.push_back(newList);
+	}
+	this->renderableList[entity->m_sceneID].push_back(entity);
 }
 
 void RenderManager::RemoveRenderable(Renderable* entity)
 {
-	this->renderableList.remove(entity);
+	this->renderableList[entity->m_sceneID].remove(entity);
 }
 
 void RenderManager::SetCamera(Camera* cam)
@@ -623,9 +621,9 @@ void RenderManager::UpdateBillboard(int sceneID)
 	{
 		return;
 	}
-	for (list<Renderable*>::iterator it = renderableList.begin(); it != renderableList.end(); ++it)
+	for (list<Renderable*>::iterator it = renderableList[sceneID].begin(); it != renderableList[sceneID].end(); ++it)
 	{
-		if ((*it)->m_sceneID == sceneID &&(*it)->b_Render == true)
+		if ((*it)->b_Render == true)
 		{
 			(*it)->UpdateBillboard();
 		}
@@ -640,7 +638,7 @@ void RenderManager::RenderTextOnScreen(std::string text, Color color, float size
 	//glDisable(GL_CULL_FACE);
 	Mtx44 ortho;
 	//ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
-	ortho.SetToOrtho(-80, 80, -60, 60, -10, 10);
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();

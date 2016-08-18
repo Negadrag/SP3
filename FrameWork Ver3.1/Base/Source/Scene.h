@@ -6,10 +6,10 @@
 class Scene
 {
 public:
-	Scene(int sceneID = 0)
+	Scene()
 	{
-		EntityManager::GetInstance()->m_currentSceneID = sceneID;
-		this->m_sceneID = sceneID;
+		EntityManager::GetInstance()->m_currentSceneID = ++EntityManager::GetInstance()->m_numScene;
+		this->m_sceneID = EntityManager::GetInstance()->m_numScene;
 		
 		b_frozen = false; 
 		b_changeScene = false;

@@ -2,8 +2,10 @@
 #define ENTITY_MANAGER_H
 
 #include <list>
+#include <vector>
 
 using std::list;
+using std::vector;
 class Entity;
 
 class EntityManager
@@ -16,8 +18,9 @@ public:
 	
 	void UpdateAllEntity(double dt, int sceneID = 0);
 
-	list<Entity*> entityList;
+	vector<list<Entity*>> entityList;
 	int m_currentSceneID;
+	int m_numScene;
 private:
 	static EntityManager* instance;
 

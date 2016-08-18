@@ -160,8 +160,8 @@ vector<Enemy*> Tower::GetEnemyInRange()
 
 Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 {
-	Enemy* enemy;
-	if (enemyList.size() == 0)
+	Enemy* enemy = nullptr;
+	if (enemyList.empty())
 	{
 		return nullptr;
 	}
