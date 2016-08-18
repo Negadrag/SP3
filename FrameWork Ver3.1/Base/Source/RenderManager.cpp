@@ -223,8 +223,8 @@ void RenderManager::InitMesh()
 
 
 	//Tower
-	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
-	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
+	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ICE.obj");
+	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
 	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
