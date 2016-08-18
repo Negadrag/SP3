@@ -38,69 +38,69 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 		return;
 	}
 	view.Normalize();
-	float rotationZToBe = Math::RadianToDegree(atan2(view.y,view.x)); // the rotation that we want it to be at;
-	
-	rotationZToBe = round(rotationZToBe);
-	
-	if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
-	{
-		if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
-		{
-			rotationZToBe += 360;
-		}
-		else if (rotationZToBe == -0)
-		{
-			rotationZToBe = 0;
-		}
-		
-		if (abs(rotationZToBe - rotation.z) <180)
-		{
-			if (rotationZToBe > rotation.z)
-			{
+	//float rotationZToBe = Math::RadianToDegree(atan2(view.y,view.x)); // the rotation that we want it to be at;
+	//
+	//rotationZToBe = round(rotationZToBe);
+	//
+	//if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
+	//{
+	//	if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
+	//	{
+	//		rotationZToBe += 360;
+	//	}
+	//	else if (rotationZToBe == -0)
+	//	{
+	//		rotationZToBe = 0;
+	//	}
+	//	
+	//	if (abs(rotationZToBe - rotation.z) <180)
+	//	{
+	//		if (rotationZToBe > rotation.z)
+	//		{
 
-				rotation.z += rotationSpeed * dt;
-				if (rotationZToBe < rotation.z)
-				{
-					rotation.z = rotationZToBe;
-				}
+	//			rotation.z += rotationSpeed * dt;
+	//			if (rotationZToBe < rotation.z)
+	//			{
+	//				rotation.z = rotationZToBe;
+	//			}
 
 
-			}
-			else if (rotationZToBe < rotation.z)
-			{
-				rotation.z -= rotationSpeed * dt;
-				if (rotationZToBe > rotation.z)
-				{
-					rotation.z = rotationZToBe;
-				}
-			}
-		}
-		else
-		{
-			if (rotationZToBe > rotation.z)
-			{
+	//		}
+	//		else if (rotationZToBe < rotation.z)
+	//		{
+	//			rotation.z -= rotationSpeed * dt;
+	//			if (rotationZToBe > rotation.z)
+	//			{
+	//				rotation.z = rotationZToBe;
+	//			}
+	//		}
+	//	}
+	//	else
+	//	{
+	//		if (rotationZToBe > rotation.z)
+	//		{
 
-				rotation.z -= rotationSpeed * dt;
-				if (rotation.z < 0.f) // wind around if negative numbers
-				{
-					rotation.z += 360;
-				}
-				else if (rotation.z == -0.f) // negate negative 0;
-				{
-					rotation.z = 0;
-				}
+	//			rotation.z -= rotationSpeed * dt;
+	//			if (rotation.z < 0.f) // wind around if negative numbers
+	//			{
+	//				rotation.z += 360;
+	//			}
+	//			else if (rotation.z == -0.f) // negate negative 0;
+	//			{
+	//				rotation.z = 0;
+	//			}
 
-			}
-			else if (rotationZToBe < rotation.z)
-			{
-				rotation.z += rotationSpeed * dt;
-				if (rotation.z >360.f)
-				{
-					rotation.z -= 360;
-				}
-			}
-		}
-	}
+	//		}
+	//		else if (rotationZToBe < rotation.z)
+	//		{
+	//			rotation.z += rotationSpeed * dt;
+	//			if (rotation.z >360.f)
+	//			{
+	//				rotation.z -= 360;
+	//			}
+	//		}
+	//	}
+	//}
 	//view = view * f_movSpeed *((float)(100 - i_slow) / 100.f) * dt;
 	view = view * f_movSpeed *dt;
 	this->pos.x += view.x ;

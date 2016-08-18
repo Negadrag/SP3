@@ -30,23 +30,29 @@ Minion::~Minion()
 
 void Minion::UpdateAnim(double dt)
 {
-	if (b_rotateUp == true)
+	//if (b_rotateUp == true)
+	//{
+	//	this->rotation.y += f_rotateSpeed * dt;
+	//	if (this->rotation.y >= f_clampRotate)
+	//	{
+	//		b_rotateUp = false;
+	//		this->rotation.y = f_clampRotate;
+	//	}
+	//	
+	//}
+	//else
+	//{
+	//	this->rotation.y -= f_rotateSpeed * dt;
+	//	if (this->rotation.y <= -f_clampRotate)
+	//	{
+	//		b_rotateUp = true;
+	//		this->rotation.y = -f_clampRotate;
+	//	}
+	//}
+
+	this->rotation.z += f_rotateSpeed*dt;
+	if (this->rotation.z > 360.f)
 	{
-		this->rotation.y += f_rotateSpeed * dt;
-		if (this->rotation.y >= f_clampRotate)
-		{
-			b_rotateUp = false;
-			this->rotation.y = f_clampRotate;
-		}
-		
-	}
-	else
-	{
-		this->rotation.y -= f_rotateSpeed * dt;
-		if (this->rotation.y <= -f_clampRotate)
-		{
-			b_rotateUp = true;
-			this->rotation.y = -f_clampRotate;
-		}
+		this->rotation.z -= 360.f;
 	}
 }
