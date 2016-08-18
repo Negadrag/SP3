@@ -213,13 +213,14 @@ void RenderManager::InitMesh()
 
 
 	//Tower
-	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
-	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//CryptWall.tga");
+	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
+	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
+	meshList[GEO_CANNON]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	
 }
 
