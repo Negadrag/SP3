@@ -28,9 +28,6 @@ public:
 private:
 	SceneManager();
 	static SceneManager* instance;
-
-	float timer;
-	float stgswap_cd;
 protected:
 
 };

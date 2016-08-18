@@ -68,6 +68,19 @@ protected:
 	float m1, m2;
 	Vector3 u1, u2, v1, v2;
 
+	bool isrunning;
+	bool b_allBallsdespawned;
+	float f_ballSpawnTimer;
+
+	int balls;
+
+	int resource1;
+	int resource2;
+	int resource3;
+	int resource4;
+
+	int bonuscount;
+
 
 };
 

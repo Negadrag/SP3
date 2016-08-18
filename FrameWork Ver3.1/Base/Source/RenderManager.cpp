@@ -171,6 +171,14 @@ void RenderManager::InitMesh()
 	meshList[GEO_CONE]->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
 	meshList[GEO_CONE]->material.kSpecular.Set(0.f, 0.f, 0.f);
 
+	meshList[GEO_BLUECUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0, 1), 1.f);
+	meshList[GEO_REDCUBE] = MeshBuilder::GenerateCube("bluecube", Color(1, 0, 0), 1.f);
+	meshList[GEO_YELLOWCUBE] = MeshBuilder::GenerateCube("bluecube", Color(1, 1, 0), 1.f);
+	meshList[GEO_GREENCUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0.7, 0), 1.f);
+
+	meshList[GEO_DUNGEONWALL] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
+	meshList[GEO_DUNGEONWALL]->textureArray[0] = LoadTGA("Image//dungeonwall.tga");
+
 	meshList[GEO_CUBE] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2]->textureArray[0] = LoadTGA("Image//Face.tga");
