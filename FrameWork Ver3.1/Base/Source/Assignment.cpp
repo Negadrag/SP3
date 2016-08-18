@@ -105,13 +105,7 @@ void Assignment::Update(double dt)
 
 void Assignment::Render()
 {
-	Node* currentNode = testMap.root;
-	while (currentNode != nullptr)
-	{
-		RenderManager::GetInstance()->RenderMesh(GEO_SPHERE, Vector3(currentNode->coords.x * testMap.i_tileSize, currentNode->coords.y  * testMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(0, 0, 0), false, false);
-		currentNode = currentNode->next;
 
-	}
 
 	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
 
@@ -119,9 +113,13 @@ void Assignment::Render()
 	{
 		for (int j = 0; j < testMap.i_columns; ++j) // x - axis
 		{
-			if (testMap.screenMap[j][i] == -1)
+			if (testMap.screenMap[j][i] == -2)
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_CUBE2, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(0, -90, 0), true, false);
+			}
+			else if (testMap.screenMap[j][i] == -1)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
 		}
 	}

@@ -33,6 +33,12 @@ TileMap::~TileMap()
 bool TileMap::LoadMap(std::fstream &file)
 {
 	vector<string> v_rows; // temporary vector to store rows
+
+	if (!file.is_open())
+	{
+		std::cout << "File failed to open" << std::endl;
+		return false;
+	}
 		
 	while (file.good())
 	{
@@ -82,15 +88,19 @@ bool TileMap::LoadMap(std::fstream &file)
 	return true;
 }
 
+static int numCounter = 1;
+
 void TileMap::AddNode(Node *node, int x, int y)
 {
 	if (root == nullptr)
 	{
 		root = new Node(x, y);
+		FillPath(root, numCounter);
 	}
 	else if (node->next == nullptr)
 	{
 		node->next = new Node(x, y);
+		FillPath(node, numCounter++);
 	}
 	else
 	{
@@ -98,15 +108,14 @@ void TileMap::AddNode(Node *node, int x, int y)
 	}
 }
 
-void TileMap::FindNextNode(int number, int x, int y)
+bool TileMap::FindNextNode(int number, int x, int y)
 {
 	for (int i = 0; i < i_columns; ++i) // x axis
 	{
 		if (screenMap[i][y] == number)
 		{
 			AddNode(root, i, y);
-			FindNextNode(number + 1, i, y);
-			return;
+			return FindNextNode(number + 1, i, y);
 		}
 	}
 
@@ -115,8 +124,66 @@ void TileMap::FindNextNode(int number, int x, int y)
 		if (screenMap[x][j] == number)
 		{
 			AddNode(root, x, j);
-			FindNextNode(number + 1, x, j);
-			return;
+			return FindNextNode(number + 1, x, j);
+		}
+	}
+
+	screenMap[x][y] = 2;
+	return false;
+}
+
+void TileMap::FillPath(Node *node, int nodeNumber)
+{
+	if (node != nullptr)
+	{
+		if (node->next != nullptr)
+		{
+			if (node->coords.x == node->next->coords.x)
+			{
+				if (node->coords.y < node->next->coords.y)
+				{
+					for (int i = node->coords.y; i < node->next->coords.y; ++i)
+					{
+						if (screenMap[(int)node->coords.x][i] == 0 || (screenMap[(int)node->coords.x][i] == nodeNumber && nodeNumber != 1))
+						{
+							screenMap[(int)node->coords.x][i] = -1;
+						}
+					}
+				}
+				else
+				{
+					for (int i = node->coords.y; i > node->next->coords.y; --i)
+					{
+						if (screenMap[(int)node->coords.x][i] == 0 || (screenMap[(int)node->coords.x][i] == nodeNumber && nodeNumber != 1))
+						{
+							screenMap[(int)node->coords.x][i] = -1;
+						}
+					}
+				}
+			}
+			else if (node->coords.y == node->next->coords.y)
+			{
+				if (node->coords.x < node->next->coords.x)
+				{
+					for (int i = node->coords.x; i < node->next->coords.x; ++i)
+					{
+						if (screenMap[i][(int)node->coords.y] == 0 || (screenMap[i][(int)node->coords.y] == nodeNumber && nodeNumber != 1))
+						{
+							screenMap[i][(int)node->coords.y] = -1;
+						}
+					}
+				}
+				else
+				{
+					for (int i = node->coords.x; i > node->next->coords.x; --i)
+					{
+						if (screenMap[i][(int)node->coords.y] == 0 || (screenMap[i][(int)node->coords.y] == nodeNumber && nodeNumber != 1))
+						{
+							screenMap[i][(int)node->coords.y] = -1;
+						}
+					}
+				}
+			}
 		}
 	}
 }

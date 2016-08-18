@@ -39,10 +39,10 @@ void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		if (tileMap.screenMap[checkPositionX][checkPositionY] == -1)
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 		{
 			SpawnTower();
-			tileMap.screenMap[checkPositionX][checkPositionY] = -2;
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 		}
 
 	}
@@ -53,10 +53,10 @@ void CursorControl::Update(const Camera &camera, const TileMap &tileMap)
 	if (!bLButtonState && Application::IsMousePressed(1))
 	{
 		bLButtonState = true;
-		if (tileMap.screenMap[checkPositionX][checkPositionY] == -1)
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 		{
 			SpawnTower();
-			tileMap.screenMap[checkPositionX][checkPositionY] = -2;
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 		}
 
 	}
