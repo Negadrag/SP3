@@ -1,4 +1,5 @@
 #include "OrthoCamera.h"
+#include "Mtx44.h"
 
 OrthoCamera::OrthoCamera()
 {
@@ -10,9 +11,13 @@ OrthoCamera::~OrthoCamera()
 
 }
 
-void OrthoCamera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
+void OrthoCamera::Init(const Vector3& pos, const Vector3& target, const Vector3& up, const float &rotation)
 {
-	this->position = defaultPosition = pos;
+	this->rotation = rotation;
+	Mtx44 rotAngle;
+	rotAngle.SetToRotation(rotation, 1, 0, 0);
+	Vector3 tempos = rotAngle * pos;
+	this->position = defaultPosition = tempos;
 	this->target = defaultTarget = target;
 	this->up = defaultUp = up;
 	Vector3 view = (target - position).Normalized();

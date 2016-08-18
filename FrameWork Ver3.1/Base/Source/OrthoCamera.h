@@ -14,9 +14,11 @@ public:
 	Vector3 defaultTarget;
 	Vector3 defaultUp;
 
+	float rotation;
+
 	OrthoCamera();
 	~OrthoCamera();
-	virtual void Init(const Vector3& pos, const Vector3& target, const Vector3& up);
+	virtual void Init(const Vector3& pos, const Vector3& target, const Vector3& up, const float &rotation = 0.f);
 	virtual void Update(double dt);
 	virtual void Reset();
 };
