@@ -87,24 +87,36 @@ void WaveManager::Update(double dt)
 		else if (WaveEnded(i_currentWave))
 		{
 			f_waveStartTimer += dt;
-			if (f_waveStartTimer >= 5.f)
+			if (f_waveStartTimer >= 0.5f)
+			{
+				b_waveEnded = true;
+			}
+			if (f_waveStartTimer >= 10.f)
 			{
 				f_waveStartTimer = 0.f;
-				ClearEnemyList();
 				i_currentRevolution = 0;
 				i_currentWave++;
+				b_waveEnded = false;
 				if (i_currentWave >= waveList.size())
 				{
 					b_allWaveEnded = true;
 				}
 			}
-			
+		}
+
+		else if (b_waveEnded == true)
+		{
+			ClearEnemyList();
 		}
 	}
 }
 
 void WaveManager::ClearEnemyList()
 {
+	if (enemyList.empty())
+	{
+		return;
+	}
 	for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 	{
 		delete (*it);

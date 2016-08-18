@@ -24,11 +24,11 @@ void SceneManager::Init()
 	RenderManager::GetInstance()->Init();
 	//create scenes here
 	//EntityManager::GetInstance()->m_currentSceneID = 1;
-	CreateScene(new Assignment(1));
+	CreateScene(new Assignment());
 	//EntityManager::GetInstance()->m_currentSceneID = 2;
-	CreateScene(new TestScene(2));
+	CreateScene(new TestScene());
 	//EntityManager::GetInstance()->m_currentSceneID = 3;
-	CreateScene(new CaptureGame(3));
+	CreateScene(new CaptureGame());
 
 	this->m_currentSceneID = 1;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
@@ -52,6 +52,10 @@ SceneManager* SceneManager::GetInstance()
 
 void SceneManager::Update(double dt)
 {
+	if (dt > 0.1)
+	{
+		dt = 0.1;
+	}
 	Scene* currScene;
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{

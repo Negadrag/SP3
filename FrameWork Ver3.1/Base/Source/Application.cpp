@@ -158,7 +158,7 @@ void Application::Init()
 
 
 	// Hide the cursor
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	SceneManager::GetInstance()->Init();
 }
 

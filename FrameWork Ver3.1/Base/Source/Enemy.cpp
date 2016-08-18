@@ -7,7 +7,7 @@ Enemy::Enemy()
 	i_defence = 0;
 	i_damage = 0;
 	i_slow = 0;
-	this->rotation.Set(90, 0, 0);
+	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos.Set(0, 0, 0);
 }
@@ -19,7 +19,7 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	i_defence = 0;
 	i_damage = 0;
 	i_slow = 0;
-	this->rotation.Set(90, 0, 0);
+	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos = pos;
 	this->nxtTile = root;
@@ -120,12 +120,9 @@ void Enemy::Update(double dt)
 				return;
 			}
 		}
-		if (f_movSpeed != 3.f || i_slow != 0)
-		{
-			std::cout << f_movSpeed << ", " << i_slow << std::endl;
-		}
-		
+	
 		MoveTo(nxtTile->coords, dt);
+		UpdateAnim(dt);
 	}
 	else
 	{
@@ -133,9 +130,13 @@ void Enemy::Update(double dt)
 	}
 }
 
+void Enemy::UpdateAnim(double dt)
+{
+}
+
 void Enemy::ReceiveDamage(int damage)
 {
-	int dmg = damage * ((100 - i_defence) / 100);
+	int dmg = damage * ((100.f - (float)i_defence) / 100.f);
 	this->i_health -= dmg;
 	if (i_health <= 0)
 	{

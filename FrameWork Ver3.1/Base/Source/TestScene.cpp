@@ -10,7 +10,7 @@
 #include <sstream>
 #include "SceneManager.h"
 
-TestScene::TestScene(int sceneID) :Scene(sceneID)
+TestScene::TestScene( ) :Scene()
 {
 }
 

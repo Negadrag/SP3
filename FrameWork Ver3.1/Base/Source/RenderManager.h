@@ -28,12 +28,7 @@ enum GEOMETRY_TYPE
 	GEO_CUBE,
 	GEO_RING,
 	GEO_CONE,
-	GEO_LEFT,
-	GEO_RIGHT,
-	GEO_TOP,
-	GEO_BOTTOM,
-	GEO_FRONT,
-	GEO_BACK,
+	GEO_PATH,
 	GEO_GRASS_DARKGREEN,
 	GEO_GRASS_LIGHTGREEN,
 	GEO_OBJECT,
@@ -49,6 +44,7 @@ enum GEOMETRY_TYPE
 
 	//Tower
 	GEO_ARROWTOWER,
+	GEO_POISONTOWER,
 	GEO_CANNONTOWER,
 	GEO_ARROW,
 	GEO_CANNON,
@@ -127,7 +123,7 @@ public:
 	};
 
 	~RenderManager();
-	list<Renderable*> renderableList;
+	vector<list<Renderable*>> renderableList;
 
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
