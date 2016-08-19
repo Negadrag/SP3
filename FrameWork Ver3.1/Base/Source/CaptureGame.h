@@ -54,6 +54,7 @@ private:
 	float angle;
 	float fps;
 	bool b_initScene;
+	float f_ballSpawnDebounceTimer;
 	Terrain terrain;
 	ParticleGenerator whitebang;
 	ParticleGenerator bluebang;

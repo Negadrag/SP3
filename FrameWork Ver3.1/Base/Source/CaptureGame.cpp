@@ -36,7 +36,8 @@ void CaptureGame::Init()
 	bonuscount = 0;
 
 	isrunning = false;
-	b_allBallsdespawned = true;
+	b_allBallsdespawned = false;
+	f_ballSpawnDebounceTimer = 0.f;
 
 	m_ghost = new GameObject(GameObject::GO_BALL);
 
@@ -68,9 +69,15 @@ void CaptureGame::Update(double dt)
 	//	b_initScene = true;
 	//}
 	if (Application::IsKeyPressed('U'))
+	{
 		balls = 30;
+		b_allBallsdespawned = false;
+	}
+	
 
 	fps = (float)(1.f / dt);
+
+	f_ballSpawnDebounceTimer += dt;
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
@@ -80,23 +87,41 @@ void CaptureGame::Update(double dt)
 	}
 
 	static bool bLButtonState = false;
-	if (!bLButtonState && Application::IsMousePressed(0))
+	//if (!bLButtonState && Application::IsMousePressed(0))
+	if (Application::IsMousePressed(0))
 	{
-		bLButtonState = true;
+		//bLButtonState = true;
 		std::cout << "down" << std::endl;
 		double x, y;
 		Application::GetCursorPos(&x, &y);
 		int w = Application::GetWindowWidth();
-		int h = Application::GetWindowHeight();
 
-		x = m_worldWidth * (x / w);
-		y = m_worldHeight * ((h - y) / h);
+		x = (x / (w)) - 0.5f;
+		y = 800;
 
-		m_ghost->pos.Set(x, y, 0);
+		float worldX = x * camera.orthoSize * 2 * (camera.aspectRatio.x/camera.aspectRatio.y);
+		worldX = Math::Clamp(worldX, -450.f, 450.f);
+		float worldY = y;
+		
+		if (balls > 0 && f_ballSpawnDebounceTimer >=1.f/4.f)
+		{
+			f_ballSpawnDebounceTimer = 0.f;
+			GameObject * ball = FetchGO(GameObject::GO_BALL);
+			//ball->type = GameObject::GO_BALL;
+			//ball->pos.Set(0, 0, 0);// = m_ghost->pos;
+			ball->pos.Set(worldX, worldY, 0);
+			ball->vel.Set(0, 0, 0);
+			ball->scale.Set(50, 50, 50);
+			ball->mass = 1.f;
+			balls--;
+		}
+
+
 	}
-	else if (bLButtonState && !Application::IsMousePressed(0))
+	//else if (bLButtonState && !Application::IsMousePressed(0))
+	else if(!Application::IsMousePressed(0))
 	{
-		bLButtonState = false;
+		//bLButtonState = false;
 		std::cout << "up" << std::endl;
 		double x, y;
 		Application::GetCursorPos(&x, &y);
@@ -105,12 +130,9 @@ void CaptureGame::Update(double dt)
 		x = m_worldWidth * (x / w);
 		y = m_worldHeight * ((h - y) / h);
 
-		bonuscount = 0;
+//		bonuscount = 0;
 
-		if (isrunning == false && balls >0 && b_allBallsdespawned == true)
-		{
-			isrunning = true;
-		}
+	
 
 
 		EstimatedTime = -1;
@@ -118,29 +140,17 @@ void CaptureGame::Update(double dt)
 		timerStarted = true;
 
 	}
-	while (balls >= 0 && isrunning == true)
+	/*while (balls >= 0 && isrunning == true)
 	{
 		float ranvalx = Math::RandFloatMinMax(-400, 300);
 		float ranvaly = Math::RandFloatMinMax(750, 950);
-		GameObject * ball = FetchGO(GameObject::GO_BALL);
-		//ball->type = GameObject::GO_BALL;
-		//ball->pos.Set(0, 0, 0);// = m_ghost->pos;
-		ball->pos.Set(ranvalx, ranvaly, 0);
-		ball->vel.Set(0, 0, 0);
-		ball->scale.Set(27, 27, 27);
-		ball->mass = 1.f;
+
 
 		balls--;
-		if (balls <= 0)
-		{
-			isrunning = false;
-		}
+	
 
-	}
-	if (isrunning == false && bonuscount > 0)
-	{
-		balls = bonuscount;
-	}
+	}*/
+
 
 	/*if (dt >= temp)
 	{
@@ -154,6 +164,13 @@ void CaptureGame::Update(double dt)
 	redbang.Update(dt);
 	yellowbang.Update(dt);
 	greenbang.Update(dt);
+
+	if (b_allBallsdespawned == true)
+	{
+		balls = bonuscount;
+		bonuscount = 0;
+		b_allBallsdespawned = false;
+	}
 
 	b_allBallsdespawned = true;
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end();)
@@ -246,6 +263,10 @@ void CaptureGame::Update(double dt)
 			++it;
 		}
 
+	}
+	if (balls > 0)
+	{
+		b_allBallsdespawned = false;
 	}
 
 
@@ -913,22 +934,6 @@ void CaptureGame::CreateScene()
 	pad->pos.Set(0, -620, 0);
 	pad->scale.Set(200, 50, 15);
 	pad->rotation.Set(0, 0, 0);
-
-	GameObject* divider = FetchGO(GameObject::GO_WALL);
-	divider->pos.Set(-100, -620, 0);
-	divider->scale.Set(200, 20, 15);
-	divider->rotation.Set(0, 0, -55);
-	rotate.SetToIdentity();
-	rotate.SetToRotation(55, 0, 0, 1);
-	divider->normal = rotate* divider->normal;
-
-	GameObject* divider2 = FetchGO(GameObject::GO_WALL);
-	divider2->pos.Set(100, -620, 0);
-	divider2->scale.Set(200, 20, 15);
-	divider2->rotation.Set(0, 0, 55);
-	rotate.SetToIdentity();
-	rotate.SetToRotation(-55, 0, 0, 1);
-	divider2->normal = rotate* divider2->normal;
 
 
 
