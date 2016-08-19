@@ -190,9 +190,9 @@ void RenderManager::InitMesh()
 
 	// Load the ground mesh and texture
 	meshList[GEO_GRASS_DARKGREEN] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//grass_darkgreen.tga");
-	meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_GRASS_LIGHTGREEN]->textureArray[0] = LoadTGA("Image//grass_lightgreen.tga");
+	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//Ground.tga");
+	//meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
+	//meshList[GEO_GRASS_LIGHTGREEN]->textureArray[0] = LoadTGA("Image//grass_lightgreen.tga");
 
 	//for terrain
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerain("Terrain", "Image//heightmap4.raw");
@@ -210,13 +210,15 @@ void RenderManager::InitMesh()
 	//Monster
 	meshList[GEO_BASIC] = MeshBuilder::GenerateOBJ("Basic", "OBJ/BasicMonster.obj");
 	meshList[GEO_BASIC]->textureArray[0] = LoadTGA("Image//BasicMonster.tga");
+	//meshList[GEO_BASIC] = MeshBuilder::GenerateOBJ("Basic", "OBJ/Boss.obj");
+	//meshList[GEO_BASIC]->textureArray[0] = LoadTGA("Image//Boss.tga");
 	//meshList[GEO_SPEED] = MeshBuilder::GenerateOBJ("Speed", "OBJ/SpeedMonster.obj");
 	//meshList[GEO_SPEED]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
 	meshList[GEO_TANKY] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
 	meshList[GEO_TANKY]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
 	
 	meshList[GEO_PATH] = MeshBuilder::GenerateQuad("Path", Color(1, 1, 1), 1.f);
-	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//soil_texture.tga");
+	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//Path.tga");
 
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
@@ -225,12 +227,17 @@ void RenderManager::InitMesh()
 	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ICE.obj");
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
-	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
+	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Cannontower", "OBJ//Tower-CANNON.obj");
+	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
+	meshList[GEO_SPEEDTOWER] = MeshBuilder::GenerateOBJ("Speedtower", "OBJ//Tower-SPEED.obj");
+	meshList[GEO_SPEEDTOWER]->textureArray[0] = LoadTGA("Image//Tower-SPEED.tga");
+	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Poisontower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
-	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
-	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
+	meshList[GEO_ICETOWER] = MeshBuilder::GenerateOBJ("Icetower", "OBJ//Tower-ICE.obj");
+	meshList[GEO_ICETOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
+	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Bullet.obj");
+	meshList[GEO_ARROW]->textureArray[0] = LoadTGA("Image//Bullet.tga");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
-	meshList[GEO_CANNON]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	
 }
 

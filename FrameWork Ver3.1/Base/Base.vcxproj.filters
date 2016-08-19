@@ -213,6 +213,9 @@
     <ClCompile Include="Source\SplashTarget.cpp">
       <Filter>Source Files\ObjectClasses\Tower\Splash</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SpeedTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\Single</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Renderable.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="Source\CannonTower.h">
       <Filter>Header Files\ObjectClasses\Tower\Splash</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpeedTower.h">
+      <Filter>Header Files\ObjectClasses\Tower\Single</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

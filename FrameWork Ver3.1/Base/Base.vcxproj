@@ -44,6 +44,7 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SingleTarget.cpp" />
+    <ClCompile Include="Source\SpeedTower.cpp" />
     <ClCompile Include="Source\SplashTarget.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Terrain.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\SingleTarget.h" />
+    <ClInclude Include="Source\SpeedTower.h" />
     <ClInclude Include="Source\SplashTarget.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Terrain.h" />
