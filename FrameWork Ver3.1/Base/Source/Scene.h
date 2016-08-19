@@ -2,19 +2,13 @@
 #define SCENE_H
 
 #include "EntityManager.h"
+#include "PlayerInfo.h"
 
 class Scene
 {
 public:
-	Scene()
-	{
-		EntityManager::GetInstance()->m_currentSceneID = ++EntityManager::GetInstance()->m_numScene;
-		this->m_sceneID = EntityManager::GetInstance()->m_numScene;
-		
-		b_frozen = false; 
-		b_changeScene = false;
-	}
-	~Scene() {}
+	Scene();
+	~Scene();
 
 	int m_sceneID;
 	bool b_frozen;
@@ -24,6 +18,7 @@ public:
 	virtual void Render() = 0;
 	virtual void Exit() = 0;
 
+	static PlayerInfo player;
 private:
 
 protected:

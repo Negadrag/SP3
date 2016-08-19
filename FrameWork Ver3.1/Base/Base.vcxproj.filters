@@ -204,14 +204,14 @@
     <ClCompile Include="Source\SplashTarget.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GUI.cpp">
-      <Filter>Source Files\ObjectClasses\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CursorControl.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GUIManager.cpp">
-      <Filter>Source Files\ObjectClasses\UI</Filter>
+    <ClCompile Include="Source\PlayerInfo.cpp">
+      <Filter>Source Files\ObjectClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,11 +350,8 @@
     <ClInclude Include="Source\SplashTarget.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI.h">
-      <Filter>Header Files\ObjectClasses\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GUIManager.h">
-      <Filter>Header Files\ObjectClasses\UI</Filter>
+    <ClInclude Include="Source\PlayerInfo.h">
+      <Filter>Header Files\ObjectClasses</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

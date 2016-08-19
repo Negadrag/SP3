@@ -23,6 +23,7 @@ WaveManager::WaveManager(Node* root)
 
 	this->root = root;
 	this->b_allWaveEnded = false;
+	this->player = nullptr;
 }
 
 WaveManager::~WaveManager()
@@ -146,8 +147,10 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 	}
 	if (enemy != nullptr)
 	{
+		enemy->player = this->player;
 		enemyList.push_back(enemy);
 	}
+
 	return enemy;
 }
 

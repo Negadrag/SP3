@@ -3,6 +3,7 @@
 
 #include "Renderable.h"
 #include "Node.h"
+#include "PlayerInfo.h"
 
 class Enemy:public Renderable
 {
@@ -13,6 +14,9 @@ public:
 	Node* nxtTile;
 	float f_movSpeed;
 	int i_health;
+	PlayerInfo* player;
+
+	int i_currency;
 
 	//to move the enemy to a specific point handles rotation based on vel as well. Rotation speed set within the function
 	void MoveTo(Vector2 dest,double dt);

@@ -41,6 +41,7 @@ private:
 	float windmillRotateAngle;
 
 	Renderable grass;
+	Renderable forValor;
 
 	//Capture Game Objects
 	GameObject* ren_ball;
