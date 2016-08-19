@@ -48,6 +48,7 @@ void Assignment::Init()
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	camera.b_ortho = true;
 	camera.orthoSize = (testMap.i_rows / 2) + 1;
+	camera.defaultOrtho = camera.orthoSize;
 	camera.aspectRatio.Set(4, 3);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
@@ -84,7 +85,7 @@ void Assignment::Update(double dt)
 	wave.Update(dt);
 	fps = (float)(1.f / dt);
 
-	cursor.Update(camera, testMap);
+	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
@@ -93,8 +94,6 @@ void Assignment::Update(double dt)
 
 void Assignment::Render()
 {
-
-
 	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
@@ -118,9 +117,6 @@ void Assignment::Render()
 	{
 		RenderManager::GetInstance()->RenderTextOnScreen(tower->s_name, Color(1, 1, 1), 3, 40 - tower->s_name.size()/2.f, 55);
 	}
-
-
-	
 
 	//On screen text
 	std::ostringstream ss;

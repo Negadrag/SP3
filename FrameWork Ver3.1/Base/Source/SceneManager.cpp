@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "RenderManager.h"
 #include "EntityManager.h"
+#include "GUIManager.h"
 #include "Assignment.h"
 #include "TestScene.h"
 #include "CaptureGame.h"
@@ -32,6 +33,7 @@ void SceneManager::Init()
 
 	this->m_currentSceneID = 1;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
+	GUIManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{
 		if ((*it)->m_sceneID == m_currentSceneID)
@@ -94,6 +96,7 @@ void SceneManager::Update(double dt)
 	EntityManager::GetInstance()->UpdateAllEntity(dt, m_currentSceneID);
 	RenderManager::GetInstance()->Update(dt);
 	RenderManager::GetInstance()->UpdateBillboard(m_currentSceneID);
+	GUIManager::GetInstance()->m_currentSceneID = m_currentSceneID;
 
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{
@@ -102,12 +105,14 @@ void SceneManager::Update(double dt)
 			(*it)->Update(dt);
 		}
 	}
+
 }
 
 void SceneManager::Render()
 {
 	RenderManager::GetInstance()->RenderGPass(m_currentSceneID);
 	RenderManager::GetInstance()->RenderMain(m_currentSceneID);
+	
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{
 		if ((*it)->m_sceneID == m_currentSceneID)
@@ -115,6 +120,8 @@ void SceneManager::Render()
 			(*it)->Render();
 		}
 	}
+
+	GUIManager::GetInstance()->RenderAllGUI();
 }
 
 bool SceneManager::SceneExist(int sceneID)
@@ -166,6 +173,7 @@ void SceneManager::Exit()
 	}
 	delete EntityManager::GetInstance();
 	delete RenderManager::GetInstance();
+	delete GUIManager::GetInstance();
 }
 
 bool SceneManager::ChangeScene(int sceneID,bool freezeScene)

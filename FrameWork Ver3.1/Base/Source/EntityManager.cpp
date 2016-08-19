@@ -33,6 +33,7 @@ void EntityManager::AddEntity(Entity* entity)
 		//newList.push_back(entity);
 		this->entityList.push_back(newList);
 		AddEntity(entity);
+		return;
 	}
 	this->entityList[m_currentSceneID].push_back(entity);
 	

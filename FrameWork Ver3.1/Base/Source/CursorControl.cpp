@@ -8,6 +8,11 @@ CursorControl::CursorControl()
 {
 	checkPositionX = 0;
 	checkPositionY = 0;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		spawnTower[i] = nullptr;
+	}
 }
 
 CursorControl::~CursorControl()
@@ -21,7 +26,7 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	this->enemyList = enemyList;
 }
 
-void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
+void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt)
 {
 	double x, y;
 	Application::GetCursorPos(&x, &y);
@@ -40,37 +45,57 @@ void CursorControl::Update(const OrthoCamera &camera, const TileMap &tileMap)
 
 	worldCoords.Set(center.x + worldX/Xunits + 0.5f,center.y + worldY/Yunits + 0.5f);
 
-	//std::cout << worldCoords << std::endl;
-
-	checkPositionX = (int)Math::Clamp(worldCoords.x,0.f,(float)tileMap.i_columns - 1.f);
-	checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
-	
 	static bool bLButtonState = false;
-	if (!bLButtonState && Application::IsMousePressed(0))
+
+	if (!bLButtonState)
+	{
+		checkPositionX = (int)Math::Clamp(worldCoords.x, 0.f, (float)tileMap.i_columns - 1.f);
+		checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
+
+		camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 3.f, camera.defaultOrtho);
+
+		EdgePanning(dt, camera, worldX, worldY);
+	}
+	
+	
+	if (!bLButtonState && Application::IsMousePressed(0) && tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 	{
 		bLButtonState = true;
-		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
-		{
-			SpawnTower(string("Arrow"));
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-		}
-
+		TowerButtons(worldX, worldY);
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
+
+		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+
+		if (button != nullptr)
+		{
+			if (button->functionID == 0)
+			{
+				SpawnTower(string("Arrow"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+			else if (button->functionID == 1)
+			{
+				SpawnTower(string("Cannon"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+		}
+
+		for (int i = 0; i < 4; ++i)
+		{
+			if (spawnTower[i] != nullptr)
+			{
+				delete spawnTower[i];
+			}
+		}
 	}
 
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
 	{
 		bRButtonState = true;
-		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
-		{
-			SpawnTower(string("Cannon"));
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-		}
-
 	}
 	else if (bRButtonState && !Application::IsMousePressed(1))
 	{
@@ -103,4 +128,83 @@ Tower* CursorControl::FindTower(int x, int y)
 		}
 	}
 	return nullptr;
+}
+
+void CursorControl::TowerButtons(float worldX,float worldY)
+{
+	spawnTower[0] = new GUI("Arrow Tower");
+	spawnTower[0]->meshID = GEO_ARROWTOWER;
+	spawnTower[0]->scale.Set(3, 3, 3);
+	spawnTower[0]->rotation.Set(-90, 0, 0);
+	spawnTower[0]->SetTextSize(2);
+	spawnTower[0]->meshOffset.Set(5, 3, 0);
+	spawnTower[0]->position.Set((worldX + 0.5f) * 80 - 20.f, (worldY + 0.5f) * 60 - 15.f);
+	spawnTower[0]->buttonSize.Set(17, 17);
+	spawnTower[0]->functionID = 0;
+
+	spawnTower[1] = new GUI("Mortar Tower");
+	spawnTower[1]->meshID = GEO_CANNONTOWER;
+	spawnTower[1]->scale.Set(3, 3, 3);
+	spawnTower[1]->rotation.Set(-90, 0, 0);
+	spawnTower[1]->SetTextSize(2);
+	spawnTower[1]->meshOffset.Set(5, 3, 0);
+	spawnTower[1]->position.Set((worldX + 0.5f) * 80 + 5.f, (worldY + 0.5f) * 60 - 15.f);
+	spawnTower[1]->buttonSize.Set(17, 17);
+	spawnTower[1]->functionID = 1;
+
+	spawnTower[2] = new GUI("Some other Tower");
+	spawnTower[2]->meshID = GEO_ARROWTOWER;
+	spawnTower[2]->scale.Set(3, 3, 3);
+	spawnTower[2]->rotation.Set(-90, 0, 0);
+	spawnTower[2]->SetTextSize(2);
+	spawnTower[2]->meshOffset.Set(5, 3, 0);
+	spawnTower[2]->position.Set((worldX + 0.5f) * 80 + 5.f, (worldY + 0.5f) * 60 + 5.f);
+	spawnTower[2]->buttonSize.Set(17, 17);
+	spawnTower[2]->functionID = 2;
+
+	spawnTower[3] = new GUI("Another Tower");
+	spawnTower[3]->meshID = GEO_ARROWTOWER;
+	spawnTower[3]->scale.Set(3, 3, 3);
+	spawnTower[3]->rotation.Set(-90, 0, 0);
+	spawnTower[3]->SetTextSize(2);
+	spawnTower[3]->meshOffset.Set(5, 3, 0);
+	spawnTower[3]->position.Set((worldX + 0.5f) * 80 - 20.f, (worldY + 0.5f) * 60 + 5.f);
+	spawnTower[3]->buttonSize.Set(17, 17);
+	spawnTower[3]->functionID = 3;
+}
+
+void CursorControl::EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY)
+{
+	float speed = 60;
+
+	if (worldX > 0.4)
+	{
+		float offset = Math::Clamp(camera.target.x + (worldX - 0.4f) * speed * (float)dt, camera.defaultTarget.x - camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y), camera.defaultTarget.x + camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y));
+		offset = offset - camera.target.x;
+		camera.target.x += offset;
+		camera.position.x += offset;
+
+	}
+	else if (worldX < -0.4)
+	{
+		float offset = Math::Clamp(camera.target.x + (worldX + 0.4f) * speed * (float)dt, camera.defaultTarget.x - camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y), camera.defaultTarget.x + camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y));
+		offset = offset - camera.target.x;
+		camera.target.x += offset;
+		camera.position.x += offset;
+	}
+
+	if (worldY > 0.4)
+	{
+		float offset = Math::Clamp(camera.target.y + (worldY - 0.4f) * speed * (float)dt, camera.defaultTarget.y - camera.defaultOrtho, camera.defaultTarget.y + camera.defaultOrtho);
+		offset = offset - camera.target.y;
+		camera.position.y += offset;
+		camera.target.y += offset;
+	}
+	else if (worldY < -0.4)
+	{
+		float offset = Math::Clamp(camera.target.y + (worldY + 0.4f) * speed * (float)dt, camera.defaultTarget.y - camera.defaultOrtho, camera.defaultTarget.y + camera.defaultOrtho);
+		offset = offset - camera.target.y;
+		camera.position.y += offset;
+		camera.target.y += offset;
+	}
 }

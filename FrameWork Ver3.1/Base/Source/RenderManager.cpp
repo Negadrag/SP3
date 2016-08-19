@@ -25,6 +25,11 @@ RenderManager::~RenderManager()
 {
 	glDeleteProgram(m_programID);
 	glDeleteProgram(m_gPassShaderID);
+
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
+	{
+		delete meshList[i];
+	}
 }
 
 void RenderManager::Init()
@@ -757,7 +762,7 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 {
 	Mesh* mesh = meshList[geo];
 	Mtx44 ortho;
-	ortho.SetToOrtho(0, 80, 0, 60, -50, 50);
+	ortho.SetToOrtho(0, 80, 0, 60, -100, 100);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
