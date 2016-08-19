@@ -73,29 +73,32 @@
     <Filter Include="Source Files\ObjectClasses\Enemy">
       <UniqueIdentifier>{2cf0de6a-3c75-41b9-9009-90c3696d336b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ObjectClasses\UI">
+    <Filter Include="Source Files\System\UI">
+      <UniqueIdentifier>{98138102-6d2e-43a7-bf73-98fd83745412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\UI">
       <UniqueIdentifier>{36bbda87-ab7c-4760-979a-ec8a687e1ab7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ObjectClasses\UI">
-      <UniqueIdentifier>{98138102-6d2e-43a7-bf73-98fd83745412}</UniqueIdentifier>
+    <Filter Include="Source Files\System\Entity">
+      <UniqueIdentifier>{86b902de-2abe-419e-82d0-b632a99c528c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Render">
+      <UniqueIdentifier>{d58a53ff-10fb-4c07-a15f-ff0f0f071c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Scene">
+      <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\Scene">
+      <UniqueIdentifier>{f5792713-dc23-4f85-89ad-443f39b8b351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\Render">
+      <UniqueIdentifier>{f7265e76-ceb1-402c-a544-562fc9b4acc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\Entity">
+      <UniqueIdentifier>{175bfdb5-542c-4854-a282-00444e740b8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Entity.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EntityManager.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Renderable.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\RenderManager.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Application.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -204,35 +207,38 @@
     <ClCompile Include="Source\SplashTarget.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GUI.cpp">
-      <Filter>Source Files\ObjectClasses\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CursorControl.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PlayerInfo.cpp">
+      <Filter>Source Files\ObjectClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI.cpp">
+      <Filter>Source Files\System\UI</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GUIManager.cpp">
-      <Filter>Source Files\ObjectClasses\UI</Filter>
+      <Filter>Source Files\System\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Source Files\System\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity.cpp">
+      <Filter>Source Files\System\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Renderable.cpp">
+      <Filter>Source Files\System\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderManager.cpp">
+      <Filter>Source Files\System\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source Files\System\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source Files\System\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Renderable.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\RenderManager.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entity.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EntityManager.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Application.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
@@ -350,11 +356,32 @@
     <ClInclude Include="Source\SplashTarget.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PlayerInfo.h">
+      <Filter>Header Files\ObjectClasses</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GUI.h">
-      <Filter>Header Files\ObjectClasses\UI</Filter>
+      <Filter>Header Files\System\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GUIManager.h">
-      <Filter>Header Files\ObjectClasses\UI</Filter>
+      <Filter>Header Files\System\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Header Files\System\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Header Files\System\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderManager.h">
+      <Filter>Header Files\System\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Renderable.h">
+      <Filter>Header Files\System\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Header Files\System\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Header Files\System\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

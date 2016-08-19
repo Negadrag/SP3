@@ -39,7 +39,7 @@ void CaptureGame::Init()
 	b_allBallsdespawned = true;
 
 	m_ghost = new GameObject(GameObject::GO_BALL);
-	
+
 
 	CreateScene();
 	camera.Init(Vector3(0, 0, 1500), Vector3(0, 0, 0), Vector3(0, 1, 0));
@@ -67,13 +67,17 @@ void CaptureGame::Update(double dt)
 	//	
 	//	b_initScene = true;
 	//}
-	
+	if (Application::IsKeyPressed('U'))
+		balls = 30;
 
 	fps = (float)(1.f / dt);
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
-
+	if (Application::IsKeyPressed('B'))
+	{
+		std::cout << "hi" << std::endl;
+	}
 
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
@@ -107,7 +111,7 @@ void CaptureGame::Update(double dt)
 		{
 			isrunning = true;
 		}
-		
+
 
 		EstimatedTime = -1;
 		TimeTaken = 0;
@@ -140,12 +144,17 @@ void CaptureGame::Update(double dt)
 
 	/*if (dt >= temp)
 	{
-		GameObject * ball = FetchGO(GameObject::GO_BALL);
-		ball->vel.Set(0, 0, 0);
-		ball->scale.Set(1.5, 1.5, 1.5);
-		ball->mass = 1.f;
+	GameObject * ball = FetchGO(GameObject::GO_BALL);
+	ball->vel.Set(0, 0, 0);
+	ball->scale.Set(1.5, 1.5, 1.5);
+	ball->mass = 1.f;
 	}*/
-	
+	whitebang.Update(dt);
+	bluebang.Update(dt);
+	redbang.Update(dt);
+	yellowbang.Update(dt);
+	greenbang.Update(dt);
+
 	b_allBallsdespawned = true;
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end();)
 	{
@@ -165,14 +174,29 @@ void CaptureGame::Update(double dt)
 				float radius = go->scale.x;
 
 				/*if ((go->pos.x > m_worldWidth - radius && go->vel.x > 0) ||
-					(go->pos.x < radius && go->vel.x < 0))
-					go->vel.x *= -1;*/
+				(go->pos.x < radius && go->vel.x < 0))
+				go->vel.x *= -1;*/
 
 				if ((go->pos.y > 1000) ||
 					(go->pos.y < -600))
 				{
 					if (go->pos.x >= -100 && go->pos.x <= 100)
+					{
 						bonuscount++;
+
+						whitebang.SetType(GEO_PARTICLE_WHITE);
+						//whitebang.pos.Set(go->pos.x, go->pos.y, go->pos.z);
+						whitebang.SetFrequency(1);
+						whitebang.SetCap(1000);
+						whitebang.i_spawnAmount = 30;
+						whitebang.f_lifeTime = 15.f;
+						whitebang.minVel.Set(-10, 5, 0);
+						whitebang.maxVel.Set(10, 100, 0);
+						whitebang.scale.Set(10, 10, 10);
+						whitebang.f_maxDist = 100.f;
+						whitebang.isActive = false;
+						whitebang.SpawnParticle(Vector3(go->pos.x, go->pos.y, 10));
+					}
 
 					go->b_isActive = false;
 					delete go;
@@ -221,33 +245,34 @@ void CaptureGame::Update(double dt)
 			}
 			++it;
 		}
-		
+
 	}
+
 
 	if (Application::IsKeyPressed('M'))
 	{
 		SceneManager::GetInstance()->ChangeScene(1, false);
 	}
-	
+
 }
 
 void CaptureGame::Render()
 {
-	
+
 	//if (m_ghost->b_isActive)
-		//RenderGO(m_ghost);
+	//RenderGO(m_ghost);
 
 	/*for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{
-		GameObject *go = (GameObject *)*it;
-		if (go->b_isActive)
-		{
-			RenderGO(go);
-		}
+	GameObject *go = (GameObject *)*it;
+	if (go->b_isActive)
+	{
+	RenderGO(go);
+	}
 	}*/
 
 	int spacing = 13;
-	
+
 	RenderManager::GetInstance()->RenderTextOnScreen("No. of Balls: ", Color(1, 1, 1), 2, 0, 40);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(balls), Color(1, 1, 1), 2, spacing, 40);
 
@@ -264,6 +289,9 @@ void CaptureGame::Render()
 	RenderManager::GetInstance()->RenderTextOnScreen("Green Items: ", Color(0, 0.7, 0), 2, 0, 25);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource4), Color(0, 0.7, 0), 2, spacing, 25);
 
+	RenderManager::GetInstance()->RenderTextOnScreen("FPS: ", Color(1, 1, 1), 2, 0, 15);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(fps), Color(1, 1, 1), 2, spacing, 15);
+
 
 	RenderManager::GetInstance()->RenderTextOnScreen("BonusCount: ", Color(1, 1, 1), 2, 0, 45);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(bonuscount), Color(1, 1, 1), 2, spacing, 45);
@@ -274,17 +302,17 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 {
 	/*for (std::vector<GameObject*>::iterator iter = m_goList.begin(); iter != m_goList.end(); ++iter)
 	{
-		GameObject *go = *iter;
-		if (go->b_isActive == false)
-		{
-			go->b_isActive = true;
-			++m_objectCount;
-			return go;
-		}
+	GameObject *go = *iter;
+	if (go->b_isActive == false)
+	{
+	go->b_isActive = true;
+	++m_objectCount;
+	return go;
+	}
 	}
 	for (unsigned int i = 0; i < 100; ++i)
 	{
-		m_goList.push_back(new GameObject(GameObject::GO_BALL));
+	m_goList.push_back(new GameObject(GameObject::GO_BALL));
 	}
 	GameObject *go = *(m_goList.end() - 1);
 	go->b_isActive = true;
@@ -302,7 +330,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->b_isActive = true;
 		m_goList.push_back(go);
 		m_objectCount++;
-		
+
 	}
 	if (type == GameObject::GO_WALL)
 	{
@@ -406,7 +434,7 @@ bool CaptureGame::CheckCollision(GameObject* go, GameObject* other, double dt)
 	case GameObject::GO_WALL:
 	{
 		Vector3 w0 = other->pos;
-		Vector3 b1 = go->pos ;
+		Vector3 b1 = go->pos;
 		Vector3 N = other->normal;
 
 		Vector3 dir = w0 - b1;
@@ -414,9 +442,9 @@ bool CaptureGame::CheckCollision(GameObject* go, GameObject* other, double dt)
 		{
 			N = -N;
 		}
-		float r = go->scale.x/2;
-		float h = other->scale.x/2;
-		float l = other->scale.y/2;
+		float r = go->scale.x / 2;
+		float h = other->scale.x / 2;
+		float l = other->scale.y / 2;
 		Vector3 NP = Vector3(-N.y, N.x);
 
 		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
@@ -438,7 +466,7 @@ bool CaptureGame::CheckCollision(GameObject* go, GameObject* other, double dt)
 		float l = other->scale.y / 2;
 		Vector3 NP = Vector3(-N.y, N.x);
 
-		
+
 		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
 		break;
 	}
@@ -458,7 +486,7 @@ bool CaptureGame::CheckCollision(GameObject* go, GameObject* other, double dt)
 		float l = other->scale.y / 2;
 		Vector3 NP = Vector3(-N.y, N.x);
 
-		
+
 		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
 		break;
 	}
@@ -478,7 +506,7 @@ bool CaptureGame::CheckCollision(GameObject* go, GameObject* other, double dt)
 		float l = other->scale.y / 2;
 		Vector3 NP = Vector3(-N.y, N.x);
 
-		
+
 
 		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
 		break;
@@ -499,7 +527,7 @@ bool CaptureGame::CheckCollision(GameObject* go, GameObject* other, double dt)
 		float l = other->scale.y / 2;
 		Vector3 NP = Vector3(-N.y, N.x);
 
-		
+
 
 		return abs((w0 - b1).Dot(N)) < r + h * 0.5f && abs((w0 - b1).Dot(NP)) < r + l *0.5f && go->vel.Dot(N) > 0;
 		break;
@@ -593,7 +621,7 @@ float CaptureGame::CheckCollision2(GameObject* go, GameObject* other)
 
 		return th;
 	}
-	
+
 	}
 }
 
@@ -619,7 +647,7 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 		v1 = go->vel;
 		v2 = other->vel;
 		break;
-	
+
 	case GameObject::GO_WALL:
 		u = go->vel * 0.80;
 		N = other->normal;
@@ -633,7 +661,19 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 		resource1++;
-		
+
+		bluebang.SetType(GEO_PARTICLE_BLUE);
+		bluebang.SetFrequency(1);
+		bluebang.SetCap(1000);
+		bluebang.i_spawnAmount = 30;
+		bluebang.f_lifeTime = 5.f;
+		bluebang.minVel.Set(-900, -900, 0);
+		bluebang.maxVel.Set(900, 900, 0);
+		bluebang.scale.Set(3, 3, 3);
+		bluebang.f_maxDist = 100.f;
+		bluebang.isActive = false;
+		bluebang.SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
+
 		break;
 	case GameObject::GO_RESOURCE2:
 		u = go->vel * 1.2;
@@ -641,7 +681,19 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 		resource2++;
-		
+
+		redbang.SetType(GEO_PARTICLE_RED);
+		redbang.SetFrequency(1);
+		redbang.SetCap(1000);
+		redbang.i_spawnAmount = 30;
+		redbang.f_lifeTime = 5.f;
+		redbang.minVel.Set(-900, -900, 0);
+		redbang.maxVel.Set(900, 900, 0);
+		redbang.scale.Set(3, 3, 3);
+		redbang.f_maxDist = 100.f;
+		redbang.isActive = false;
+		redbang.SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
+
 		break;
 	case GameObject::GO_RESOURCE3:
 		u = go->vel * 1.2;
@@ -649,7 +701,19 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 		resource3++;
-		
+
+		yellowbang.SetType(GEO_PARTICLE_YELLOW);
+		yellowbang.SetFrequency(1);
+		yellowbang.SetCap(1000);
+		yellowbang.i_spawnAmount = 30;
+		yellowbang.f_lifeTime = 5.f;
+		yellowbang.minVel.Set(-900, -900, 0);
+		yellowbang.maxVel.Set(900, 900, 0);
+		yellowbang.scale.Set(3, 3, 3);
+		yellowbang.f_maxDist = 100.f;
+		yellowbang.isActive = false;
+		yellowbang.SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
+
 		break;
 	case GameObject::GO_RESOURCE4:
 		u = go->vel * 1.2;
@@ -659,6 +723,18 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 
 		resource4++;
 
+		greenbang.SetType(GEO_PARTICLE_GREEN);
+		greenbang.SetFrequency(1);
+		greenbang.SetCap(1000);
+		greenbang.i_spawnAmount = 30;
+		greenbang.f_lifeTime = 5.f;
+		greenbang.minVel.Set(-900, -900, 0);
+		greenbang.maxVel.Set(900, 900, 0);
+		greenbang.scale.Set(3, 3, 3);
+		greenbang.f_maxDist = 100.f;
+		greenbang.isActive = false;
+		greenbang.SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
+
 		break;
 	case GameObject::GO_BONUSPAD:
 		u = go->vel * 1.2;
@@ -666,7 +742,7 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 
-		
+
 
 		break;
 	case GameObject::GO_PILLAR:
@@ -717,12 +793,12 @@ void CaptureGame::CreateScene()
 	grass.rotation.Set(-90, 0, 0);
 	grass.rotation.Set(0, 0, 0);
 
-
-	//GameObject* ball = FetchGO(GameObject::GO_BALL);
-	//ball->pos.Set(0, 1, 0);
-
-	//GameObject* ball2 = FetchGO(GameObject::GO_BALL);
-	//ball2->pos.Set(-40, 1, 0);
+	forValor.meshID = GEO_FOR_VALOR;
+	forValor.pos.Set(0, 0.5, 0);
+	forValor.scale.Set(2000, 2000, 2000);
+	forValor.rotation.Set(-90, 0, 0);
+	forValor.rotation.Set(0, 0, 0);
+	
 
 
 	for (int i = 0; i < 6; i++)
@@ -837,7 +913,7 @@ void CaptureGame::CreateScene()
 	pad->pos.Set(0, -620, 0);
 	pad->scale.Set(200, 50, 15);
 	pad->rotation.Set(0, 0, 0);
-	
+
 	GameObject* divider = FetchGO(GameObject::GO_WALL);
 	divider->pos.Set(-100, -620, 0);
 	divider->scale.Set(200, 20, 15);
@@ -845,7 +921,7 @@ void CaptureGame::CreateScene()
 	rotate.SetToIdentity();
 	rotate.SetToRotation(55, 0, 0, 1);
 	divider->normal = rotate* divider->normal;
-	
+
 	GameObject* divider2 = FetchGO(GameObject::GO_WALL);
 	divider2->pos.Set(100, -620, 0);
 	divider2->scale.Set(200, 20, 15);
@@ -853,10 +929,10 @@ void CaptureGame::CreateScene()
 	rotate.SetToIdentity();
 	rotate.SetToRotation(-55, 0, 0, 1);
 	divider2->normal = rotate* divider2->normal;
-			
-		
-	
-			
+
+
+
+
 
 
 
@@ -887,7 +963,7 @@ void CaptureGame::CreateScene()
 	ren_wall->pos.Set(0, -300, 0);
 	ren_wall->scale.Set(105, 15, 15);
 	ren_wall->b_isActive = true;*/
-	
+
 }
 
 void CaptureGame::ClearScene()
@@ -908,9 +984,9 @@ void CaptureGame::Exit()
 	//clean Up scene Variables
 	/*while (m_goList.size() > 0)
 	{
-		GameObject *go = m_goList.back();
-		delete go;
-		m_goList.pop_back();
+	GameObject *go = m_goList.back();
+	delete go;
+	m_goList.pop_back();
 	}*/
 
 	for (vector<GameObject*>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
@@ -921,9 +997,9 @@ void CaptureGame::Exit()
 
 	/*while (particleList.size() > 0)
 	{
-		ParticleObject* particle = particleList.back();
-		delete particle;
-		particleList.pop_back();
+	ParticleObject* particle = particleList.back();
+	delete particle;
+	particleList.pop_back();
 	}*/
 	if (m_ghost)
 	{

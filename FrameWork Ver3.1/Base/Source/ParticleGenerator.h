@@ -20,13 +20,22 @@ public:
 	void SetCap(int cap);
 	void ClearParticles();
 
+	void SpawnParticle();
+	void SpawnParticle(Vector3 pos);
+
 	bool isActive;
 	vector<Particles*> particleList;
+
+
 
 	Vector3 pos;
 	Vector3 scale;
 	Vector3 minVel;
 	Vector3 maxVel;
+	float f_maxDist;
+
+	float f_lifeTime;
+	int i_spawnAmount;//number to spawn per time
 private:
 	GEOMETRY_TYPE meshID;
 	float f_frequency;
@@ -34,6 +43,8 @@ private:
 	int i_particleCount;
 	int i_maxParticles;
 	
+	
+
 };
 
 #endif
