@@ -4,7 +4,7 @@
 ArrowTower::ArrowTower()
 :Tower()
 {
-	this->level = T_TOWER1;
+	//this->level = T_TOWER1;
 	this->meshID = GEO_ARROWTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
@@ -50,16 +50,16 @@ Projectile* ArrowTower::GetProjectile()
 void ArrowTower::Update(double dt)
 {
 	Tower::Update(dt);
-	if (upgrade)
-	{
-		level = T_TOWER2;
-		if (level == T_TOWER2)
-		{
-			this->meshID = GEO_POISONTOWER;
-			SetRange(10);
-		}
-	}
-	
+	//if (upgrade)
+	//{
+	//	level = T_TOWER2;
+	//	if (level == T_TOWER2)
+	//	{
+	//		this->meshID = GEO_POISONTOWER;
+	//		SetRange(10);
+	//	}
+	//}
+	//
 
 	//std::cout << this->atkDamage << std::endl;
 }
