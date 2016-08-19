@@ -21,6 +21,7 @@ double Application::mouse_last_x = 0.0, Application::mouse_last_y = 0.0,
 	   Application::mouse_current_x = 0.0, Application::mouse_current_y = 0.0,
 	   Application::mouse_diff_x = 0.0, Application::mouse_diff_y = 0.0;
 double Application::camera_yaw = 0.0, Application::camera_pitch = 0.0;
+int Application::mouse_scroll = 0;
 
 //Define an error callback
 static void error_callback(int error, const char* description)
@@ -39,6 +40,11 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 void resize_callback(GLFWwindow* window, int w, int h)
 {
 	glViewport(0, 0, w, h);
+}
+
+void scroll_callback(GLFWwindow *m_window, double xoffset, double yoffset)
+{
+	Application::mouse_scroll = (int)yoffset;
 }
 
 bool Application::IsKeyPressed(unsigned short key)
@@ -68,16 +74,16 @@ bool Application::GetMouseUpdate()
 	camera_pitch = mouse_diff_y * 0.0174555555555556f;// 3.142f / 180.0f );
 
 	// Do a wraparound if the mouse cursor has gone out of the deadzone
-	if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))
-	{
-		mouse_current_x = m_window_width >> 1;
-		glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
-	}
-	if ((mouse_current_y < m_window_deadzone) || (mouse_current_y > m_window_height-m_window_deadzone))
-	{
-		mouse_current_y = m_window_height >> 1;
-		glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
-	}
+	//if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))
+	//{
+	//	mouse_current_x = m_window_width >> 1;
+	//	glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
+	//}
+	//if ((mouse_current_y < m_window_deadzone) || (mouse_current_y > m_window_height-m_window_deadzone))
+	//{
+	//	mouse_current_y = m_window_height >> 1;
+	//	glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
+	//}
 
 
 	//mouse_current_y = m_window_height >> 1;
@@ -129,6 +135,7 @@ void Application::Init()
 
 	//Create a window and create its OpenGL context
 	m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", NULL, NULL);
+	glfwSetScrollCallback(m_window, scroll_callback);
 
 	//If the window couldn't be created
 	if (!m_window)
@@ -140,6 +147,8 @@ void Application::Init()
 
 	//This function makes the context of the specified window current on the calling thread. 
 	glfwMakeContextCurrent(m_window);
+
+
 
 	//Sets the key callback
 	//glfwSetKeyCallback(m_window, key_callback);
@@ -171,9 +180,17 @@ void Application::Run()
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
 		if (!IsKeyPressed(VK_LCONTROL))
-		GetMouseUpdate();
+			GetMouseUpdate(); 
+
+		glfwSetScrollCallback(m_window, scroll_callback);
+
 		SceneManager::GetInstance()->Update(m_timer.getElapsedTime());
 		SceneManager::GetInstance()->Render();
+
+		if (Application::mouse_scroll != 0)
+		{
+			mouse_scroll = 0;
+		}
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...

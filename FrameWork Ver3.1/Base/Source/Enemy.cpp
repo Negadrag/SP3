@@ -7,9 +7,11 @@ Enemy::Enemy()
 	i_defence = 0;
 	i_damage = 0;
 	i_slow = 0;
+	i_currency = 0;
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos.Set(0, 0, 0);
+	this->player = nullptr;
 }
 
 Enemy::Enemy(Vector3 pos, Node* root)
@@ -19,10 +21,12 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	i_defence = 0;
 	i_damage = 0;
 	i_slow = 0;
+	i_currency = 0;
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos = pos;
 	this->nxtTile = root;
+	this->player = nullptr;
 }
 
 Enemy::~Enemy()
@@ -101,8 +105,8 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
-	//view = view * f_movSpeed *((float)(100 - i_slow) / 100.f) * dt;
-	view = view * f_movSpeed *dt;
+	view = view * f_movSpeed *((float)(100 - i_slow) / 100.f) * dt;
+	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x ;
 	this->pos.y += view.y;
 }
@@ -126,6 +130,11 @@ void Enemy::Update(double dt)
 	}
 	else
 	{
+		if (player)
+		{
+			player->i_health -= this->i_damage;
+			player->i_currency += this->i_currency;
+		}
 		this->b_isActive = false;
 	}
 }

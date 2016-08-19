@@ -15,6 +15,7 @@ Tower::Tower()
 	enemyList = nullptr;
 	heightOffset.SetZero();
 	strategy = NEAREST_ENEMY;
+	s_name = "";
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
@@ -32,7 +33,8 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	heightOffset.Set(0, 0, 5);
 	p_speed = 10.0f;
 	enemyList = nullptr;
-	strategy = NEAREST_ENEMY;
+	strategy = FIRST_ENEMY;
+	s_name = "";
 }
 
 Tower::~Tower()

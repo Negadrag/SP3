@@ -12,6 +12,7 @@ CannonTower::CannonTower()
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;
+	s_name = "Cannon Tower";
 }
 
 Projectile* CannonTower::GetProjectile()

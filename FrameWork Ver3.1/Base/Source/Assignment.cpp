@@ -26,13 +26,15 @@ void Assignment::Init()
 
 	wave.SetRoot(testMap.root);
 	wave.AddWave({ MINION }, 0, 1);
+	wave.AddWave({ MINION,MINION }, 5, 2);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
-	wave.AddWave({ MINION }, 100, 4);
+
+	wave.player = &(this->player);
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
@@ -42,16 +44,13 @@ void Assignment::Init()
 
 	}
 
-	//testball.meshID = GEO_SPHERE;
-	testball.pos.Set(0, 10, 0);
-	testball.scale.Set(1, 1, 1);
-
 
 	camera.Init(Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	camera.b_ortho = true;
 	camera.orthoSize = (testMap.i_rows / 2) + 1;
+	camera.defaultOrtho = camera.orthoSize;
 	camera.aspectRatio.Set(4, 3);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
@@ -60,15 +59,7 @@ void Assignment::Init()
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 
-	/*ATower.pos.Set(5, 6, 0);
-	ATower.scale.Set(1, 1, 1);
-	ATower.enemyList = wave.GetEnemyList();
-
-	CTower.pos.Set(5, 5, 0);
-	CTower.scale.Set(1, 1, 1);
-	CTower.enemyList = wave.GetEnemyList();*/
-
-	cursor.Init(&towerList, wave.GetEnemyList());
+	cursor.Init(&towerList,wave.GetEnemyList());
 }
 
 void Assignment::Update(double dt)
@@ -96,7 +87,7 @@ void Assignment::Update(double dt)
 	wave.Update(dt);
 	fps = (float)(1.f / dt);
 
-	cursor.Update(camera, testMap);
+	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
@@ -105,8 +96,6 @@ void Assignment::Update(double dt)
 
 void Assignment::Render()
 {
-
-
 	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
@@ -123,17 +112,40 @@ void Assignment::Render()
 			}
 		}
 	}
-	
+
+	Tower* tower = cursor.FindTower(cursor.checkPositionX, cursor.checkPositionY);
+
+	if (tower != nullptr)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen(tower->s_name, Color(1, 1, 1), 3, 40 - tower->s_name.size()/2.f, 55);
+	}
 
 	//On screen text
 	std::ostringstream ss;
 	ss.precision(5);
 	ss << "FPS: " << fps;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 9);
+	
+	ss.str("");
+	ss.precision(5);
+	ss << "Health left: " << player.i_health;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 3);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "Currency: " << player.i_currency;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 6);
 }
 
 void Assignment::Exit()
 {
 	//clean Up scene Variables
-
+	for (vector<Tower*>::iterator it = towerList.begin(); it != towerList.end(); ++it)
+	{
+		if (*it != nullptr)
+		{
+			delete *it;
+		}
+	}
+	towerList.clear();
 }

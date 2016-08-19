@@ -26,6 +26,7 @@ public:
 	static int GetWindowWidth();
 	static int GetWindowHeight();
 
+	static int mouse_scroll;
 private:
 	Application();
 	~Application();

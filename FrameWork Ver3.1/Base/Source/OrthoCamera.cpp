@@ -1,5 +1,6 @@
 #include "OrthoCamera.h"
 #include "Mtx44.h"
+#include "Application.h"
 
 OrthoCamera::OrthoCamera()
 {
@@ -28,8 +29,9 @@ void OrthoCamera::Init(const Vector3& pos, const Vector3& target, const Vector3&
 	this->aspectRatio.Set(4, 3);
 	this->FOV = 45.f;
 	this->orthoSize = 10.f;
-	this->nearPlane = 0.1f;
-	this->farPlane = 10000;
+	this->defaultOrtho = orthoSize;
+	this->nearPlane = -1000.f;
+	this->farPlane = 1000.f;
 }
 
 void OrthoCamera::Update(double dt)

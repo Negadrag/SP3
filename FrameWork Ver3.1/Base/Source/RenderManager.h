@@ -44,7 +44,16 @@ enum GEOMETRY_TYPE
 
 	GEO_CUBE2,
 	GEO_WATER,
+
+	//Particles
 	GEO_SMOKEPARTICLES,
+	GEO_PARTICLE_WHITE,
+
+	GEO_PARTICLE_BLUE,
+	GEO_PARTICLE_RED,
+	GEO_PARTICLE_YELLOW,
+	GEO_PARTICLE_GREEN,
+
 	//TSL
 	GEO_SKYPLANE,
 	GEO_LIGHT_DEPTH_QUAD,
@@ -65,6 +74,7 @@ enum GEOMETRY_TYPE
 	GEO_TANKY,
 	GEO_RESIST,
 
+	GEO_FOR_VALOR,
 
 	NUM_GEOMETRY,
 };
@@ -163,6 +173,7 @@ public:
 	void RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool lightEnabled, bool fog);
 	void RenderTextOnScreen(string text, Color color, float size, float x, float y);
 	void RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, float size, float x, float y);
+	void RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vector3 position, Vector3 scale, Vector3 rotation);
 	void RenderGPass(int sceneID = 0);
 	void RenderMain(int sceneID = 0);
 	void Update(double dt);

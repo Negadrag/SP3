@@ -14,6 +14,7 @@ ArrowTower::ArrowTower()
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	upgrade = false;
+	s_name = "Arrow Tower";
 }
 
 ArrowTower::~ArrowTower()

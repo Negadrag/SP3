@@ -27,6 +27,8 @@
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GameplayCam.cpp" />
+    <ClCompile Include="Source\GUI.cpp" />
+    <ClCompile Include="Source\GUIManager.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
@@ -38,9 +40,11 @@
     <ClCompile Include="Source\OrthoCamera.cpp" />
     <ClCompile Include="Source\ParticleGenerator.cpp" />
     <ClCompile Include="Source\Particles.cpp" />
+    <ClCompile Include="Source\PlayerInfo.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\Renderable.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SingleTarget.cpp" />
@@ -72,6 +76,8 @@
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GameplayCam.h" />
+    <ClInclude Include="Source\GUI.h" />
+    <ClInclude Include="Source\GUIManager.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
@@ -84,6 +90,7 @@
     <ClInclude Include="Source\OrthoCamera.h" />
     <ClInclude Include="Source\ParticleGenerator.h" />
     <ClInclude Include="Source\Particles.h" />
+    <ClInclude Include="Source\PlayerInfo.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\Renderable.h" />
     <ClInclude Include="Source\RenderManager.h" />
