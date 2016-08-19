@@ -236,6 +236,17 @@ void RenderManager::InitMesh()
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
 	
+
+	//Particles
+	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
+	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");
+
+	meshList[GEO_PARTICLE_WHITE] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 1), 18, 36, 1.f);
+	meshList[GEO_PARTICLE_BLUE] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.6, 1), 18, 36, 1.f);
+	meshList[GEO_PARTICLE_RED] = MeshBuilder::GenerateSphere("sphere", Color(1, 0.3, 0.3), 18, 36, 1.f);
+	meshList[GEO_PARTICLE_YELLOW] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 0), 18, 36, 1.f);
+	meshList[GEO_PARTICLE_GREEN] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.7, 0), 18, 36, 1.f);
+
 	
 }
 

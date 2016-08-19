@@ -11,6 +11,7 @@
 #include "Terrain.h"
 #include "Application.h"
 #include "GameObject.h"
+#include "ParticleGenerator.h"
 
 using std::vector;
 
@@ -53,6 +54,11 @@ private:
 	float fps;
 	bool b_initScene;
 	Terrain terrain;
+	ParticleGenerator whitebang;
+	ParticleGenerator bluebang;
+	ParticleGenerator redbang;
+	ParticleGenerator yellowbang;
+	ParticleGenerator greenbang;
 
 protected:
 	std::vector<GameObject *> m_goList;

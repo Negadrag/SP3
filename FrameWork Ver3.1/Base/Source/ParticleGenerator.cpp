@@ -11,6 +11,9 @@ ParticleGenerator::ParticleGenerator(GEOMETRY_TYPE meshID)
 	this->scale.SetZero();
 	this->minVel.SetZero();
 	this->maxVel.SetZero();
+	isActive = true;
+	i_spawnAmount = 0;
+	f_lifeTime = 0.f;
 }
 
 ParticleGenerator::ParticleGenerator(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 minVel, Vector3 maxVel)
@@ -24,14 +27,14 @@ ParticleGenerator::ParticleGenerator(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 
 	f_spawnTimer = 0.f;
 	i_maxParticles = 300;
 	i_particleCount = 0;
+	isActive = true;
+	i_spawnAmount = 0;
+	f_lifeTime = 0.f;
 }
 
 ParticleGenerator::~ParticleGenerator()
 {
-	for (vector<Particles*>::iterator it = particleList.begin(); it != particleList.end(); ++it)
-	{
-		delete(*it);
-	}
+	ClearParticles();
 }
 
 void ParticleGenerator::SetType(GEOMETRY_TYPE meshID)
@@ -71,15 +74,21 @@ void ParticleGenerator::Update(double dt)
 {
 
 	f_spawnTimer += (float)dt;
-	if (f_spawnTimer >= 1.f / f_frequency && i_particleCount<i_maxParticles)
+	if (f_spawnTimer >= 1.f / f_frequency && i_particleCount<i_maxParticles && isActive == true)
 	{
 		f_spawnTimer = 0.f;
-		Particles* particle = GetParticle();
-		particle->meshID = this->meshID;
-		particle->scale= this->scale;
-		particle->vel.Set(Math::RandFloatMinMax(minVel.x, maxVel.x), Math::RandFloatMinMax(minVel.y,maxVel.y), Math::RandFloatMinMax(minVel.z, maxVel.z));
-		particle->rotationSpeed = Math::RandFloatMinMax(20.f, 40.f);
-		particle->pos = this->pos;
+		for (int i = 0; i < i_spawnAmount; ++i)
+		{
+			Particles* particle = GetParticle();
+			particle->meshID = this->meshID;
+			particle->scale = this->scale;
+			particle->vel.Set(Math::RandFloatMinMax(minVel.x, maxVel.x), Math::RandFloatMinMax(minVel.y, maxVel.y), Math::RandFloatMinMax(minVel.z, maxVel.z));
+			particle->rotationSpeed = Math::RandFloatMinMax(20.f, 40.f);
+			particle->pos = this->pos;
+			particle->lifeTime = f_lifeTime;
+			particle->f_distTravelled = 0.f;
+			particle->f_maxDist = this->f_maxDist;
+		}
 	}
 	for (std::vector<Particles*>::iterator it = particleList.begin(); it != particleList.end(); ++it)
 	{
@@ -100,4 +109,42 @@ void ParticleGenerator::ClearParticles()
 		delete(*it);
 	}
 	particleList.clear();
+}
+
+void ParticleGenerator::SpawnParticle()
+{
+	if (i_particleCount<i_maxParticles && isActive == true)
+	{
+		for (int i = 0; i < i_spawnAmount; ++i)
+		{
+			Particles* particle = GetParticle();
+			particle->meshID = this->meshID;
+			particle->scale = this->scale;
+			particle->vel.Set(Math::RandFloatMinMax(minVel.x, maxVel.x), Math::RandFloatMinMax(minVel.y, maxVel.y), Math::RandFloatMinMax(minVel.z, maxVel.z));
+			particle->rotationSpeed = Math::RandFloatMinMax(20.f, 40.f);
+			particle->pos = this->pos;
+			particle->lifeTime = f_lifeTime;
+			particle->f_distTravelled = 0.f;
+			particle->f_maxDist = this->f_maxDist;
+		}
+	}
+}
+
+void ParticleGenerator::SpawnParticle(Vector3 pos)
+{
+	if (i_particleCount<i_maxParticles)
+	{
+		for (int i = 0; i < i_spawnAmount; ++i)
+		{
+			Particles* particle = GetParticle();
+			particle->meshID = this->meshID;
+			particle->scale = this->scale;
+			particle->vel.Set(Math::RandFloatMinMax(minVel.x, maxVel.x), Math::RandFloatMinMax(minVel.y, maxVel.y), Math::RandFloatMinMax(minVel.z, maxVel.z));
+			particle->rotationSpeed = Math::RandFloatMinMax(20.f, 40.f);
+			particle->pos = pos;
+			particle->lifeTime = f_lifeTime;
+			particle->f_distTravelled = 0.f;
+			particle->f_maxDist = this->f_maxDist;
+		}
+	}
 }

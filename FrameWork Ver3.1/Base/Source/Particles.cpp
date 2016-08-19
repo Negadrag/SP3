@@ -1,7 +1,7 @@
 #include "Particles.h"
 
-Particles::Particles(GEOMETRY_TYPE ID):
- vel(0,0,0)
+Particles::Particles(GEOMETRY_TYPE ID) :
+vel(0, 0, 0)
 , rotation(0)
 , rotationSpeed(0)
 {
@@ -11,6 +11,8 @@ Particles::Particles(GEOMETRY_TYPE ID):
 	b_shadows = false;
 	b_isActive = false;
 	lifeTime = 0.f;
+	f_distTravelled = 0.f;
+	f_maxDist = 0.f;
 }
 
 Particles::~Particles()
@@ -39,9 +41,72 @@ void Particles::Update(double dt, int& particle_count)
 			if (this->lifeTime<0.f)
 			{
 				this->b_isActive = false;
+				//--particle_count;
+			}
+		}
+
+		if (this->meshID == GEO_PARTICLE_WHITE)
+		{
+			lifeTime -= dt;
+			this->pos += vel * dt;
+			this->scale -= Vector3(dt * 5, dt * 5, 0);
+			if (scale.x <= 0.2f || scale.y <= 0.2f)
+			{
+				this->b_isActive = false;
+				--particle_count;
+			}
+			this->f_distTravelled += vel.Length() * dt;
+			if (this->lifeTime<0.f || f_distTravelled >= f_maxDist)
+			{
+				this->b_isActive = false;
 				--particle_count;
 			}
 		}
+		if (this->meshID == GEO_PARTICLE_BLUE)
+		{
+			lifeTime -= dt;
+			this->pos += vel * dt;
+			this->f_distTravelled += vel.Length() * dt;
+			if (this->lifeTime<0.f || f_distTravelled >= f_maxDist)
+			{
+				this->b_isActive = false;
+				--particle_count;
+			}
+		}
+		if (this->meshID == GEO_PARTICLE_RED)
+		{
+			lifeTime -= dt;
+			this->pos += vel * dt;
+			this->f_distTravelled += vel.Length() * dt;
+			if (this->lifeTime<0.f || f_distTravelled >= f_maxDist)
+			{
+				this->b_isActive = false;
+				--particle_count;
+			}
+		}
+		if (this->meshID == GEO_PARTICLE_YELLOW)
+		{
+			lifeTime -= dt;
+			this->pos += vel * dt;
+			this->f_distTravelled += vel.Length() * dt;
+			if (this->lifeTime<0.f || f_distTravelled >= f_maxDist)
+			{
+				this->b_isActive = false;
+				--particle_count;
+			}
+		}
+		if (this->meshID == GEO_PARTICLE_GREEN)
+		{
+			lifeTime -= dt;
+			this->pos += vel * dt;
+			this->f_distTravelled += vel.Length() * dt;
+			if (this->lifeTime<0.f || f_distTravelled >= f_maxDist)
+			{
+				this->b_isActive = false;
+				--particle_count;
+			}
+		}
+
 	}
-	
+
 }
