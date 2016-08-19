@@ -207,6 +207,12 @@
     <ClCompile Include="Source\CursorControl.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PlayerInfo.cpp">
+      <Filter>Source Files\ObjectClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Renderable.h">
@@ -343,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="Source\SplashTarget.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerInfo.h">
+      <Filter>Header Files\ObjectClasses</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

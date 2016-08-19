@@ -248,6 +248,7 @@ void CaptureGame::Update(double dt)
 
 	}
 
+
 	if (Application::IsKeyPressed('M'))
 	{
 		SceneManager::GetInstance()->ChangeScene(1, false);
@@ -792,12 +793,12 @@ void CaptureGame::CreateScene()
 	grass.rotation.Set(-90, 0, 0);
 	grass.rotation.Set(0, 0, 0);
 
-
-	//GameObject* ball = FetchGO(GameObject::GO_BALL);
-	//ball->pos.Set(0, 1, 0);
-
-	//GameObject* ball2 = FetchGO(GameObject::GO_BALL);
-	//ball2->pos.Set(-40, 1, 0);
+	forValor.meshID = GEO_FOR_VALOR;
+	forValor.pos.Set(0, 0.5, 0);
+	forValor.scale.Set(2000, 2000, 2000);
+	forValor.rotation.Set(-90, 0, 0);
+	forValor.rotation.Set(0, 0, 0);
+	
 
 
 	for (int i = 0; i < 6; i++)

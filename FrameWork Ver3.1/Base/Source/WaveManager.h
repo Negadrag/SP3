@@ -2,6 +2,7 @@
 #define WAVE_MANAGER_H
 
 #include "Minion.h"
+#include "PlayerInfo.h"
 #include <vector>
 
 using std::vector;
@@ -50,6 +51,8 @@ public:
 	void ClearEnemyList();
 	void Update(double dt);
 	vector<Enemy*>* GetEnemyList();
+	PlayerInfo* player;
+
 private:
 	vector<Enemy*> enemyList;
 	vector<Wave> waveList;

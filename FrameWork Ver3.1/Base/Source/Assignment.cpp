@@ -26,13 +26,15 @@ void Assignment::Init()
 
 	wave.SetRoot(testMap.root);
 	wave.AddWave({ MINION }, 0, 1);
-	wave.AddWave({ MINION }, 20, 2);
+	wave.AddWave({ MINION,MINION }, 5, 2);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
+
+	wave.player = &(this->player);
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
@@ -126,6 +128,16 @@ void Assignment::Render()
 	std::ostringstream ss;
 	ss.precision(5);
 	ss << "FPS: " << fps;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 9);
+	
+	ss.str("");
+	ss.precision(5);
+	ss << "Health left: " << player.i_health;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 3);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "Currency: " << player.i_currency;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 6);
 }
 
