@@ -70,6 +70,11 @@ void Tower::SetRange(float r)
 	this->atkRange = r;
 }
 
+float Tower::GetRange()
+{
+	return atkRange;
+}
+
 
 Projectile* Tower::GetProjectile()
 {

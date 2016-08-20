@@ -26,7 +26,7 @@ void Assignment::Init()
 
 	wave.SetRoot(testMap.root);
 	wave.AddWave({ MINION }, 0, 1);
-	wave.AddWave({ MINION,MINION }, 5, 2);
+	wave.AddWave({ MINION,MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
@@ -111,13 +111,6 @@ void Assignment::Render()
 				RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
 		}
-	}
-
-	Tower* tower = cursor.FindTower(cursor.checkPositionX, cursor.checkPositionY);
-
-	if (tower != nullptr)
-	{
-		RenderManager::GetInstance()->RenderTextOnScreen(tower->s_name, Color(1, 1, 1), 3, 40 - tower->s_name.size()/2.f, 55);
 	}
 
 	//On screen text

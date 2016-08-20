@@ -1,6 +1,8 @@
 #include "ArrowTower.h"
 #include "SingleTarget.h"
 
+int ArrowTower::cost = 5;
+
 ArrowTower::ArrowTower()
 :Tower()
 {

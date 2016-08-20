@@ -113,7 +113,7 @@ void RenderManager::Init()
 	m_parameters[U_SHADOW_COLOR_TEXTURE2] = glGetUniformLocation(m_gPassShaderID, "colorTexture[2]");
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(-3, -3, 3);
+	lights[0].position.Set(-0.5f, -0.5f, 1);
 	lights[0].color.Set(1, 1, 1);
 	lights[0].power = 1.5f;
 	lights[0].kC = 1.0f;
@@ -169,7 +169,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-	meshList[GEO_RING] = MeshBuilder::GenerateRing("ring", Color(1, 0, 1), 36, 1, 0.5f);
+	meshList[GEO_RING] = MeshBuilder::GenerateRing("ring", Color(1, 1, 0), 36, 1, 0.99f);
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 0.5f);
 	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(1, 0, 0), 18, 36, 0.5f);
 	meshList[GEO_CONE] = MeshBuilder::GenerateSphere("cone", Color(0.5f, 1, 0.3f), 18, 36, 0.5f);
@@ -235,6 +235,12 @@ void RenderManager::InitMesh()
 	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW.tga");
+
+	meshList[GEO_ICETOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ICE.obj");
+	meshList[GEO_ICETOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
+	meshList[GEO_ICETOWER]->material.kShininess = 0.8f;
+	meshList[GEO_ICETOWER]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
+
 	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
@@ -268,7 +274,6 @@ RenderManager* RenderManager::GetInstance()
 
 void RenderManager::RenderObj(Renderable* obj) 
 {
-	
 	if (obj->scale.IsZero()) {
 		return;
 	}
@@ -334,21 +339,21 @@ void RenderManager::RenderGPass(int sceneID)
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
 	{
 		float width = camera->orthoSize * camera->aspectRatio.x / camera->aspectRatio.y;
-		m_lightDepthProj.SetToOrtho(-width*2,width*2,-camera->orthoSize*2, camera->orthoSize*2, -camera->farPlane*2, camera->farPlane*2);
+		m_lightDepthProj.SetToOrtho(-20, 20, -30, 30, -30, 30);
 	}
 	else
 	{
 		m_lightDepthProj.SetToPerspective(90, 1.f, 0.1, 20);
 	}
 	m_lightDepthView.SetToLookAt(lights[0].position.x, lights[0].position.y, lights[0].position.z, 0, 0, 0, 0, 1, 0);
-	/*
+	
 	for (list<Renderable*>::iterator it = renderableList[sceneID].begin(); it != renderableList[sceneID].end(); ++it)
 	{
 		if ((*it)->b_isActive == true && (*it)->b_Render == true && (*it)->b_shadows == true)
 		{
 			RenderObj((*it));
 		}
-	}*/
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -421,7 +426,6 @@ void RenderManager::RenderMain(int sceneID)
 				RenderObj((*it));
 			}
 	}
-
 }
 
 void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) {
@@ -503,7 +507,6 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
-
 }
 
 
@@ -624,8 +627,6 @@ void RenderManager::Update(double dt)
 	{
 		viewStack.LoadIdentity();
 	}
-	//lights[0].position.Set(-6, 30, 300);
-	// Camera matrix	
 }
 
 void RenderManager::AddRenderable(Renderable* entity)
@@ -731,6 +732,7 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, flo
 
 	if (lightEnabled)
 	{
+
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
 		modelView = viewStack.Top() * modelStack.Top();
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
@@ -782,9 +784,12 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
 	modelStack.Translate(position.x, position.y, position.z);
+	
 	modelStack.Rotate(rotation.z, 0, 0, 1);
-	modelStack.Rotate(rotation.x, 1, 0, 0);
 	modelStack.Rotate(rotation.y, 0, 1, 0);
+	modelStack.Rotate(rotation.x, 1, 0, 0);
+	
+	
 	modelStack.Scale(scale.x, scale.y, scale.z);
 
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
@@ -799,6 +804,9 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
 		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView.a[0]);
+
+		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
+		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP], 1, GL_TRUE, &lightDepthMVP.a[0]);
 
 		//load material
 		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);

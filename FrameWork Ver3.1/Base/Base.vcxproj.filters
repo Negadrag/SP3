@@ -332,9 +332,6 @@
     <ClInclude Include="Source\CannonTower.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CursorControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy.h">
       <Filter>Header Files\ObjectClasses\Enemy</Filter>
     </ClInclude>
@@ -382,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\System\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CursorControl.h">
+      <Filter>Header Files\ObjectClasses</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -74,16 +74,30 @@ bool Application::GetMouseUpdate()
 	camera_pitch = mouse_diff_y * 0.0174555555555556f;// 3.142f / 180.0f );
 
 	// Do a wraparound if the mouse cursor has gone out of the deadzone
-	//if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))
-	//{
-	//	mouse_current_x = m_window_width >> 1;
-	//	glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
-	//}
-	//if ((mouse_current_y < m_window_deadzone) || (mouse_current_y > m_window_height-m_window_deadzone))
-	//{
-	//	mouse_current_y = m_window_height >> 1;
-	//	glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
-	//}
+	/*if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))
+	{
+		if (mouse_current_x < m_window_deadzone)
+		{
+			mouse_current_x = m_window_deadzone;
+		}
+		else
+		{
+			mouse_current_x = m_window_width - m_window_deadzone;
+		}
+		glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
+	}
+	if ((mouse_current_y < m_window_deadzone) || (mouse_current_y > m_window_height-m_window_deadzone))
+	{
+		if (mouse_current_y < m_window_deadzone)
+		{
+			mouse_current_y = m_window_deadzone;
+		}
+		else
+		{
+			mouse_current_y = m_window_height - m_window_deadzone;
+		}
+		glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
+	}*/
 
 
 	//mouse_current_y = m_window_height >> 1;
@@ -135,6 +149,8 @@ void Application::Init()
 
 	//Create a window and create its OpenGL context
 	m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", NULL, NULL);
+	//m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", glfwGetPrimaryMonitor(), NULL);
+
 	glfwSetScrollCallback(m_window, scroll_callback);
 
 	//If the window couldn't be created

@@ -35,6 +35,7 @@ public:
 	void SetAtkDmg(float ad);
 	void SetSpdRate(float sr);
 	void SetRange(float r);
+	float GetRange();
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
 	virtual void Fire();

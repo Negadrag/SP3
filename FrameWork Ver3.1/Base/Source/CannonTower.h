@@ -12,6 +12,7 @@ public:
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
 
+	static int cost;
 
 private:
 
