@@ -23,10 +23,10 @@ void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up)
 	right.y = 0;
 	right.Normalize();
 	up = right.Cross(view).Normalized();
-	this->b_ortho = false;
+	this->b_ortho = true;
 	this->aspectRatio.Set(4, 3);
 	this->FOV = 45.f;
-	this->orthoSize = 10.f;
+	this->orthoSize = 750.f;
 	this->nearPlane = 0.1;
 	this->farPlane = 10000;
 

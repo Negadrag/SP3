@@ -12,12 +12,6 @@ class Tower : public Renderable
 public:
 	virtual ~Tower();
 
-	enum TOWERUPGRADE
-	{
-		T_TOWER1,
-		T_TOWER2,
-		NUM_TOWERUPGRADE
-	};
 	enum STRATEGY
 	{
 		FIRST_ENEMY=0,
@@ -29,7 +23,6 @@ public:
 		NUM_STRATEGY
 	};
 	STRATEGY strategy;
-	TOWERUPGRADE level;
 	void SetType(GEOMETRY_TYPE meshID);
 	void SetCost(float c);
 	void SetAtkDmg(float ad);
@@ -59,6 +52,7 @@ protected:
 
 	GEOMETRY_TYPE projectile_meshID;
 	
+	int i_level;
 	float p_frequency;
 	float p_spawnTimer;
 	float towerCost;

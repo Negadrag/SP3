@@ -171,7 +171,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_RING] = MeshBuilder::GenerateRing("ring", Color(1, 1, 0), 36, 1, 0.99f);
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 0.5f);
-	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(1, 0, 0), 18, 36, 0.5f);
+	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 1), 18, 36, 0.5f);
 	meshList[GEO_CONE] = MeshBuilder::GenerateSphere("cone", Color(0.5f, 1, 0.3f), 18, 36, 0.5f);
 	meshList[GEO_CONE]->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
 	meshList[GEO_CONE]->material.kSpecular.Set(0.f, 0.f, 0.f);
@@ -195,9 +195,9 @@ void RenderManager::InitMesh()
 
 	// Load the ground mesh and texture
 	meshList[GEO_GRASS_DARKGREEN] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//ground.tga");
-	meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_GRASS_LIGHTGREEN]->textureArray[0] = LoadTGA("Image//grass_lightgreen.tga");
+	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//Ground.tga");
+	//meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
+	//meshList[GEO_GRASS_LIGHTGREEN]->textureArray[0] = LoadTGA("Image//grass_lightgreen.tga");
 
 	//for terrain
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerain("Terrain", "Image//heightmap4.raw");

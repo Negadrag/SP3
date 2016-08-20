@@ -97,6 +97,18 @@
     <Filter Include="Header Files\System\Entity">
       <UniqueIdentifier>{175bfdb5-542c-4854-a282-00444e740b8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ObjectClasses\Tower\SingleTarget">
+      <UniqueIdentifier>{e200d2a3-3695-400e-918e-18fa2a70f16b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectClasses\Tower\SplashTarget">
+      <UniqueIdentifier>{95aef32f-20f2-4cc3-865d-954a0c0d0385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ObjectClasses\Tower\SingleTarget">
+      <UniqueIdentifier>{98b3ae54-d915-4c1c-911e-6d063acec261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ObjectClasses\Tower\SplashTarget">
+      <UniqueIdentifier>{e02334ea-6eff-47d8-b191-a1f5aa19e683}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -174,16 +186,10 @@
     <ClCompile Include="Source\OrthoCamera.cpp">
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ArrowTower.cpp">
-      <Filter>Source Files\ObjectClasses\Tower</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Projectile.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
     <ClCompile Include="Source\Tower.cpp">
-      <Filter>Source Files\ObjectClasses\Tower</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CannonTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
@@ -200,12 +206,6 @@
     </ClCompile>
     <ClCompile Include="Source\GameplayCam.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SingleTarget.cpp">
-      <Filter>Source Files\ObjectClasses\Tower</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SplashTarget.cpp">
-      <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
     <ClCompile Include="Source\CursorControl.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
@@ -236,6 +236,21 @@
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source Files\System\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpeedTower.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ArrowTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SingleTarget.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CannonTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SplashTarget.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -320,17 +335,14 @@
     <ClInclude Include="Source\OrthoCamera.h">
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ArrowTower.h">
-      <Filter>Header Files\ObjectClasses\Tower</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Tower.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
     <ClInclude Include="Source\Projectile.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CannonTower.h">
-      <Filter>Header Files\ObjectClasses\Tower</Filter>
+    <ClInclude Include="Source\CursorControl.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
       <Filter>Header Files\ObjectClasses\Enemy</Filter>
@@ -346,12 +358,6 @@
     </ClInclude>
     <ClInclude Include="Source\GameplayCam.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SingleTarget.h">
-      <Filter>Header Files\ObjectClasses\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SplashTarget.h">
-      <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerInfo.h">
       <Filter>Header Files\ObjectClasses</Filter>
@@ -380,8 +386,20 @@
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\System\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CursorControl.h">
-      <Filter>Header Files\ObjectClasses</Filter>
+    <ClInclude Include="Source\SpeedTower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SingleTarget.h">
+      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ArrowTower.h">
+      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CannonTower.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SplashTarget.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
