@@ -20,7 +20,7 @@ public:
 	bool SpawnTower(string name);
 	Tower* FindTower(int x,int y);
 	void CameraBounds(OrthoCamera &camera);
-
+	bool bLButtonState;
 	Renderable aoe;
 
 	GUI spawnTower[4];

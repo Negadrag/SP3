@@ -51,8 +51,6 @@ private:
 	float angle;
 	float fps;
 
-	WaveManager wave;
-
 	Terrain terrain;
 
 	vector<Tower*> towerList;

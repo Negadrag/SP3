@@ -6,6 +6,8 @@
 
 CursorControl::CursorControl()
 {
+
+	bLButtonState = false;
 	checkPositionX = 0;
 	checkPositionY = 0;
 
@@ -51,8 +53,6 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 	Vector3 center = camera.target;
 
 	worldCoords.Set(center.x + worldX/Xunits + 0.5f,center.y + worldY/Yunits + 0.5f);
-
-	static bool bLButtonState = false;
 
 	if (!bLButtonState) // If LClick is being held down
 	{

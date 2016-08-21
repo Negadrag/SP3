@@ -194,10 +194,11 @@ void RenderManager::InitMesh()
 	//meshList[GEO_SKYPLANE]->textureArray[1] = LoadTGA("Image//sunsetsky.tga");
 
 	// Load the ground mesh and texture
-	meshList[GEO_GRASS_DARKGREEN] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//Ground.tga");
-	//meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
-	//meshList[GEO_GRASS_LIGHTGREEN]->textureArray[0] = LoadTGA("Image//grass_lightgreen.tga");
+	meshList[GEO_GRASS] = MeshBuilder::GenerateQuad("GRASS", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRASS]->textureArray[0] = LoadTGA("Image//grass.tga");
+
+	meshList[GEO_GRASS_DARKGREEN] = MeshBuilder::GenerateQuad("GRASS", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//ground.tga");
 
 	//for terrain
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerain("Terrain", "Image//heightmap4.raw");

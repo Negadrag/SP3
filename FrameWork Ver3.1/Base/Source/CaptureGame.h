@@ -61,6 +61,8 @@ private:
 	ParticleGenerator yellowbang;
 	ParticleGenerator greenbang;
 
+	float f_ballSpawnDebounceTimer;
+
 protected:
 	std::vector<GameObject *> m_goList;
 	float m_speed;
