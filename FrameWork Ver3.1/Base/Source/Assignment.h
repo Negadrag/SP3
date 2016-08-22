@@ -38,8 +38,6 @@ private:
 	//TurntableCam turntab;
 	OrthoCamera camera;
 
-	float windmillRotateAngle;
-
 	Renderable grass;
 	Renderable testball;
 

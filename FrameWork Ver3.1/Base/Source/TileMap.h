@@ -27,9 +27,12 @@ public:
 
 	bool LoadMap(std::fstream &file);
 	bool LoadWaves(vector<string> wave);
+	bool LoadEmpty();
 	void AddNode(Node *node,int x, int y);
 	bool FindNextNode(int number, int x, int y);
 	void FillPath(Node *node, int nodeNumber);
+private:
+	int numCounter;
 };
 
 #endif

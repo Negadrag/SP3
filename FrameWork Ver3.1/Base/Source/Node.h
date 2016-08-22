@@ -11,6 +11,7 @@ public:
 	~Node();
 	Vector2 coords;
 	Node *next;
+	int i_number;
 };
 
 #endif

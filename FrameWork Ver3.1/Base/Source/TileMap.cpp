@@ -7,6 +7,7 @@ TileMap::TileMap(const int tileSize)
 	screenMap = nullptr;
 	i_rows = i_columns = 0;
 	root = nullptr;
+	numCounter = 1;
 }
 
 TileMap::~TileMap()
@@ -110,7 +111,23 @@ bool TileMap::LoadMap(std::fstream &file)
 	return LoadWaves(wave);
 }
 
-static int numCounter = 1;
+bool TileMap::LoadEmpty()
+{
+	screenMap = new int*[i_columns];
+	for (int i = 0; i < i_columns; ++i)
+	{
+		screenMap[i] = new int[i_rows];
+	}
+
+	for (int i = 0; i < i_columns; ++i)
+	{
+		for (int j = 0; j < i_rows; ++j)
+		{
+			screenMap[i][j] = 0;
+		}
+	}
+	return true;
+}
 
 void TileMap::AddNode(Node *node, int x, int y)
 {
@@ -229,21 +246,20 @@ bool TileMap::LoadWaves(vector<string> wave)
 			string temp2;
 			std::getline(ss, temp2, ',');
 
-			if (temp2 == "")
-			{
-				continue;
-			}
 			if (temp2 == string("/"))
 			{
 				checkRevolutions = true;
 			}
-			else if (temp2 == string("MINION") && !checkRevolutions && !checkFrequency)
+			else if (!checkRevolutions && !checkFrequency)
 			{
-				enemyType.push_back(MINION);
-			}
-			else if (!checkRevolutions && !checkFrequency) // default enemy
-			{
-				enemyType.push_back(MINION);
+				if (temp2 == string("MINION")) // Taking in MINION
+				{
+					enemyType.push_back(MINION);
+				}
+				else // Default enemy
+				{
+					enemyType.push_back(MINION);
+				}
 			}
 			else if (checkRevolutions && !checkFrequency)
 			{
@@ -253,6 +269,7 @@ bool TileMap::LoadWaves(vector<string> wave)
 			else if (checkRevolutions && checkFrequency)
 			{
 				frequency = atoi(temp2.c_str());
+				break;
 			}
 		}
 

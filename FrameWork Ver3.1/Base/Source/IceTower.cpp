@@ -20,19 +20,17 @@ IceTower::IceTower()
 	this->b_rotateWhenFire = false;
 	child.meshID = GEO_ICECRYSTAL;
 
-
-	particleGenerator.SetType(GEO_ICEPARTICLE);
-	particleGenerator.SetFrequency(20);
-	particleGenerator.SetCap(1000);
-	particleGenerator.i_spawnAmount = 30;
-	particleGenerator.f_lifeTime = 0.3f;
-	particleGenerator.minVel.Set(0, 0, 0);
-	particleGenerator.maxVel.Set(0, 0, 0);
-	particleGenerator.scale.Set(0.07f, 0.07f, 0.07f);
-	particleGenerator.i_particleCount = 0;
-	particleGenerator.f_maxDist = 2.f;
-	particleGenerator.isActive = true;
-	particleGenerator.i_spawnAmount = 10;
+	this->iceparticle.SetType(GEO_ICEPARTICLE);
+	this->iceparticle.SetFrequency(25);
+	this->iceparticle.SetCap(1000);
+	this->iceparticle.f_lifeTime = 1.f;
+	this->iceparticle.minVel.Set(-2.f, -2.f, 0.f);
+	this->iceparticle.maxVel.Set(2.f, 2.f, 0.f);
+	this->iceparticle.scale.Set(0.1f, 0.1f, 0.1f);
+	this->iceparticle.i_particleCount = 0;
+	this->iceparticle.f_maxDist = 3.f;
+	this->iceparticle.isActive = false;
+	this->iceparticle.i_spawnAmount = 15;
 
 }
 
@@ -46,7 +44,7 @@ Projectile* IceTower::GetProjectile()
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
 			projectile->enemyVec = this->enemyList;
-			projectile->iceparticle = &(particleGenerator);
+			projectile->iceparticle = &(this->iceparticle);
 			return projectile;
 
 		}
