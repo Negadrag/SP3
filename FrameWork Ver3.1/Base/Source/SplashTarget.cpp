@@ -24,6 +24,19 @@ void SplashTarget::Update(double dt)
 		return;
 	}
 
+	if (meshID == GEO_ICESHOT)
+	{
+		Mtx44 rotate;
+		rotate.SetToRotation(45.f, 0, 0, 1);
+
+		iceparticle->minVel = rotate * -vel.Normalized();
+		rotate.SetToIdentity();
+		rotate.SetToRotation(-45.f, 0, 0, 1);
+		iceparticle->maxVel = rotate * -vel.Normalized();
+		iceparticle->pos = this->pos;
+		iceparticle->Update(dt);
+	}
+
 	d = enemy->pos - this->pos;
 	//this->vel = (this->vel + d *( p_speed / 4.f)).Normalize() * p_speed;
 	if (d.IsZero())
@@ -49,19 +62,6 @@ void SplashTarget::Update(double dt)
 				iceparticle->pos.z = 2.f;
 				iceparticle->SpawnParticle();
 		}
-		else if (meshID == GEO_ICESHOT)
-		{
-			Mtx44 rotate;
-			rotate.SetToRotation(45.f, 0, 0, 1);
-
-			iceparticle->minVel = rotate * -vel.Normalized();
-			rotate.SetToIdentity();
-			rotate.SetToRotation(-45.f, 0, 0, 1);
-			iceparticle->maxVel = rotate * -vel.Normalized();
-			iceparticle->pos = this->pos;
-			iceparticle->Update(dt);
-		}
-		
 		//this->iceparticle.isActive = false;
 		this->b_isActive = false;
 		if (enemyVec != nullptr)
