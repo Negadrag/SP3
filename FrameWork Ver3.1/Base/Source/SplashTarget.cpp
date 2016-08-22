@@ -38,7 +38,7 @@ void SplashTarget::Update(double dt)
 	if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 	{
 		this->b_isActive = false;
-		if (enemyVec)
+		if (enemyVec != nullptr)
 		{
 			for (vector<Enemy*>::iterator it = (*enemyVec).begin(); it != (*enemyVec).end(); ++it)
 			{
