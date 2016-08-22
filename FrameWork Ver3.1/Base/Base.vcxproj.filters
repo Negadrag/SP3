@@ -109,6 +109,12 @@
     <Filter Include="Header Files\ObjectClasses\Tower\SplashTarget">
       <UniqueIdentifier>{e02334ea-6eff-47d8-b191-a1f5aa19e683}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectClasses\Cursor">
+      <UniqueIdentifier>{53aeee78-8d88-441a-bdd7-69a602daea4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectClasses\Cursor">
+      <UniqueIdentifier>{e8a03aa3-9b32-4d5f-8e26-9a511fbf67d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -207,9 +213,6 @@
     <ClCompile Include="Source\GameplayCam.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CursorControl.cpp">
-      <Filter>Source Files\ObjectClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PlayerInfo.cpp">
       <Filter>Source Files\ObjectClasses</Filter>
     </ClCompile>
@@ -269,6 +272,18 @@
     </ClCompile>
     <ClCompile Include="Source\MortarTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorCursor.cpp">
+      <Filter>Source Files\ObjectClasses\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cursor.cpp">
+      <Filter>Source Files\ObjectClasses\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CursorControl.cpp">
+      <Filter>Source Files\ObjectClasses\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MapEditor.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -359,9 +374,6 @@
     <ClInclude Include="Source\Projectile.h">
       <Filter>Header Files\ObjectClasses\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CursorControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy.h">
       <Filter>Header Files\ObjectClasses\Enemy</Filter>
     </ClInclude>
@@ -436,6 +448,18 @@
     </ClInclude>
     <ClInclude Include="Source\MortarTower.h">
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cursor.h">
+      <Filter>Header Files\ObjectClasses\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CursorControl.h">
+      <Filter>Header Files\ObjectClasses\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorCursor.h">
+      <Filter>Header Files\ObjectClasses\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MapEditor.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

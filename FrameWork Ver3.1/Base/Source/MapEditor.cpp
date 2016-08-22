@@ -39,7 +39,7 @@ void MapEditor::Init()
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	grass.meshID = GEO_GRASS_DARKGREEN;
-	grass.pos.Set(tileMap.i_columns / 2, tileMap.i_rows / 2, 0);
+	grass.pos.Set((float)tileMap.i_columns / 2.f, (float)tileMap.i_rows / 2.f, 0);
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 	
@@ -57,13 +57,13 @@ void MapEditor::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (Application::IsKeyPressed('N'))
-	{
-		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		SceneManager::GetInstance()->ChangeScene(3, true);
-	}
 
 	fps = (float)(1.f / dt);
+
+	if (Application::IsKeyPressed('M'))
+	{
+		SceneManager::GetInstance()->ChangeScene(1, false);
+	}
 
 	cursor.Update(camera, dt);
 	camera.Update(dt);
@@ -132,7 +132,7 @@ void MapEditor::HandleInput()
 		for (int j = 0; j < 5; ++j)
 		{
 			int enemy;
-			std::cout << "Enemy " << j << " (1 - MINION):";
+			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION):";
 			std::cin >> enemy;
 			switch (enemy)
 			{
@@ -157,7 +157,7 @@ void MapEditor::HandleInput()
 			string input;
 			std::cout << "Number of revolutions:";
 			std::cin >> input;
-			ss << atoi(input.c_str()) << ",";
+			ss << atoi(input.c_str()) << ',';
 		}
 
 		// frequency
@@ -165,15 +165,43 @@ void MapEditor::HandleInput()
 			string input;
 			std::cout << "Frequency:";
 			std::cin >> input;
-			ss << atoi(input.c_str());
+			ss << atoi(input.c_str()) << ',';
+			if (i != numWaves - 1)
+			{
+				ss << '\n';
+			}
 		}
 		waves.push_back(ss.str());
 	}
+}
 
+void MapEditor::WriteToFile()
+{
+	std::ofstream file;
+	file.open("Image//" + s_mapName + ".csv");
+	for (int i = tileMap.i_rows - 1; i >= 0; --i)
+	{
+		for (int j = 0; j < tileMap.i_columns; ++j)
+		{
+			int num = tileMap.screenMap[j][i];
+			if (num != 0)
+				file << num;
+			if (j != tileMap.i_columns - 1)
+				file << ',';
+		}
+		file << '\n';
+	}
+	file << "e,\n";
+	for (vector<string>::iterator it = waves.begin(); it != waves.end(); ++it)
+	{
+		file << *it;
+	}
+
+	file.close();
 }
 
 void MapEditor::Exit()
 {
+	WriteToFile();
 	//clean Up scene Variables
-
 }

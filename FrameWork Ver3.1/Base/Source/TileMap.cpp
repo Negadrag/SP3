@@ -65,10 +65,16 @@ bool TileMap::LoadMap(std::fstream &file)
 	}
 	file.close();
 
-
+	i_columns = 1; // x - axis
+	for (int i = 0; i < v_rows[0].size(); ++i)
+	{
+		if (v_rows[0][i] == ',')
+		{
+			i_columns++;
+		}
+	}
 	// SCREENMAP
-	i_columns = v_rows[0].size() - 1; // x-axis
-	i_rows = v_rows.size() - 1; // y-axis
+	i_rows = v_rows.size(); // y-axis
 
 	screenMap = new int*[i_columns];
 	for (int i = 0; i < i_columns; ++i)
@@ -183,7 +189,7 @@ void TileMap::FillPath(Node *node, int nodeNumber)
 				{
 					for (int i = node->coords.y; i < node->next->coords.y; ++i)
 					{
-						if (screenMap[(int)node->coords.x][i] == 0 || (screenMap[(int)node->coords.x][i] == nodeNumber && nodeNumber != 1))
+						if (screenMap[(int)node->coords.x][i] <= 0 || (screenMap[(int)node->coords.x][i] == nodeNumber && nodeNumber != 1))
 						{
 							screenMap[(int)node->coords.x][i] = -1;
 						}
@@ -193,7 +199,7 @@ void TileMap::FillPath(Node *node, int nodeNumber)
 				{
 					for (int i = node->coords.y; i > node->next->coords.y; --i)
 					{
-						if (screenMap[(int)node->coords.x][i] == 0 || (screenMap[(int)node->coords.x][i] == nodeNumber && nodeNumber != 1))
+						if (screenMap[(int)node->coords.x][i] <= 0 || (screenMap[(int)node->coords.x][i] == nodeNumber && nodeNumber != 1))
 						{
 							screenMap[(int)node->coords.x][i] = -1;
 						}
@@ -206,7 +212,7 @@ void TileMap::FillPath(Node *node, int nodeNumber)
 				{
 					for (int i = node->coords.x; i < node->next->coords.x; ++i)
 					{
-						if (screenMap[i][(int)node->coords.y] == 0 || (screenMap[i][(int)node->coords.y] == nodeNumber && nodeNumber != 1))
+						if (screenMap[i][(int)node->coords.y] <= 0 || (screenMap[i][(int)node->coords.y] == nodeNumber && nodeNumber != 1))
 						{
 							screenMap[i][(int)node->coords.y] = -1;
 						}
@@ -216,7 +222,7 @@ void TileMap::FillPath(Node *node, int nodeNumber)
 				{
 					for (int i = node->coords.x; i > node->next->coords.x; --i)
 					{
-						if (screenMap[i][(int)node->coords.y] == 0 || (screenMap[i][(int)node->coords.y] == nodeNumber && nodeNumber != 1))
+						if (screenMap[i][(int)node->coords.y] <= 0 || (screenMap[i][(int)node->coords.y] == nodeNumber && nodeNumber != 1))
 						{
 							screenMap[i][(int)node->coords.y] = -1;
 						}

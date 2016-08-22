@@ -867,10 +867,6 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView.a[0]);
 
-
-		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
-		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP], 1, GL_TRUE, &lightDepthMVP.a[0]);
-
 		//load material
 		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);
 		glUniform3fv(m_parameters[U_MATERIAL_DIFFUSE], 1, &mesh->material.kDiffuse.r);

@@ -29,7 +29,7 @@ void Cursor::Update(OrthoCamera &camera, const TileMap &tileMap, const double &d
 
 	Vector3 center = camera.target;
 
-	worldCoords.Set(center.x + worldX / Xunits + 0.5f, center.y + worldY / Yunits + 0.5f);
+	worldCoords.Set(center.x + worldX / Xunits + 0.5f, center.y + worldY / Yunits);
 }
 
 void Cursor::EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY, float speed)

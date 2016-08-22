@@ -37,10 +37,12 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	this->enemyList = enemyList;
 }
 
+static float debounce = 0.f;
+
 void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt)
 {
 	Cursor::Update(camera, tileMap, dt);
-
+	debounce += (float)dt;
 	if (!bLButtonState) // If LClick is NOT being held down
 	{
 		checkPositionX = (int)Math::Clamp(worldCoords.x, 0.f, (float)tileMap.i_columns - 1.f);
@@ -125,8 +127,6 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 bool CursorControl::SpawnTower(string name)
 {
 	Tower *tempTower;
-	/*if (name == string("Arrow"))
-		tempTower = new ArrowTower();*/
 	if (name == string("Arrow"))
 		tempTower = new PoisonTower();
 	else if (name == string("Cannon"))
@@ -165,28 +165,29 @@ void CursorControl::TowerButtons(float worldX,float worldY)
 		{
 			text = "Arrow Tower (Q)";
 			mesh = GEO_ARROWTOWER;
-			offset.Set(-15.f, -15.f);
-			//cost = ArrowTower::cost;
+			offset.Set(-15.f, 5.f);
+			
+			cost = ArrowTower::cost;
 		}
 		else if (i == 1)
 		{
 			text = "Cannon Tower (W)";
 			mesh = GEO_CANNONTOWER;
-			offset.Set(5.f, -15.f);
+			offset.Set(5.f, 5.f);
 			cost = CannonTower::cost;
 		}
 		else if (i == 2)
 		{
 			text = "Ice Tower (E)";
 			mesh = GEO_ICETOWER;
-			offset.Set(5.f, 5.f);
+			offset.Set(-15.f, -15.f);
 			cost = IceTower::cost;
 		}
 		else if (i == 3)
 		{
 			text = "Another One (R)";
 			mesh = GEO_ARROWTOWER;
-			offset.Set(-15.f, 5.f);
+			offset.Set(5.f, -15.f);
 		}
 
 		spawnTower[i].SetText(text);
@@ -228,10 +229,13 @@ void CursorControl::AOEDisplay(Tower* tower)
 
 void CursorControl::HotKeys(const TileMap &tileMap)
 {
+	float cooldown = 0.5f;
+
 	if (Application::IsKeyPressed('Q'))
 	{
-		if (bLButtonState)
+		if (bLButtonState && debounce > cooldown)
 		{
+			debounce = 0.f;
 			SpawnTower("Arrow");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
@@ -245,8 +249,9 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('W'))
 	{
-		if (bLButtonState)
+		if (bLButtonState && debounce > cooldown)
 		{
+			debounce = 0.f;
 			SpawnTower("Cannon");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
@@ -260,8 +265,9 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('E'))
 	{
-		if (bLButtonState)
+		if (bLButtonState && debounce > cooldown)
 		{
+			debounce = 0.f;
 			SpawnTower("Ice");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
@@ -275,8 +281,9 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('R'))
 	{
-		if (bLButtonState)
+		if (bLButtonState && debounce > cooldown)
 		{
+			debounce = 0.f;
 			SpawnTower("Arrow");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;

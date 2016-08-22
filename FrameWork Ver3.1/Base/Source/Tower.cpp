@@ -188,7 +188,7 @@ void Tower::Fire(double dt)
 	Enemy* enemy = SearchEnemy(GetEnemyInRange());
 	if (enemy == nullptr || enemy->b_isActive == false)
 	{
-		f_rotationToBe = 0.f;
+		f_rotationToBe = 270.f;
 		return;
 	}
 	if (b_rotateWhenFire == true)

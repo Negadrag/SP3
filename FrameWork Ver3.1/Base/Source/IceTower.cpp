@@ -70,12 +70,10 @@ IceTower::~IceTower()
 void IceTower::Update(double dt)
 {
 	Tower::Update(dt);
-
+	particleGenerator.Update(dt);
 	child.rotation.z += 90.f * dt;
 	if (child.rotation.z > 360.f)
 		child.rotation.z -= 360.f;
-
-	particleGenerator.Update(dt);
 }
 
 
