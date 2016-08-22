@@ -786,12 +786,14 @@ void CaptureGame::CreateScene()
 	grass.rotation.Set(-90, 0, 0);
 	grass.rotation.Set(0, 0, 0);
 	grass.b_shadows = false;
+	grass.b_lightEnabled = false;
 
 	/*forValor.meshID = GEO_FOR_VALOR;
 	forValor.pos.Set(0, 0.5, 0);
 	forValor.scale.Set(2000, 2000, 2000);
 	forValor.rotation.Set(-90, 0, 0);
 	forValor.rotation.Set(0, 0, 0);
+	forValor.b_shadows = false;
 	*/
 
 
@@ -931,7 +933,7 @@ void CaptureGame::Exit()
 	GameObject *go = m_goList.back();
 	delete go;
 	m_goList.pop_back();
-	}*/
+	}
 
 	for (vector<GameObject*>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{

@@ -4,14 +4,14 @@ Projectile::Projectile(GEOMETRY_TYPE ID) :
 vel(0, 0, 0)
 {
 	this->meshID = ID;// ID;
-
+	this->b_shadows = false;
 }
 
 Projectile::Projectile(Vector3 pos, Vector3 scale)
 {
 	this->pos = pos;
 	this->scale = scale;
-
+	this->b_shadows = false;
 }
 
 Projectile::~Projectile()

@@ -33,6 +33,9 @@ TileMap::~TileMap()
 bool TileMap::LoadMap(std::fstream &file)
 {
 	vector<string> v_rows; // temporary vector to store rows
+	vector<string> wave;
+
+	bool waveInput = false;
 
 	if (!file.is_open())
 	{
@@ -44,10 +47,25 @@ bool TileMap::LoadMap(std::fstream &file)
 	{
 		string temp;
 		std::getline(file, temp,'\n');	
-		v_rows.push_back(temp);
+		if (temp[0] == 'e')
+		{
+			waveInput = true;
+			continue;
+		}
+		if (waveInput)
+		{
+			wave.push_back(temp);
+		}
+		else
+		{
+			v_rows.push_back(temp);
+		}
+		
 	}
 	file.close();
 
+
+	// SCREENMAP
 	i_columns = v_rows[0].size() - 1; // x-axis
 	i_rows = v_rows.size() - 1; // y-axis
 
@@ -81,11 +99,15 @@ bool TileMap::LoadMap(std::fstream &file)
 			{
 				AddNode(root, i, j);
 				FindNextNode(2, i, j);
-				return true;
 			}
 		}
 	}
-	return true;
+
+	// WAVES
+
+	waves.SetRoot(root);
+
+	return LoadWaves(wave);
 }
 
 static int numCounter = 1;
@@ -186,4 +208,55 @@ void TileMap::FillPath(Node *node, int nodeNumber)
 			}
 		}
 	}
+}
+
+bool TileMap::LoadWaves(vector<string> wave)
+{
+	for (vector<string>::iterator it = wave.begin(); it != wave.end(); ++it)
+	{
+		std::stringstream ss(*it);
+
+		bool checkRevolutions = false;
+		bool checkFrequency = false;
+
+		int revolutions = 0;
+		int frequency = 0;
+
+		vector<ENEMY_TYPE> enemyType;
+
+		while (ss.good())
+		{
+			string temp2;
+			std::getline(ss, temp2, ',');
+
+			if (temp2 == "")
+			{
+				continue;
+			}
+			if (temp2 == string("/"))
+			{
+				checkRevolutions = true;
+			}
+			else if (temp2 == string("MINION") && !checkRevolutions && !checkFrequency)
+			{
+				enemyType.push_back(MINION);
+			}
+			else if (!checkRevolutions && !checkFrequency) // default enemy
+			{
+				enemyType.push_back(MINION);
+			}
+			else if (checkRevolutions && !checkFrequency)
+			{
+				revolutions = atoi(temp2.c_str());
+				checkFrequency = true;
+			}
+			else if (checkRevolutions && checkFrequency)
+			{
+				frequency = atoi(temp2.c_str());
+			}
+		}
+
+		waves.AddWave(enemyType, revolutions, frequency);
+	}
+	return true;
 }

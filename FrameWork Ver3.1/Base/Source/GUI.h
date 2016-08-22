@@ -28,6 +28,8 @@ public:
 	void SetText(string s);
 	string GetText();
 
+	Vector3 textColor;
+
 	void SetTextSize(float size);
 	float GetTextSize();
 
@@ -37,7 +39,11 @@ public:
 	int m_sceneID;
 
 	int functionID; // To check what function will run on click
+
+	void SetParent(GUI* parent);
+	GUI* GetParent();
 private:
+	GUI* parent;
 	string Text;
 	float f_textSize;
 };

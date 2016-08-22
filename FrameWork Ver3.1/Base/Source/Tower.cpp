@@ -12,11 +12,12 @@ Tower::Tower()
 	p_projectileCount = 0;
 	p_maxProjectile = 0;
 	this->pos.SetZero();
-	this->b_rotateWhenFire = true;
 	enemyList = nullptr;
 	heightOffset.SetZero();
 	strategy = NEAREST_ENEMY;
 	s_name = "";
+	this->b_rotateWhenFire = true;
+	this->f_rotationToBe = 0.f;
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
@@ -37,6 +38,7 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	strategy = FIRST_ENEMY;
 	s_name = "";
 	this->b_rotateWhenFire = true;
+	this->f_rotationToBe = 0.f;
 }
 
 Tower::~Tower()
@@ -72,6 +74,11 @@ void Tower::SetRange(float r)
 	this->atkRange = r;
 }
 
+float Tower::GetRange()
+{
+	return atkRange;
+}
+
 
 Projectile* Tower::GetProjectile()
 {
@@ -105,60 +112,45 @@ void Tower::Update(double dt)
 		p_spawnTimer = 0.f;
 		Fire(dt);
 	}
-
-}
-
-void Tower::Fire(double dt)
-{
-	Enemy* enemy = SearchEnemy(GetEnemyInRange());
-	if (enemy == nullptr || enemy->b_isActive == false)
-	{
-		return;
-	}
 	if (b_rotateWhenFire == true)
 	{
-		float rotationSpeed = 720.f;
-		Vector3 view = enemy->pos - this->pos;
-		float rotationZToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
-
-		rotationZToBe = round(rotationZToBe);
-
-		if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
+		float rotationSpeed = 450.f;
+		if (this->rotation.z != f_rotationToBe)// to rotate the model if the enemy is turning
 		{
-			if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
+			if (f_rotationToBe < 0) // making sure f_rotationToBe is withiin 0 and 360
 			{
-				rotationZToBe += 360;
+				f_rotationToBe += 360;
 			}
-			else if (rotationZToBe == -0)
+			else if (f_rotationToBe == -0)
 			{
-				rotationZToBe = 0;
+				f_rotationToBe = 0;
 			}
 
-			if (abs(rotationZToBe - rotation.z) <180)
+			if (abs(f_rotationToBe - rotation.z) <180)
 			{
-				if (rotationZToBe > rotation.z)
+				if (f_rotationToBe > rotation.z)
 				{
 
 					rotation.z += rotationSpeed * dt;
-					if (rotationZToBe < rotation.z)
+					if (f_rotationToBe < rotation.z)
 					{
-						rotation.z = rotationZToBe;
+						rotation.z = f_rotationToBe;
 					}
 
 
 				}
-				else if (rotationZToBe < rotation.z)
+				else if (f_rotationToBe < rotation.z)
 				{
 					rotation.z -= rotationSpeed * dt;
-					if (rotationZToBe > rotation.z)
+					if (f_rotationToBe > rotation.z)
 					{
-						rotation.z = rotationZToBe;
+						rotation.z = f_rotationToBe;
 					}
 				}
 			}
 			else
 			{
-				if (rotationZToBe > rotation.z)
+				if (f_rotationToBe > rotation.z)
 				{
 
 					rotation.z -= rotationSpeed * dt;
@@ -172,7 +164,7 @@ void Tower::Fire(double dt)
 					}
 
 				}
-				else if (rotationZToBe < rotation.z)
+				else if (f_rotationToBe < rotation.z)
 				{
 					rotation.z += rotationSpeed * dt;
 					if (rotation.z >360.f)
@@ -182,6 +174,25 @@ void Tower::Fire(double dt)
 				}
 			}
 		}
+	}
+}
+
+void Tower::Fire(double dt)
+{
+	Enemy* enemy = SearchEnemy(GetEnemyInRange());
+	if (enemy == nullptr || enemy->b_isActive == false)
+	{
+		f_rotationToBe = 0.f;
+		return;
+	}
+	if (b_rotateWhenFire == true)
+	{
+		Vector3 view = enemy->pos - this->pos;
+		f_rotationToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
+
+		f_rotationToBe = round(f_rotationToBe);
+
+		
 	}
 	Projectile* projectile = GetProjectile();
 	projectile->meshID = this->projectile_meshID;

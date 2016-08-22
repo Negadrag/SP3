@@ -13,6 +13,7 @@ public:
 
 	bool upgrade;
 
+	static int cost;
 
 private:
 

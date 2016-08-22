@@ -54,12 +54,14 @@ private:
 	float angle;
 	float fps;
 	bool b_initScene;
-	float f_ballSpawnDebounceTimer;
+
 	ParticleGenerator whitebang;
 	ParticleGenerator bluebang;
 	ParticleGenerator redbang;
 	ParticleGenerator yellowbang;
 	ParticleGenerator greenbang;
+
+	float f_ballSpawnDebounceTimer;
 
 protected:
 

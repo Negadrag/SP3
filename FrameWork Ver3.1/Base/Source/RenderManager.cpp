@@ -169,7 +169,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-	meshList[GEO_RING] = MeshBuilder::GenerateRing("ring", Color(1, 0, 1), 36, 1, 0.5f);
+	meshList[GEO_RING] = MeshBuilder::GenerateRing("ring", Color(1, 1, 0), 36, 1, 0.99f);
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 0.5f);
 	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 1), 18, 36, 0.5f);
 	meshList[GEO_CONE] = MeshBuilder::GenerateSphere("cone", Color(0.5f, 1, 0.3f), 18, 36, 0.5f);
@@ -194,10 +194,11 @@ void RenderManager::InitMesh()
 	//meshList[GEO_SKYPLANE]->textureArray[1] = LoadTGA("Image//sunsetsky.tga");
 
 	// Load the ground mesh and texture
-	meshList[GEO_GRASS_DARKGREEN] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//Ground.tga");
-	//meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
-	//meshList[GEO_GRASS_LIGHTGREEN]->textureArray[0] = LoadTGA("Image//grass_lightgreen.tga");
+	meshList[GEO_GRASS] = MeshBuilder::GenerateQuad("GRASS", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRASS]->textureArray[0] = LoadTGA("Image//grass.tga");
+
+	meshList[GEO_GRASS_DARKGREEN] = MeshBuilder::GenerateQuad("GRASS", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//ground.tga");
 
 	//for terrain
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerain("Terrain", "Image//heightmap4.raw");
@@ -240,6 +241,12 @@ void RenderManager::InitMesh()
 	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW.tga");
+
+	meshList[GEO_ICETOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ICE.obj");
+	meshList[GEO_ICETOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
+	meshList[GEO_ICETOWER]->material.kShininess = 0.8f;
+	meshList[GEO_ICETOWER]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
+
 	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
@@ -273,8 +280,7 @@ RenderManager* RenderManager::GetInstance()
 
 void RenderManager::RenderObj(Renderable* obj) 
 {
-	
-	if (obj->scale.IsZero()) 
+	if (obj->scale.IsZero())
 	{
 		return;
 	}
@@ -432,7 +438,6 @@ void RenderManager::RenderMain(int sceneID)
 				RenderObj((*it));
 			}
 	}
-
 }
 
 void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) {
@@ -528,7 +533,6 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
-
 }
 
 
@@ -662,8 +666,6 @@ void RenderManager::Update(double dt)
 	{
 		viewStack.LoadIdentity();
 	}
-	//lights[0].position.Set(-6, 30, 300);
-	// Camera matrix	
 }
 
 void RenderManager::AddRenderable(Renderable* entity)
@@ -769,6 +771,7 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, flo
 
 	if (lightEnabled)
 	{
+
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
 		modelView = viewStack.Top() * modelStack.Top();
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
@@ -820,9 +823,12 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
 	modelStack.Translate(position.x, position.y, position.z);
+	
 	modelStack.Rotate(rotation.z, 0, 0, 1);
-	modelStack.Rotate(rotation.x, 1, 0, 0);
 	modelStack.Rotate(rotation.y, 0, 1, 0);
+	modelStack.Rotate(rotation.x, 1, 0, 0);
+	
+	
 	modelStack.Scale(scale.x, scale.y, scale.z);
 
 	Mtx44 MVP, modelView, modelView_inverse_transpose;

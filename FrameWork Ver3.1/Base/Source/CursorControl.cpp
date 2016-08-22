@@ -6,18 +6,27 @@
 
 CursorControl::CursorControl()
 {
+
+	bLButtonState = false;
 	checkPositionX = 0;
 	checkPositionY = 0;
 
-	for (int i = 0; i < 4; ++i)
-	{
-		spawnTower[i] = nullptr;
-	}
+	aoe.b_isActive = false;
+	aoe.b_lightEnabled = false;
+	aoe.meshID = GEO_RING;
+	aoe.rotation.Set(90, 0, 0);
+	aoe.b_shadows = false;
+
+	towerName.SetText("Name");
+	towerName.SetTextSize(3);
+	towerName.position.Set(40,55);
+	towerName.b_isActive = false;
+	towerName.b_buttonActive = false;
+	towerName.b_textActive = true;
 }
 
 CursorControl::~CursorControl()
 {
-
 }
 
 void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
@@ -45,20 +54,42 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 
 	worldCoords.Set(center.x + worldX/Xunits + 0.5f,center.y + worldY/Yunits + 0.5f);
 
-	static bool bLButtonState = false;
-
-	if (!bLButtonState)
+	if (!bLButtonState) // If LClick is being held down
 	{
 		checkPositionX = (int)Math::Clamp(worldCoords.x, 0.f, (float)tileMap.i_columns - 1.f);
 		checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
 
-		camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 3.f, camera.defaultOrtho);
-
-		EdgePanning(dt, camera, worldX, worldY);
+		camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 2.f, camera.defaultOrtho); // scrolling in and out
+		EdgePanning(dt, camera, worldX, worldY, 6 * tileMap.i_rows);
 	}
+	else // If LClick is not being held down
+	{
+		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		if (button != nullptr)
+		{
+			button->rotation.y = Math::Wrap(button->rotation.y + 50.f * (float)dt,0.f,360.f);
+		}
+	}
+
+
+	Tower* tower = FindTower(checkPositionX, checkPositionY);
+	if (tower != nullptr)
+	{
+		towerName.SetText(tower->s_name);
+		towerName.position.x = 40 - tower->s_name.size() / 1.5f;
+		towerName.b_isActive = true;
+	}
+	else
+	{
+		towerName.b_isActive = false;
+	}
+
+	AOEDisplay(tower);
+
+
+	CameraBounds(camera);
 	
-	
-	if (!bLButtonState && Application::IsMousePressed(0) && tileMap.screenMap[checkPositionX][checkPositionY] == -2)
+	if (!bLButtonState && Application::IsMousePressed(0) && tileMap.screenMap[checkPositionX][checkPositionY] == -2) // -2 being a empty slot
 	{
 		bLButtonState = true;
 		TowerButtons(worldX, worldY);
@@ -85,10 +116,8 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 
 		for (int i = 0; i < 4; ++i)
 		{
-			if (spawnTower[i] != nullptr)
-			{
-				delete spawnTower[i];
-			}
+			spawnTower[i].b_isActive = false;
+			towerCosts[i].b_isActive = false;
 		}
 	}
 
@@ -132,79 +161,126 @@ Tower* CursorControl::FindTower(int x, int y)
 
 void CursorControl::TowerButtons(float worldX,float worldY)
 {
-	spawnTower[0] = new GUI("Arrow Tower");
-	spawnTower[0]->meshID = GEO_ARROWTOWER;
-	spawnTower[0]->scale.Set(3, 3, 3);
-	spawnTower[0]->rotation.Set(-90, 0, 0);
-	spawnTower[0]->SetTextSize(2);
-	spawnTower[0]->meshOffset.Set(5, 3, 0);
-	spawnTower[0]->position.Set((worldX + 0.5f) * 80 - 20.f, (worldY + 0.5f) * 60 - 15.f);
-	spawnTower[0]->buttonSize.Set(17, 17);
-	spawnTower[0]->functionID = 0;
+	for (int i = 0; i < 4; ++i)
+	{
+		string text;
+		GEOMETRY_TYPE mesh;
+		Vector2 offset;
+		int cost = 0;
+		if (i == 0)
+		{
+			text = "Arrow Tower";
+			mesh = GEO_ARROWTOWER;
+			offset.Set(-15.f, -15.f);
+			cost = ArrowTower::cost;
+		}
+		else if (i == 1)
+		{
+			text = "Cannon Tower";
+			mesh = GEO_CANNONTOWER;
+			offset.Set(5.f, -15.f);
+			cost = CannonTower::cost;
+		}
+		else if (i == 2)
+		{
+			text = "Ice Tower";
+			mesh = GEO_ICETOWER;
+			offset.Set(5.f, 5.f);
+		}
+		else if (i == 3)
+		{
+			text = "Another One";
+			mesh = GEO_ARROWTOWER;
+			offset.Set(-15.f, 5.f);
+		}
 
-	spawnTower[1] = new GUI("Mortar Tower");
-	spawnTower[1]->meshID = GEO_CANNONTOWER;
-	spawnTower[1]->scale.Set(3, 3, 3);
-	spawnTower[1]->rotation.Set(-90, 0, 0);
-	spawnTower[1]->SetTextSize(2);
-	spawnTower[1]->meshOffset.Set(5, 3, 0);
-	spawnTower[1]->position.Set((worldX + 0.5f) * 80 + 5.f, (worldY + 0.5f) * 60 - 15.f);
-	spawnTower[1]->buttonSize.Set(17, 17);
-	spawnTower[1]->functionID = 1;
+		spawnTower[i].SetText(text);
+		spawnTower[i].meshID = mesh;
+		spawnTower[i].scale.Set(3, 3, 3);
+		spawnTower[i].rotation.Set(-90, 0, 0);
+		spawnTower[i].SetTextSize(2);
+		spawnTower[i].meshOffset.Set(5, 3, 0);
+		spawnTower[i].position.Set((worldX + 0.5f) * 80 + offset.x, (worldY + 0.5f) * 60 + offset.y);
+		spawnTower[i].buttonSize.Set(12, 17);
+		spawnTower[i].functionID = i;
+		spawnTower[i].b_isActive = true;
 
-	spawnTower[2] = new GUI("Some other Tower");
-	spawnTower[2]->meshID = GEO_ARROWTOWER;
-	spawnTower[2]->scale.Set(3, 3, 3);
-	spawnTower[2]->rotation.Set(-90, 0, 0);
-	spawnTower[2]->SetTextSize(2);
-	spawnTower[2]->meshOffset.Set(5, 3, 0);
-	spawnTower[2]->position.Set((worldX + 0.5f) * 80 + 5.f, (worldY + 0.5f) * 60 + 5.f);
-	spawnTower[2]->buttonSize.Set(17, 17);
-	spawnTower[2]->functionID = 2;
-
-	spawnTower[3] = new GUI("Another Tower");
-	spawnTower[3]->meshID = GEO_ARROWTOWER;
-	spawnTower[3]->scale.Set(3, 3, 3);
-	spawnTower[3]->rotation.Set(-90, 0, 0);
-	spawnTower[3]->SetTextSize(2);
-	spawnTower[3]->meshOffset.Set(5, 3, 0);
-	spawnTower[3]->position.Set((worldX + 0.5f) * 80 - 20.f, (worldY + 0.5f) * 60 + 5.f);
-	spawnTower[3]->buttonSize.Set(17, 17);
-	spawnTower[3]->functionID = 3;
+		std::ostringstream os;
+		os << "Cost: " << cost;
+		towerCosts[i].SetText(os.str());
+		towerCosts[i].SetParent(&spawnTower[i]);
+		towerCosts[i].textColor.Set(1, 1, 0);
+		towerCosts[i].SetTextSize(2);
+		towerCosts[i].b_buttonActive = false;
+		towerCosts[i].position.Set(0, -2);
+		towerCosts[i].b_isActive = true;
+	}
 }
 
-void CursorControl::EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY)
+void CursorControl::EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY, float speed)
 {
-	float speed = 60;
-
 	if (worldX > 0.4)
 	{
-		float offset = Math::Clamp(camera.target.x + (worldX - 0.4f) * speed * (float)dt, camera.defaultTarget.x - camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y), camera.defaultTarget.x + camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y));
-		offset = offset - camera.target.x;
-		camera.target.x += offset;
-		camera.position.x += offset;
-
+		camera.target.x += (worldX - 0.4f) * speed * (float)dt;
+		camera.position.x += (worldX - 0.4f) * speed * (float)dt;
 	}
-	else if (worldX < -0.4)
+	if (worldX < -0.4)
 	{
-		float offset = Math::Clamp(camera.target.x + (worldX + 0.4f) * speed * (float)dt, camera.defaultTarget.x - camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y), camera.defaultTarget.x + camera.defaultOrtho * (float)(camera.aspectRatio.x / camera.aspectRatio.y));
-		offset = offset - camera.target.x;
-		camera.target.x += offset;
-		camera.position.x += offset;
+		camera.target.x += (worldX + 0.4f) * speed * (float)dt;
+		camera.position.x += (worldX + 0.4f) * speed * (float)dt;
 	}
 
 	if (worldY > 0.4)
 	{
-		float offset = Math::Clamp(camera.target.y + (worldY - 0.4f) * speed * (float)dt, camera.defaultTarget.y - camera.defaultOrtho, camera.defaultTarget.y + camera.defaultOrtho);
-		offset = offset - camera.target.y;
-		camera.position.y += offset;
-		camera.target.y += offset;
+		camera.target.y += (worldY - 0.4f) * speed * (float)dt;
+		camera.position.y += (worldY - 0.4f) * speed * (float)dt;
 	}
-	else if (worldY < -0.4)
+	if (worldY < -0.4)
 	{
-		float offset = Math::Clamp(camera.target.y + (worldY + 0.4f) * speed * (float)dt, camera.defaultTarget.y - camera.defaultOrtho, camera.defaultTarget.y + camera.defaultOrtho);
-		offset = offset - camera.target.y;
-		camera.position.y += offset;
+		camera.target.y += (worldY + 0.4f) * speed * (float)dt;
+		camera.position.y += (worldY + 0.4f) * speed * (float)dt;
+	}
+}
+
+void CursorControl::CameraBounds(OrthoCamera &camera)
+{
+	if (camera.target.x > camera.defaultTarget.x + (camera.defaultOrtho - camera.orthoSize) * (camera.aspectRatio.x / camera.aspectRatio.y))
+	{
+		float offset = camera.defaultTarget.x + (camera.defaultOrtho - camera.orthoSize) * (camera.aspectRatio.x / camera.aspectRatio.y) - camera.target.x;
+		camera.target.x += offset;
+		camera.position.x += offset;
+	}
+	else if (camera.target.x < camera.defaultTarget.x - (camera.defaultOrtho - camera.orthoSize) * (camera.aspectRatio.x / camera.aspectRatio.y))
+	{
+		float offset = camera.defaultTarget.x - (camera.defaultOrtho - camera.orthoSize) * (camera.aspectRatio.x / camera.aspectRatio.y) - camera.target.x;
+		camera.target.x += offset;
+		camera.position.x += offset;
+	}
+
+	if (camera.target.y > camera.defaultTarget.y + (camera.defaultOrtho - camera.orthoSize))
+	{
+		float offset = camera.defaultTarget.y + (camera.defaultOrtho - camera.orthoSize) - camera.target.y;
 		camera.target.y += offset;
+		camera.position.y += offset;
+	}
+	else if (camera.target.y < camera.defaultTarget.y - (camera.defaultOrtho - camera.orthoSize))
+	{
+		float offset = camera.defaultTarget.y - (camera.defaultOrtho - camera.orthoSize) - camera.target.y;
+		camera.target.y += offset;
+		camera.position.y += offset;
+	}
+}
+
+void CursorControl::AOEDisplay(Tower* tower)
+{
+	if (tower != nullptr)
+	{
+		aoe.b_isActive = true;
+		aoe.pos.Set(tower->pos.x, tower->pos.y, 0.5f);
+		aoe.scale.Set(tower->GetRange(), tower->GetRange(), tower->GetRange());
+	}
+	else
+	{
+		aoe.b_isActive = false;
 	}
 }

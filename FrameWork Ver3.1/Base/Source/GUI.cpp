@@ -16,6 +16,8 @@ GUI::GUI(string s)
 	m_sceneID = 0;
 	functionID = 0;
 	GUIManager::GetInstance()->AddGUI(this);
+	parent = nullptr;
+	textColor.Set(1, 1, 1);
 }
 
 GUI::~GUI()
@@ -41,4 +43,14 @@ void GUI::SetTextSize(float size)
 float GUI::GetTextSize()
 {
 	return f_textSize;
+}
+
+void GUI::SetParent(GUI* parent)
+{
+	this->parent = parent;
+}
+
+GUI* GUI::GetParent()
+{
+	return parent;
 }

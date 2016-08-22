@@ -1,6 +1,8 @@
 #include "ArrowTower.h"
 #include "SingleTarget.h"
 
+int ArrowTower::cost = 5;
+
 ArrowTower::ArrowTower()
 :Tower()
 {
@@ -12,7 +14,7 @@ ArrowTower::ArrowTower()
 	this->p_speed = 10.f;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = NEAREST_ENEMY;
+	this->strategy = FIRST_ENEMY;
 	upgrade = false;
 	s_name = "Arrow Tower";
 }

@@ -1,12 +1,14 @@
 #include "CannonTower.h"
 #include "SplashTarget.h"
 
+int CannonTower::cost = 8;
+
 CannonTower::CannonTower()
 :Tower()
 {
 	this->meshID = GEO_CANNONTOWER;
-	SetAtkDmg(50);
-	SetRange(30);
+	SetAtkDmg(10);
+	SetRange(5.f);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
 	this->projectile_meshID = GEO_CANNON;

@@ -58,6 +58,7 @@ void SceneManager::Update(double dt)
 	{
 		dt = 0.1;
 	}
+	//dt *= 2;
 	Scene* currScene;
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{

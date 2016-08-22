@@ -11,6 +11,7 @@ public:
 
 	virtual Projectile* GetProjectile();
 
+	static int cost;
 
 private:
 
