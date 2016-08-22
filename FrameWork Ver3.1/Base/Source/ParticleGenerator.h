@@ -33,14 +33,14 @@ public:
 	Vector3 minVel;
 	Vector3 maxVel;
 	float f_maxDist;
-
+	int i_particleCount;
 	float f_lifeTime;
 	int i_spawnAmount;//number to spawn per time
 private:
 	GEOMETRY_TYPE meshID;
 	float f_frequency;
 	float f_spawnTimer;
-	int i_particleCount;
+	//int i_particleCount;
 	int i_maxParticles;
 	
 	

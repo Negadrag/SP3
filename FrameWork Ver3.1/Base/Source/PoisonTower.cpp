@@ -1,30 +1,29 @@
-#include "ArrowTower.h"
+#include "PoisonTower.h"
 #include "SingleTarget.h"
 
-int ArrowTower::cost = 5;
-
-ArrowTower::ArrowTower()
+PoisonTower::PoisonTower()
 :Tower()
 {
 	this->i_level = 1;
-	this->meshID = GEO_ARROWTOWER;
+	this->meshID = GEO_POISONBASE;
 	SetAtkDmg(10);
 	SetRange(5);
-	SetSpdRate(2.f);
+	SetSpdRate(0.5f);
 	this->p_speed = 10.f;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
-	s_name = "Arrow Tower";
+	s_name = "Poison Tower";
+	child.meshID = GEO_POISONMOB;
 }
 
-ArrowTower::~ArrowTower()
+PoisonTower::~PoisonTower()
 {
 
 }
 
 
-Projectile* ArrowTower::GetProjectile()
+Projectile* PoisonTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
@@ -34,10 +33,12 @@ Projectile* ArrowTower::GetProjectile()
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
 			return projectile;
+
 		}
 	}
 	for (unsigned i = 0; i <= 10; ++i)
 	{
+
 		Projectile* projectile = new SingleTarget(projectile_meshID);
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
@@ -46,12 +47,12 @@ Projectile* ArrowTower::GetProjectile()
 	return projectileList.back();
 }
 
-void ArrowTower::Update(double dt)
+void PoisonTower::Update(double dt)
 {
 	Tower::Update(dt);
 }
 
-void ArrowTower::LevelUp()
+void PoisonTower::LevelUp()
 {
 	if (this->i_level >= 2)
 	{

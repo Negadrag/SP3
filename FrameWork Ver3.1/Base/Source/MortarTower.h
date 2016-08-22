@@ -1,19 +1,18 @@
-#ifndef ARROWTOWER_H
-#define ARROWTOWER_H
+#ifndef MORTARTOWER_H
+#define MORTARTOWER_H
 
 #include "Tower.h"
 
-class ArrowTower : public Tower
+class MortarTower : public Tower
 {
 public:
-	ArrowTower();
-	~ArrowTower();
+	MortarTower();
+	~MortarTower();
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
 	virtual void LevelUp();
 
-	static int cost;
 private:
 
 };

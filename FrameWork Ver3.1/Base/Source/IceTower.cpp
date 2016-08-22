@@ -1,24 +1,28 @@
-#include "CannonTower.h"
+#include "IceTower.h"
 #include "SplashTarget.h"
 
-int CannonTower::cost = 8;
+int IceTower::cost = 5;
 
-CannonTower::CannonTower()
+IceTower::IceTower()
 :Tower()
 {
 	this->i_level = 1;
-	this->meshID = GEO_CANNONTOWER;
+	this->pos.SetZero();
+	this->meshID = GEO_ICEBASE;
 	SetAtkDmg(10);
-	SetRange(5.f);
+	SetRange(30);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = LOWEST_HEALTH;
-	s_name = "Cannon Tower";
+	this->strategy = FIRST_ENEMY;
+	s_name = "Ice Tower";
+	this->b_rotateWhenFire = false;
+	child.meshID = GEO_ICECRYSTAL;
+
 }
 
-Projectile* CannonTower::GetProjectile()
+Projectile* IceTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
@@ -39,24 +43,28 @@ Projectile* CannonTower::GetProjectile()
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
 	}
-	
+
 	return GetProjectile();
 }
 
 
-CannonTower::~CannonTower()
+IceTower::~IceTower()
 {
 
 }
 
-void CannonTower::Update(double dt)
+void IceTower::Update(double dt)
 {
 	Tower::Update(dt);
 
+	child.rotation.z += 90.f * dt;
+	if (child.rotation.z > 360.f)
+		child.rotation.z -= 360.f;
+
 }
 
 
-void CannonTower::LevelUp()
+void IceTower::LevelUp()
 {
 	if (this->i_level >= 2)
 	{

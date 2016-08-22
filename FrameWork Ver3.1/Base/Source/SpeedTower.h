@@ -11,9 +11,7 @@ public:
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-
-	bool upgrade;
-
+	virtual void LevelUp();
 
 private:
 

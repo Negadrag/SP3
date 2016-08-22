@@ -3,6 +3,7 @@
 Tower::Tower()
 : Renderable()
 {
+	i_level = 1;
 	p_spawnTimer = 0.f;
 	towerCost = 0.f;
 	atkDamage = 0.f;
@@ -18,11 +19,14 @@ Tower::Tower()
 	s_name = "";
 	this->b_rotateWhenFire = true;
 	this->f_rotationToBe = 0.f;
+	child.meshID = GEO_NULL;
+	child.SetParent(this);
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 : Renderable()
 {
+	i_level = 1;
 	p_spawnTimer = 0.f;
 	this->pos = pos;
 	this->scale = scale;
@@ -39,6 +43,8 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	s_name = "";
 	this->b_rotateWhenFire = true;
 	this->f_rotationToBe = 0.f;
+	child.meshID = GEO_NULL;
+	child.SetParent(this);
 }
 
 Tower::~Tower()
@@ -112,10 +118,10 @@ void Tower::Update(double dt)
 		p_spawnTimer = 0.f;
 		Fire(dt);
 	}
-	if (b_rotateWhenFire == true)
+	if (b_rotateWhenFire == true && child.meshID != GEO_NULL)
 	{
 		float rotationSpeed = 450.f;
-		if (this->rotation.z != f_rotationToBe)// to rotate the model if the enemy is turning
+		if (child.rotation.z != f_rotationToBe)// to rotate the model if the enemy is turning
 		{
 			if (f_rotationToBe < 0) // making sure f_rotationToBe is withiin 0 and 360
 			{
@@ -126,50 +132,50 @@ void Tower::Update(double dt)
 				f_rotationToBe = 0;
 			}
 
-			if (abs(f_rotationToBe - rotation.z) <180)
+			if (abs(f_rotationToBe - child.rotation.z) <180)
 			{
-				if (f_rotationToBe > rotation.z)
+				if (f_rotationToBe > child.rotation.z)
 				{
 
-					rotation.z += rotationSpeed * dt;
-					if (f_rotationToBe < rotation.z)
+					child.rotation.z += rotationSpeed * dt;
+					if (f_rotationToBe < child.rotation.z)
 					{
-						rotation.z = f_rotationToBe;
+						child.rotation.z = f_rotationToBe;
 					}
 
 
 				}
-				else if (f_rotationToBe < rotation.z)
+				else if (f_rotationToBe < child.rotation.z)
 				{
-					rotation.z -= rotationSpeed * dt;
-					if (f_rotationToBe > rotation.z)
+					child.rotation.z -= rotationSpeed * dt;
+					if (f_rotationToBe > child.rotation.z)
 					{
-						rotation.z = f_rotationToBe;
+						child.rotation.z = f_rotationToBe;
 					}
 				}
 			}
 			else
 			{
-				if (f_rotationToBe > rotation.z)
+				if (f_rotationToBe > child.rotation.z)
 				{
 
-					rotation.z -= rotationSpeed * dt;
-					if (rotation.z < 0.f) // wind around if negative numbers
+					child.rotation.z -= rotationSpeed * dt;
+					if (child.rotation.z < 0.f) // wind around if negative numbers
 					{
-						rotation.z += 360;
+						child.rotation.z += 360;
 					}
-					else if (rotation.z == -0.f) // negate negative 0;
+					else if (child.rotation.z == -0.f) // negate negative 0;
 					{
-						rotation.z = 0;
+						child.rotation.z = 0;
 					}
 
 				}
-				else if (f_rotationToBe < rotation.z)
+				else if (f_rotationToBe < child.rotation.z)
 				{
-					rotation.z += rotationSpeed * dt;
-					if (rotation.z >360.f)
+					child.rotation.z += rotationSpeed * dt;
+					if (child.rotation.z >360.f)
 					{
-						rotation.z -= 360;
+						child.rotation.z -= 360;
 					}
 				}
 			}
@@ -352,4 +358,9 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 
 
 	return enemy;
+}
+
+void Tower::LevelUp()
+{
+
 }

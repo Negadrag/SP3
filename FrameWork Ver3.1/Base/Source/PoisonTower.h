@@ -1,19 +1,18 @@
-#ifndef ARROWTOWER_H
-#define ARROWTOWER_H
+#ifndef POISONTOWER_H
+#define POISONTOWER_H
 
 #include "Tower.h"
 
-class ArrowTower : public Tower
+class PoisonTower : public Tower
 {
 public:
-	ArrowTower();
-	~ArrowTower();
+	PoisonTower();
+	~PoisonTower();
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
 	virtual void LevelUp();
 
-	static int cost;
 private:
 
 };

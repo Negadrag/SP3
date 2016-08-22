@@ -34,6 +34,7 @@ public:
 	void Fire(double dt);
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
+	virtual void LevelUp();
 
 	Enemy* SearchEnemy(vector<Enemy*> enemyVec);
 
@@ -42,6 +43,7 @@ public:
 	
 	Vector3 heightOffset;
 	vector<Enemy*>* enemyList;
+	Renderable child;
 
 	string s_name;
 private:

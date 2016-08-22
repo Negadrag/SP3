@@ -4,7 +4,7 @@
 SpeedTower::SpeedTower()
 :Tower()
 {
-	//this->level = T_TOWER1;
+	this->i_level = 1;
 	this->meshID = GEO_SPEEDTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
@@ -13,7 +13,6 @@ SpeedTower::SpeedTower()
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;
-	upgrade = false;
 }
 
 SpeedTower::~SpeedTower()
@@ -49,15 +48,20 @@ Projectile* SpeedTower::GetProjectile()
 void SpeedTower::Update(double dt)
 {
 	Tower::Update(dt);
-	//if (upgrade)
-	//{
-	//	level = T_TOWER2;
-	//}
-	//if (level == T_TOWER2)
-	//{
 
-	//	SetRange(10);
-	//}
+}
 
-	//std::cout << this->atkDamage << std::endl;
+void SpeedTower::LevelUp()
+{
+	if (this->i_level >= 2)
+	{
+		i_level = 2;
+	}
+	this->i_level++;
+	this->atkDamage += 5;
+	this->atkRange += 1;
+	if (atkRange > 7)
+	{
+		atkRange = 7;
+	}
 }

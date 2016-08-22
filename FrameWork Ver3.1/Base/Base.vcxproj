@@ -30,6 +30,7 @@
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\GUIManager.cpp" />
     <ClCompile Include="Source\IceMonster.cpp" />
+    <ClCompile Include="Source\IceTower.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
@@ -37,11 +38,13 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Minion.cpp" />
+    <ClCompile Include="Source\MortarTower.cpp" />
     <ClCompile Include="Source\Node.cpp" />
     <ClCompile Include="Source\OrthoCamera.cpp" />
     <ClCompile Include="Source\ParticleGenerator.cpp" />
     <ClCompile Include="Source\Particles.cpp" />
     <ClCompile Include="Source\PlayerInfo.cpp" />
+    <ClCompile Include="Source\PoisonTower.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\Renderable.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
@@ -82,6 +85,7 @@
     <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\GUIManager.h" />
     <ClInclude Include="Source\IceMonster.h" />
+    <ClInclude Include="Source\IceTower.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
@@ -90,11 +94,13 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\Minion.h" />
+    <ClInclude Include="Source\MortarTower.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\OrthoCamera.h" />
     <ClInclude Include="Source\ParticleGenerator.h" />
     <ClInclude Include="Source\Particles.h" />
     <ClInclude Include="Source\PlayerInfo.h" />
+    <ClInclude Include="Source\PoisonTower.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\Renderable.h" />
     <ClInclude Include="Source\RenderManager.h" />
