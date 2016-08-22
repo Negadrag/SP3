@@ -1,14 +1,11 @@
 #ifndef CURSORCONTROL_H
 #define CURSORCONTROL_H
 
-#include "OrthoCamera.h"
-#include "TileMap.h"
+#include "Cursor.h"
 #include "Tower.h"
-#include "MatrixStack.h"
-#include "RenderManager.h"
 #include "GUI.h"
 
-class CursorControl
+class CursorControl : public Cursor
 {
 public:
 	CursorControl();
@@ -16,10 +13,8 @@ public:
 	void Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList);
 	void Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt);
 	int checkPositionX, checkPositionY;
-	Vector3 worldCoords;
 	bool SpawnTower(string name);
 	Tower* FindTower(int x,int y);
-	void CameraBounds(OrthoCamera &camera);
 	bool bLButtonState;
 	Renderable aoe;
 
@@ -31,8 +26,8 @@ public:
 	vector<Enemy*> *enemyList;
 private:
 	void TowerButtons(float worldX,float worldY);
-	void EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY, float speed);
 	void AOEDisplay(Tower* tower);
+	void HotKeys(const TileMap &tileMap);
 };
 
 #endif
