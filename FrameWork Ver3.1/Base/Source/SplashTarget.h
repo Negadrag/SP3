@@ -12,6 +12,10 @@ public:
 	SplashTarget(GEOMETRY_TYPE meshID);
 	~SplashTarget();
 
+	vector<Enemy*>* enemyVec;
+
+	float f_range;
+
 	virtual void Update(double dt);
 private:
 

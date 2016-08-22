@@ -28,9 +28,10 @@ public:
 	void SetAtkDmg(float ad);
 	void SetSpdRate(float sr);
 	void SetRange(float r);
+	float GetRange();
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	virtual void Fire();
+	void Fire(double dt);
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
 	virtual void LevelUp();
@@ -63,7 +64,9 @@ protected:
 	float newAngle;
 	int p_projectileCount;
 	int p_maxProjectile;
-
+	//for tower rotation when firing
+	bool b_rotateWhenFire;
+	float f_rotationToBe;//desired rotation calculated in fire function
 };
 #endif
 

@@ -24,26 +24,14 @@ void Assignment::Init()
 	testMap.LoadMap(std::fstream("Image//MapDesign.csv"));
 	//this->m_sceneID = 1;
 
-	wave.SetRoot(testMap.root);
-	wave.AddWave({ MINION }, 0, 1);
-	wave.AddWave({ MINION,MINION }, 5, 2);
-	wave.AddWave({ MINION }, 100, 4);
-	wave.AddWave({ MINION }, 100, 4);
-	wave.AddWave({ MINION }, 100, 4);
-	wave.AddWave({ MINION }, 100, 4);
-	wave.AddWave({ MINION }, 100, 4);
-	wave.AddWave({ MINION }, 100, 4);
-
-	wave.player = &(this->player);
+	testMap.waves.player = &(this->player);
 
 	Node* currentNode = testMap.root;
 	while (currentNode != nullptr)
 	{
 		std::cout << currentNode->coords.x << "," << currentNode->coords.y << std::endl;
 		currentNode = currentNode->next;
-
 	}
-
 
 	camera.Init(Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
@@ -59,7 +47,7 @@ void Assignment::Init()
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 
-	cursor.Init(&towerList,wave.GetEnemyList());
+	cursor.Init(&towerList,testMap.waves.GetEnemyList());
 }
 
 void Assignment::Update(double dt)
@@ -84,7 +72,7 @@ void Assignment::Update(double dt)
 		SceneManager::GetInstance()->ChangeScene(3, true);
 	}
 
-	wave.Update(dt);
+	testMap.waves.Update(dt);
 	fps = (float)(1.f / dt);
 
 	cursor.Update(camera, testMap, dt);
@@ -110,14 +98,11 @@ void Assignment::Render()
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
+			else if (testMap.screenMap[j][i] == 0)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+			}
 		}
-	}
-
-	Tower* tower = cursor.FindTower(cursor.checkPositionX, cursor.checkPositionY);
-
-	if (tower != nullptr)
-	{
-		RenderManager::GetInstance()->RenderTextOnScreen(tower->s_name, Color(1, 1, 1), 3, 40 - tower->s_name.size()/2.f, 55);
 	}
 
 	//On screen text

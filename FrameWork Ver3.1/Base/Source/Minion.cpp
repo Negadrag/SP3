@@ -4,13 +4,13 @@ Minion::Minion() :Enemy()
 {
 	this->meshID = GEO_BASIC;
 	this->f_movSpeed = 3.f;
-	this->i_health = 100;
-	this->i_damage = 2;
+	this->i_health = 50;
+	this->i_damage = 1;
 	this->i_defence = 0;
 	this->b_rotateUp = true;
 	this->f_rotateSpeed = 90.f;
 	this->f_clampRotate = 20.f;
-	this->i_currency = 1;
+	i_currency = 1;
 }
 
 Minion::Minion(Vector3 pos, Node* root) :Enemy(pos, root)
@@ -18,7 +18,7 @@ Minion::Minion(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->meshID = GEO_BASIC;
 	this->f_movSpeed = 3.f;
 	this->i_health = 50;
-	this->i_damage = 2;
+	this->i_damage = 1;
 	this->i_defence = 0;
 	this->b_rotateUp = true;
 	this->f_rotateSpeed = 90.f;

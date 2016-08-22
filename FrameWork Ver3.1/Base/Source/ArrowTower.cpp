@@ -1,6 +1,8 @@
 #include "ArrowTower.h"
 #include "SingleTarget.h"
 
+int ArrowTower::cost = 5;
+
 ArrowTower::ArrowTower()
 :Tower()
 {
@@ -8,7 +10,7 @@ ArrowTower::ArrowTower()
 	this->meshID = GEO_ARROWTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
-	SetSpdRate(0.5f);
+	SetSpdRate(2.f);
 	this->p_speed = 10.f;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
@@ -32,12 +34,10 @@ Projectile* ArrowTower::GetProjectile()
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
 			return projectile;
-
 		}
 	}
 	for (unsigned i = 0; i <= 10; ++i)
 	{
-
 		Projectile* projectile = new SingleTarget(projectile_meshID);
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
@@ -64,4 +64,3 @@ void ArrowTower::LevelUp()
 	{
 		atkRange = 7;
 	}
-}

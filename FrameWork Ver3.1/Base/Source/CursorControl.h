@@ -19,15 +19,20 @@ public:
 	Vector3 worldCoords;
 	bool SpawnTower(string name);
 	Tower* FindTower(int x,int y);
-	
+	void CameraBounds(OrthoCamera &camera);
+	bool bLButtonState;
+	Renderable aoe;
 
-	GUI* spawnTower[4];
+	GUI spawnTower[4];
+	GUI towerCosts[4];
+	GUI towerName;
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
 private:
 	void TowerButtons(float worldX,float worldY);
-	void EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY);
+	void EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY, float speed);
+	void AOEDisplay(Tower* tower);
 };
 
 #endif

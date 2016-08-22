@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include "Node.h"
+#include "WaveManager.h"
 
 using std::string;
 using std::vector;
@@ -22,8 +23,10 @@ public:
 	int i_rows, i_columns;
 
 	Node *root;
+	WaveManager waves;
 
 	bool LoadMap(std::fstream &file);
+	bool LoadWaves(vector<string> wave);
 	void AddNode(Node *node,int x, int y);
 	bool FindNextNode(int number, int x, int y);
 	void FillPath(Node *node, int nodeNumber);

@@ -260,6 +260,14 @@
     </ClCompile>
     <ClCompile Include="Source\MortarTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    <ClCompile Include="Source\IceMonster.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpeedMonster.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TankMonster.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -418,6 +426,14 @@
     </ClInclude>
     <ClInclude Include="Source\MortarTower.h">
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    <ClInclude Include="Source\IceMonster.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpeedMonster.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TankMonster.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

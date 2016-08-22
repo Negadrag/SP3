@@ -8,6 +8,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue)
 	mass(1.f),
 	vel(Vector3(0,0,0))
 {
+	this->b_shadows = false;
 }
 
 GameObject::~GameObject()

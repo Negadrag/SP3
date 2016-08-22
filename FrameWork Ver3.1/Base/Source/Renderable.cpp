@@ -8,7 +8,7 @@ Renderable::Renderable() :Entity()
 	b_lightEnabled = true;
 	b_billboarded = false;
 	b_3DbillBoard = false;
-	b_shadows = false;
+	b_shadows = true;
 	b_fog = false;
 	this->parent = nullptr;
 	RenderManager::GetInstance()->AddRenderable(this);

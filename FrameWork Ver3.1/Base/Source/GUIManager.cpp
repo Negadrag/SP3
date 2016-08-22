@@ -55,13 +55,18 @@ void GUIManager::RenderAllGUI()
 		GUI* gui = *it;
 		if (gui->b_isActive)
 		{
+			Vector3 offset(0,0,0);
+			if (gui->GetParent() != nullptr)
+			{
+				offset.Set(gui->GetParent()->position.x,gui->GetParent()->position.y,0);
+			}
 			if (gui->meshID != GEO_NULL)
 			{
-				RenderManager::GetInstance()->RenderMeshOnScreen(gui->meshID, true, Vector3(gui->position.x + gui->meshOffset.x, gui->position.y + gui->meshOffset.y, gui->meshOffset.z), gui->scale, gui->rotation);
+				RenderManager::GetInstance()->RenderMeshOnScreen(gui->meshID, true, Vector3(gui->position.x + gui->meshOffset.x, gui->position.y + gui->meshOffset.y, gui->meshOffset.z) + offset, gui->scale, gui->rotation);
 			}
 			if (gui->b_textActive)
 			{
-				RenderManager::GetInstance()->RenderTextOnScreen(gui->GetText(), Color(1, 1, 1), gui->GetTextSize(), gui->position.x + gui->textOffset.x, gui->position.y + gui->textOffset.y);
+				RenderManager::GetInstance()->RenderTextOnScreen(gui->GetText(), Color(gui->textColor.x, gui->textColor.y, gui->textColor.z), gui->GetTextSize(), gui->position.x + gui->textOffset.x + offset.x, gui->position.y + gui->textOffset.y + offset.y);
 			}
 		}
 	}

@@ -32,7 +32,7 @@ private:
 	~Application();
 
 	// Declare the window width and height as constant integer
-	const static int m_window_deadzone = 0;
+	const static int m_window_deadzone = 30;
 	const static int m_window_width = 1600;
 	const static int m_window_height = 900;
 	//Declare a window object

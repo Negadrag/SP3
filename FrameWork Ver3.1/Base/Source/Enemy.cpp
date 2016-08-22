@@ -133,7 +133,7 @@ void Enemy::Update(double dt)
 		if (player)
 		{
 			player->i_health -= this->i_damage;
-			player->i_currency += this->i_currency;
+			
 		}
 		this->b_isActive = false;
 	}
@@ -149,6 +149,7 @@ void Enemy::ReceiveDamage(int damage)
 	this->i_health -= dmg;
 	if (i_health <= 0)
 	{
+		player->i_currency += this->i_currency;
 		this->b_isActive = false;
 	}
 }

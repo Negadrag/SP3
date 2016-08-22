@@ -42,7 +42,7 @@ private:
 	float windmillRotateAngle;
 
 	Renderable grass;
-	Renderable forValor;
+	//Renderable forValor;
 
 	//Capture Game Objects
 	GameObject* ren_ball;
@@ -54,14 +54,17 @@ private:
 	float angle;
 	float fps;
 	bool b_initScene;
-	Terrain terrain;
+
 	ParticleGenerator whitebang;
 	ParticleGenerator bluebang;
 	ParticleGenerator redbang;
 	ParticleGenerator yellowbang;
 	ParticleGenerator greenbang;
 
+	float f_ballSpawnDebounceTimer;
+
 protected:
+
 	std::vector<GameObject *> m_goList;
 	float m_speed;
 	Vector3 m_gravity;
@@ -87,8 +90,6 @@ protected:
 	int resource4;
 
 	int bonuscount;
-
-
 };
 
 #endif
