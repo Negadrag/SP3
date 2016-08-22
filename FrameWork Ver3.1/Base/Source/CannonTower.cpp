@@ -20,14 +20,16 @@ CannonTower::CannonTower()
 	this->particleGenerator.SetType(GEO_ICEPARTICLE);
 	this->particleGenerator.SetFrequency(25);
 	this->particleGenerator.SetCap(1000);
-	this->particleGenerator.f_lifeTime = 0.3f;
-	this->particleGenerator.minVel.Set(0, 0, 0);
-	this->particleGenerator.maxVel.Set(0, 0, 0);
-	this->particleGenerator.scale.Set(0.07f, 0.07f, 0.07f);
+	this->particleGenerator.f_lifeTime = 1.f;
+	this->particleGenerator.minVel.Set(-2.f,-2.f,0.f);
+	this->particleGenerator.maxVel.Set(2.f, 2.f, 0.f);
+	this->particleGenerator.scale.Set(0.1f,0.1f,0.1f);
 	this->particleGenerator.i_particleCount = 0;
-	this->particleGenerator.f_maxDist = 2.f;
+	this->particleGenerator.f_maxDist = 3.f;
 	this->particleGenerator.isActive = false;
-	this->particleGenerator.i_spawnAmount = 5;
+	this->particleGenerator.i_spawnAmount = 15;
+
+	
 }
 
 Projectile* CannonTower::GetProjectile()

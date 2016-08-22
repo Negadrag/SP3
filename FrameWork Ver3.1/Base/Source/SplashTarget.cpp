@@ -14,24 +14,7 @@ SplashTarget::~SplashTarget()
 void SplashTarget::Update(double dt)
 {
 	Vector3 d;
-	if (meshID == GEO_CANNON)
-	{
-		f_particleSpawnTimer += dt;
-		if (f_particleSpawnTimer > 1.f / iceparticle->f_frequency)
-		{
-			f_particleSpawnTimer = 0.f;
-			Mtx44 rotate;
-			rotate.SetToRotation(45.f, 0, 0, 1);
-
-			iceparticle->minVel = rotate * -vel.Normalized();
-			rotate.SetToIdentity();
-			rotate.SetToRotation(-45.f, 0, 0, 1);
-			iceparticle->maxVel = rotate * -vel.Normalized();
-
-			iceparticle->pos = this->pos;
-			iceparticle->SpawnParticle();
-		}
-	}
+	
 
 	//if (this->b_isActive)
 	//{
@@ -59,7 +42,16 @@ void SplashTarget::Update(double dt)
 	float distanceToCheck = 0.04f * p_speed;
 	if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 	{
+		if (meshID == GEO_CANNON)
+		{
 
+				f_particleSpawnTimer = 0.f;
+
+				iceparticle->pos = this->pos;
+				iceparticle->pos.z = 2.f;
+				iceparticle->SpawnParticle();
+
+		}
 		//this->iceparticle.isActive = false;
 		this->b_isActive = false;
 		if (enemyVec != nullptr)
