@@ -33,6 +33,7 @@ public:
 	virtual void Fire();
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
+	virtual void LevelUp();
 
 	Enemy* SearchEnemy(vector<Enemy*> enemyVec);
 

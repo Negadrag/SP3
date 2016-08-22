@@ -1,13 +1,13 @@
-#ifndef SPEEDTOWER_H
-#define SPEEDTOWER_H
+#ifndef POISONTOWER_H
+#define POISONTOWER_H
 
 #include "Tower.h"
 
-class SpeedTower : public Tower
+class PoisonTower : public Tower
 {
 public:
-	SpeedTower();
-	~SpeedTower();
+	PoisonTower();
+	~PoisonTower();
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);

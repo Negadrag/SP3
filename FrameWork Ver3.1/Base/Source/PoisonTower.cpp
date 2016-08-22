@@ -1,27 +1,28 @@
-#include "SpeedTower.h"
+#include "PoisonTower.h"
 #include "SingleTarget.h"
 
-SpeedTower::SpeedTower()
+PoisonTower::PoisonTower()
 :Tower()
 {
 	this->i_level = 1;
-	this->meshID = GEO_SPEEDTOWER;
+	this->meshID = GEO_POISONTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
-	SetSpdRate(4.f);
+	SetSpdRate(0.5f);
 	this->p_speed = 10.f;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = NEAREST_ENEMY;
+	this->strategy = FIRST_ENEMY;
+	s_name = "Arrow Tower";
 }
 
-SpeedTower::~SpeedTower()
+PoisonTower::~PoisonTower()
 {
 
 }
 
 
-Projectile* SpeedTower::GetProjectile()
+Projectile* PoisonTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
@@ -45,13 +46,12 @@ Projectile* SpeedTower::GetProjectile()
 	return projectileList.back();
 }
 
-void SpeedTower::Update(double dt)
+void PoisonTower::Update(double dt)
 {
 	Tower::Update(dt);
-
 }
 
-void SpeedTower::LevelUp()
+void PoisonTower::LevelUp()
 {
 	if (this->i_level >= 2)
 	{

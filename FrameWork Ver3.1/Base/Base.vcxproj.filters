@@ -237,9 +237,6 @@
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source Files\System\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SpeedTower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ArrowTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClCompile>
@@ -250,6 +247,18 @@
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClCompile>
     <ClCompile Include="Source\SplashTarget.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpeedTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PoisonTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IceTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MortarTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClCompile>
   </ItemGroup>
@@ -386,9 +395,6 @@
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\System\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SpeedTower.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SingleTarget.h">
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClInclude>
@@ -399,6 +405,18 @@
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClInclude>
     <ClInclude Include="Source\SplashTarget.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpeedTower.h">
+      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PoisonTower.h">
+      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IceTower.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MortarTower.h">
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClInclude>
   </ItemGroup>

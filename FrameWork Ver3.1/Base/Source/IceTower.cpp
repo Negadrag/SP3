@@ -1,27 +1,22 @@
-#include "SpeedTower.h"
-#include "SingleTarget.h"
+#include "IceTower.h"
+#include "SplashTarget.h"
 
-SpeedTower::SpeedTower()
+IceTower::IceTower()
 :Tower()
 {
 	this->i_level = 1;
-	this->meshID = GEO_SPEEDTOWER;
+	//this->meshID = GEO_ICETOWER;
 	SetAtkDmg(10);
-	SetRange(5);
-	SetSpdRate(4.f);
-	this->p_speed = 10.f;
-	this->projectile_meshID = GEO_ARROW;
+	SetRange(30);
+	SetSpdRate(0.5f);
+	this->p_speed = 5.f;
+	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = NEAREST_ENEMY;
+	this->strategy = LOWEST_HEALTH;
+	s_name = "Ice Tower";
 }
 
-SpeedTower::~SpeedTower()
-{
-
-}
-
-
-Projectile* SpeedTower::GetProjectile()
+Projectile* IceTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
@@ -37,7 +32,7 @@ Projectile* SpeedTower::GetProjectile()
 	for (unsigned i = 0; i <= 10; ++i)
 	{
 
-		Projectile* projectile = new SingleTarget(projectile_meshID);
+		Projectile* projectile = new SplashTarget(projectile_meshID);
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
 	}
@@ -45,13 +40,20 @@ Projectile* SpeedTower::GetProjectile()
 	return projectileList.back();
 }
 
-void SpeedTower::Update(double dt)
+
+IceTower::~IceTower()
+{
+
+}
+
+void IceTower::Update(double dt)
 {
 	Tower::Update(dt);
 
 }
 
-void SpeedTower::LevelUp()
+
+void IceTower::LevelUp()
 {
 	if (this->i_level >= 2)
 	{

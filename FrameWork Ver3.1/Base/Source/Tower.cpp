@@ -3,6 +3,7 @@
 Tower::Tower()
 : Renderable()
 {
+	i_level = 1;
 	p_spawnTimer = 0.f;
 	towerCost = 0.f;
 	atkDamage = 0.f;
@@ -21,6 +22,7 @@ Tower::Tower()
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 : Renderable()
 {
+	i_level = 1;
 	p_spawnTimer = 0.f;
 	this->pos = pos;
 	this->scale = scale;
@@ -271,4 +273,9 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 
 
 	return enemy;
+}
+
+void Tower::LevelUp()
+{
+
 }
