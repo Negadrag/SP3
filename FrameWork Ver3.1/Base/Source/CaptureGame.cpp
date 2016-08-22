@@ -776,34 +776,6 @@ void CaptureGame::CollisionResponse(GameObject* go, GameObject* other)
 	}
 }
 
-//void CaptureGame::RenderGO(GameObject *go)
-//{
-//	float angle = Math::RadianToDegree(atan2(go->normal.y, go->normal.x));
-//
-//	switch (go->type)
-//	{
-//	case GameObject::GO_BALL:
-//		ren_ball.meshID = GEO_SPHERE;
-//		ren_ball.pos.Set(go->pos.x, go->pos.y, go->pos.z);
-//		ren_ball.scale.Set(go->scale.x, go->scale.y, go->scale.z);
-//		break;
-//
-//	case GameObject::GO_WALL:
-//		ren_wall.meshID = GEO_BLUECUBE;
-//		ren_wall.pos.Set(go->pos.x, go->pos.y, go->pos.z);
-//		ren_wall.rotation.Set(0, 0, angle);
-//		ren_wall.scale.Set(go->scale.x, go->scale.y, go->scale.z);
-//		break;
-//
-//	case GameObject::GO_PILLAR:
-//		ren_pillar.meshID = GEO_SPHERE;
-//		ren_pillar.pos.Set(go->pos.x, go->pos.y, go->pos.z);
-//		ren_pillar.rotation.Set(0, 0, angle);
-//		ren_pillar.scale.Set(go->scale.x, go->scale.y, go->scale.z);
-//		break;
-//	}
-//}
-
 void CaptureGame::CreateScene()
 {
 	Mtx44 rotate;
@@ -813,13 +785,14 @@ void CaptureGame::CreateScene()
 	grass.scale.Set(2000, 2000, 2000);
 	grass.rotation.Set(-90, 0, 0);
 	grass.rotation.Set(0, 0, 0);
+	grass.b_shadows = false;
 
-	forValor.meshID = GEO_FOR_VALOR;
+	/*forValor.meshID = GEO_FOR_VALOR;
 	forValor.pos.Set(0, 0.5, 0);
 	forValor.scale.Set(2000, 2000, 2000);
 	forValor.rotation.Set(-90, 0, 0);
 	forValor.rotation.Set(0, 0, 0);
-	
+	*/
 
 
 	for (int i = 0; i < 6; i++)
@@ -934,40 +907,6 @@ void CaptureGame::CreateScene()
 	pad->pos.Set(0, -620, 0);
 	pad->scale.Set(200, 50, 15);
 	pad->rotation.Set(0, 0, 0);
-
-
-
-
-
-
-
-	//wall->rotation.Set(0, 0, 45);
-	//Mtx44 rotate;
-	//rotate.SetToRotation(-45, 0, 0, 1);
-	//wall->normal = rotate* wall->normal;
-
-	/*GameObject* wall2 = FetchGO(GameObject::GO_WALL);
-	wall2->pos.Set(-230 + (i * 150), 50 + (j * -300), 0);
-	wall2->scale.Set(30, 30, 15);
-	wall2->rotation.Set(0, 0, -45);
-	rotate.SetToIdentity();
-	rotate.SetToRotation(45, 0, 0, 1);
-	wall2->normal = rotate* wall2->normal;*/
-
-
-
-	/*ren_ball = new GameObject();
-	ren_ball->type = GameObject::GO_BALL;
-	ren_ball->meshID = GEO_SPHERE;
-	ren_ball->pos.Set(0, 0, 0);
-	ren_ball->scale.Set(1, 1, 1);
-	m_goList.push_back(ren_ball);
-
-	GameObject * wall = FetchGO();
-	ren_wall->type = GameObject::GO_WALL;
-	ren_wall->pos.Set(0, -300, 0);
-	ren_wall->scale.Set(105, 15, 15);
-	ren_wall->b_isActive = true;*/
 
 }
 

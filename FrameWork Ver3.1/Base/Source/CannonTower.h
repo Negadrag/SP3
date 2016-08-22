@@ -10,7 +10,6 @@ public:
 	~CannonTower();
 
 	virtual Projectile* GetProjectile();
-	virtual void Update(double dt);
 
 
 private:

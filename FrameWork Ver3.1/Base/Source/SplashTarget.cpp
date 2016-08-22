@@ -2,7 +2,7 @@
 
 SplashTarget::SplashTarget(GEOMETRY_TYPE ID) : Projectile(ID)
 {
-
+	f_range = 2.f;
 }
 
 SplashTarget::~SplashTarget()
@@ -38,7 +38,19 @@ void SplashTarget::Update(double dt)
 	if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 	{
 		this->b_isActive = false;
-		enemy->ReceiveDamage(i_damage);
+		if (enemyVec)
+		{
+			for (vector<Enemy*>::iterator it = (*enemyVec).begin(); it != (*enemyVec).end(); ++it)
+			{
+				if ((*it)->b_isActive == true)
+				{
+					if (((*it)->pos - this->pos).LengthSquared() < f_range*f_range)
+					(*it)->ReceiveDamage(i_damage/2);
+				}
+			}
+		}
+		
+		enemy->ReceiveDamage(i_damage/2);
 		//std::cout << d.LengthSquared() << std::endl;
 	}
 

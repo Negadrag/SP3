@@ -113,9 +113,9 @@ void RenderManager::Init()
 	m_parameters[U_SHADOW_COLOR_TEXTURE2] = glGetUniformLocation(m_gPassShaderID, "colorTexture[2]");
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(-3, -3, 3);
+	lights[0].position.Set(-0.5,-0.5,1);
 	lights[0].color.Set(1, 1, 1);
-	lights[0].power = 1.5f;
+	lights[0].power = 1.2f;
 	lights[0].kC = 1.0f;
 	lights[0].kL = 0.01f;
 	lights[0].kQ = 0.001f;
@@ -221,7 +221,12 @@ void RenderManager::InitMesh()
 	//meshList[GEO_SPEED]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
 	meshList[GEO_TANKY] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
 	meshList[GEO_TANKY]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
-	
+	meshList[GEO_ICE] = MeshBuilder::GenerateOBJ("Basic", "OBJ/ice.obj");
+	meshList[GEO_ICE]->textureArray[0] = LoadTGA("Image//ice.tga");
+	meshList[GEO_ICE]->material.kShininess = 0.8f;
+	meshList[GEO_ICE]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
+
+
 	meshList[GEO_PATH] = MeshBuilder::GenerateQuad("Path", Color(1, 1, 1), 1.f);
 	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//Path.tga");
 
@@ -269,7 +274,8 @@ RenderManager* RenderManager::GetInstance()
 void RenderManager::RenderObj(Renderable* obj) 
 {
 	
-	if (obj->scale.IsZero()) {
+	if (obj->scale.IsZero()) 
+	{
 		return;
 	}
 	if (obj->meshID == GEO_NULL)
@@ -291,13 +297,16 @@ void RenderManager::RenderObj(Renderable* obj)
 	}
 	modelStack.PushMatrix();
 		modelStack.Translate(obj->pos.x, obj->pos.y, obj->pos.z);
-		if (obj->b_3DbillBoard == true) {
+		if (obj->b_3DbillBoard == true) 
+		{
 			Vector3 dist = camera->position - obj->pos;
 			Vector3 forward = Vector3(0, 0, 1);
 			Vector3 axisOfRotation = forward.Cross(dist);
 			float angleOfRotation = Math::RadianToDegree(acos(forward.Dot(Vector3(dist)) / dist.Length()));
 			modelStack.Rotate(angleOfRotation, axisOfRotation.x, axisOfRotation.y, axisOfRotation.z);
-		} else {
+		} 
+		else 
+		{
 			modelStack.Rotate(obj->rotation.z, 0, 0, 1);
 			modelStack.Rotate(obj->rotation.x, 1, 0, 0);
 			modelStack.Rotate(obj->rotation.y, 0, 1, 0);
@@ -323,7 +332,7 @@ void RenderManager::RenderGPass(int sceneID)
 	m_lightDepthFBO.BindForWriting();
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);	
 	glUseProgram(m_gPassShaderID);
 	
 	viewStack.LoadIdentity();
@@ -334,21 +343,22 @@ void RenderManager::RenderGPass(int sceneID)
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
 	{
 		float width = camera->orthoSize * camera->aspectRatio.x / camera->aspectRatio.y;
-		m_lightDepthProj.SetToOrtho(-width*2,width*2,-camera->orthoSize*2, camera->orthoSize*2, -camera->farPlane*2, camera->farPlane*2);
+		//m_lightDepthProj.SetToOrtho(-width*2,width*2,-camera->orthoSize*2, camera->orthoSize*2, -30, 30);
+		m_lightDepthProj.SetToOrtho(-20, 20, -30, 30, -30, 30);
 	}
 	else
 	{
 		m_lightDepthProj.SetToPerspective(90, 1.f, 0.1, 20);
 	}
 	m_lightDepthView.SetToLookAt(lights[0].position.x, lights[0].position.y, lights[0].position.z, 0, 0, 0, 0, 1, 0);
-	/*
+	
 	for (list<Renderable*>::iterator it = renderableList[sceneID].begin(); it != renderableList[sceneID].end(); ++it)
 	{
 		if ((*it)->b_isActive == true && (*it)->b_Render == true && (*it)->b_shadows == true)
 		{
 			RenderObj((*it));
 		}
-	}*/
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -395,7 +405,8 @@ void RenderManager::RenderMain(int sceneID)
 	}
 	projectionStack.LoadMatrix(perspective);
 	
-	for (unsigned int n = 0; n < sizeof(lights)/sizeof(*lights); ++n) {
+	for (unsigned int n = 0; n < sizeof(lights)/sizeof(*lights); ++n)
+	{
 		glUniform1i(m_parameters[U_LIGHT0_TYPE + n], lights[n].type);
 		if (lights[n].type == Light::LIGHT_DIRECTIONAL) {
 			Vector3 lightDir(lights[n].position.x, lights[n].position.y, lights[n].position.z);
@@ -429,23 +440,29 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 	Mesh* mesh = meshList[meshID];
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
-	if (m_renderPass == RENDER_PASS_PRE) {
+	if (m_renderPass == RENDER_PASS_PRE)
+	{
 		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
 		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP_GPASS], 1, GL_FALSE, &lightDepthMVP.a[0]);
 
-		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
-			if (mesh->textureArray[i] > 0) {
+		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+		{
+			if (mesh->textureArray[i] > 0) 
+			{
 				glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 1);
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, mesh->textureArray[i]);
 				glUniform1i(m_parameters[U_COLOR_TEXTURE + i], i);
-			} else {
+			}
+			else 
+			{
 				glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 0);
 			}
 		}
 		mesh->Render();
 
-		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
+		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+		{
 			if (mesh->textureArray[i] > 0) {
 				glBindTexture(GL_TEXTURE_2D, 0);
 			}
@@ -469,7 +486,8 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 	modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
 	glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView_inverse_transpose.a[0]);
 
-	if (enableLight) {
+	if (enableLight) 
+	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
 
 		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
@@ -480,25 +498,32 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 		glUniform3fv(m_parameters[U_MATERIAL_DIFFUSE], 1, &mesh->material.kDiffuse.r);
 		glUniform3fv(m_parameters[U_MATERIAL_SPECULAR], 1, &mesh->material.kSpecular.r);
 		glUniform1f(m_parameters[U_MATERIAL_SHININESS], mesh->material.kShininess);
-	} else {
+	} 
+	else
+	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	}
 
-	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
-		if (mesh->textureArray[i] > 0) {
+	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+	{
+		if (mesh->textureArray[i] > 0) 
+		{
 			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 1);
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, mesh->textureArray[i]);
 			glUniform1i(m_parameters[U_COLOR_TEXTURE + i], i);
-		} else {
+		} else 
+		{
 			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 0);
 		}
 	}
 
 	mesh->Render();
 
-	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
-		if (mesh->textureArray[i] > 0) {
+	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+	{
+		if (mesh->textureArray[i] > 0) 
+		{
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
@@ -507,7 +532,8 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 }
 
 
-void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight, bool fog) {
+void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight, bool fog) 
+{
 
 	Mesh* mesh = meshList[meshID];
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
@@ -521,21 +547,26 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale,
 		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
 		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP_GPASS], 1, GL_FALSE, &lightDepthMVP.a[0]);
 
-		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
-			if (mesh->textureArray[i] > 0) {
+		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+		{
+			if (mesh->textureArray[i] > 0) 
+			{
 				glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 1);
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, mesh->textureArray[i]);
 				glUniform1i(m_parameters[U_COLOR_TEXTURE + i], i);
 			}
-			else {
+			else 
+			{
 				glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 0);
 			}
 		}
 		mesh->Render();
 
-		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
-			if (mesh->textureArray[i] > 0) {
+		for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+		{
+			if (mesh->textureArray[i] > 0) 
+			{
 				glBindTexture(GL_TEXTURE_2D, 0);
 			}
 		}
@@ -558,7 +589,8 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale,
 	modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
 	glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView_inverse_transpose.a[0]);
 
-	if (enableLight) {
+	if (enableLight) 
+	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
 
 		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
@@ -570,26 +602,32 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale,
 		glUniform3fv(m_parameters[U_MATERIAL_SPECULAR], 1, &mesh->material.kSpecular.r);
 		glUniform1f(m_parameters[U_MATERIAL_SHININESS], mesh->material.kShininess);
 	}
-	else {
+	else 
+	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	}
 
-	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
-		if (mesh->textureArray[i] > 0) {
+	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+	{
+		if (mesh->textureArray[i] > 0) 
+		{
 			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 1);
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, mesh->textureArray[i]);
 			glUniform1i(m_parameters[U_COLOR_TEXTURE + i], i);
 		}
-		else {
+		else 
+		{
 			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 0);
 		}
 	}
 
 	mesh->Render();
 
-	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) {
-		if (mesh->textureArray[i] > 0) {
+	for (unsigned int i = 0; i < Mesh::MAX_TEXTURES; ++i) 
+	{
+		if (mesh->textureArray[i] > 0) 
+		{
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
@@ -800,6 +838,10 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView.a[0]);
 
+
+		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
+		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP], 1, GL_TRUE, &lightDepthMVP.a[0]);
+
 		//load material
 		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);
 		glUniform3fv(m_parameters[U_MATERIAL_DIFFUSE], 1, &mesh->material.kDiffuse.r);
@@ -832,3 +874,4 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
 }
+

@@ -12,6 +12,7 @@ Tower::Tower()
 	p_projectileCount = 0;
 	p_maxProjectile = 0;
 	this->pos.SetZero();
+	this->b_rotateWhenFire = true;
 	enemyList = nullptr;
 	heightOffset.SetZero();
 	strategy = NEAREST_ENEMY;
@@ -35,6 +36,7 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	enemyList = nullptr;
 	strategy = FIRST_ENEMY;
 	s_name = "";
+	this->b_rotateWhenFire = true;
 }
 
 Tower::~Tower()
@@ -101,17 +103,85 @@ void Tower::Update(double dt)
 	if (p_spawnTimer >= 1.f /this->atkSpeed)// p_frequency) && p_projectileCount<p_maxProjectile)
 	{
 		p_spawnTimer = 0.f;
-		Fire();
+		Fire(dt);
 	}
 
 }
 
-void Tower::Fire()
+void Tower::Fire(double dt)
 {
 	Enemy* enemy = SearchEnemy(GetEnemyInRange());
 	if (enemy == nullptr || enemy->b_isActive == false)
 	{
 		return;
+	}
+	if (b_rotateWhenFire == true)
+	{
+		float rotationSpeed = 720.f;
+		Vector3 view = enemy->pos - this->pos;
+		float rotationZToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
+
+		rotationZToBe = round(rotationZToBe);
+
+		if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
+		{
+			if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
+			{
+				rotationZToBe += 360;
+			}
+			else if (rotationZToBe == -0)
+			{
+				rotationZToBe = 0;
+			}
+
+			if (abs(rotationZToBe - rotation.z) <180)
+			{
+				if (rotationZToBe > rotation.z)
+				{
+
+					rotation.z += rotationSpeed * dt;
+					if (rotationZToBe < rotation.z)
+					{
+						rotation.z = rotationZToBe;
+					}
+
+
+				}
+				else if (rotationZToBe < rotation.z)
+				{
+					rotation.z -= rotationSpeed * dt;
+					if (rotationZToBe > rotation.z)
+					{
+						rotation.z = rotationZToBe;
+					}
+				}
+			}
+			else
+			{
+				if (rotationZToBe > rotation.z)
+				{
+
+					rotation.z -= rotationSpeed * dt;
+					if (rotation.z < 0.f) // wind around if negative numbers
+					{
+						rotation.z += 360;
+					}
+					else if (rotation.z == -0.f) // negate negative 0;
+					{
+						rotation.z = 0;
+					}
+
+				}
+				else if (rotationZToBe < rotation.z)
+				{
+					rotation.z += rotationSpeed * dt;
+					if (rotation.z >360.f)
+					{
+						rotation.z -= 360;
+					}
+				}
+			}
+		}
 	}
 	Projectile* projectile = GetProjectile();
 	projectile->meshID = this->projectile_meshID;

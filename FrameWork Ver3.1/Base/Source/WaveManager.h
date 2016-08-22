@@ -1,7 +1,7 @@
 #ifndef WAVE_MANAGER_H
 #define WAVE_MANAGER_H
 
-#include "Minion.h"
+#include "Enemy.h"
 #include "PlayerInfo.h"
 #include <vector>
 
@@ -11,6 +11,7 @@ using std::vector;
 enum ENEMY_TYPE
 {
 	MINION = 1,
+	ICE_MONSTER,
 
 	NUM_ENEMY
 };

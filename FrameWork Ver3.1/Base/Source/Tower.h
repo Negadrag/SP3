@@ -30,7 +30,7 @@ public:
 	void SetRange(float r);
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	virtual void Fire();
+	void Fire(double dt);
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
 
@@ -60,6 +60,7 @@ protected:
 	float atkRange;
 	float p_speed;
 	float newAngle;
+	bool b_rotateWhenFire;
 	int p_projectileCount;
 	int p_maxProjectile;
 

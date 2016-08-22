@@ -10,7 +10,6 @@ public:
 	~ArrowTower();
 
 	virtual Projectile* GetProjectile();
-	virtual void Update(double dt);
 
 	bool upgrade;
 

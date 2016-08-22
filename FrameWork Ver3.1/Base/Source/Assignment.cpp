@@ -26,7 +26,7 @@ void Assignment::Init()
 
 	wave.SetRoot(testMap.root);
 	wave.AddWave({ MINION }, 0, 1);
-	wave.AddWave({ MINION,MINION }, 5, 2);
+	wave.AddWave({ ICE_MONSTER, MINION }, 100, 5);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
 	wave.AddWave({ MINION }, 100, 4);
@@ -41,9 +41,7 @@ void Assignment::Init()
 	{
 		std::cout << currentNode->coords.x << "," << currentNode->coords.y << std::endl;
 		currentNode = currentNode->next;
-
 	}
-
 
 	camera.Init(Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 

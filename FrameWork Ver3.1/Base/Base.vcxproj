@@ -29,6 +29,7 @@
     <ClCompile Include="Source\GameplayCam.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\GUIManager.cpp" />
+    <ClCompile Include="Source\IceMonster.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
@@ -48,9 +49,11 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SingleTarget.cpp" />
+    <ClCompile Include="Source\SpeedMonster.cpp" />
     <ClCompile Include="Source\SpeedTower.cpp" />
     <ClCompile Include="Source\SplashTarget.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
+    <ClCompile Include="Source\TankMonster.cpp" />
     <ClCompile Include="Source\Terrain.cpp" />
     <ClCompile Include="Source\TestScene.cpp" />
     <ClCompile Include="Source\TileMap.cpp" />
@@ -78,6 +81,7 @@
     <ClInclude Include="Source\GameplayCam.h" />
     <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\GUIManager.h" />
+    <ClInclude Include="Source\IceMonster.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
@@ -98,9 +102,11 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\SingleTarget.h" />
+    <ClInclude Include="Source\SpeedMonster.h" />
     <ClInclude Include="Source\SpeedTower.h" />
     <ClInclude Include="Source\SplashTarget.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
+    <ClInclude Include="Source\TankMonster.h" />
     <ClInclude Include="Source\Terrain.h" />
     <ClInclude Include="Source\TestScene.h" />
     <ClInclude Include="Source\TileMap.h" />
