@@ -10,6 +10,8 @@ public:
 	IceTower();
 	~IceTower();
 
+	ParticleGenerator particleGenerator;
+
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
 	virtual void LevelUp();
@@ -17,7 +19,6 @@ public:
 	static int cost;
 
 private:
-	ParticleGenerator iceparticle;
 };
 
 #endif

@@ -13,12 +13,26 @@ IceTower::IceTower()
 	SetRange(30);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
-	this->projectile_meshID = GEO_CANNON;
+	this->projectile_meshID = GEO_ICESHOT;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Ice Tower";
 	this->b_rotateWhenFire = false;
 	child.meshID = GEO_ICECRYSTAL;
+
+
+	particleGenerator.SetType(GEO_ICEPARTICLE);
+	particleGenerator.SetFrequency(20);
+	particleGenerator.SetCap(1000);
+	particleGenerator.i_spawnAmount = 30;
+	particleGenerator.f_lifeTime = 0.3f;
+	particleGenerator.minVel.Set(0, 0, 0);
+	particleGenerator.maxVel.Set(0, 0, 0);
+	particleGenerator.scale.Set(0.07f, 0.07f, 0.07f);
+	particleGenerator.i_particleCount = 0;
+	particleGenerator.f_maxDist = 2.f;
+	particleGenerator.isActive = true;
+	particleGenerator.i_spawnAmount = 10;
 
 }
 
@@ -32,6 +46,7 @@ Projectile* IceTower::GetProjectile()
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
 			projectile->enemyVec = this->enemyList;
+			projectile->iceparticle = &(particleGenerator);
 			return projectile;
 
 		}
