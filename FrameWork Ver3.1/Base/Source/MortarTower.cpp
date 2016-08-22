@@ -20,11 +20,12 @@ Projectile* MortarTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
-		Projectile* projectile = (Projectile*)(*it);
+		SplashTarget* projectile = (SplashTarget*)(*it);
 		if (!(projectile->b_isActive))
 		{
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
+			projectile->enemyVec = this->enemyList;
 			return projectile;
 
 		}
@@ -32,12 +33,12 @@ Projectile* MortarTower::GetProjectile()
 	for (unsigned i = 0; i <= 10; ++i)
 	{
 
-		Projectile* projectile = new SplashTarget(projectile_meshID);
+		SplashTarget* projectile = new SplashTarget(projectile_meshID);
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
 	}
-	projectileList.back()->b_isActive = true;
-	return projectileList.back();
+
+	return GetProjectile();
 }
 
 

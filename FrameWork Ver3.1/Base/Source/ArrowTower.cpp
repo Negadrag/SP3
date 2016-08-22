@@ -64,3 +64,4 @@ void ArrowTower::LevelUp()
 	{
 		atkRange = 7;
 	}
+}

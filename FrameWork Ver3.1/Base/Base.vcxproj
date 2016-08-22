@@ -29,8 +29,8 @@
     <ClCompile Include="Source\GameplayCam.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\GUIManager.cpp" />
-    <ClCompile Include="Source\IceTower.cpp" />
     <ClCompile Include="Source\IceMonster.cpp" />
+    <ClCompile Include="Source\IceTower.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
@@ -84,8 +84,8 @@
     <ClInclude Include="Source\GameplayCam.h" />
     <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\GUIManager.h" />
-    <ClInclude Include="Source\IceTower.h" />
     <ClInclude Include="Source\IceMonster.h" />
+    <ClInclude Include="Source\IceTower.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />

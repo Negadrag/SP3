@@ -3,6 +3,8 @@
 #include "MathUtility.h"
 #include "ArrowTower.h"
 #include "CannonTower.h"
+#include "IceTower.h"
+#include "PoisonTower.h"
 
 CursorControl::CursorControl()
 {
@@ -104,12 +106,18 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 		{
 			if (button->functionID == 0)
 			{
-				SpawnTower(string("Arrow"));
+				//SpawnTower(string("Arrow"));
+				SpawnTower(string("Poison"));
 				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			}
 			else if (button->functionID == 1)
 			{
 				SpawnTower(string("Cannon"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+			else if (button->functionID == 2)
+			{
+				SpawnTower(string("Ice"));
 				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			}
 		}
@@ -135,10 +143,14 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 bool CursorControl::SpawnTower(string name)
 {
 	Tower *tempTower;
-	if (name == string("Arrow"))
-		tempTower = new ArrowTower();
+	/*if (name == string("Arrow"))
+		tempTower = new ArrowTower();*/
+	if (name == string("Poison"))
+		tempTower = new PoisonTower();
 	else if (name == string("Cannon"))
 		tempTower = new CannonTower();
+	else if (name == string("Ice"))
+		tempTower = new IceTower();
 	tempTower->pos.Set(checkPositionX, checkPositionY, 0);
 	tempTower->scale.Set(1, 1, 1);
 	tempTower->enemyList = enemyList;
@@ -170,9 +182,10 @@ void CursorControl::TowerButtons(float worldX,float worldY)
 		if (i == 0)
 		{
 			text = "Arrow Tower";
-			mesh = GEO_ARROWTOWER;
+			//mesh = GEO_ARROWTOWER;
+			mesh = GEO_POISONTOWER;
 			offset.Set(-15.f, -15.f);
-			cost = ArrowTower::cost;
+			//cost = ArrowTower::cost;
 		}
 		else if (i == 1)
 		{
@@ -186,6 +199,7 @@ void CursorControl::TowerButtons(float worldX,float worldY)
 			text = "Ice Tower";
 			mesh = GEO_ICETOWER;
 			offset.Set(5.f, 5.f);
+			cost = IceTower::cost;
 		}
 		else if (i == 3)
 		{

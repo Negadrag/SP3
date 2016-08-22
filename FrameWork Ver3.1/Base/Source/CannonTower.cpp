@@ -69,3 +69,4 @@ void CannonTower::LevelUp()
 	{
 		atkRange = 7;
 	}
+}

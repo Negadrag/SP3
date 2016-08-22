@@ -43,6 +43,7 @@ public:
 	
 	Vector3 heightOffset;
 	vector<Enemy*>* enemyList;
+	Renderable child;
 
 	string s_name;
 private:
