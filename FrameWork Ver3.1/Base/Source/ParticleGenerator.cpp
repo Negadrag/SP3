@@ -113,7 +113,7 @@ void ParticleGenerator::ClearParticles()
 
 void ParticleGenerator::SpawnParticle()
 {
-	if (i_particleCount<i_maxParticles && isActive == true)
+	if (i_particleCount<i_maxParticles)
 	{
 		for (int i = 0; i < i_spawnAmount; ++i)
 		{

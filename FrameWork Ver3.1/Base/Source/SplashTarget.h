@@ -16,7 +16,8 @@ public:
 	vector<Enemy*>* enemyVec;
 
 	float f_range;
-	ParticleGenerator iceparticle;
+	ParticleGenerator* iceparticle;
+	float f_particleSpawnTimer;
 	virtual void Update(double dt);
 private:
 

@@ -64,10 +64,19 @@ void SplashTarget::Update(double dt)
 	float distanceToCheck = 0.04f * p_speed;
 	if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 	{
+		if (meshID == GEO_CANNON)
+		{
+
+				f_particleSpawnTimer = 0.f;
+
+				iceparticle->pos = this->pos;
+				iceparticle->pos.z = 2.f;
 		this->iceparticle.ClearParticles();
+
+		}
 		//this->iceparticle.isActive = false;
 		this->b_isActive = false;
-		if (enemyVec)
+		if (enemyVec != nullptr)
 		{
 			for (vector<Enemy*>::iterator it = (*enemyVec).begin(); it != (*enemyVec).end(); ++it)
 			{

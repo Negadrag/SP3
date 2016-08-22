@@ -27,7 +27,7 @@ public:
 	vector<Particles*> particleList;
 
 
-
+	float f_frequency;
 	Vector3 pos;
 	Vector3 scale;
 	Vector3 minVel;
@@ -38,7 +38,7 @@ public:
 	int i_spawnAmount;//number to spawn per time
 private:
 	GEOMETRY_TYPE meshID;
-	float f_frequency;
+	
 	float f_spawnTimer;
 	//int i_particleCount;
 	int i_maxParticles;
