@@ -25,7 +25,7 @@ SplashTarget::~SplashTarget()
 void SplashTarget::Update(double dt)
 {
 	Vector3 d;
-	if (meshID == GEO_CANNON)
+	if (meshID == GEO_ICESHOT)
 	{
 		Mtx44 rotate;
 		rotate.SetToRotation(45.f, 0, 0, 1);
