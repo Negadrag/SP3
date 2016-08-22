@@ -270,7 +270,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
-	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.6, 1), 18, 36, 1.f);
+	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.7f,0.7f,0.7f), 18, 36, 1.f);
 
 
 	//Particles
