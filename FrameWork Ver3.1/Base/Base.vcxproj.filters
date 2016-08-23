@@ -288,14 +288,6 @@
     <ClCompile Include="Source\CaptureTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BuffTower.cpp">
-      <Filter>Source Files\ObjectClasses\Tower</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PoisonProjectile.cpp">
-      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\IceProjectile.cpp">
-      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
     <ClCompile Include="Source\WinScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -304,6 +296,15 @@
     </ClCompile>
     <ClCompile Include="Source\Display.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BuffTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IceProjectile.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PoisonProjectile.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -484,14 +485,6 @@
     <ClInclude Include="Source\CaptureTower.h">
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BuffTower.h">
-      <Filter>Header Files\ObjectClasses\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PoisonProjectile.h">
-      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\IceProjectile.h">
-      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     <ClInclude Include="Source\WinScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
@@ -500,6 +493,15 @@
     </ClInclude>
     <ClInclude Include="Source\Display.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BuffTower.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IceProjectile.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PoisonProjectile.h">
+      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
