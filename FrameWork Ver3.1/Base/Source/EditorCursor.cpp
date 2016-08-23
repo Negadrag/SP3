@@ -49,7 +49,7 @@ void EditorCursor::HotKeys()
 	{
 		currentTile = TILE_NODE;
 	}
-	else if (Application::IsKeyPressed('Q'))
+	else if (Application::IsKeyPressed('W'))
 	{
 		currentTile = TILE_OPEN;
 	}
@@ -70,11 +70,20 @@ void EditorCursor::Clicking()
 			{
 				if (currentTile == TILE_NODE)
 				{
-					if (checkPositionX == FindNode(tile[currentTile])->coords.x || checkPositionY == FindNode(tile[currentTile])->coords.y)
+					if (tile[TILE_NODE] > 1)
+					{
+						if (checkPositionX == (int)FindNode(tile[currentTile] - 1)->coords.x || checkPositionY == (int)FindNode(tile[currentTile] - 1)->coords.y)
+						{
+							tileMap->screenMap[checkPositionX][checkPositionY] = tile[currentTile];
+							AddNode(root, checkPositionX, checkPositionY);
+							tile[currentTile]++;
+						}
+					}
+					else
 					{
 						tileMap->screenMap[checkPositionX][checkPositionY] = tile[currentTile];
 						AddNode(root, checkPositionX, checkPositionY);
-						tile[currentTile]++; 
+						tile[currentTile]++;
 					}
 				}
 				else

@@ -26,24 +26,19 @@ void Assignment::Init()
 
 	testMap.waves.player = &(this->player);
 
-	Node* currentNode = testMap.root;
-	while (currentNode != nullptr)
-	{
-		std::cout << currentNode->coords.x << "," << currentNode->coords.y << std::endl;
-		currentNode = currentNode->next;
-	}
-
 	camera.Init(Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
+
 
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	camera.b_ortho = true;
-	camera.orthoSize = (testMap.i_rows / 2) + 1;
+	camera.orthoSize = ((float)testMap.i_rows / 2.f) + 1.f;
 	camera.defaultOrtho = camera.orthoSize;
 	camera.aspectRatio.Set(4, 3);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
+	grass.b_shadows = false;
 	grass.meshID = GEO_GRASS_DARKGREEN;
-	grass.pos.Set(testMap.i_columns / 2, testMap.i_rows / 2, 0);
+	grass.pos.Set((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 0);
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 
