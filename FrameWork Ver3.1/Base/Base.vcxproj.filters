@@ -288,6 +288,9 @@
     <ClCompile Include="Source\CaptureTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClCompile>
+    <ClCompile Include="Source\WinScene.cpp">
+      <Filter>Source Files\System\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -466,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="Source\CaptureTower.h">
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WinScene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

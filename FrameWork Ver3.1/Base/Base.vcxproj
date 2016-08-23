@@ -68,6 +68,7 @@
     <ClCompile Include="Source\TurntableCam.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\WaveManager.cpp" />
+    <ClCompile Include="Source\WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="Source\WaveManager.h" />
+    <ClInclude Include="Source\WinScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>

@@ -3,6 +3,7 @@
 
 #include "Vector3.h"
 #include "Renderable.h"
+#include "ParticleGenerator.h"
 
 struct GameObject:public Renderable
 {
@@ -34,8 +35,14 @@ struct GameObject:public Renderable
 
 	float mass;
 	float timer;
+	ParticleGenerator* particleGenerator;
+	int* score;
 
 	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL);
+	bool CheckCollision(GameObject* go2,double dt);
+	void CollisionResponse(GameObject* go2);
+	void HandleCollision(GameObject* go2,double dt);
+	
 	~GameObject();
 };
 
