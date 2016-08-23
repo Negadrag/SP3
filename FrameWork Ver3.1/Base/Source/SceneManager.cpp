@@ -89,6 +89,9 @@ void SceneManager::Update(double dt)
 		}
 		currScene->b_changeScene = false;
 		m_currentSceneID = m_nxtSceneID;
+
+		GUIManager::GetInstance()->m_currentSceneID = m_currentSceneID;
+
 		Scene* nxtScene;
 		for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 		{
@@ -111,7 +114,7 @@ void SceneManager::Update(double dt)
 	EntityManager::GetInstance()->UpdateAllEntity(dt, m_currentSceneID);
 	RenderManager::GetInstance()->Update(dt);
 	RenderManager::GetInstance()->UpdateBillboard(m_currentSceneID);
-	GUIManager::GetInstance()->m_currentSceneID = m_currentSceneID;
+	
 
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{

@@ -18,14 +18,15 @@ public:
 	bool bLButtonState;
 	Renderable aoe;
 
-	GUI spawnTower[4];
-	GUI towerCosts[4];
-	GUI towerName;
+	GUI *spawnTower[4];
+	GUI *towerCosts[4];
+	GUI *towerName;
+	GUI *background;
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
 private:
-	void TowerButtons(float worldX,float worldY);
+	void TowerButtons();
 	void AOEDisplay(Tower* tower);
 	void HotKeys(const TileMap &tileMap);
 };

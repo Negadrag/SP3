@@ -2,9 +2,9 @@
 
 GUI::GUI(string s)
 {
-	position.Set(0, 0);
+	position.SetZero();
 	buttonSize.Set(1,1);
-	textOffset.Set(0, 0);
+	textOffset.SetZero();
 	b_isActive = true;
 	b_textActive = true;
 	meshID = GEO_NULL;
@@ -18,6 +18,7 @@ GUI::GUI(string s)
 	GUIManager::GetInstance()->AddGUI(this);
 	parent = nullptr;
 	textColor.Set(1, 1, 1);
+	b_lightEnabled = true;
 }
 
 GUI::~GUI()

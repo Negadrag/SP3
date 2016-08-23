@@ -28,6 +28,7 @@ public:
 	bool b_ortho;
 
 	float orthoSize;
+	float defaultOrtho;
 	AspectRatio aspectRatio;
 
 	float FOV;

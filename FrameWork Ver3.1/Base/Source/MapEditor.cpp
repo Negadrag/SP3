@@ -13,6 +13,7 @@
 
 MapEditor::MapEditor() :Scene()
 {
+
 }
 
 MapEditor::~MapEditor()
@@ -60,11 +61,6 @@ void MapEditor::Update(double dt)
 
 	fps = (float)(1.f / dt);
 
-	if (Application::IsKeyPressed('M'))
-	{
-		SceneManager::GetInstance()->ChangeScene(1, false);
-	}
-
 	cursor.Update(camera, dt);
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
@@ -92,9 +88,25 @@ void MapEditor::Render()
 			}
 			else if (tileMap.screenMap[j][i] > 0)
 			{
-				RenderManager::GetInstance()->RenderMesh(GEO_SPHERE, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+				//RenderManager::GetInstance()->RenderMesh(GEO_SPHERE, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+				std::ostringstream ss;
+				ss << tileMap.screenMap[j][i];
+				RenderManager::GetInstance()->RenderText(ss.str(), Color(1, 1, 0), Vector3((float)(j * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, (float)(i  * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0));
 			}
 		}
+	}
+
+	if (cursor.currentTile == EditorCursor::TILE_EMPTY)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("REMOVE", Color(0, 1, 0), 3, 36, 55);
+	}
+	else if (cursor.currentTile == EditorCursor::TILE_NODE)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("NODE", Color(0, 1, 0), 3, 36, 55);
+	}
+	else if (cursor.currentTile == EditorCursor::TILE_OPEN)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("TOWER SLOTS", Color(0, 1, 0), 3, 36, 55);
 	}
 
 	//On screen text
@@ -178,7 +190,7 @@ void MapEditor::HandleInput()
 void MapEditor::WriteToFile()
 {
 	std::ofstream file;
-	file.open("Image//" + s_mapName + ".csv");
+	file.open("Maps//" + s_mapName + ".csv");
 	for (int i = tileMap.i_rows - 1; i >= 0; --i)
 	{
 		for (int j = 0; j < tileMap.i_columns; ++j)

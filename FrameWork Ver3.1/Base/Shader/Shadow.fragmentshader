@@ -177,7 +177,7 @@ void main(){
 		}
 
 			float alpha = texture2D( colorTexture[0], texCoord ).a;
-			if (alpha < 0.3)
+			if (alpha < 0.1)
 				discard;
 	}
 	else
@@ -207,7 +207,7 @@ void main(){
 				color = vec4( fragmentColor, 1 );
 
 			float alpha = texture2D( colorTexture[0], texCoord ).a;
-			if (alpha < 0.3)
+			if (alpha < 0.1)
 				discard;
 		}
 		

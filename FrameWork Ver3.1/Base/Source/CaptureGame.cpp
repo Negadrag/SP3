@@ -1094,8 +1094,8 @@ void CaptureGame::CreateScene()
 	grass.scale.Set(2000, 2000, 2000);
 	grass.rotation.Set(-90, 0, 0);
 	grass.rotation.Set(0, 0, 0);
-	grass.b_shadows = false;
-	grass.b_lightEnabled = false;
+	grass.b_shadows = true;
+	grass.b_lightEnabled = true;
 
 	/*forValor.meshID = GEO_FOR_VALOR;
 	forValor.pos.Set(0, 0.5, 0);

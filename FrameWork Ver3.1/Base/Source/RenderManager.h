@@ -108,6 +108,8 @@ enum GEOMETRY_TYPE
 	GEO_ICE,
 	GEO_RESIST,
 
+	GEO_SAVE,
+
 	GEO_FOR_VALOR,
 
 	NUM_GEOMETRY,
@@ -205,7 +207,8 @@ public:
 	void RenderObj(Renderable* obj);
 	void RenderMesh(GEOMETRY_TYPE meshID,bool lightEnabled, bool fog);
 	void RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool lightEnabled, bool fog);
-	void RenderTextOnScreen(string text, Color color, float size, float x, float y);
+	void RenderText(std::string text, Color color, Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight = false, bool fog = false);
+	void RenderTextOnScreen(string text, Color color, float size, float x, float y, float z = 0.f);
 	void RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, float size, float x, float y);
 	void RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vector3 position, Vector3 scale, Vector3 rotation);
 	void RenderGPass(int sceneID = 0);

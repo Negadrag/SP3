@@ -164,8 +164,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_NULL] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
-	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-	meshList[GEO_QUAD]->textureArray[0] = LoadTGA("Image//calibri.tga");
+	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 0), 1.f);
+	meshList[GEO_QUAD]->textureArray[0] = LoadTGA("Image//background.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
@@ -320,7 +320,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_PARTICLE_YELLOW] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 0), 18, 36, 1.f);
 	meshList[GEO_PARTICLE_GREEN] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.7, 0), 18, 36, 1.f);
 
-	
+	meshList[GEO_SAVE] = MeshBuilder::GenerateQuad("Save", Color(1, 1, 1), 1.f);
+	meshList[GEO_SAVE]->textureArray[0] = LoadTGA("Image//save.tga");
 }
 
 RenderManager* RenderManager::GetInstance()
@@ -407,9 +408,9 @@ void RenderManager::RenderGPass(int sceneID)
 	//These matrices should change when light position or direction changes
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
 	{
-		float width = camera->orthoSize * camera->aspectRatio.x / camera->aspectRatio.y;
-		//m_lightDepthProj.SetToOrtho(-width*2,width*2,-camera->orthoSize*2, camera->orthoSize*2, -30, 30);
-		m_lightDepthProj.SetToOrtho(-20, 20, -30, 30, -30, 30);
+		float width = camera->defaultOrtho * camera->aspectRatio.x / camera->aspectRatio.y;
+		m_lightDepthProj.SetToOrtho(-width * 2, width * 2, -camera->defaultOrtho * 2, camera->defaultOrtho * 2, -width * 2, width * 2);
+		//m_lightDepthProj.SetToOrtho(-20, 20, -30, 30, -30, 30);
 	}
 	else
 	{
@@ -763,7 +764,45 @@ void RenderManager::UpdateBillboard(int sceneID)
 	}
 }
 
-void RenderManager::RenderTextOnScreen(std::string text, Color color, float size, float x, float y)
+void RenderManager::RenderText(std::string text, Color color,Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight, bool fog)
+{
+	Mesh* mesh = meshList[GEO_TEXT];
+
+	if (!mesh || mesh->textureArray[0] <= 0) //Proper error check
+		return;
+
+	modelStack.PushMatrix();
+	modelStack.Translate(pos.x, pos.y, pos.z);
+	modelStack.Rotate(rotation.x, 1, 0, 0);
+	modelStack.Rotate(rotation.z, 0, 0, 1);
+	modelStack.Rotate(rotation.y, 0, 1, 0);
+	modelStack.Scale(scale.x, scale.y, scale.z);
+
+	glDisable(GL_DEPTH_TEST);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
+	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
+	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh->textureArray[0]);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	for (unsigned i = 0; i < text.length(); ++i)
+	{
+		Mtx44 characterSpacing;
+		characterSpacing.SetToTranslation(i * 0.5f + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
+		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
+		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+		mesh->Render((unsigned)text[i] * 6, 6);
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
+	glEnable(GL_DEPTH_TEST);
+
+	modelStack.PopMatrix();
+}
+
+void RenderManager::RenderTextOnScreen(std::string text, Color color, float size, float x, float y, float z)
 {
 	Mesh *mesh = meshList[GEO_TEXT];
 
@@ -771,16 +810,16 @@ void RenderManager::RenderTextOnScreen(std::string text, Color color, float size
 	//glDisable(GL_CULL_FACE);
 	Mtx44 ortho;
 	//ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
-	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	ortho.SetToOrtho(0, 80, 0, 60, -100, 100);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
-	modelStack.Translate(x, y, 0);
+	modelStack.Translate(x, y, z);
 	//modelStack.Translate(0, 0, 0);
-	modelStack.Scale(size, size, size);
+	modelStack.Scale(size, size, 1);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
 	//cout << "Text enablked" << m_parameters[U_TEXT_ENABLED] << endl;
 	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
@@ -902,6 +941,9 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
 		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView.a[0]);
+
+		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
+		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP], 1, GL_FALSE, &lightDepthMVP.a[0]);
 
 		//load material
 		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);

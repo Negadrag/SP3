@@ -1,6 +1,7 @@
 #include "EditorCursor.h"
 #include "Application.h"
 #include "MathUtility.h"
+#include "SceneManager.h"
 
 
 EditorCursor::EditorCursor()
@@ -15,6 +16,10 @@ EditorCursor::EditorCursor()
 
 EditorCursor::~EditorCursor()
 {
+	if (save != nullptr)
+	{
+		delete save;
+	}
 }
 
 void EditorCursor::Init(TileMap *tileMap)
@@ -25,6 +30,18 @@ void EditorCursor::Init(TileMap *tileMap)
 	tile[TILE_EMPTY] = 0;
 	tile[TILE_NODE] = 1;
 	tile[TILE_PATH] = -1;
+
+	save = new GUI();
+	save->b_buttonActive = true;
+	save->b_textActive = false;
+	save->meshID = GEO_SAVE;
+	save->scale.Set(10, 10, 0);
+	save->buttonSize.Set(10, 10);
+	save->position.Set(70, 50);
+	save->meshOffset.Set(5, 0, 0);
+	save->b_lightEnabled = false;
+	save->b_isActive = true;
+	save->functionID = 0;
 }
 
 void EditorCursor::Update(OrthoCamera &camera, const double &dt)
@@ -36,7 +53,6 @@ void EditorCursor::Update(OrthoCamera &camera, const double &dt)
 
 	camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 2.f, camera.defaultOrtho); // scrolling in and out
 	EdgePanning(dt, camera, worldX, worldY, 6 * tileMap->i_rows);
-
 	CameraBounds(camera);
 
 	Clicking();
@@ -61,10 +77,28 @@ void EditorCursor::HotKeys()
 
 void EditorCursor::Clicking()
 {
+	GUI* temp = GUIManager::GetInstance()->FindGUI(this->worldX, this->worldY);
+	if (save == temp)
+	{
+		save->rotation.Set(10, 0, 0);
+	}
+	else
+	{
+		save->rotation.Set(0, 0, 0);
+	}
+
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		if (tileMap != nullptr)
+		GUI* temp = GUIManager::GetInstance()->FindGUI(this->worldX, this->worldY);
+		if (temp != nullptr)
+		{
+			if (temp->functionID == 0)
+			{
+				SceneManager::GetInstance()->ChangeScene(1, false);
+			}
+		}
+		else if (tileMap != nullptr)
 		{
 			if (tileMap->screenMap[checkPositionX][checkPositionY] == tile[TILE_EMPTY])
 			{
@@ -91,13 +125,31 @@ void EditorCursor::Clicking()
 					tileMap->screenMap[checkPositionX][checkPositionY] = tile[currentTile];
 				}
 			}
-			else if (tileMap->screenMap[checkPositionX][checkPositionY] > 0)
+			else if (tileMap->screenMap[checkPositionX][checkPositionY] > 0 && currentTile == TILE_EMPTY)
 			{
-				Node *temp;
-				temp = FindNode(tileMap->screenMap[checkPositionX][checkPositionY]);
-				RemoveFromMap(temp);
-				tile[TILE_NODE] = temp->i_number;
-				delete temp;
+				if (tileMap->screenMap[checkPositionX][checkPositionY] == 1)
+				{
+					RemoveFromMap(root);
+					delete root;
+					root = nullptr;
+					tile[TILE_NODE] = 1;
+				}
+				else
+				{
+					Node *temp;
+					temp = FindNode(tileMap->screenMap[checkPositionX][checkPositionY]);
+					tile[TILE_NODE] = tileMap->screenMap[checkPositionX][checkPositionY];
+					Node *temp2 = FindNode(tileMap->screenMap[checkPositionX][checkPositionY] - 1);
+					RemoveFromMap(temp);
+					delete temp2->next;
+					temp2->next = nullptr;
+					
+				}
+
+			}
+			else if (currentTile == TILE_EMPTY)
+			{
+				tileMap->screenMap[checkPositionX][checkPositionY] = tile[TILE_EMPTY];
 			}
 		}
 		
