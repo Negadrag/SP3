@@ -198,7 +198,7 @@ void Tower::Fire(double dt)
 
 		f_rotationToBe = round(f_rotationToBe);
 
-		
+
 	}
 	Projectile* projectile = GetProjectile();
 	projectile->meshID = this->projectile_meshID;
@@ -213,6 +213,8 @@ void Tower::Fire(double dt)
 	projectile->enemy = enemy;
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
 	projectile->i_damage = this->atkDamage;
+
+
 	projectileList.push_back(projectile);
 	//enemy->i_health -= 1;
 }

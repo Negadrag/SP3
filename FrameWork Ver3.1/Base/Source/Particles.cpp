@@ -106,7 +106,7 @@ void Particles::Update(double dt, int& particle_count)
 				--particle_count;
 			}
 		}
-		if (this->meshID == GEO_ICEPARTICLE)
+		if (this->meshID == GEO_ICEPARTICLE || this->meshID == GEO_CANNONBLAST)
 		{
 			lifeTime -= dt;
 			this->scale -= Vector3(0.2f, 0.2f, 0.2f)*dt;

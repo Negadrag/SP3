@@ -20,6 +20,7 @@
     <ClCompile Include="Source\Camera3.cpp" />
     <ClCompile Include="Source\CannonTower.cpp" />
     <ClCompile Include="Source\CaptureGame.cpp" />
+    <ClCompile Include="Source\CaptureTower.cpp" />
     <ClCompile Include="Source\Cursor.cpp" />
     <ClCompile Include="Source\CursorControl.cpp" />
     <ClCompile Include="Source\DepthFBO.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="Source\Camera3.h" />
     <ClInclude Include="Source\CannonTower.h" />
     <ClInclude Include="Source\CaptureGame.h" />
+    <ClInclude Include="Source\CaptureTower.h" />
     <ClInclude Include="Source\Cursor.h" />
     <ClInclude Include="Source\CursorControl.h" />
     <ClInclude Include="Source\DepthFBO.h" />

@@ -270,6 +270,18 @@
     <ClCompile Include="Source\MortarTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Cursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorCursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MapEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CaptureTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -436,6 +448,18 @@
     </ClInclude>
     <ClInclude Include="Source\MortarTower.h">
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cursor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorCursor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MapEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CaptureTower.h">
+      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

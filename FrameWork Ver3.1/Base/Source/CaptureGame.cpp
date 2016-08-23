@@ -789,12 +789,12 @@ void CaptureGame::CreateScene()
 	grass.b_lightEnabled = false;
 
 	/*forValor.meshID = GEO_FOR_VALOR;
-	forValor.pos.Set(0, 0.5, 0);
+	forValor.pos.Set(0, 2, 0);
 	forValor.scale.Set(2000, 2000, 2000);
 	forValor.rotation.Set(-90, 0, 0);
 	forValor.rotation.Set(0, 0, 0);
-	forValor.b_shadows = false;
-	*/
+	forValor.b_shadows = false;*/
+	
 
 
 	for (int i = 0; i < 6; i++)

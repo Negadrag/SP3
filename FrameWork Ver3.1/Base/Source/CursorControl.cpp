@@ -5,6 +5,7 @@
 #include "CannonTower.h"
 #include "PoisonTower.h"
 #include "IceTower.h"
+#include "CaptureTower.h"
 
 CursorControl::CursorControl()
 {
@@ -89,7 +90,7 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 			if (button->functionID == 0)
 			{
 				//SpawnTower(string("Arrow"));
-				SpawnTower(string("Arrow"));
+				SpawnTower(string("Capture"));
 				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			}
 			else if (button->functionID == 1)
@@ -127,8 +128,8 @@ bool CursorControl::SpawnTower(string name)
 	Tower *tempTower;
 	/*if (name == string("Arrow"))
 		tempTower = new ArrowTower();*/
-	if (name == string("Arrow"))
-		tempTower = new PoisonTower();
+	if (name == string("Capture"))
+		tempTower = new CaptureTower();
 	else if (name == string("Cannon"))
 		tempTower = new CannonTower();
 	else if (name == string("Ice"))
@@ -232,7 +233,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	{
 		if (bLButtonState)
 		{
-			SpawnTower("Arrow");
+			SpawnTower("Capture");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
 

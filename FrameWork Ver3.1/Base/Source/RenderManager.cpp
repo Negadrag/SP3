@@ -182,7 +182,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_GREENCUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0.7, 0), 1.f);
 
 	meshList[GEO_DUNGEONWALL] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_DUNGEONWALL]->textureArray[0] = LoadTGA("Image//dungeonwall.tga");
+	meshList[GEO_DUNGEONWALL]->textureArray[0] = LoadTGA("Image//dungeonwall2.tga");
 
 	meshList[GEO_CUBE] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
@@ -257,7 +257,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_ICECRYSTAL]->material.kShininess = 0.8f;
 	meshList[GEO_ICECRYSTAL]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
 	meshList[GEO_ICESHOT] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 1), 18, 36, 0.5f);
-	//meshList[GEO_ICETOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
+	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.f, 0.f, 1.f), 18, 36, 1.f);
 
 	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
@@ -266,14 +266,15 @@ void RenderManager::InitMesh()
 	meshList[GEO_POISONMOB] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-POISONMOB.obj");
 	meshList[GEO_POISONMOB]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 
-
-
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
-	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.96f,0.71f,0.28f), 18, 36, 1.f);
+	meshList[GEO_CANNONBLAST] = MeshBuilder::GenerateSphere("sphere", Color(0.96f, 0.71f, 0.28f), 18, 36, 1.f);
 
-
+	meshList[GEO_MORTARBASE] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARBASE.obj");
+	meshList[GEO_MORTARBASE]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
+	meshList[GEO_MORTARCANNON] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARCANNON.obj");
+	meshList[GEO_MORTARCANNON]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
 	//Particles
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
 	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");

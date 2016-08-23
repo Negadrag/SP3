@@ -34,7 +34,7 @@ void SplashTarget::Update(double dt)
 		rotate.SetToRotation(-45.f, 0, 0, 1);
 		iceparticle->maxVel = rotate * -vel.Normalized();
 		iceparticle->pos = this->pos;
-		iceparticle->Update(dt);
+		iceparticle->SpawnParticle();
 	}
 
 	d = enemy->pos - this->pos;

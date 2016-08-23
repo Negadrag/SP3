@@ -31,7 +31,7 @@ public:
 	float GetRange();
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	void Fire(double dt);
+	virtual void Fire(double dt);
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
 	virtual void LevelUp();

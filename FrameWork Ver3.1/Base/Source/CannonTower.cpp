@@ -17,7 +17,7 @@ CannonTower::CannonTower()
 	this->strategy = LOWEST_HEALTH;
 	s_name = "Cannon Tower";
 
-	this->particleGenerator.SetType(GEO_ICEPARTICLE);
+	this->particleGenerator.SetType(GEO_CANNONBLAST);
 	this->particleGenerator.SetFrequency(25);
 	this->particleGenerator.SetCap(1000);
 	this->particleGenerator.f_lifeTime = 1.f;

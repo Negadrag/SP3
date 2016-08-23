@@ -5,6 +5,7 @@
 #include "Renderable.h"
 #include "Enemy.h"
 #include "Projectile.h"
+#include "ParticleGenerator.h"
 
 class SingleTarget :public Projectile
 {
@@ -12,6 +13,11 @@ public:
 	SingleTarget(GEOMETRY_TYPE meshID);
 	~SingleTarget();
 
+	vector<Enemy*>* enemyVec;
+
+	float f_range;
+	ParticleGenerator* iceparticle;
+	float f_particleSpawnTimer;
 	virtual void Update(double dt);
 private:
 

@@ -30,7 +30,7 @@ IceTower::IceTower()
 	particleGenerator.scale.Set(0.07f, 0.07f, 0.07f);
 	particleGenerator.i_particleCount = 0;
 	particleGenerator.f_maxDist = 2.f;
-	particleGenerator.isActive = true;
+	particleGenerator.isActive = false;
 	particleGenerator.i_spawnAmount = 10;
 
 }

@@ -5,7 +5,7 @@ MortarTower::MortarTower()
 :Tower()
 {
 	this->i_level = 1;
-	//this->meshID = GEO_MortarTower;
+	this->meshID = GEO_MORTARBASE;
 	SetAtkDmg(10);
 	SetRange(30);
 	SetSpdRate(0.5f);
@@ -14,6 +14,7 @@ MortarTower::MortarTower()
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;
 	s_name = "Mortar Tower";
+	child.meshID = GEO_MORTARCANNON;
 }
 
 Projectile* MortarTower::GetProjectile()
