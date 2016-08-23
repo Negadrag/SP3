@@ -77,6 +77,12 @@ void Particles::Update(double dt, int& particle_count)
 		{
 			lifeTime -= dt;
 			this->pos += vel * dt;
+			this->scale -= Vector3(dt/2 , dt/2 , 0);
+			if (scale.x <= 0.2f || scale.y <= 0.2f)
+			{
+				this->b_isActive = false;
+				--particle_count;
+			}
 			this->f_distTravelled += vel.Length() * dt;
 			if (this->lifeTime<0.f || f_distTravelled >= f_maxDist)
 			{

@@ -28,7 +28,7 @@ void WinScene::Init()
 
 
 	CreateScene();
-	camera.Init(Vector3(0, 0, 1500), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 0, 1500), Vector3(0, 0, 0), Vector3(0, 1, 0),1);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	b_initScene = false;
@@ -83,6 +83,10 @@ void WinScene::Update(double dt)
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
+	if (Application::IsKeyPressed('N'))
+	{
+		SceneManager::GetInstance()->ChangeScene(6, false);
+	}
 	if (Application::IsKeyPressed('M'))
 	{
 		SceneManager::GetInstance()->ChangeScene(1, false);

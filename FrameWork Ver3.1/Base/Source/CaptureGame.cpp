@@ -50,7 +50,7 @@ void CaptureGame::Init()
 	//SwitchInitializer();
 
 	CreateScene();
-	camera.Init(Vector3(0, 0, 1500), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 0, 1500), Vector3(0, 0, 0), Vector3(0, 1, 0),0);
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	b_initScene = false;
@@ -248,7 +248,7 @@ void CaptureGame::Update(double dt)
 	}
 	if (Application::IsKeyPressed(VK_SPACE))
 	{
-		SceneManager::GetInstance()->ChangeScene(4, false);
+		SceneManager::GetInstance()->ChangeScene(5, false);
 	}
 
 }
@@ -324,6 +324,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->normal.Set(0, 1, 0);
 		go->rotation.Set(0, 0, 90);
 		go->score = &resource1;
+		go->particleGenerator = &bluebang;
 		m_goList.push_back(go);
 		m_objectCount++;
 	}
@@ -338,6 +339,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->normal.Set(0, 1, 0);
 		go->rotation.Set(0, 0, 90);
 		go->score = &resource2;
+		go->particleGenerator = &redbang;
 		m_goList.push_back(go);
 		m_objectCount++;
 	}
@@ -352,6 +354,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->normal.Set(0, 1, 0);
 		go->rotation.Set(0, 0, 90);
 		go->score = &resource3;
+		go->particleGenerator = &yellowbang;
 		m_goList.push_back(go);
 		m_objectCount++;
 	}
@@ -366,6 +369,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->normal.Set(0, 1, 0);
 		go->rotation.Set(0, 0, 90);
 		go->score = &resource4;
+		go->particleGenerator = &greenbang;
 		m_goList.push_back(go);
 		m_objectCount++;
 	}
@@ -652,7 +656,7 @@ void CaptureGame::CreateTypeONE(int type)
 			rotate.SetToRotation(-55, 0, 0, 1);
 			wall->normal = rotate* wall->normal;
 			wall->b_lightEnabled = false;
-			wall->particleGenerator = &yellowbang;
+			
 
 			GameObject* wall2 = FetchGO(passedWall);
 			wall2->pos.Set(-370 + (i * 150), 250 + (j * -300), 0);
@@ -662,7 +666,7 @@ void CaptureGame::CreateTypeONE(int type)
 			rotate.SetToRotation(55, 0, 0, 1);
 			wall2->normal = rotate* wall2->normal;
 			wall2->b_lightEnabled = false;
-			wall2->particleGenerator = &yellowbang;
+		
 
 		}
 	}
@@ -679,7 +683,7 @@ void CaptureGame::CreateTypeONE(int type)
 			rotate.SetToRotation(-55, 0, 0, 1);
 			wall->normal = rotate* wall->normal;
 			wall->b_lightEnabled = false;
-			wall->particleGenerator = &redbang;
+		
 
 			GameObject* wall2 = FetchGO(passedWall);
 			wall2->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
@@ -689,7 +693,7 @@ void CaptureGame::CreateTypeONE(int type)
 			rotate.SetToRotation(55, 0, 0, 1);
 			wall2->normal = rotate* wall2->normal;
 			wall2->b_lightEnabled = false;
-			wall2->particleGenerator = &redbang;
+			
 
 		}
 	}
@@ -756,7 +760,7 @@ void CaptureGame::CreateTypeTWO(int type1, int type2)
 			rotate.SetToRotation(-55, 0, 0, 1);
 			wall->normal = rotate* wall->normal;
 			wall->b_lightEnabled = false;
-			wall->particleGenerator = &yellowbang;
+			
 
 			GameObject* wall2 = FetchGO(passedWall_2);
 			wall2->pos.Set(-370 + (i * 150), 250 + (j * -300), 0);
@@ -766,7 +770,7 @@ void CaptureGame::CreateTypeTWO(int type1, int type2)
 			rotate.SetToRotation(55, 0, 0, 1);
 			wall2->normal = rotate* wall2->normal;
 			wall2->b_lightEnabled = false;
-			wall2->particleGenerator = &yellowbang;
+		
 
 		}
 	}
@@ -783,7 +787,7 @@ void CaptureGame::CreateTypeTWO(int type1, int type2)
 			rotate.SetToRotation(-55, 0, 0, 1);
 			wall->normal = rotate* wall->normal;
 			wall->b_lightEnabled = false;
-			wall->particleGenerator = &redbang;
+			
 
 			GameObject* wall2 = FetchGO(passedWall_1);
 			wall2->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
@@ -793,8 +797,7 @@ void CaptureGame::CreateTypeTWO(int type1, int type2)
 			rotate.SetToRotation(55, 0, 0, 1);
 			wall2->normal = rotate* wall2->normal;
 			wall2->b_lightEnabled = false;
-			wall2->particleGenerator = &redbang;
-
+			
 		}
 	}
 }
@@ -908,7 +911,7 @@ void CaptureGame::CreateTypeTHREE(int type1, int type2, int type3)
 			rotate.SetToRotation(-55, 0, 0, 1);
 			wall->normal = rotate* wall->normal;
 			wall->b_lightEnabled = false;
-			wall->particleGenerator = &yellowbang;
+			
 
 			GameObject* wall2 = FetchGO(passedWall_2);
 			wall2->pos.Set(-370 + (i * 150), 250 + (j * -300), 0);
@@ -918,8 +921,7 @@ void CaptureGame::CreateTypeTHREE(int type1, int type2, int type3)
 			rotate.SetToRotation(55, 0, 0, 1);
 			wall2->normal = rotate* wall2->normal;
 			wall2->b_lightEnabled = false;
-			wall2->particleGenerator = &yellowbang;
-
+		
 		}
 	}
 	for (int i = 0; i < 5; i++)
@@ -936,7 +938,7 @@ void CaptureGame::CreateTypeTHREE(int type1, int type2, int type3)
 				rotate.SetToRotation(-55, 0, 0, 1);
 				wall->normal = rotate* wall->normal;
 				wall->b_lightEnabled = false;
-				wall->particleGenerator = &redbang;
+			
 
 				GameObject* wall2 = FetchGO(passedWall_3);
 				wall2->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
@@ -946,7 +948,7 @@ void CaptureGame::CreateTypeTHREE(int type1, int type2, int type3)
 				rotate.SetToRotation(55, 0, 0, 1);
 				wall2->normal = rotate* wall2->normal;
 				wall2->b_lightEnabled = false;
-				wall2->particleGenerator = &redbang;
+				
 			}
 			else
 			{
@@ -958,7 +960,7 @@ void CaptureGame::CreateTypeTHREE(int type1, int type2, int type3)
 				rotate.SetToRotation(-55, 0, 0, 1);
 				wall->normal = rotate* wall->normal;
 				wall->b_lightEnabled = false;
-				wall->particleGenerator = &redbang;
+			
 
 				GameObject* wall2 = FetchGO(passedWall_1);
 				wall2->pos.Set(-300 + (i * 150), 100 + (j * -300), 0);
@@ -968,7 +970,7 @@ void CaptureGame::CreateTypeTHREE(int type1, int type2, int type3)
 				rotate.SetToRotation(55, 0, 0, 1);
 				wall2->normal = rotate* wall2->normal;
 				wall2->b_lightEnabled = false;
-				wall2->particleGenerator = &redbang;
+			
 
 			}
 

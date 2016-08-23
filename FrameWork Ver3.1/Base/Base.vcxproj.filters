@@ -289,7 +289,13 @@
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClCompile>
     <ClCompile Include="Source\WinScene.cpp">
-      <Filter>Source Files\System\Scene</Filter>
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoseScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Display.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -471,6 +477,12 @@
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClInclude>
     <ClInclude Include="Source\WinScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoseScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Display.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>

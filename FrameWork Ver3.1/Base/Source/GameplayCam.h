@@ -10,7 +10,13 @@ public:
 
 	GameplayCam();
 	~GameplayCam();
-	virtual void Init(const Vector3& pos, const Vector3& target, Vector3& up);
+
+	/*cameratype
+		0 = locked camera
+		1 = Pan Camera
+		2 = Auto turn camera (display new towers / enemies)
+	*/
+	virtual void Init(const Vector3& pos, const Vector3& target, Vector3& up, int cameratype);
 	virtual void Update(double dt);
 	virtual void Reset();
 
@@ -22,6 +28,8 @@ public:
 
 
 private:
+	int cameratype_no;
+
 	bool leftright;	// false = left,  true = right
 	float turnSpeed_Mod;
 
