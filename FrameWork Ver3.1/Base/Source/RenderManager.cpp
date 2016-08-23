@@ -213,6 +213,28 @@ void RenderManager::InitMesh()
 	meshList[GEO_TERRAIN]->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	meshList[GEO_TERRAIN]->material.kShininess = 1.0f;
 
+	//For Skybox
+	meshList[GEO_SKYTOP] = MeshBuilder::GenerateQuad("Sky", Color(1, 1, 1), 1.f);
+	meshList[GEO_SKYTOP]->textureArray[0] = LoadTGA("Image//skytop.tga");
+
+	meshList[GEO_SKYBOTTOM] = MeshBuilder::GenerateQuad("Sky", Color(1, 1, 1), 1.f);
+	meshList[GEO_SKYBOTTOM]->textureArray[0] = LoadTGA("Image//skybottom.tga");
+
+	meshList[GEO_SKYLEFT] = MeshBuilder::GenerateQuad("Sky", Color(1, 1, 1), 1.f);
+	meshList[GEO_SKYLEFT]->textureArray[0] = LoadTGA("Image//skyleft.tga");
+
+	meshList[GEO_SKYRIGHT] = MeshBuilder::GenerateQuad("Sky", Color(1, 1, 1), 1.f);
+	meshList[GEO_SKYRIGHT]->textureArray[0] = LoadTGA("Image//skyright.tga");
+
+	meshList[GEO_SKYFRONT] = MeshBuilder::GenerateQuad("Sky", Color(1, 1, 1), 1.f);
+	meshList[GEO_SKYFRONT]->textureArray[0] = LoadTGA("Image//skyfront.tga");
+
+	meshList[GEO_SKYBACK] = MeshBuilder::GenerateQuad("Sky", Color(1, 1, 1), 1.f);
+	meshList[GEO_SKYBACK]->textureArray[0] = LoadTGA("Image//skyback.tga");
+
+
+
+
 	//Monster
 	meshList[GEO_BASIC] = MeshBuilder::GenerateOBJ("Basic", "OBJ/BasicMonster.obj");
 	meshList[GEO_BASIC]->textureArray[0] = LoadTGA("Image//BasicMonster.tga");

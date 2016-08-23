@@ -22,17 +22,28 @@ public:
 	CaptureGame();
 	~CaptureGame();
 
+	int resource1;
+	int resource2;
+	int resource3;
+	int resource4;
+
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
 
-	bool CheckCollision(GameObject* go, GameObject* other, double dt);
-	float CheckCollision2(GameObject* go, GameObject* other);
-	void CollisionResponse(GameObject*go, GameObject*other);
 	//void RenderGO(GameObject *go);
 	void CreateScene();
 	void ClearScene();
+
+	void SwitchInitializer();
+	//void SwitchInitializer(bool blue, bool red, bool yellow, bool green);
+	//Generates patterns of the minigame scene
+	void CreateTypeONE(int type);
+	void CreateTypeTWO(int type1, int type2);
+	void CreateTypeTHREE(int type1, int type2, int type3);
+	void CreateTypeFOUR();
+
 
 	GameObject* FetchGO(GameObject::GAMEOBJECT_TYPE type);
 
@@ -44,17 +55,12 @@ private:
 	Renderable grass;
 	//Renderable forValor;
 
-	//Capture Game Objects
-	GameObject* ren_ball;
-	GameObject* ren_wall;
-	GameObject* ren_pillar;
-
 	bool bLightEnabled;
 	Vector3 distance;
 	float angle;
 	float fps;
 	bool b_initScene;
-
+	//Terrain terrain;
 	ParticleGenerator whitebang;
 	ParticleGenerator bluebang;
 	ParticleGenerator redbang;
@@ -64,32 +70,33 @@ private:
 	float f_ballSpawnDebounceTimer;
 
 protected:
-
 	std::vector<GameObject *> m_goList;
 	float m_speed;
 	Vector3 m_gravity;
 	float m_worldWidth;
 	float m_worldHeight;
-	GameObject *m_ghost;
 	int m_objectCount;
 	float EstimatedTime, TimeTaken;
 	bool timerStarted;
-
-	float m1, m2;
-	Vector3 u1, u2, v1, v2;
-
+	
 	bool isrunning;
 	bool b_allBallsdespawned;
 	float f_ballSpawnTimer;
 
 	int balls;
-
-	int resource1;
-	int resource2;
-	int resource3;
-	int resource4;
-
 	int bonuscount;
+
+	int top_rarest; //blue,red,yelo,green = 1,2,3,4
+
+	bool blueswitch;
+	bool redswitch;
+	bool yellowswitch;
+	bool greenswitch;
+
+	/* counts the number of active resource thats true, 
+	patterns of walls is based on number of bools switched on*/
+	int total_active_switches;
+
 };
 
 #endif

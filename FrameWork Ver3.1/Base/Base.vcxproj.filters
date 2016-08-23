@@ -296,6 +296,14 @@
     </ClCompile>
     <ClCompile Include="Source\IceProjectile.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    <ClCompile Include="Source\WinScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoseScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Display.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -484,6 +492,14 @@
     </ClInclude>
     <ClInclude Include="Source\IceProjectile.h">
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    <ClInclude Include="Source\WinScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoseScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Display.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

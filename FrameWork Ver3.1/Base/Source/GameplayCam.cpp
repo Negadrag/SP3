@@ -12,7 +12,7 @@ GameplayCam::~GameplayCam()
 
 }
 
-void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up)
+void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up, int cameratype)
 {
 	
 
@@ -30,6 +30,8 @@ void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up)
 	this->nearPlane = 0.1;
 	this->farPlane = 10000;
 
+	this->cameratype_no = cameratype;
+
 	leftright = false;
 	turnSpeed_Mod = 0; 
 	started = false;
@@ -40,10 +42,15 @@ void GameplayCam::Update(double dt)
 {
 	static const float CAMERA_SPEED = 200.f;
 	
+	if (cameratype_no == 1)
+		PanCamera(CAMERA_SPEED, dt);
+	else if (cameratype_no == 2)
+		TurnTable(CAMERA_SPEED, dt, position);
+	else
+		return;
+	//
 
-	//TurnTable(CAMERA_SPEED, dt, position);
-
-	PanCamera(CAMERA_SPEED, dt);
+	
 
 }
 
@@ -103,32 +110,22 @@ void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 
 
 	//Camera Pitching
-	//if (Application::IsKeyPressed(VK_UP))
-	//{
-	//	float pitch = (float)(-turnCam_spd * (float)dt);
-	//	Vector3 view = (target - position).Normalized();
-	//	Vector3 right = view.Cross(up);
-	//	right.y = 0;
-	//	right.Normalize();
-	//	up = right.Cross(view).Normalized();
-	//	Mtx44 rotation;
-	//	rotation.SetToRotation(pitch, right.x, right.y, right.z);
-	//	view = rotation * view;
-	//	//target = position + view;
-	//}
-	//if (Application::IsKeyPressed(VK_DOWN))
-	//{
-	//	float pitch = (float)(turnCam_spd * (float)dt);
-	//	Vector3 view = (target - position).Normalized();
-	//	Vector3 right = view.Cross(up);
-	//	right.y = 0;
-	//	right.Normalize();
-	//	up = right.Cross(view).Normalized();
-	//	Mtx44 rotation;
-	//	rotation.SetToRotation(pitch, right.x, right.y, right.z);
-	//	view = rotation * view;
-	//	//target = position + view;
-	//}
+	if (Application::IsKeyPressed(VK_UP))
+	{
+		Vector3 view = (target - position).Normalized();
+		position.y += view.y * turnCam_spd * (float)dt * 10;
+
+		if (position.y <= 100)
+			position.y = 100;
+	}
+	if (Application::IsKeyPressed(VK_DOWN))
+	{
+		Vector3 view = (target - position).Normalized();
+		position.y -= view.y * turnCam_spd * (float)dt * 10;
+
+		if (position.y >= 2000)
+			position.y = 2000;
+	}
 
 
 

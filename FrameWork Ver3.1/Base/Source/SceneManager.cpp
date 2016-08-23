@@ -7,6 +7,9 @@
 #include "CaptureGame.h"
 #include "Application.h"
 #include "MapEditor.h"
+#include "WinScene.h"
+#include "LoseScene.h"
+#include "Display.h"
 
 SceneManager* SceneManager::instance = nullptr;
 
@@ -33,6 +36,14 @@ void SceneManager::Init()
 	CreateScene(new CaptureGame());
 	// Scene ID 4
 	CreateScene(new MapEditor());
+	// Scene ID 5
+	CreateScene(new WinScene());
+	// Scene ID 6
+	CreateScene(new LoseScene());
+	// Scene ID 7
+	CreateScene(new Display());
+	
+	
 
 	this->m_currentSceneID = 1;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;

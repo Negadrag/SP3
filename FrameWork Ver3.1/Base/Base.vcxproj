@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Cursor.cpp" />
     <ClCompile Include="Source\CursorControl.cpp" />
     <ClCompile Include="Source\DepthFBO.cpp" />
+    <ClCompile Include="Source\Display.cpp" />
     <ClCompile Include="Source\EditorCursor.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
+    <ClCompile Include="Source\LoseScene.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MapEditor.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
@@ -71,6 +73,7 @@
     <ClCompile Include="Source\TurntableCam.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\WaveManager.cpp" />
+    <ClCompile Include="Source\WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
@@ -89,6 +92,7 @@
     <ClInclude Include="Source\DepthFBO.h" />
     <ClInclude Include="Source\EditorCursor.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\Display.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\GameObject.h" />
@@ -102,6 +106,7 @@
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
+    <ClInclude Include="Source\LoseScene.h" />
     <ClInclude Include="Source\MapEditor.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
@@ -135,6 +140,7 @@
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="Source\WaveManager.h" />
+    <ClInclude Include="Source\WinScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>
