@@ -15,6 +15,7 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\ArrowTower.cpp" />
     <ClCompile Include="Source\Assignment.cpp" />
+    <ClCompile Include="Source\BuffTower.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Camera2.cpp" />
     <ClCompile Include="Source\Camera3.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\GUIManager.cpp" />
     <ClCompile Include="Source\IceMonster.cpp" />
+    <ClCompile Include="Source\IceProjectile.cpp" />
     <ClCompile Include="Source\IceTower.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
@@ -48,6 +50,7 @@
     <ClCompile Include="Source\ParticleGenerator.cpp" />
     <ClCompile Include="Source\Particles.cpp" />
     <ClCompile Include="Source\PlayerInfo.cpp" />
+    <ClCompile Include="Source\PoisonProjectile.cpp" />
     <ClCompile Include="Source\PoisonTower.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\Renderable.cpp" />
@@ -74,6 +77,7 @@
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\ArrowTower.h" />
     <ClInclude Include="Source\Assignment.h" />
+    <ClInclude Include="Source\BuffTower.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera2.h" />
     <ClInclude Include="Source\Camera3.h" />
@@ -92,6 +96,7 @@
     <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\GUIManager.h" />
     <ClInclude Include="Source\IceMonster.h" />
+    <ClInclude Include="Source\IceProjectile.h" />
     <ClInclude Include="Source\IceTower.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
@@ -108,6 +113,7 @@
     <ClInclude Include="Source\ParticleGenerator.h" />
     <ClInclude Include="Source\Particles.h" />
     <ClInclude Include="Source\PlayerInfo.h" />
+    <ClInclude Include="Source\PoisonProjectile.h" />
     <ClInclude Include="Source\PoisonTower.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\Renderable.h" />

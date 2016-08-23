@@ -19,7 +19,8 @@ public:
 	virtual void Fire(double dt);
 
 	static int cost;
-
+	Renderable child2;
+	Renderable child3;
 
 private:
 

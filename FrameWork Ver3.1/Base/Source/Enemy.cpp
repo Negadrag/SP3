@@ -11,8 +11,7 @@ Enemy::Enemy()
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos.Set(0, 0, 0);
-	this->player = nullptr;
-}
+	this->player = nullptr;}
 
 Enemy::Enemy(Vector3 pos, Node* root)
 {
@@ -124,7 +123,8 @@ void Enemy::Update(double dt)
 				return;
 			}
 		}
-	
+
+
 		MoveTo(nxtTile->coords, dt);
 		UpdateAnim(dt);
 	}
@@ -137,6 +137,7 @@ void Enemy::Update(double dt)
 		}
 		this->b_isActive = false;
 	}
+
 }
 
 void Enemy::UpdateAnim(double dt)
@@ -151,5 +152,22 @@ void Enemy::ReceiveDamage(int damage)
 	{
 		player->i_currency += this->i_currency;
 		this->b_isActive = false;
+	}
+}
+
+void Enemy::ReceiveSlowStatus(bool status)
+{
+	if (status == true)
+	{
+		this->i_slow = 50;
+	}
+}
+
+void Enemy::ReceivePoisonStatus(bool status, double dt)
+{
+	if(status == true)
+	{
+		this->i_slow = 25;
+		this->i_health -= 1 * dt;
 	}
 }

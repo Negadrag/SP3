@@ -6,12 +6,14 @@ int CaptureTower::cost = 5;
 CaptureTower::CaptureTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_ARROWTOWER;
-	SetAtkDmg(10);
+	SetAtkDmg(0);
 	SetRange(5);
 	SetSpdRate(10.f);
 	this->p_speed = 15.f;
+
+	this->meshID = GEO_CAPTUREBASE;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Capture Tower";
@@ -28,6 +30,18 @@ CaptureTower::CaptureTower()
 	//particleGenerator.i_particleCount = 0;
 	particleGenerator.f_maxDist = 5.f;
 	particleGenerator.isActive = false;
+
+	child.meshID = GEO_CAPTURERING1;
+	child2.SetParent(this);
+	child2.meshID = GEO_CAPTURERING1;
+	child2.scale.Set(0.7f, 0.7f, 0.7f);
+	child2.pos.Set(0, 0, 2.5f);
+	child2.b_isActive = true;
+	child3.SetParent(this);
+	child3.meshID = GEO_CAPTUREORB;
+	child3.scale.Set(0.7f, 0.7f, 0.7f);
+	child3.pos.Set(0, 0, 2.5f);
+	child3.b_isActive = true;
 }
 
 CaptureTower::~CaptureTower()
@@ -47,6 +61,24 @@ void CaptureTower::Update(double dt)
 
 	particleGenerator.Update(dt);
 
+	if (child2.meshID == GEO_CAPTURERING1)
+	{
+		child2.pos.z = 2.5f;
+		child2.rotation.y += 30.f * dt;
+		child2.rotation.z += 30.f * dt;
+	}
+
+	if (child.meshID == GEO_CAPTURERING1)
+	{
+		child.pos.z = 2.5f;
+		child.rotation.y += 30.f * dt;
+	}
+
+	if (child3.meshID == GEO_CAPTUREORB)
+	{
+		child3.pos.z = 2.5f;
+		child3.rotation.z += 30.f * dt;
+	}
 }
 
 void CaptureTower::LevelUp()

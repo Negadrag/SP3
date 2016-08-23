@@ -45,6 +45,7 @@ void Projectile::Update(double dt)
 			{
 				this->b_isActive = false;
 				enemy->ReceiveDamage(i_damage);
+			
 				//std::cout << d.LengthSquared() << std::endl;
 			}
 

@@ -214,7 +214,6 @@ void Tower::Fire(double dt)
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
 	projectile->i_damage = this->atkDamage;
 
-
 	projectileList.push_back(projectile);
 	//enemy->i_health -= 1;
 }

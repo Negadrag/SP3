@@ -6,12 +6,14 @@ int CannonTower::cost = 8;
 CannonTower::CannonTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_CANNONTOWER;
 	SetAtkDmg(10);
 	SetRange(5.f);
 	SetSpdRate(0.5f);
 	this->p_speed = 12.f;
+
+	this->meshID = GEO_CANNONTOWER;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;

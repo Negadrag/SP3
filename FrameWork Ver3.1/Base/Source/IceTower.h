@@ -17,6 +17,7 @@ public:
 	virtual void LevelUp();
 
 	static int cost;
+	float f_SlowTime;
 
 private:
 };

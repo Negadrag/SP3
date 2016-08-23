@@ -4,12 +4,14 @@
 MortarTower::MortarTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_MORTARBASE;
 	SetAtkDmg(10);
 	SetRange(30);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
+
+	this->meshID = GEO_MORTARBASE;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;

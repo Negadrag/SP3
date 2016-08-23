@@ -14,6 +14,7 @@ public:
 	virtual void LevelUp();
 
 	static int cost;
+
 private:
 
 };

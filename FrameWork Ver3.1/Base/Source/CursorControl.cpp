@@ -6,6 +6,7 @@
 #include "PoisonTower.h"
 #include "IceTower.h"
 #include "CaptureTower.h"
+#include "BuffTower.h"
 
 CursorControl::CursorControl()
 {
@@ -91,8 +92,7 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 		{
 			if (button->functionID == 0)
 			{
-				//SpawnTower(string("Arrow"));
-				SpawnTower(string("Capture"));
+				SpawnTower(string("Arrow"));
 				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			}
 			else if (button->functionID == 1)
@@ -102,7 +102,12 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 			}
 			else if (button->functionID == 2)
 			{
-				SpawnTower(string("Ice"));
+				SpawnTower(string("Capture"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+			else if (button->functionID == 3)
+			{
+				SpawnTower(string("Buff"));
 				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			}
 		}
@@ -128,14 +133,14 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 bool CursorControl::SpawnTower(string name)
 {
 	Tower *tempTower;
-	/*if (name == string("Arrow"))
-		tempTower = new ArrowTower();*/
-	if (name == string("Capture"))
-		tempTower = new CaptureTower();
+	if (name == string("Arrow"))
+		tempTower = new PoisonTower();
 	else if (name == string("Cannon"))
 		tempTower = new CannonTower();
-	else if (name == string("Ice"))
-		tempTower = new IceTower();
+	else if (name == string("Capture"))
+		tempTower = new CaptureTower();
+	else if (name == string("Buff"))
+		tempTower = new BuffTower();
 	tempTower->pos.Set(checkPositionX, checkPositionY, 0);
 	tempTower->scale.Set(1, 1, 1);
 	tempTower->enemyList = enemyList;
@@ -164,12 +169,12 @@ void CursorControl::TowerButtons(float worldX,float worldY)
 		GEOMETRY_TYPE mesh;
 		Vector2 offset;
 		int cost = 0;
+		int atk = 0;
 		if (i == 0)
 		{
 			text = "Arrow Tower (Q)";
 			mesh = GEO_ARROWTOWER;
 			offset.Set(-15.f, 5.f);
-			
 			cost = ArrowTower::cost;
 		}
 		else if (i == 1)
@@ -181,14 +186,14 @@ void CursorControl::TowerButtons(float worldX,float worldY)
 		}
 		else if (i == 2)
 		{
-			text = "Ice Tower (E)";
-			mesh = GEO_ICETOWER;
+			text = "Capture Tower (E)";
+			mesh = GEO_CAPTURETOWER;
 			offset.Set(-15.f, -15.f);
 			cost = IceTower::cost;
 		}
 		else if (i == 3)
 		{
-			text = "Another One (R)";
+			text = "Buff Tower (R)";
 			mesh = GEO_ARROWTOWER;
 			offset.Set(5.f, -15.f);
 		}
@@ -239,7 +244,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		if (bLButtonState && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Capture");
+			SpawnTower("Arrow");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
 
@@ -271,7 +276,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		if (bLButtonState && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Ice");
+			SpawnTower("Capture");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
 
@@ -287,7 +292,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		if (bLButtonState && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Arrow");
+			SpawnTower("Buff");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
 

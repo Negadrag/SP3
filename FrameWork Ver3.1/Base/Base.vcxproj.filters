@@ -288,6 +288,15 @@
     <ClCompile Include="Source\CaptureTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BuffTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PoisonProjectile.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IceProjectile.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -466,6 +475,15 @@
     </ClInclude>
     <ClInclude Include="Source\CaptureTower.h">
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BuffTower.h">
+      <Filter>Header Files\ObjectClasses\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PoisonProjectile.h">
+      <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IceProjectile.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

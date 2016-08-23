@@ -6,19 +6,22 @@ int IceTower::cost = 5;
 IceTower::IceTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->pos.SetZero();
-	this->meshID = GEO_ICEBASE;
 	SetAtkDmg(10);
-	SetRange(30);
+	SetRange(2);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
+
+	this->pos.SetZero();
+	this->meshID = GEO_ICEBASE;
 	this->projectile_meshID = GEO_ICESHOT;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = FIRST_ENEMY;
+	this->strategy = NEAREST_ENEMY;
 	s_name = "Ice Tower";
 	this->b_rotateWhenFire = false;
 	child.meshID = GEO_ICECRYSTAL;
+	this->f_SlowTime = 10.f;
 
 	particleGenerator.SetType(GEO_ICEPARTICLE);
 	particleGenerator.SetFrequency(20);

@@ -265,6 +265,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_POISONBASE]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_POISONMOB] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-POISONMOB.obj");
 	meshList[GEO_POISONMOB]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
+	meshList[GEO_POISONARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
 
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
@@ -275,6 +276,18 @@ void RenderManager::InitMesh()
 	meshList[GEO_MORTARBASE]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
 	meshList[GEO_MORTARCANNON] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARCANNON.obj");
 	meshList[GEO_MORTARCANNON]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
+
+	meshList[GEO_CAPTURETOWER] = MeshBuilder::GenerateOBJ("CaptureTower", "OBJ//Tower-CAPTURE.obj");
+	meshList[GEO_CAPTURETOWER]->textureArray[0] = LoadTGA("Image//Tower-CAPTUREBASE.tga");
+	meshList[GEO_CAPTURETOWER]->textureArray[1] = LoadTGA("Image//Orb.tga");
+	meshList[GEO_CAPTUREBASE] = MeshBuilder::GenerateOBJ("Capture Base", "OBJ//Tower-CAPTUREBASE.obj");
+	meshList[GEO_CAPTUREBASE]->textureArray[0] = LoadTGA("Image//Tower-CAPTUREBASE.tga");
+	meshList[GEO_CAPTURERING1] = MeshBuilder::GenerateOBJ("Capture Ring1", "OBJ//Tower-CAPTURERING1.obj");
+	meshList[GEO_CAPTURERING2] = MeshBuilder::GenerateOBJ("Capture Ring2", "OBJ//Tower-CAPTURERING2.obj");
+	meshList[GEO_CAPTUREORB] = MeshBuilder::GenerateOBJ("Capture Orb", "OBJ//Tower-CAPTUREORB.obj");
+	meshList[GEO_CAPTUREORB]->textureArray[0] = LoadTGA("Image//Orb.tga");
+	meshList[GEO_CAPTUREORB]->material.kShininess = 0.5f;
+	meshList[GEO_CAPTUREORB]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 	//Particles
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
 	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");

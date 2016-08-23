@@ -4,12 +4,14 @@
 SpeedTower::SpeedTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_SPEEDTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
 	SetSpdRate(4.f);
 	this->p_speed = 10.f;
+
+	this->meshID = GEO_SPEEDTOWER;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;

@@ -22,6 +22,8 @@ public:
 	virtual void MoveTo(Vector2 dest,double dt);
 	void Update(double dt);
 	void ReceiveDamage(int damage);
+	void ReceiveSlowStatus(bool status);
+	void ReceivePoisonStatus(bool status, double dt);
 	virtual void UpdateAnim(double dt);
 private:
 
@@ -31,6 +33,9 @@ protected:
 	int i_defence;//percentage of dmg mitigation
 	int i_damage;
 	int i_slow;// the percentage of movement speed slow
+
+	
+
 	Enemy();
 	Enemy(Vector3 pos, Node* root);
 };

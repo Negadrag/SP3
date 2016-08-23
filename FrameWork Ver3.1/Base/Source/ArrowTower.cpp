@@ -6,12 +6,14 @@ int ArrowTower::cost = 5;
 ArrowTower::ArrowTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_ARROWTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
 	SetSpdRate(2.f);
 	this->p_speed = 10.f;
+
+	this->meshID = GEO_ARROWTOWER;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;

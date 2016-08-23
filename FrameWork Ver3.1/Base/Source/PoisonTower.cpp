@@ -4,13 +4,15 @@
 PoisonTower::PoisonTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_POISONBASE;
 	SetAtkDmg(10);
 	SetRange(5);
 	SetSpdRate(0.5f);
 	this->p_speed = 10.f;
-	this->projectile_meshID = GEO_ARROW;
+
+	this->meshID = GEO_POISONBASE;
+	this->projectile_meshID = GEO_POISONARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Poison Tower";
