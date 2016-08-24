@@ -194,7 +194,7 @@ void CaptureGame::Update(double dt)
 						whitebang.f_lifeTime = 15.f;
 						whitebang.minVel.Set(-10, 5, 0);
 						whitebang.maxVel.Set(10, 100, 0);
-						whitebang.scale.Set(10, 10, 10);
+						whitebang.scale.Set(20, 20, 20);
 						whitebang.f_maxDist = 100.f;
 						whitebang.isActive = false;
 						whitebang.SpawnParticle(Vector3(go->pos.x, go->pos.y, 10));
@@ -1112,7 +1112,7 @@ void CaptureGame::CreateScene()
 	bluebang.f_lifeTime = 5.f;
 	bluebang.minVel.Set(-900, -900, 0);
 	bluebang.maxVel.Set(900, 900, 0);
-	bluebang.scale.Set(3, 3, 3);
+	bluebang.scale.Set(10, 10, 10);
 	bluebang.f_maxDist = 100.f;
 	bluebang.isActive = false;
 
@@ -1123,7 +1123,7 @@ void CaptureGame::CreateScene()
 	redbang.f_lifeTime = 5.f;
 	redbang.minVel.Set(-900, -900, 0);
 	redbang.maxVel.Set(900, 900, 0);
-	redbang.scale.Set(3, 3, 3);
+	redbang.scale.Set(10, 10, 10);
 	redbang.f_maxDist = 100.f;
 	redbang.isActive = false;
 
@@ -1134,7 +1134,7 @@ void CaptureGame::CreateScene()
 	yellowbang.f_lifeTime = 5.f;
 	yellowbang.minVel.Set(-900, -900, 0);
 	yellowbang.maxVel.Set(900, 900, 0);
-	yellowbang.scale.Set(3, 3, 3);
+	yellowbang.scale.Set(10, 10, 10);
 	yellowbang.f_maxDist = 100.f;
 	yellowbang.isActive = false;
 
@@ -1145,7 +1145,7 @@ void CaptureGame::CreateScene()
 	greenbang.f_lifeTime = 5.f;
 	greenbang.minVel.Set(-900, -900, 0);
 	greenbang.maxVel.Set(900, 900, 0);
-	greenbang.scale.Set(3, 3, 3);
+	greenbang.scale.Set(10, 10, 10);
 	greenbang.f_maxDist = 100.f;
 	greenbang.isActive = false;
 

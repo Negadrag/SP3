@@ -21,7 +21,8 @@ PoisonTower::PoisonTower()
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Poison Tower";
-	child.meshID = GEO_POISONMOB;
+	child.meshID = GEO_BASIC;
+	child.pos.Set(0, 0, 2.2f);
 }
 
 PoisonTower::~PoisonTower()

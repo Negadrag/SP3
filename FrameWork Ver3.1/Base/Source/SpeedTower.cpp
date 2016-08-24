@@ -12,9 +12,12 @@ SpeedTower::SpeedTower()
 	this->p_speed = 10.f;
 
 	this->meshID = GEO_SPEEDTOWER;
-	this->projectile_meshID = GEO_ARROW;
+	this->projectile_meshID = GEO_BULLET;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;
+	s_name = "Speed Tower";
+	child.meshID = GEO_SPEED;
+	child.pos.Set(0, 0, 2.2f);
 }
 
 SpeedTower::~SpeedTower()

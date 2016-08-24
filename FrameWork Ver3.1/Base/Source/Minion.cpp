@@ -15,7 +15,7 @@ Minion::Minion() :Enemy()
 
 Minion::Minion(Vector3 pos, Node* root) :Enemy(pos, root)
 {
-	this->meshID = GEO_TANKY;
+	this->meshID = GEO_SPEED;
 	this->f_movSpeed = 3.f;
 	this->f_health = 50;
 	this->i_damage = 1;
