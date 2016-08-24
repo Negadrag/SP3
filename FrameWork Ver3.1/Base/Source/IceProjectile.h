@@ -11,7 +11,8 @@ public:
 
 	virtual void Update(double dt);
 
-	float f_frostdura;
+	float f_slowDuration;
+	float f_slowAmount;
 private:
 
 

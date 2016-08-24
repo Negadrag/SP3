@@ -40,9 +40,8 @@ void SceneManager::Init()
 	CreateScene(new WinScene());
 	// Scene ID 6
 	CreateScene(new LoseScene());
-	// Scene ID 7
+	// Scene ID 75
 	CreateScene(new Display());
-	
 	
 
 	this->m_currentSceneID = 1;

@@ -3,10 +3,10 @@
 Enemy::Enemy()
 {
 	f_movSpeed = 5.f;
-	i_health = 10;
+	f_health = 10;
 	i_defence = 0;
 	i_damage = 0;
-	i_slow = 0;
+	f_slow = 0;
 	i_currency = 0;
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
@@ -16,10 +16,10 @@ Enemy::Enemy()
 Enemy::Enemy(Vector3 pos, Node* root)
 {
 	f_movSpeed = 5.f;
-	i_health = 10;
+	f_health = 10;
 	i_defence = 0;
 	i_damage = 0;
-	i_slow = 0;
+	f_slow = 0;
 	i_currency = 0;
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
@@ -104,7 +104,7 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
-	view = view * f_movSpeed *((float)(100 - i_slow) / 100.f) * dt;
+	view = view * f_movSpeed *((float)(100 - f_slow) / 100.f) * dt;
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x ;
 	this->pos.y += view.y;
@@ -147,27 +147,35 @@ void Enemy::UpdateAnim(double dt)
 void Enemy::ReceiveDamage(int damage)
 {
 	int dmg = damage * ((100.f - (float)i_defence) / 100.f);
-	this->i_health -= dmg;
-	if (i_health <= 0)
+	this->f_health -= dmg;
+	if (f_health <= 0)
 	{
 		player->i_currency += this->i_currency;
 		this->b_isActive = false;
 	}
 }
 
-void Enemy::ReceiveSlowStatus(bool status)
+void Enemy::ReceiveSlowStatus(float slowAmount, float duration)
 {
-	if (status == true)
+	if (slowAmount > this->f_slow)
 	{
-		this->i_slow = 50;
+		this->f_slow = slowAmount;
+	}
+	if (this->f_slowTimer < duration)
+	{
+		this->f_slowTimer = duration;
 	}
 }
 
-void Enemy::ReceivePoisonStatus(bool status, double dt)
+void Enemy::ReceivePoisonStatus(float poisonDPS,float slowAmount,float duration)
 {
-	if(status == true)
+	this->ReceiveSlowStatus(slowAmount,duration);
+	if (this->f_poisonDps < poisonDPS)
 	{
-		this->i_slow = 25;
-		this->i_health -= 1 * dt;
+		this->f_poisonDps = poisonDPS;
+	}
+	if (this->f_poisonTimer < duration)
+	{
+		this->f_poisonTimer = duration;
 	}
 }

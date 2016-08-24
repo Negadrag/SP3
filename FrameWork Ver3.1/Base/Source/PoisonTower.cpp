@@ -1,5 +1,7 @@
 #include "PoisonTower.h"
 #include "SingleTarget.h"
+#include "PoisonProjectile.h"
+
 
 PoisonTower::PoisonTower()
 :Tower()
@@ -33,11 +35,14 @@ Projectile* PoisonTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
-		Projectile* projectile = (Projectile*)(*it);
+		PoisonProjectile* projectile = (PoisonProjectile*)(*it);
 		if (!(projectile->b_isActive))
 		{
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
+			projectile->f_poisondmg = this->f_PoisonDPS;
+			projectile->f_poisondura = this->f_PoisonDura;
+			projectile->f_slowAmount = this->f_PoisonSlowAmount;
 			return projectile;
 
 		}
@@ -45,7 +50,7 @@ Projectile* PoisonTower::GetProjectile()
 	for (unsigned i = 0; i <= 10; ++i)
 	{
 
-		Projectile* projectile = new SingleTarget(projectile_meshID);
+		PoisonProjectile* projectile = new PoisonProjectile(projectile_meshID);
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
 	}

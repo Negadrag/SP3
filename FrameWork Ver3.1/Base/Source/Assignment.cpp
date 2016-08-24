@@ -26,7 +26,7 @@ void Assignment::Init()
 
 	testMap.waves.player = &(this->player);
 
-	camera.Init(Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
+	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
 
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
@@ -38,7 +38,7 @@ void Assignment::Init()
 
 	grass.b_shadows = false;
 	grass.meshID = GEO_GRASS_DARKGREEN;
-	grass.pos.Set((float)testMap.i_columns / 2.f, (float)testMap.i_rows / 2.f, 0);
+	grass.pos.Set((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0);
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 
@@ -79,7 +79,7 @@ void Assignment::Update(double dt)
 
 void Assignment::Render()
 {
-	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
+	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.f, 1.5f, 1.f), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
 	{
@@ -93,7 +93,7 @@ void Assignment::Render()
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
-			else if (testMap.screenMap[j][i] == 0)
+			else if (testMap.screenMap[j][i] == 0 || testMap.screenMap[j][i] == -3)
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}

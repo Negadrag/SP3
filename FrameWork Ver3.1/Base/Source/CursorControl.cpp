@@ -5,8 +5,10 @@
 #include "ArrowTower.h"
 #include "CannonTower.h"
 #include "PoisonTower.h"
+#include "SpeedTower.h"
 #include "IceTower.h"
 #include "BuffTower.h"
+#include "MortarTower.h"
 #include "CaptureTower.h"
 
 CursorControl::CursorControl()
@@ -30,6 +32,14 @@ CursorControl::~CursorControl()
 		}
 	}
 
+	for (int i = 0; i < (int)T_TOTAL; ++i)
+	{
+		if (towerStats[i] != nullptr)
+		{
+			delete towerStats[i];
+		}
+	}
+
 	if (towerName != nullptr)
 	{
 		delete towerName;
@@ -37,6 +47,10 @@ CursorControl::~CursorControl()
 	if (background != nullptr)
 	{
 		delete background;
+	}
+	if (background2 != nullptr)
+	{
+		delete background2;
 	}
 }
 
@@ -68,6 +82,16 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	background->scale.Set(70, 12, 1);
 
 	TowerButtons();
+
+	background2 = new GUI();
+	background2->b_isActive = false;
+	background2->b_lightEnabled = false;
+	background2->b_textActive = false;
+	background2->b_buttonActive = false;
+	background2->position.Set(13, 0);
+	background2->meshID = GEO_QUAD;
+	background2->scale.Set(30, 12, 1);
+	background2->SetParent(towerStats[0]);
 }
 
 static float debounce = 0.f;
@@ -99,72 +123,37 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 		towerName->SetText(tower->s_name);
 		towerName->position.x = 40 - tower->s_name.size() / 1.5f;
 		towerName->b_isActive = true;
+
+		std::ostringstream os;
+		os << "Atk: " << (int)tower->GetAtkDmg();
+		towerStats[T_ATK]->SetText(os.str());
+		towerStats[T_ATK]->b_isActive = true;
+
+		os.str("");
+		os << "Speed: " << tower->GetSpdRate();
+		towerStats[T_SPEED]->SetText(os.str());
+		towerStats[T_SPEED]->b_isActive = true;
+
+		os.str("");
+		os << "Strategy: " << Tower::StrategyToString(tower->strategy);
+		towerStats[T_STRATEGY]->SetText(os.str());
+		towerStats[T_STRATEGY]->b_isActive = true;
+
+		background2->b_isActive = true;
 	}
 	else
 	{
 		towerName->b_isActive = false;
+		background2->b_isActive = false;
+		for (int i = 0; i < (int)T_TOTAL; ++i)
+		{
+			towerStats[i]->b_isActive = false;
+		}
 	}
 	HotKeys(tileMap);
 	AOEDisplay(tower);
 	CameraBounds(camera);
-	
-	if (!bLButtonState && Application::IsMousePressed(0) && tileMap.screenMap[checkPositionX][checkPositionY] == -2) // -2 being a empty slot
-	{
-		bLButtonState = true;
-		for (int i = 0; i < 4; ++i)
-		{
-			spawnTower[i]->b_isActive = true;
-			towerCosts[i]->b_isActive = true;
-		}
-		background->b_isActive = true;
-	}
-	else if (bLButtonState && !Application::IsMousePressed(0))
-	{
-		bLButtonState = false;
-
-		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
-
-		if (button != nullptr)
-		{
-			if (button->functionID == 0)
-			{
-				SpawnTower(string("Arrow"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			}
-			else if (button->functionID == 1)
-			{
-				SpawnTower(string("Cannon"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			}
-			else if (button->functionID == 2)
-			{
-				SpawnTower(string("Capture"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			}
-			else if (button->functionID == 3)
-			{
-				SpawnTower(string("Buff"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			}
-		}
-
-		for (int i = 0; i < 4; ++i)
-		{
-			spawnTower[i]->b_isActive = false;
-			towerCosts[i]->b_isActive = false;
-		}
-		background->b_isActive = false;
-	}
-
-	static bool bRButtonState = false;
-	if (!bRButtonState && Application::IsMousePressed(1))
-	{
-		bRButtonState = true;
-	}
-	else if (bRButtonState && !Application::IsMousePressed(1))
-	{
-		bRButtonState = false;
-	}
+	Clicking(tileMap);
 }
 
 bool CursorControl::SpawnTower(string name)
@@ -243,7 +232,7 @@ void CursorControl::TowerButtons()
 		spawnTower[i]->SetTextSize(2);
 		spawnTower[i]->meshOffset.Set(5, 3, 50.f);
 		spawnTower[i]->position.Set(offset.x * 80, offset.y * 60, 0.f);
-		spawnTower[i]->buttonSize.Set(12, 17);
+		spawnTower[i]->buttonSize.Set(12, 10);
 		spawnTower[i]->functionID = i;
 		spawnTower[i]->b_isActive = false;
 
@@ -256,6 +245,16 @@ void CursorControl::TowerButtons()
 		towerCosts[i]->b_buttonActive = false;
 		towerCosts[i]->position.Set(0, -1.5f);
 		towerCosts[i]->b_isActive = false;
+	}
+
+	for (int i = 0; i < (int)T_TOTAL; ++i)
+	{
+		towerStats[i] = new GUI();
+		towerStats[i]->textColor.Set(1, 1, 1);
+		towerStats[i]->SetTextSize(2);
+		towerStats[i]->b_buttonActive = false;
+		towerStats[i]->position.Set(28.f, 52.f - i * 2.f);
+		towerStats[i]->b_isActive = false;
 	}
 }
 
@@ -344,5 +343,66 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 			}
 			background->b_isActive = false;
 		}
+	}
+}
+
+void CursorControl::Clicking(const TileMap &tileMap)
+{
+	if (!bLButtonState && Application::IsMousePressed(0) && tileMap.screenMap[checkPositionX][checkPositionY] == -2) // -2 being a empty slot
+	{
+		bLButtonState = true;
+		for (int i = 0; i < 4; ++i)
+		{
+			spawnTower[i]->b_isActive = true;
+			towerCosts[i]->b_isActive = true;
+		}
+		background->b_isActive = true;
+	}
+	else if (bLButtonState && !Application::IsMousePressed(0))
+	{
+		bLButtonState = false;
+
+		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+
+		if (button != nullptr)
+		{
+			if (button->functionID == 0)
+			{
+				SpawnTower(string("Arrow"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+			else if (button->functionID == 1)
+			{
+				SpawnTower(string("Cannon"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+			else if (button->functionID == 2)
+			{
+				SpawnTower(string("Capture"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+			else if (button->functionID == 3)
+			{
+				SpawnTower(string("Buff"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			}
+		}
+
+		for (int i = 0; i < 4; ++i)
+		{
+			spawnTower[i]->b_isActive = false;
+			towerCosts[i]->b_isActive = false;
+		}
+		background->b_isActive = false;
+	}
+
+	static bool bRButtonState = false;
+	if (!bRButtonState && Application::IsMousePressed(1))
+	{
+		bRButtonState = true;
+	}
+	else if (bRButtonState && !Application::IsMousePressed(1))
+	{
+		bRButtonState = false;
 	}
 }

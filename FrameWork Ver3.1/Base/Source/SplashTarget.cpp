@@ -71,19 +71,13 @@ void SplashTarget::Update(double dt)
 				if ((*it)->b_isActive == true)
 				{
 					if (((*it)->pos - this->pos).LengthSquared() < f_range*f_range)
-					if (meshID == GEO_ICESHOT)
-					{
-						(*it)->ReceiveSlowStatus(true);
-					}
+
 					(*it)->ReceiveDamage(i_damage/2);
 				}
 			}
 		}
 		
-		if (meshID == GEO_ICESHOT)
-		{
-			enemy->ReceiveSlowStatus(true);
-		}
+
 		enemy->ReceiveDamage(i_damage/2);
 		//std::cout << d.LengthSquared() << std::endl;
 	}

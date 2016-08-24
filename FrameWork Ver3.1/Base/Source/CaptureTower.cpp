@@ -14,7 +14,7 @@ CaptureTower::CaptureTower()
 	this->p_speed = 15.f;
 
 	this->meshID = GEO_CAPTUREBASE;
-	this->heightOffset.Set(0, 0, 2);
+	this->heightOffset.Set(0, 0, 1);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Capture Tower";
 	this->b_rotateWhenFire = false;

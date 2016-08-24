@@ -5,7 +5,7 @@ IceMonster::IceMonster() :Enemy()
 {
 	this->meshID = GEO_ICE;
 	this->f_movSpeed = 3.f;
-	this->i_health = 100;
+	this->f_health = 100;
 	this->i_damage = 1;
 	this->i_defence = 0;
 	this->f_rotateSpeed = 90.f;
@@ -16,7 +16,7 @@ IceMonster::IceMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 {
 	this->meshID = GEO_ICE;
 	this->f_movSpeed = 3.f;
-	this->i_health = 50;
+	this->f_health = 50;
 
 	this->i_damage = 1;
 	this->i_defence = 0;
@@ -37,7 +37,7 @@ void IceMonster::MoveTo(Vector2 dest, double dt)
 	}
 	view.Normalize();
 
-	view = view * f_movSpeed *((float)(100 - i_slow) / 100.f) * dt;
+	view = view * f_movSpeed *((float)(100 - f_slow) / 100.f) * dt;
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x;
 	this->pos.y += view.y;
