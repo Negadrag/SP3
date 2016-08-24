@@ -30,7 +30,7 @@ void MapEditor::Init()
 	tileMap.waves.player = &(this->player);
 
 
-	camera.Init(Vector3((float)tileMap.i_columns / 2.f, (float)tileMap.i_rows / 2.f, 10.f), Vector3((float)tileMap.i_columns / 2.f, (float)tileMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
+	camera.Init(Vector3((float)(tileMap.i_columns - 1) / 2.f, (float)tileMap.i_rows / 2.f, 10.f), Vector3((float)(tileMap.i_columns - 1) / 2.f, (float)tileMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	camera.b_ortho = true;
@@ -40,7 +40,7 @@ void MapEditor::Init()
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	grass.meshID = GEO_GRASS_DARKGREEN;
-	grass.pos.Set((float)tileMap.i_columns / 2.f, (float)tileMap.i_rows / 2.f, 0);
+	grass.pos.Set((float)(tileMap.i_columns - 1)/2.f, (float)tileMap.i_rows / 2.f, 0);
 	grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
 	grass.rotation.Set(0, 0, 0);
 	
@@ -96,17 +96,19 @@ void MapEditor::Render()
 		}
 	}
 
+	RenderManager::GetInstance()->RenderTextOnScreen("Q - Node, W - Tower Slot, E - Remove", Color(0, 1, 0), 3, 15, 57);
+
 	if (cursor.currentTile == EditorCursor::TILE_EMPTY)
 	{
-		RenderManager::GetInstance()->RenderTextOnScreen("REMOVE", Color(0, 1, 0), 3, 36, 55);
+		RenderManager::GetInstance()->RenderTextOnScreen("REMOVE", Color(0, 1, 0), 3, 33, 53);
 	}
 	else if (cursor.currentTile == EditorCursor::TILE_NODE)
 	{
-		RenderManager::GetInstance()->RenderTextOnScreen("NODE", Color(0, 1, 0), 3, 36, 55);
+		RenderManager::GetInstance()->RenderTextOnScreen("NODE", Color(0, 1, 0), 3, 33, 53);
 	}
 	else if (cursor.currentTile == EditorCursor::TILE_OPEN)
 	{
-		RenderManager::GetInstance()->RenderTextOnScreen("TOWER SLOTS", Color(0, 1, 0), 3, 36, 55);
+		RenderManager::GetInstance()->RenderTextOnScreen("TOWER SLOTS", Color(0, 1, 0), 3, 33, 53);
 	}
 
 	//On screen text

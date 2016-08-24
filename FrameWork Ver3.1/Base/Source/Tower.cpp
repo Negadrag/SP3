@@ -65,14 +65,29 @@ void Tower::SetCost(float c)
 	this->towerCost = c;
 }
 
+float Tower::GetCost()
+{
+	return towerCost;
+}
+
 void Tower::SetAtkDmg(float ad)
 {
 	this->atkDamage = ad;
 }
 
+float Tower::GetAtkDmg()
+{
+	return atkDamage;
+}
+
 void Tower::SetSpdRate(float sr)
 {
 	this->atkSpeed = sr;
+}
+
+float Tower::GetSpdRate()
+{
+	return atkSpeed;
 }
 
 void Tower::SetRange(float r)
@@ -364,4 +379,28 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 void Tower::LevelUp()
 {
 
+}
+
+string Tower::StrategyToString(STRATEGY strats)
+{
+	if (strats == FIRST_ENEMY)
+	{
+		return string("First Enemy");
+	}
+	else if (strats == NEAREST_ENEMY)
+	{
+		return string("Nearest Enemy");
+	}
+	else if (strats == FURTHER_ENEMY)
+	{
+		return string("Furthest Enemy");
+	}
+	else if (strats == LOWEST_HEALTH)
+	{
+		return string("Lowest Health");
+	}
+	else if (strats == HIGHEST_HEALTH)
+	{
+		return string("Highest Health");
+	}
 }
