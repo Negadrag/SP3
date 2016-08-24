@@ -19,14 +19,14 @@ CaptureTower::CaptureTower()
 	s_name = "Capture Tower";
 	this->b_rotateWhenFire = false;
 
-	particleGenerator.SetType(GEO_ICEPARTICLE);
+	particleGenerator.SetType(GEO_ESSENCE);
 	particleGenerator.SetFrequency(1);
 	particleGenerator.SetCap(1000);
 	particleGenerator.i_spawnAmount = 10;
 	particleGenerator.f_lifeTime = 2.f;
 	particleGenerator.minVel.Set(0, 0, 0);
 	particleGenerator.maxVel.Set(0, 0, 0);
-	particleGenerator.scale.Set(0.2f, 0.2f, 0.2f);
+	particleGenerator.scale.Set(0.35f, 0.35f, 0.35f);
 	//particleGenerator.i_particleCount = 0;
 	particleGenerator.f_maxDist = 5.f;
 	particleGenerator.isActive = false;

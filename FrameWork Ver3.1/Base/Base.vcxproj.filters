@@ -297,14 +297,14 @@
     <ClCompile Include="Source\Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LoseScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\IceProjectile.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClCompile>
     <ClCompile Include="Source\PoisonProjectile.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoseScene.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

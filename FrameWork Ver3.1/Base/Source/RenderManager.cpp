@@ -254,10 +254,13 @@ void RenderManager::InitMesh()
 	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//Path.tga");
 
 	meshList[GEO_FOR_VALOR] = MeshBuilder::GenerateQuad("FOR VALOR", Color(1, 1, 1), 1.f);
-	meshList[GEO_FOR_VALOR]->textureArray[0] = LoadTGA("Image//Valor.tga");				
+	meshList[GEO_FOR_VALOR]->textureArray[0] = LoadTGA("Image//Valor.tga");			
+	meshList[GEO_ESSENCE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_ESSENCE]->textureArray[0] = LoadTGA("Image//Essence.tga");
 
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
+
 
 
 	//Tower
@@ -293,7 +296,9 @@ void RenderManager::InitMesh()
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
-	meshList[GEO_CANNONBLAST] = MeshBuilder::GenerateSphere("sphere", Color(0.96f, 0.71f, 0.28f), 18, 36, 1.f);
+	meshList[GEO_CANNONBLAST] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_CANNONBLAST]->textureArray[0] = LoadTGA("Image//OrangeParticle.tga");
+
 
 	meshList[GEO_MORTARBASE] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARBASE.obj");
 	meshList[GEO_MORTARBASE]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
@@ -314,11 +319,16 @@ void RenderManager::InitMesh()
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
 	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");
 
-	meshList[GEO_PARTICLE_WHITE] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 1), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_BLUE] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.6, 1), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_RED] = MeshBuilder::GenerateSphere("sphere", Color(1, 0.3, 0.3), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_YELLOW] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 0), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_GREEN] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.7, 0), 18, 36, 1.f);
+	meshList[GEO_PARTICLE_WHITE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_WHITE]->textureArray[0] = LoadTGA("Image//WhiteParticle.tga");
+	meshList[GEO_PARTICLE_BLUE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_BLUE]->textureArray[0] = LoadTGA("Image//BlueParticle.tga");
+	meshList[GEO_PARTICLE_RED] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_RED]->textureArray[0] = LoadTGA("Image//RedParticle.tga");
+	meshList[GEO_PARTICLE_YELLOW] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_YELLOW]->textureArray[0] = LoadTGA("Image//YellowParticle.tga");
+	meshList[GEO_PARTICLE_GREEN] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_GREEN]->textureArray[0] = LoadTGA("Image//GreenParticle.tga");
 
 	meshList[GEO_SAVE] = MeshBuilder::GenerateQuad("Save", Color(1, 1, 1), 1.f);
 	meshList[GEO_SAVE]->textureArray[0] = LoadTGA("Image//save.tga");

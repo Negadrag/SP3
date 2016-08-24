@@ -25,7 +25,7 @@ CannonTower::CannonTower()
 	this->particleGenerator.f_lifeTime = 1.f;
 	this->particleGenerator.minVel.Set(-2.f,-2.f,0.f);
 	this->particleGenerator.maxVel.Set(2.f, 2.f, 0.f);
-	this->particleGenerator.scale.Set(0.1f,0.1f,0.1f);
+	this->particleGenerator.scale.Set(0.15f,0.15f,0.15f);
 	this->particleGenerator.i_particleCount = 0;
 	this->particleGenerator.f_maxDist = 3.f;
 	this->particleGenerator.isActive = false;
