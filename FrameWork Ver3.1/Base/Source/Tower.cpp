@@ -332,7 +332,7 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 		int lowestHP = INT_MAX;
 		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 		{
-			int hp = (*it)->i_health;
+			int hp = (*it)->f_health;
 			if (hp < lowestHP)
 			{
 				lowestHP = hp;
@@ -347,7 +347,7 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 		int highestHP = 0;
 		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 		{
-			int hp = (*it)->i_health;
+			int hp = (*it)->f_health;
 			if (hp > highestHP)
 			{
 				highestHP = hp;

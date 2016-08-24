@@ -13,7 +13,8 @@ public:
 
 	Node* nxtTile;
 	float f_movSpeed;
-	int i_health;
+	float f_health;
+	
 	PlayerInfo* player;
 
 	int i_currency;
@@ -22,8 +23,8 @@ public:
 	virtual void MoveTo(Vector2 dest,double dt);
 	void Update(double dt);
 	void ReceiveDamage(int damage);
-	void ReceiveSlowStatus(bool status);
-	void ReceivePoisonStatus(bool status, double dt);
+	void ReceiveSlowStatus(float slowAmount, float slowDuration);
+	void ReceivePoisonStatus(float poisonDamage,float slowAmount,float duration);
 	virtual void UpdateAnim(double dt);
 private:
 
@@ -32,8 +33,10 @@ protected:
 	
 	int i_defence;//percentage of dmg mitigation
 	int i_damage;
-	int i_slow;// the percentage of movement speed slow
-
+	float f_slow;// the percentage of movement speed slow
+	float f_poisonDps;
+	float f_slowTimer;
+	float f_poisonTimer;
 	
 
 	Enemy();

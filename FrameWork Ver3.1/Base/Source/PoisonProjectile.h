@@ -12,6 +12,7 @@ public:
 	virtual void Update(double dt);
 
 	float f_poisondmg;
+	float f_slowAmount;
 	float f_poisondura;
 private:
 

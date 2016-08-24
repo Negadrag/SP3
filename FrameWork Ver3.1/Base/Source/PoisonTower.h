@@ -14,6 +14,9 @@ public:
 	virtual void LevelUp();
 
 	static int cost;
+	float f_PoisonDura;
+	float f_PoisonSlowAmount;
+	float f_PoisonDPS;
 	string towerUpgrade;
 
 private:

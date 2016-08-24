@@ -1,5 +1,6 @@
 #include "IceTower.h"
 #include "SplashTarget.h"
+#include "IceProjectile.h"
 
 int IceTower::cost = 5;
 
@@ -12,6 +13,8 @@ IceTower::IceTower()
 	SetRange(2);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
+	this->f_SlowAmount = 50.f;
+	this->f_SlowDura = 10.f;
 
 	this->pos.SetZero();
 	this->meshID = GEO_ICEBASE;
@@ -21,7 +24,6 @@ IceTower::IceTower()
 	s_name = "Ice Tower";
 	this->b_rotateWhenFire = false;
 	child.meshID = GEO_ICECRYSTAL;
-	this->f_SlowTime = 10.f;
 
 	particleGenerator.SetType(GEO_ICEPARTICLE);
 	particleGenerator.SetFrequency(20);
@@ -42,13 +44,15 @@ Projectile* IceTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
-		SplashTarget* projectile = (SplashTarget*)(*it);
+		IceProjectile* projectile = (IceProjectile*)(*it);
 		if (!(projectile->b_isActive))
 		{
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
 			projectile->enemyVec = this->enemyList;
 			projectile->iceparticle = &(particleGenerator);
+			projectile->f_slowAmount = this->f_SlowAmount;
+			projectile->f_slowDuration = this->f_SlowDura;
 			return projectile;
 
 		}
@@ -56,7 +60,7 @@ Projectile* IceTower::GetProjectile()
 	for (unsigned i = 0; i <= 10; ++i)
 	{
 
-		SplashTarget* projectile = new SplashTarget(projectile_meshID);
+		IceProjectile* projectile = new IceProjectile(projectile_meshID);
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
 	}
