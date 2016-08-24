@@ -123,7 +123,24 @@ void Enemy::Update(double dt)
 				return;
 			}
 		}
-
+		if (f_poisonTimer>0.f)
+		{
+			ReceiveDamage(f_poisonDps*dt);
+			f_poisonTimer -= dt;
+			if (f_poisonTimer <= 0.f)
+			{
+				f_poisonTimer = 0.f;
+			}
+		}
+		if (f_slowTimer > 0)
+		{
+			f_slowTimer -= dt;
+			if (f_slowTimer <= 0.f)
+			{
+				f_slow = 0;
+				f_slowTimer = 0;
+			}
+		}
 
 		MoveTo(nxtTile->coords, dt);
 		UpdateAnim(dt);
