@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "PlayerInfo.h"
 
 Enemy::Enemy()
 {
@@ -104,7 +105,7 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
-	view = view * f_movSpeed *((float)(100 - f_slow) / 100.f) * dt;
+	view = view * f_movSpeed *((float)(100.f - f_slow) / 100.f) * dt;
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x ;
 	this->pos.y += view.y;

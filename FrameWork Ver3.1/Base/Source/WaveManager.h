@@ -2,16 +2,18 @@
 #define WAVE_MANAGER_H
 
 #include "Enemy.h"
-#include "PlayerInfo.h"
 #include <vector>
 
 using std::vector;
 
+class PlayerInfo;
 
 enum ENEMY_TYPE
 {
 	MINION = 1,
-	ICE_MONSTER,
+	TANKY,
+	SPEED,
+	ICE,
 
 	NUM_ENEMY
 };

@@ -3,7 +3,9 @@
 
 #include "Renderable.h"
 #include "Node.h"
-#include "PlayerInfo.h"
+
+
+class PlayerInfo;
 
 class Enemy:public Renderable
 {

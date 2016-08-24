@@ -1,6 +1,5 @@
 #include "IceMonster.h"
 
-
 IceMonster::IceMonster() :Enemy()
 {
 	this->meshID = GEO_ICE;

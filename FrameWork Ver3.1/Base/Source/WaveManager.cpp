@@ -1,6 +1,7 @@
 #include "WaveManager.h"
 #include "Minion.h"
 #include "IceMonster.h"
+#include "PlayerInfo.h"
 
 Wave::Wave(vector<ENEMY_TYPE> typeVec,int revolution, float spawnFrequency)
 {
