@@ -8,6 +8,14 @@
 class CursorControl : public Cursor
 {
 public:
+	enum TOWER_STATS
+	{
+		T_ATK,
+		T_SPEED,
+		T_STRATEGY,
+		T_TOTAL,
+	};
+
 	CursorControl();
 	~CursorControl();
 	void Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList);
@@ -18,16 +26,21 @@ public:
 	bool bLButtonState;
 	Renderable aoe;
 
-	GUI spawnTower[4];
-	GUI towerCosts[4];
-	GUI towerName;
+	GUI *spawnTower[4];
+	GUI *towerCosts[4];
+	GUI *towerName;
+	GUI *background;
+	GUI *background2;
+	GUI *towerStats[T_TOTAL];
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
 private:
-	void TowerButtons(float worldX,float worldY);
+	string StrategyToString(Tower::STRATEGY strats);
+	void TowerButtons();
 	void AOEDisplay(Tower* tower);
 	void HotKeys(const TileMap &tileMap);
+	void Clicking(const TileMap &tileMap);
 };
 
 #endif

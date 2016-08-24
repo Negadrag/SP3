@@ -3,24 +3,23 @@
 Enemy::Enemy()
 {
 	f_movSpeed = 5.f;
-	i_health = 10;
+	f_health = 10;
 	i_defence = 0;
 	i_damage = 0;
-	i_slow = 0;
+	f_slow = 0;
 	i_currency = 0;
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos.Set(0, 0, 0);
-	this->player = nullptr;
-}
+	this->player = nullptr;}
 
 Enemy::Enemy(Vector3 pos, Node* root)
 {
 	f_movSpeed = 5.f;
-	i_health = 10;
+	f_health = 10;
 	i_defence = 0;
 	i_damage = 0;
-	i_slow = 0;
+	f_slow = 0;
 	i_currency = 0;
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
@@ -105,7 +104,7 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
-	view = view * f_movSpeed *((float)(100 - i_slow) / 100.f) * dt;
+	view = view * f_movSpeed *((float)(100 - f_slow) / 100.f) * dt;
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x ;
 	this->pos.y += view.y;
@@ -124,7 +123,25 @@ void Enemy::Update(double dt)
 				return;
 			}
 		}
-	
+		if (f_poisonTimer>0.f)
+		{
+			ReceiveDamage(f_poisonDps*dt);
+			f_poisonTimer -= dt;
+			if (f_poisonTimer <= 0.f)
+			{
+				f_poisonTimer = 0.f;
+			}
+		}
+		if (f_slowTimer > 0)
+		{
+			f_slowTimer -= dt;
+			if (f_slowTimer <= 0.f)
+			{
+				f_slow = 0;
+				f_slowTimer = 0;
+			}
+		}
+
 		MoveTo(nxtTile->coords, dt);
 		UpdateAnim(dt);
 	}
@@ -137,6 +154,7 @@ void Enemy::Update(double dt)
 		}
 		this->b_isActive = false;
 	}
+
 }
 
 void Enemy::UpdateAnim(double dt)
@@ -146,10 +164,35 @@ void Enemy::UpdateAnim(double dt)
 void Enemy::ReceiveDamage(int damage)
 {
 	int dmg = damage * ((100.f - (float)i_defence) / 100.f);
-	this->i_health -= dmg;
-	if (i_health <= 0)
+	this->f_health -= dmg;
+	if (f_health <= 0)
 	{
 		player->i_currency += this->i_currency;
 		this->b_isActive = false;
+	}
+}
+
+void Enemy::ReceiveSlowStatus(float slowAmount, float duration)
+{
+	if (slowAmount > this->f_slow)
+	{
+		this->f_slow = slowAmount;
+	}
+	if (this->f_slowTimer < duration)
+	{
+		this->f_slowTimer = duration;
+	}
+}
+
+void Enemy::ReceivePoisonStatus(float poisonDPS,float slowAmount,float duration)
+{
+	this->ReceiveSlowStatus(slowAmount,duration);
+	if (this->f_poisonDps < poisonDPS)
+	{
+		this->f_poisonDps = poisonDPS;
+	}
+	if (this->f_poisonTimer < duration)
+	{
+		this->f_poisonTimer = duration;
 	}
 }

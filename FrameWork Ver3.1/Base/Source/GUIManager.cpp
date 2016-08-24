@@ -50,6 +50,25 @@ void GUIManager::RenderAllGUI()
 		return;
 	}
 
+	// Render twice because mesh will be behind text ( render order issues )
+
+	for (list<GUI*>::iterator it = GUIList[m_currentSceneID].begin(); it != GUIList[m_currentSceneID].end(); ++it)
+	{
+		GUI* gui = *it;
+		if (gui->b_isActive)
+		{
+			Vector3 offset(0, 0, 0);
+			if (gui->GetParent() != nullptr)
+			{
+				offset = gui->GetParent()->position;
+			}
+			if (gui->meshID != GEO_NULL)
+			{
+				RenderManager::GetInstance()->RenderMeshOnScreen(gui->meshID, gui->b_lightEnabled, Vector3(gui->position.x + gui->meshOffset.x, gui->position.y + gui->meshOffset.y, gui->position.z + gui->meshOffset.z) + offset, gui->scale, gui->rotation);
+			}
+		}
+	}
+
 	for (list<GUI*>::iterator it = GUIList[m_currentSceneID].begin(); it != GUIList[m_currentSceneID].end(); ++it)
 	{
 		GUI* gui = *it;
@@ -58,15 +77,11 @@ void GUIManager::RenderAllGUI()
 			Vector3 offset(0,0,0);
 			if (gui->GetParent() != nullptr)
 			{
-				offset.Set(gui->GetParent()->position.x,gui->GetParent()->position.y,0);
-			}
-			if (gui->meshID != GEO_NULL)
-			{
-				RenderManager::GetInstance()->RenderMeshOnScreen(gui->meshID, true, Vector3(gui->position.x + gui->meshOffset.x, gui->position.y + gui->meshOffset.y, gui->meshOffset.z) + offset, gui->scale, gui->rotation);
+				offset = gui->GetParent()->position;
 			}
 			if (gui->b_textActive)
 			{
-				RenderManager::GetInstance()->RenderTextOnScreen(gui->GetText(), Color(gui->textColor.x, gui->textColor.y, gui->textColor.z), gui->GetTextSize(), gui->position.x + gui->textOffset.x + offset.x, gui->position.y + gui->textOffset.y + offset.y);
+				RenderManager::GetInstance()->RenderTextOnScreen(gui->GetText(), Color(gui->textColor.x, gui->textColor.y, gui->textColor.z), gui->GetTextSize(), gui->position.x + gui->textOffset.x + offset.x, gui->position.y + gui->textOffset.y + offset.y,gui->position.z + gui->textOffset.z + offset.z);
 			}
 		}
 	}

@@ -67,24 +67,37 @@ enum GEOMETRY_TYPE
 
 	//Tower
 	GEO_ARROWTOWER,
+	GEO_ARROW,
+
+	GEO_CANNONTOWER,
+	GEO_CANNON,
+	GEO_CANNONBLAST,
+
+	GEO_CAPTURETOWER,
+	GEO_CAPTUREBASE,
+	GEO_CAPTURERING1,
+	GEO_CAPTURERING2,
+	GEO_CAPTURERING3,
+	GEO_CAPTUREORB,
+
+	GEO_BUFFTOWER,
+
 	GEO_ICETOWER,
 	GEO_ICEBASE,
-	GEO_ICECRYSTAL,
+	GEO_ICESHOT,
+	GEO_ICEPARTICLE,
+
 	GEO_POISONTOWER,
 	GEO_POISONBASE,
-	GEO_POISONMOB,
-	GEO_CANNONTOWER,
-	GEO_CANNONBLAST,
+	GEO_POISONARROW,
+
 	GEO_SPEEDTOWER,
+	GEO_BULLET,
+
 	GEO_MORTARTOWER,
 	GEO_MORTARBASE,
 	GEO_MORTARCANNON,
-	GEO_ARROW,
-	GEO_CANNON,
-	GEO_ICESHOT,
 
-	GEO_ICEPARTICLE,
-	GEO_ICEPARTICLE_AFTER,
 
 	//Monster
 	GEO_BASIC,
@@ -93,7 +106,10 @@ enum GEOMETRY_TYPE
 	GEO_ICE,
 	GEO_RESIST,
 
+	GEO_SAVE,
+
 	GEO_FOR_VALOR,
+	GEO_ESSENCE,
 
 	NUM_GEOMETRY,
 };
@@ -190,7 +206,8 @@ public:
 	void RenderObj(Renderable* obj);
 	void RenderMesh(GEOMETRY_TYPE meshID,bool lightEnabled, bool fog);
 	void RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool lightEnabled, bool fog);
-	void RenderTextOnScreen(string text, Color color, float size, float x, float y);
+	void RenderText(std::string text, Color color, Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight = false, bool fog = false);
+	void RenderTextOnScreen(string text, Color color, float size, float x, float y, float z = 0.f);
 	void RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, float size, float x, float y);
 	void RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vector3 position, Vector3 scale, Vector3 rotation);
 	void RenderGPass(int sceneID = 0);

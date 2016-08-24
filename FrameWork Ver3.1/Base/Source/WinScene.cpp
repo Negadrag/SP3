@@ -61,7 +61,7 @@ void WinScene::Update(double dt)
 	whiteUp.f_lifeTime = 15.f;
 	whiteUp.minVel.Set(-50, 5, 0);
 	whiteUp.maxVel.Set(50, 500, 0);
-	whiteUp.scale.Set(10, 10, 10);
+	whiteUp.scale.Set(20, 20, 1);
 	whiteUp.f_maxDist = 1000.f;
 	whiteUp.isActive = false;
 	whiteUp.SpawnParticle(Vector3(500, -500, 1));
@@ -74,7 +74,7 @@ void WinScene::Update(double dt)
 	whiteUp2.f_lifeTime = 15.f;
 	whiteUp2.minVel.Set(-50, 5, 0);
 	whiteUp2.maxVel.Set(50, 500, 0);
-	whiteUp2.scale.Set(10, 10, 10);
+	whiteUp2.scale.Set(20, 20, 1);
 	whiteUp2.f_maxDist = 1000.f;
 	whiteUp2.isActive = false;
 	whiteUp2.SpawnParticle(Vector3(-600, -500, 1));

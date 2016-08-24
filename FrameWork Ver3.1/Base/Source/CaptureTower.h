@@ -18,8 +18,10 @@ public:
 	virtual void LevelUp();
 	virtual void Fire(double dt);
 
+	string towerUpgrade;
 	static int cost;
-
+	Renderable child2;
+	Renderable child3;
 
 private:
 

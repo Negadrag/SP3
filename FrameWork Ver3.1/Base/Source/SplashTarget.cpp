@@ -71,11 +71,13 @@ void SplashTarget::Update(double dt)
 				if ((*it)->b_isActive == true)
 				{
 					if (((*it)->pos - this->pos).LengthSquared() < f_range*f_range)
+
 					(*it)->ReceiveDamage(i_damage/2);
 				}
 			}
 		}
 		
+
 		enemy->ReceiveDamage(i_damage/2);
 		//std::cout << d.LengthSquared() << std::endl;
 	}

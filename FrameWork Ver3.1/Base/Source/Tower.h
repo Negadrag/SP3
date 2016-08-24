@@ -25,8 +25,11 @@ public:
 	STRATEGY strategy;
 	void SetType(GEOMETRY_TYPE meshID);
 	void SetCost(float c);
+	float GetCost();
 	void SetAtkDmg(float ad);
+	float GetAtkDmg();
 	void SetSpdRate(float sr);
+	float GetSpdRate();
 	void SetRange(float r);
 	float GetRange();
 	virtual Projectile* GetProjectile();
@@ -35,6 +38,8 @@ public:
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
 	virtual void LevelUp();
+
+	static string StrategyToString(STRATEGY strats);
 
 	Enemy* SearchEnemy(vector<Enemy*> enemyVec);
 

@@ -4,15 +4,20 @@
 SpeedTower::SpeedTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_SPEEDTOWER;
 	SetAtkDmg(10);
 	SetRange(5);
 	SetSpdRate(4.f);
 	this->p_speed = 10.f;
-	this->projectile_meshID = GEO_ARROW;
+
+	this->meshID = GEO_SPEEDTOWER;
+	this->projectile_meshID = GEO_BULLET;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;
+	s_name = "Speed Tower";
+	child.meshID = GEO_SPEED;
+	child.pos.Set(0, 0, 2.2f);
 }
 
 SpeedTower::~SpeedTower()
@@ -53,15 +58,18 @@ void SpeedTower::Update(double dt)
 
 void SpeedTower::LevelUp()
 {
-	if (this->i_level >= 2)
+	if (this->i_level <= 2)
 	{
-		i_level = 2;
-	}
-	this->i_level++;
-	this->atkDamage += 5;
-	this->atkRange += 1;
-	if (atkRange > 7)
-	{
-		atkRange = 7;
+		this->i_level++;
+		this->atkDamage += 5;
+		this->atkRange += 1;
+		if (atkRange > 7)
+		{
+			atkRange = 7;
+		}
+		if (this->i_level >= 2)
+		{
+			i_level = 2;
+		}
 	}
 }

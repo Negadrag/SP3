@@ -21,9 +21,9 @@ public:
 
 	bool b_isActive;
 
-	Vector2 position; // Position of GUI on screen (x : 0 to 80, y :0 to 60)
+	Vector3 position; // Position of GUI on screen (x : 0 to 80, y :0 to 60)
 	Vector2 buttonSize; // Button size
-	Vector2 textOffset;
+	Vector3 textOffset;
 
 	void SetText(string s);
 	string GetText();
@@ -40,6 +40,7 @@ public:
 
 	int functionID; // To check what function will run on click
 
+	bool b_lightEnabled;
 	void SetParent(GUI* parent);
 	GUI* GetParent();
 private:

@@ -14,8 +14,6 @@ public:
 	Vector3 defaultTarget;
 	Vector3 defaultUp;
 
-	float defaultOrtho;
-
 	float rotation;
 
 	OrthoCamera();

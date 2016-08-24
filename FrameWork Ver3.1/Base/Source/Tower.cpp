@@ -65,14 +65,29 @@ void Tower::SetCost(float c)
 	this->towerCost = c;
 }
 
+float Tower::GetCost()
+{
+	return towerCost;
+}
+
 void Tower::SetAtkDmg(float ad)
 {
 	this->atkDamage = ad;
 }
 
+float Tower::GetAtkDmg()
+{
+	return atkDamage;
+}
+
 void Tower::SetSpdRate(float sr)
 {
 	this->atkSpeed = sr;
+}
+
+float Tower::GetSpdRate()
+{
+	return atkSpeed;
 }
 
 void Tower::SetRange(float r)
@@ -204,7 +219,10 @@ void Tower::Fire(double dt)
 	projectile->meshID = this->projectile_meshID;
 	projectile->pos = this->pos + heightOffset;
 
-	if (projectile->meshID == GEO_ARROW)
+	if (projectile->meshID == GEO_ARROW ||
+		projectile->meshID == GEO_POISONARROW || 
+		projectile->meshID == GEO_ICESHOT ||
+		projectile->meshID == GEO_BULLET)
 		projectile->scale.Set(2, 2, 2);
 	else
 		projectile->scale.Set(0.5f, 0.5f, 0.5f);
@@ -213,7 +231,6 @@ void Tower::Fire(double dt)
 	projectile->enemy = enemy;
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
 	projectile->i_damage = this->atkDamage;
-
 
 	projectileList.push_back(projectile);
 	//enemy->i_health -= 1;
@@ -333,7 +350,7 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 		int lowestHP = INT_MAX;
 		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 		{
-			int hp = (*it)->i_health;
+			int hp = (*it)->f_health;
 			if (hp < lowestHP)
 			{
 				lowestHP = hp;
@@ -348,7 +365,7 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 		int highestHP = 0;
 		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 		{
-			int hp = (*it)->i_health;
+			int hp = (*it)->f_health;
 			if (hp > highestHP)
 			{
 				highestHP = hp;
@@ -365,4 +382,28 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 void Tower::LevelUp()
 {
 
+}
+
+string Tower::StrategyToString(STRATEGY strats)
+{
+	if (strats == FIRST_ENEMY)
+	{
+		return string("First Enemy");
+	}
+	else if (strats == NEAREST_ENEMY)
+	{
+		return string("Nearest Enemy");
+	}
+	else if (strats == FURTHER_ENEMY)
+	{
+		return string("Furthest Enemy");
+	}
+	else if (strats == LOWEST_HEALTH)
+	{
+		return string("Lowest Health");
+	}
+	else if (strats == HIGHEST_HEALTH)
+	{
+		return string("Highest Health");
+	}
 }

@@ -2,6 +2,7 @@
 #define EDITORCURSOR_H
 
 #include "Cursor.h"
+#include "GUI.h"
 
 class EditorCursor : public Cursor
 {
@@ -26,6 +27,7 @@ public:
 	TILE_TYPE currentTile;
 
 	Node* root;
+	GUI* save;
 private:
 	bool bLButtonState;
 	void Clicking();

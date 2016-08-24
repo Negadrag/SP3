@@ -6,12 +6,14 @@ int CannonTower::cost = 8;
 CannonTower::CannonTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_CANNONTOWER;
 	SetAtkDmg(10);
 	SetRange(5.f);
 	SetSpdRate(0.5f);
 	this->p_speed = 12.f;
+
+	this->meshID = GEO_CANNONTOWER;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;
@@ -23,7 +25,7 @@ CannonTower::CannonTower()
 	this->particleGenerator.f_lifeTime = 1.f;
 	this->particleGenerator.minVel.Set(-2.f,-2.f,0.f);
 	this->particleGenerator.maxVel.Set(2.f, 2.f, 0.f);
-	this->particleGenerator.scale.Set(0.1f,0.1f,0.1f);
+	this->particleGenerator.scale.Set(0.15f,0.15f,0.15f);
 	this->particleGenerator.i_particleCount = 0;
 	this->particleGenerator.f_maxDist = 3.f;
 	this->particleGenerator.isActive = false;
@@ -75,15 +77,18 @@ void CannonTower::Update(double dt)
 
 void CannonTower::LevelUp()
 {
-	if (this->i_level >= 2)
+	if (this->i_level <= 3)
 	{
-		i_level = 2;
-	}
-	this->i_level++;
-	this->atkDamage += 5;
-	this->atkRange += 1;
-	if (atkRange > 7)
-	{
-		atkRange = 7;
+		this->i_level++;
+		this->atkDamage += 5;
+		this->atkRange += 1;
+		if (atkRange > 7)
+		{
+			atkRange = 7;
+		}
+		if (this->i_level >= 3)
+		{
+			i_level = 3;
+		}
 	}
 }

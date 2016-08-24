@@ -38,6 +38,7 @@ void SingleTarget::Update(double dt)
 	if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 	{
 		this->b_isActive = false;
+	
 		enemy->ReceiveDamage(i_damage);
 		//std::cout << d.LengthSquared() << std::endl;
 	}

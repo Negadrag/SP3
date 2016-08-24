@@ -4,12 +4,14 @@
 MortarTower::MortarTower()
 :Tower()
 {
+	//Tower Stat
 	this->i_level = 1;
-	this->meshID = GEO_MORTARBASE;
 	SetAtkDmg(10);
 	SetRange(30);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
+
+	this->meshID = GEO_MORTARBASE;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;
@@ -57,15 +59,19 @@ void MortarTower::Update(double dt)
 
 void MortarTower::LevelUp()
 {
-	if (this->i_level >= 2)
+
+	if (this->i_level <= 2)
 	{
-		i_level = 2;
-	}
-	this->i_level++;
-	this->atkDamage += 5;
-	this->atkRange += 1;
-	if (atkRange > 7)
-	{
-		atkRange = 7;
+		this->i_level++;
+		this->atkDamage += 5;
+		this->atkRange += 1;
+		if (atkRange > 7)
+		{
+			atkRange = 7;
+		}
+		if (this->i_level >= 2)
+		{
+			i_level = 2;
+		}
 	}
 }

@@ -164,8 +164,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_NULL] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
-	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-	meshList[GEO_QUAD]->textureArray[0] = LoadTGA("Image//calibri.tga");
+	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 0), 1.f);
+	meshList[GEO_QUAD]->textureArray[0] = LoadTGA("Image//background.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
@@ -240,8 +240,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_BASIC]->textureArray[0] = LoadTGA("Image//BasicMonster.tga");
 	/*meshList[GEO_BASIC]->material.kShininess = 0.8f;
 	meshList[GEO_BASIC]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);*/
-	//meshList[GEO_SPEED] = MeshBuilder::GenerateOBJ("Speed", "OBJ/SpeedMonster.obj");
-	//meshList[GEO_SPEED]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
+	meshList[GEO_SPEED] = MeshBuilder::GenerateOBJ("Speed", "OBJ/SpeedMonster.obj");
+	meshList[GEO_SPEED]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
 	meshList[GEO_TANKY] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
 	meshList[GEO_TANKY]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
 	meshList[GEO_ICE] = MeshBuilder::GenerateOBJ("Basic", "OBJ/ice.obj");
@@ -254,16 +254,24 @@ void RenderManager::InitMesh()
 	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//Path.tga");
 
 	meshList[GEO_FOR_VALOR] = MeshBuilder::GenerateQuad("FOR VALOR", Color(1, 1, 1), 1.f);
-	meshList[GEO_FOR_VALOR]->textureArray[0] = LoadTGA("Image//Valor.tga");				
+	meshList[GEO_FOR_VALOR]->textureArray[0] = LoadTGA("Image//Valor.tga");			
+	meshList[GEO_ESSENCE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_ESSENCE]->textureArray[0] = LoadTGA("Image//Essence.tga");
 
 	meshList[GEO_LIGHT_DEPTH_QUAD] = MeshBuilder::GenerateQuad("LIGHT_DEPTH_TEXTURE", Color(1, 1, 1), 1.f);
 	meshList[GEO_LIGHT_DEPTH_QUAD]->textureArray[0] = m_lightDepthFBO.GetTexture();
+
 
 
 	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
+
+	meshList[GEO_SPEEDTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-SPEED.obj");
+	meshList[GEO_SPEEDTOWER]->textureArray[0] = LoadTGA("Image//Tower-SPEED.tga");
+	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Bullet.obj");
+	meshList[GEO_BULLET]->textureArray[0] = LoadTGA("Image//Bullet.tga");
 
 	meshList[GEO_ICETOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ICE.obj");
 	meshList[GEO_ICETOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
@@ -274,40 +282,56 @@ void RenderManager::InitMesh()
 	meshList[GEO_ICEBASE]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
 	meshList[GEO_ICEBASE]->material.kShininess = 0.8f;
 	meshList[GEO_ICEBASE]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
-	meshList[GEO_ICECRYSTAL] = MeshBuilder::GenerateOBJ("IcetowerBase", "OBJ//Tower-ICECRYSTAL.obj");
-	meshList[GEO_ICECRYSTAL]->textureArray[0] = LoadTGA("Image//ice.tga");
-	meshList[GEO_ICECRYSTAL]->material.kShininess = 0.8f;
-	meshList[GEO_ICECRYSTAL]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
-	meshList[GEO_ICESHOT] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 1), 18, 36, 0.5f);
-	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.f, 0.f, 1.f), 18, 36, 1.f);
+	meshList[GEO_ICESHOT] = MeshBuilder::GenerateOBJ("Iceshard", "OBJ//IceShard.obj");
+	meshList[GEO_ICESHOT]->textureArray[0] = LoadTGA("Image//IceShard.tga");
+	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.057f, 0.964f, 0.933f), 18, 36, 1.f);
 
 	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_POISONBASE] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-POISONBASE.obj");
 	meshList[GEO_POISONBASE]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
-	meshList[GEO_POISONMOB] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-POISONMOB.obj");
-	meshList[GEO_POISONMOB]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
+	meshList[GEO_POISONARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
+	meshList[GEO_POISONARROW]->textureArray[0] = LoadTGA("Image//PoisonArrow.tga");
 
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
-	meshList[GEO_CANNONBLAST] = MeshBuilder::GenerateSphere("sphere", Color(0.96f, 0.71f, 0.28f), 18, 36, 1.f);
+	meshList[GEO_CANNONBLAST] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_CANNONBLAST]->textureArray[0] = LoadTGA("Image//OrangeParticle.tga");
+
 
 	meshList[GEO_MORTARBASE] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARBASE.obj");
 	meshList[GEO_MORTARBASE]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
 	meshList[GEO_MORTARCANNON] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARCANNON.obj");
 	meshList[GEO_MORTARCANNON]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
+
+	meshList[GEO_CAPTURETOWER] = MeshBuilder::GenerateOBJ("CaptureTower", "OBJ//Tower-CAPTURE.obj");
+	meshList[GEO_CAPTURETOWER]->textureArray[0] = LoadTGA("Image//Tower-CAPTURE.tga");
+	meshList[GEO_CAPTUREBASE] = MeshBuilder::GenerateOBJ("Capture Base", "OBJ//Tower-CAPTUREBASE.obj");
+	meshList[GEO_CAPTUREBASE]->textureArray[0] = LoadTGA("Image//Tower-CAPTUREBASE.tga");
+	meshList[GEO_CAPTURERING1] = MeshBuilder::GenerateOBJ("Capture Ring1", "OBJ//Tower-CAPTURERING1.obj");
+	meshList[GEO_CAPTURERING2] = MeshBuilder::GenerateOBJ("Capture Ring2", "OBJ//Tower-CAPTURERING2.obj");
+	meshList[GEO_CAPTUREORB] = MeshBuilder::GenerateOBJ("Capture Orb", "OBJ//Tower-CAPTUREORB.obj");
+	meshList[GEO_CAPTUREORB]->textureArray[0] = LoadTGA("Image//Orb.tga");
+	meshList[GEO_CAPTUREORB]->material.kShininess = 0.5f;
+	meshList[GEO_CAPTUREORB]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 	//Particles
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
 	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");
 
-	meshList[GEO_PARTICLE_WHITE] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 1), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_BLUE] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.6, 1), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_RED] = MeshBuilder::GenerateSphere("sphere", Color(1, 0.3, 0.3), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_YELLOW] = MeshBuilder::GenerateSphere("sphere", Color(1, 1, 0), 18, 36, 1.f);
-	meshList[GEO_PARTICLE_GREEN] = MeshBuilder::GenerateSphere("sphere", Color(0, 0.7, 0), 18, 36, 1.f);
+	meshList[GEO_PARTICLE_WHITE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_WHITE]->textureArray[0] = LoadTGA("Image//WhiteParticle.tga");
+	meshList[GEO_PARTICLE_BLUE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_BLUE]->textureArray[0] = LoadTGA("Image//BlueParticle.tga");
+	meshList[GEO_PARTICLE_RED] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_RED]->textureArray[0] = LoadTGA("Image//RedParticle.tga");
+	meshList[GEO_PARTICLE_YELLOW] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_YELLOW]->textureArray[0] = LoadTGA("Image//YellowParticle.tga");
+	meshList[GEO_PARTICLE_GREEN] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_PARTICLE_GREEN]->textureArray[0] = LoadTGA("Image//GreenParticle.tga");
 
-	
+	meshList[GEO_SAVE] = MeshBuilder::GenerateQuad("Save", Color(1, 1, 1), 1.f);
+	meshList[GEO_SAVE]->textureArray[0] = LoadTGA("Image//save.tga");
 }
 
 RenderManager* RenderManager::GetInstance()
@@ -394,9 +418,9 @@ void RenderManager::RenderGPass(int sceneID)
 	//These matrices should change when light position or direction changes
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
 	{
-		float width = camera->orthoSize * camera->aspectRatio.x / camera->aspectRatio.y;
-		//m_lightDepthProj.SetToOrtho(-width*2,width*2,-camera->orthoSize*2, camera->orthoSize*2, -30, 30);
-		m_lightDepthProj.SetToOrtho(-20, 20, -30, 30, -30, 30);
+		float width = camera->defaultOrtho * camera->aspectRatio.x / camera->aspectRatio.y;
+		m_lightDepthProj.SetToOrtho(-width * 2, width * 2, -camera->defaultOrtho * 2, camera->defaultOrtho * 2, -width * 2, width * 2);
+		//m_lightDepthProj.SetToOrtho(-20, 20, -30, 30, -30, 30);
 	}
 	else
 	{
@@ -750,7 +774,45 @@ void RenderManager::UpdateBillboard(int sceneID)
 	}
 }
 
-void RenderManager::RenderTextOnScreen(std::string text, Color color, float size, float x, float y)
+void RenderManager::RenderText(std::string text, Color color,Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight, bool fog)
+{
+	Mesh* mesh = meshList[GEO_TEXT];
+
+	if (!mesh || mesh->textureArray[0] <= 0) //Proper error check
+		return;
+
+	modelStack.PushMatrix();
+	modelStack.Translate(pos.x, pos.y, pos.z);
+	modelStack.Rotate(rotation.x, 1, 0, 0);
+	modelStack.Rotate(rotation.z, 0, 0, 1);
+	modelStack.Rotate(rotation.y, 0, 1, 0);
+	modelStack.Scale(scale.x, scale.y, scale.z);
+
+	glDisable(GL_DEPTH_TEST);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
+	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
+	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh->textureArray[0]);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	for (unsigned i = 0; i < text.length(); ++i)
+	{
+		Mtx44 characterSpacing;
+		characterSpacing.SetToTranslation(i * 0.5f + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
+		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
+		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+		mesh->Render((unsigned)text[i] * 6, 6);
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
+	glEnable(GL_DEPTH_TEST);
+
+	modelStack.PopMatrix();
+}
+
+void RenderManager::RenderTextOnScreen(std::string text, Color color, float size, float x, float y, float z)
 {
 	Mesh *mesh = meshList[GEO_TEXT];
 
@@ -758,16 +820,16 @@ void RenderManager::RenderTextOnScreen(std::string text, Color color, float size
 	//glDisable(GL_CULL_FACE);
 	Mtx44 ortho;
 	//ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
-	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	ortho.SetToOrtho(0, 80, 0, 60, -100, 100);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
-	modelStack.Translate(x, y, 0);
+	modelStack.Translate(x, y, z);
 	//modelStack.Translate(0, 0, 0);
-	modelStack.Scale(size, size, size);
+	modelStack.Scale(size, size, 1);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
 	//cout << "Text enablked" << m_parameters[U_TEXT_ENABLED] << endl;
 	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
@@ -889,6 +951,9 @@ void RenderManager::RenderMeshOnScreen(GEOMETRY_TYPE geo, bool lightEnabled, Vec
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
 		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
 		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView.a[0]);
+
+		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
+		glUniformMatrix4fv(m_parameters[U_LIGHT_DEPTH_MVP], 1, GL_FALSE, &lightDepthMVP.a[0]);
 
 		//load material
 		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);
