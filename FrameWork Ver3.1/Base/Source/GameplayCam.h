@@ -26,10 +26,14 @@ public:
 	//Gameplay panning camera
 	void PanCamera(float cam_spd, double dt);
 
+	//void ZoomInCam()
+	bool showcase_intro;
+	//void ShowcaseIntro();
 
 private:
 	int cameratype_no;
-
+	
+	
 	bool leftright;	// false = left,  true = right
 	float turnSpeed_Mod;
 

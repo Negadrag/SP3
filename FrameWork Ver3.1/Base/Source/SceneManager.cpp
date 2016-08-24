@@ -10,6 +10,7 @@
 #include "WinScene.h"
 #include "LoseScene.h"
 #include "Display.h"
+#include "MainMenu.h"
 
 SceneManager* SceneManager::instance = nullptr;
 
@@ -42,10 +43,11 @@ void SceneManager::Init()
 	CreateScene(new LoseScene());
 	// Scene ID 7
 	CreateScene(new Display());
-	
+	// Scene ID 8
+	CreateScene(new MainMenu());
 	
 
-	this->m_currentSceneID = 1;
+	this->m_currentSceneID = 8;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
 	GUIManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
