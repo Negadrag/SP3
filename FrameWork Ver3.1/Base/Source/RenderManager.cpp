@@ -302,8 +302,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_MORTARCANNON]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
 
 	meshList[GEO_CAPTURETOWER] = MeshBuilder::GenerateOBJ("CaptureTower", "OBJ//Tower-CAPTURE.obj");
-	meshList[GEO_CAPTURETOWER]->textureArray[0] = LoadTGA("Image//Tower-CAPTUREBASE.tga");
-	meshList[GEO_CAPTURETOWER]->textureArray[1] = LoadTGA("Image//Orb.tga");
+	meshList[GEO_CAPTURETOWER]->textureArray[0] = LoadTGA("Image//Tower-CAPTURE.tga");
 	meshList[GEO_CAPTUREBASE] = MeshBuilder::GenerateOBJ("Capture Base", "OBJ//Tower-CAPTUREBASE.obj");
 	meshList[GEO_CAPTUREBASE]->textureArray[0] = LoadTGA("Image//Tower-CAPTUREBASE.tga");
 	meshList[GEO_CAPTURERING1] = MeshBuilder::GenerateOBJ("Capture Ring1", "OBJ//Tower-CAPTURERING1.obj");

@@ -12,6 +12,8 @@ IceTower::IceTower()
 	SetRange(2);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
+	this->f_SlowAmount = 50.f;
+	this->f_SlowDura = 10.f;
 
 	this->pos.SetZero();
 	this->meshID = GEO_ICEBASE;
@@ -20,8 +22,8 @@ IceTower::IceTower()
 	this->strategy = NEAREST_ENEMY;
 	s_name = "Ice Tower";
 	this->b_rotateWhenFire = false;
-	child.meshID = GEO_ICECRYSTAL;
-	this->f_SlowTime = 10.f;
+	child.meshID = GEO_ICE;
+	child.pos.Set(0, 0, 1.2f);
 
 	particleGenerator.SetType(GEO_ICEPARTICLE);
 	particleGenerator.SetFrequency(20);

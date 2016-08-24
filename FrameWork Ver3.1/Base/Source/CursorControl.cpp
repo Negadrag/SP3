@@ -224,7 +224,7 @@ void CursorControl::TowerButtons()
 		}
 		else if (i == 2)
 		{
-			text = "Ice Tower (E)";
+			text = "Capture Tower (E)";
 			mesh = GEO_CAPTURETOWER;
 			offset.Set(0.5f, 0.15f);
 			cost = IceTower::cost;

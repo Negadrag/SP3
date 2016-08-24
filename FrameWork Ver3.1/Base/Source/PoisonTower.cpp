@@ -10,13 +10,17 @@ PoisonTower::PoisonTower()
 	SetRange(5);
 	SetSpdRate(0.5f);
 	this->p_speed = 10.f;
+	this->f_PoisonDPS = 1.f;
+	this->f_PoisonDura = 5.f;
+	this->f_PoisonSlowAmount = 25.f;
 
 	this->meshID = GEO_POISONBASE;
 	this->projectile_meshID = GEO_POISONARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Poison Tower";
-	child.meshID = GEO_POISONMOB;
+	child.meshID = GEO_BASIC;
+	child.pos.Set(0, 0, 2.2f);
 }
 
 PoisonTower::~PoisonTower()
