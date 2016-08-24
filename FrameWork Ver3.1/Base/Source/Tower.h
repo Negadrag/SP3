@@ -37,7 +37,7 @@ public:
 	virtual void Fire(double dt);
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
-	virtual void LevelUp();
+	virtual bool LevelUp();
 
 	static string StrategyToString(STRATEGY strats);
 
@@ -50,7 +50,13 @@ public:
 	vector<Enemy*>* enemyList;
 	Renderable child;
 
+	GEOMETRY_TYPE fullMeshID;
+
 	string s_name;
+	int i_level;
+	int i_MaxLevel;
+
+	string upgrades[2];
 private:
 
 protected:
@@ -59,7 +65,6 @@ protected:
 
 	GEOMETRY_TYPE projectile_meshID;
 	
-	int i_level;
 	float p_frequency;
 	float p_spawnTimer;
 	float towerCost;

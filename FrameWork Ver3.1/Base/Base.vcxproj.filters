@@ -291,9 +291,6 @@
     <ClCompile Include="Source\WinScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BuffTower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -305,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="Source\PoisonProjectile.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BuffTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

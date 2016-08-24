@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "MathUtility.h"
 
+#include "Scene.h"
 #include "ArrowTower.h"
 #include "CannonTower.h"
 #include "PoisonTower.h"
@@ -14,6 +15,7 @@
 CursorControl::CursorControl()
 {
 	bLButtonState = false;
+	bPlacingTower = false;
 	checkPositionX = 0;
 	checkPositionY = 0;
 }
@@ -29,6 +31,18 @@ CursorControl::~CursorControl()
 		if (towerCosts[i] != nullptr)
 		{
 			delete towerCosts[i];
+		}
+	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		if (towerUpgrades[i] != nullptr)
+		{
+			delete towerUpgrades[i];
+		}
+		if (upgradeCosts[i] != nullptr)
+		{
+			delete upgradeCosts[i];
 		}
 	}
 
@@ -51,6 +65,10 @@ CursorControl::~CursorControl()
 	if (background2 != nullptr)
 	{
 		delete background2;
+	}
+	if (background3 != nullptr)
+	{
+		delete background3;
 	}
 }
 
@@ -79,7 +97,7 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	background->b_buttonActive = false;
 	background->position.Set(40, 13);
 	background->meshID = GEO_QUAD;
-	background->scale.Set(70, 12, 1);
+	background->scale.Set(70, 15, 1);
 
 	TowerButtons();
 
@@ -88,10 +106,20 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	background2->b_lightEnabled = false;
 	background2->b_textActive = false;
 	background2->b_buttonActive = false;
-	background2->position.Set(13, 0);
+	background2->position.Set(15, 0);
 	background2->meshID = GEO_QUAD;
-	background2->scale.Set(30, 12, 1);
+	background2->scale.Set(40, 12, 1);
 	background2->SetParent(towerStats[0]);
+
+	background3 = new GUI();
+	background3->b_isActive = false;
+	background3->b_lightEnabled = false;
+	background3->b_textActive = false;
+	background3->b_buttonActive = false;
+	background3->position.Set(5, -10);
+	background3->meshID = GEO_QUAD;
+	background3->scale.Set(14, 50, 1);
+	background3->SetParent(towerUpgrades[0]);
 }
 
 static float debounce = 0.f;
@@ -100,7 +128,7 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 {
 	Cursor::Update(camera, tileMap, dt);
 	debounce += (float)dt;
-	if (!bLButtonState) // If LClick is NOT being held down
+	if (!bPlacingTower) // If LClick is NOT being held down
 	{
 		checkPositionX = (int)Math::Clamp(worldCoords.x, 0.f, (float)tileMap.i_columns - 1.f);
 		checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
@@ -120,12 +148,22 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 	Tower* tower = FindTower(checkPositionX, checkPositionY);
 	if (tower != nullptr)
 	{
-		towerName->SetText(tower->s_name);
+		std::ostringstream os;
+		if (tower->i_level > 0)
+		{
+			os << tower->s_name << " Lvl." << tower->i_level;
+		}
+		else
+		{
+			os << tower->s_name;
+		}
+		
+		towerName->SetText(os.str());
 		towerName->position.x = 40 - tower->s_name.size() / 1.5f;
 		towerName->b_isActive = true;
 
-		std::ostringstream os;
-		os << "Atk: " << (int)tower->GetAtkDmg();
+		os.str("");
+		os << "Atk: " << tower->GetAtkDmg();
 		towerStats[T_ATK]->SetText(os.str());
 		towerStats[T_ATK]->b_isActive = true;
 
@@ -135,7 +173,7 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 		towerStats[T_SPEED]->b_isActive = true;
 
 		os.str("");
-		os << "Strategy: " << Tower::StrategyToString(tower->strategy);
+		os << "Strategy: " << Tower::StrategyToString(tower->strategy) << " (R-Click)";
 		towerStats[T_STRATEGY]->SetText(os.str());
 		towerStats[T_STRATEGY]->b_isActive = true;
 
@@ -167,11 +205,45 @@ bool CursorControl::SpawnTower(string name)
 		tempTower = new CaptureTower();
 	else if (name == string("Buff"))
 		tempTower = new BuffTower();
-	tempTower->pos.Set(checkPositionX, checkPositionY, 0);
-	tempTower->scale.Set(1, 1, 1);
-	tempTower->enemyList = enemyList;
-	towerList->push_back(tempTower);
-	return true;
+	else if (name == string("Ice"))
+		tempTower = new IceTower();
+	else if (name == string("Poison"))
+		tempTower = new PoisonTower();
+	else if (name == string("Mortar"))
+		tempTower = new MortarTower();
+	else if (name == string("Speed"))
+		tempTower = new SpeedTower();
+	else
+		tempTower = nullptr;
+	if (tempTower != nullptr)
+	{
+		tempTower->pos.Set(checkPositionX, checkPositionY, 0);
+		tempTower->scale.Set(1, 1, 1);
+		tempTower->enemyList = enemyList;
+		towerList->push_back(tempTower);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool CursorControl::RemoveTower(Tower* tower)
+{
+	if (towerList != nullptr)
+	{
+		for (vector<Tower*>::iterator it = towerList->begin(); it != towerList->end(); ++it)
+		{
+			if (tower == *it)
+			{
+				delete *it;
+				it = towerList->erase(it);
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 Tower* CursorControl::FindTower(int x, int y)
@@ -213,16 +285,17 @@ void CursorControl::TowerButtons()
 		}
 		else if (i == 2)
 		{
-			text = "Ice Tower (E)";
+			text = "Capture Tower (E)";
 			mesh = GEO_CAPTURETOWER;
 			offset.Set(0.5f, 0.15f);
-			cost = IceTower::cost;
+			cost = CaptureTower::cost;
 		}
 		else if (i == 3)
 		{
 			text = "Buff Tower (R)";
 			mesh = GEO_ARROWTOWER;
 			offset.Set(0.7f, 0.15f);
+			cost = BuffTower::cost;
 		}
 
 		spawnTower[i] = new GUI(text);
@@ -253,8 +326,28 @@ void CursorControl::TowerButtons()
 		towerStats[i]->textColor.Set(1, 1, 1);
 		towerStats[i]->SetTextSize(2);
 		towerStats[i]->b_buttonActive = false;
-		towerStats[i]->position.Set(28.f, 52.f - i * 2.f);
+		towerStats[i]->position.Set(27.f, 52.f - i * 2.f);
 		towerStats[i]->b_isActive = false;
+	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		towerUpgrades[i] = new GUI("Hello");
+		towerUpgrades[i]->scale.Set(3, 3, 3);
+		towerUpgrades[i]->rotation.Set(-90, 0, 0);
+		towerUpgrades[i]->SetTextSize(2);
+		towerUpgrades[i]->meshOffset.Set(5, 3, 50.f);
+		towerUpgrades[i]->position.Set(5.f, 40 - i * 15.f, 0.f);
+		towerUpgrades[i]->buttonSize.Set(10, 10);
+		towerUpgrades[i]->b_isActive = false;
+
+		upgradeCosts[i] = new GUI("cost");
+		upgradeCosts[i]->SetParent(towerUpgrades[i]);
+		upgradeCosts[i]->textColor.Set(1, 1, 0);
+		upgradeCosts[i]->SetTextSize(2);
+		upgradeCosts[i]->b_buttonActive = false;
+		upgradeCosts[i]->position.Set(0, -1.5f);
+		upgradeCosts[i]->b_isActive = false;
 	}
 }
 
@@ -278,7 +371,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 
 	if (Application::IsKeyPressed('Q'))
 	{
-		if (bLButtonState && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX,checkPositionY) == nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
 			SpawnTower("Arrow");
@@ -295,7 +388,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('W'))
 	{
-		if (bLButtonState && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
 			SpawnTower("Cannon");
@@ -312,7 +405,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('E'))
 	{
-		if (bLButtonState && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
 			SpawnTower("Capture");
@@ -329,7 +422,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('R'))
 	{
-		if (bLButtonState && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
 			SpawnTower("Buff");
@@ -348,43 +441,133 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 
 void CursorControl::Clicking(const TileMap &tileMap)
 {
-	if (!bLButtonState && Application::IsMousePressed(0) && tileMap.screenMap[checkPositionX][checkPositionY] == -2) // -2 being a empty slot
+	if (!bLButtonState && Application::IsMousePressed(0)) // -2 being a empty slot
 	{
 		bLButtonState = true;
-		for (int i = 0; i < 4; ++i)
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
 		{
-			spawnTower[i]->b_isActive = true;
-			towerCosts[i]->b_isActive = true;
+			bPlacingTower = true;
+			for (int i = 0; i < 4; ++i)
+			{
+				spawnTower[i]->b_isActive = true;
+				towerCosts[i]->b_isActive = true;
+			}
+			background->b_isActive = true;
 		}
-		background->b_isActive = true;
+		else if (FindTower(checkPositionX, checkPositionY) != nullptr)
+		{
+			bPlacingTower = true;
+			Tower* temp = FindTower(checkPositionX, checkPositionY);
+			UpgradeButtons(temp);
+		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
-
+		bPlacingTower = false;
 		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
-
+		
 		if (button != nullptr)
 		{
 			if (button->functionID == 0)
 			{
-				SpawnTower(string("Arrow"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				if (Scene::player.i_currency >= ArrowTower::cost)
+				{
+					SpawnTower(string("Arrow"));
+					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+					Scene::player.i_currency -= ArrowTower::cost;
+				}
 			}
 			else if (button->functionID == 1)
 			{
-				SpawnTower(string("Cannon"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				if (Scene::player.i_currency >= CannonTower::cost)
+				{
+					SpawnTower(string("Cannon"));
+					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+					Scene::player.i_currency -= CannonTower::cost;
+				}
 			}
 			else if (button->functionID == 2)
 			{
-				SpawnTower(string("Capture"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				if (Scene::player.i_currency >= CaptureTower::cost)
+				{
+					SpawnTower(string("Capture"));
+					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+					Scene::player.i_currency -= CaptureTower::cost;
+				}
 			}
 			else if (button->functionID == 3)
 			{
-				SpawnTower(string("Buff"));
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				if (Scene::player.i_currency >= BuffTower::cost)
+				{
+					SpawnTower(string("Buff"));
+					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+					Scene::player.i_currency -= BuffTower::cost;
+				}
+			}
+			else if (button->functionID == 5) // Level up
+			{
+				Tower* temp = FindTower(checkPositionX, checkPositionY);
+				if (Scene::player.i_currency >= temp->GetCost())
+				{
+					if (temp->LevelUp())
+					{
+						Scene::player.i_currency -= temp->GetCost();
+						temp->SetCost(temp->GetCost() * 2);
+					}
+				}
+			}
+			else if (button->functionID == 6)
+			{
+				Tower* temp = FindTower(checkPositionX, checkPositionY);
+				if (temp != nullptr)
+				{
+					if (Scene::player.i_currency >= IceTower::cost)
+					{
+						RemoveTower(temp);
+						SpawnTower("Ice");
+						Scene::player.i_currency -= IceTower::cost;
+					}
+				}
+			}
+			else if (button->functionID == 7)
+			{
+				Tower* temp = FindTower(checkPositionX, checkPositionY);
+				if (temp != nullptr)
+				{
+					if (Scene::player.i_currency >= PoisonTower::cost)
+					{
+						RemoveTower(temp);
+						SpawnTower("Poison");
+						Scene::player.i_currency -= PoisonTower::cost;
+					}
+				}
+			}
+			else if (button->functionID == 8)
+			{
+				Tower* temp = FindTower(checkPositionX, checkPositionY);
+				if (temp != nullptr)
+				{
+					if (Scene::player.i_currency >= MortarTower::cost)
+					{
+						RemoveTower(temp);
+						SpawnTower("Mortar");
+						Scene::player.i_currency -= MortarTower::cost;
+					}
+				}
+			}
+			else if (button->functionID == 9)
+			{
+				Tower* temp = FindTower(checkPositionX, checkPositionY);
+				if (temp != nullptr)
+				{
+					if (Scene::player.i_currency >= SpeedTower::cost)
+					{
+						RemoveTower(temp);
+						SpawnTower("Speed");
+						Scene::player.i_currency -= SpeedTower::cost;
+					}
+				}
 			}
 		}
 
@@ -393,16 +576,110 @@ void CursorControl::Clicking(const TileMap &tileMap)
 			spawnTower[i]->b_isActive = false;
 			towerCosts[i]->b_isActive = false;
 		}
+
+		for (int i = 0; i < 3; ++i)
+		{
+			towerUpgrades[i]->b_isActive = false;
+			upgradeCosts[i]->b_isActive = false;
+		}
+
 		background->b_isActive = false;
+		background3->b_isActive = false;
 	}
 
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
 	{
 		bRButtonState = true;
+		Tower* tower = FindTower(checkPositionX, checkPositionY);
+		if (tower != nullptr)
+		{
+			tower->strategy = static_cast<Tower::STRATEGY>(tower->strategy + 1);
+			if (tower->strategy == Tower::NUM_STRATEGY)
+			{
+				tower->strategy = static_cast<Tower::STRATEGY>(0);
+			}
+		}
 	}
 	else if (bRButtonState && !Application::IsMousePressed(1))
 	{
 		bRButtonState = false;
+	}
+}
+
+void CursorControl::UpgradeButtons(Tower* tower)
+{
+	if (tower->i_level < tower->i_MaxLevel)
+	{
+		background3->b_isActive = true;
+
+		towerUpgrades[0]->SetText("Level up");
+		towerUpgrades[0]->b_isActive = true;
+		towerUpgrades[0]->meshID = tower->fullMeshID;
+		towerUpgrades[0]->functionID = 5;
+		std::ostringstream os;
+		os << "Cost:" << tower->GetCost();
+		upgradeCosts[0]->SetText(os.str());
+		upgradeCosts[0]->b_isActive = true;
+	}
+
+	if (tower->i_level == 1)
+	{
+		if (tower->upgrades[0] != "")
+		{
+			SetUpgradeButtons(towerUpgrades[1], upgradeCosts[1], tower->upgrades[0]);
+		}
+		if (tower->upgrades[1] != "")
+		{
+			SetUpgradeButtons(towerUpgrades[2], upgradeCosts[2], tower->upgrades[1]);
+		}
+	}
+}
+
+void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
+{
+	if (tower == string("Ice"))
+	{
+		button->SetText("Ice Tower");
+		button->b_isActive = true;
+		button->meshID = GEO_ICETOWER;
+		std::ostringstream os;
+		os << "Cost:" << IceTower::cost;
+		cost->SetText(os.str());
+		cost->b_isActive = true;
+		button->functionID = 6;
+	}
+	else if (tower == string("Poison"))
+	{
+		button->SetText("Poison Tower");
+		button->b_isActive = true;
+		button->meshID = GEO_POISONTOWER;
+		std::ostringstream os;
+		os << "Cost:" << PoisonTower::cost;
+		cost->SetText(os.str());
+		cost->b_isActive = true;
+		button->functionID = 7;
+	}
+	else if (tower == string("Mortar"))
+	{
+		button->SetText("Mortar Tower");
+		button->b_isActive = true;
+		button->meshID = GEO_POISONTOWER;
+		std::ostringstream os;
+		os << "Cost:" << MortarTower::cost;
+		cost->SetText(os.str());
+		cost->b_isActive = true;
+		button->functionID = 8;
+	}
+	else if (tower == string("Speed"))
+	{
+		button->SetText("Speed Tower");
+		button->b_isActive = true;
+		button->meshID = GEO_POISONTOWER;
+		std::ostringstream os;
+		os << "Cost:" << SpeedTower::cost;
+		cost->SetText(os.str());
+		cost->b_isActive = true;
+		button->functionID = 9;
 	}
 }

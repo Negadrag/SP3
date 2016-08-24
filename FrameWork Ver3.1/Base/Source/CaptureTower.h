@@ -15,7 +15,7 @@ public:
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	virtual void LevelUp();
+	virtual bool LevelUp();
 	virtual void Fire(double dt);
 
 	string towerUpgrade;

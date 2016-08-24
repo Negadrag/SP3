@@ -11,7 +11,7 @@ public:
 
 	virtual void Update(double dt);
 	vector<Tower*> GetTowerInRange();
-	virtual void LevelUp();
+	virtual bool LevelUp();
 	void Buff();
 	Tower* SearchTower(vector<Tower*> towerVec);
 

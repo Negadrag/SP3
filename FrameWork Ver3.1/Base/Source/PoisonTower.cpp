@@ -2,6 +2,7 @@
 #include "SingleTarget.h"
 #include "PoisonProjectile.h"
 
+int PoisonTower::cost = 5;
 
 PoisonTower::PoisonTower()
 :Tower()
@@ -15,8 +16,9 @@ PoisonTower::PoisonTower()
 	this->f_PoisonDPS = 1.f;
 	this->f_PoisonDura = 5.f;
 	this->f_PoisonSlowAmount = 25.f;
-
+	this->towerCost = cost;
 	this->meshID = GEO_POISONBASE;
+	this->fullMeshID = GEO_POISONTOWER;
 	this->projectile_meshID = GEO_POISONARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
@@ -62,9 +64,8 @@ void PoisonTower::Update(double dt)
 	Tower::Update(dt);
 }
 
-void PoisonTower::LevelUp()
+bool PoisonTower::LevelUp()
 {
-
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
@@ -74,9 +75,7 @@ void PoisonTower::LevelUp()
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 2)
-		{
-			i_level = 2;
-		}
+		return true;
 	}
+	return false;
 }

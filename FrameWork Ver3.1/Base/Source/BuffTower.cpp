@@ -7,13 +7,14 @@ BuffTower::BuffTower()
 :Tower()
 {
 	//Tower Stat
-	this->i_level = 1;
+	this->i_level = 0;
 	SetRange(10);
 	f_increaseATK = 10.f;
 	f_increaseRANGE = 5.f;
 	f_increaseRATE = 2.f;
 
 	//this->meshID = GEO_BuffTower;
+	//this->fullMeshID = GEO_BuffTower;
 	s_name = "Buff Tower";
 }
 
@@ -51,8 +52,6 @@ void BuffTower::Update(double dt)
 void BuffTower::Buff()
 {
 	Tower* tower = SearchTower(GetTowerInRange());
-
-
 }
 
 Tower* BuffTower::SearchTower(vector<Tower*> towerList)
@@ -76,18 +75,7 @@ Tower* BuffTower::SearchTower(vector<Tower*> towerList)
 	}
 }
 
-void BuffTower::LevelUp()
+bool BuffTower::LevelUp()
 {
-	if (this->i_level >= 2)
-	{
-		i_level = 2;
-		f_increaseATK = 15.f;
-		f_increaseRANGE = 10.f;
-		f_increaseRATE = 4.f;
-	}
-
-	if (atkRange > 7)
-	{
-		atkRange = 7;
-	}
+	return false;
 }

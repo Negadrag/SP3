@@ -73,8 +73,6 @@ void Assignment::Update(double dt)
 	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
-
-	
 }
 
 void Assignment::Render()

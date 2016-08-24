@@ -1,6 +1,8 @@
 #include "SpeedTower.h"
 #include "SingleTarget.h"
 
+int SpeedTower::cost = 5;
+
 SpeedTower::SpeedTower()
 :Tower()
 {
@@ -10,8 +12,9 @@ SpeedTower::SpeedTower()
 	SetRange(5);
 	SetSpdRate(4.f);
 	this->p_speed = 10.f;
-
+	this->towerCost = cost;
 	this->meshID = GEO_SPEEDTOWER;
+	this->fullMeshID = GEO_SPEEDTOWER;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;
@@ -53,7 +56,7 @@ void SpeedTower::Update(double dt)
 
 }
 
-void SpeedTower::LevelUp()
+bool SpeedTower::LevelUp()
 {
 	if (this->i_level <= 2)
 	{
@@ -64,9 +67,7 @@ void SpeedTower::LevelUp()
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 2)
-		{
-			i_level = 2;
-		}
+		return true;
 	}
+	return false;
 }

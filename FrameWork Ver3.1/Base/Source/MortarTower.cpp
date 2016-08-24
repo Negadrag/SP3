@@ -1,6 +1,8 @@
 #include "MortarTower.h"
 #include "SplashTarget.h"
 
+int MortarTower::cost = 5;
+
 MortarTower::MortarTower()
 :Tower()
 {
@@ -10,8 +12,9 @@ MortarTower::MortarTower()
 	SetRange(30);
 	SetSpdRate(0.5f);
 	this->p_speed = 5.f;
-
+	this->towerCost = cost;
 	this->meshID = GEO_MORTARBASE;
+	this->fullMeshID = GEO_MORTARTOWER;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;
@@ -53,13 +56,11 @@ MortarTower::~MortarTower()
 void MortarTower::Update(double dt)
 {
 	Tower::Update(dt);
-
 }
 
 
-void MortarTower::LevelUp()
+bool MortarTower::LevelUp()
 {
-
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
@@ -69,9 +70,7 @@ void MortarTower::LevelUp()
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 2)
-		{
-			i_level = 2;
-		}
+		return true;
 	}
+	return false;
 }
