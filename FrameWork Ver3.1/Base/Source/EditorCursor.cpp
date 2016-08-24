@@ -38,7 +38,7 @@ void EditorCursor::Init(TileMap *tileMap)
 	save->scale.Set(10, 10, 0);
 	save->buttonSize.Set(10, 10);
 	save->position.Set(70, 50);
-	save->meshOffset.Set(5, 0, 0);
+	save->meshOffset.Set(5, 5, 0);
 	save->b_lightEnabled = false;
 	save->b_isActive = true;
 	save->functionID = 0;

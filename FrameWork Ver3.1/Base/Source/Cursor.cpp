@@ -22,14 +22,14 @@ void Cursor::Update(OrthoCamera &camera, const TileMap &tileMap, const double &d
 	worldX = x / w - 0.5f; // -0.5 - 0.5
 	worldY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
-	worldY = worldY / cos(Math::DegreeToRadian(camera.rotation)); // Slanting the camera by getting the hypotenuse
+	float worldY2 = worldY / cos(Math::DegreeToRadian(camera.rotation)); // Slanting the camera by getting the hypotenuse
 
 	float Xunits = 0.5f / (camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y)); // 1 unit in world space
 	float Yunits = 0.5f / (camera.orthoSize);
 
 	Vector3 center = camera.target;
 
-	worldCoords.Set(center.x + worldX / Xunits + 0.5f, center.y + worldY / Yunits);
+	worldCoords.Set(center.x + worldX / Xunits + 0.5f, center.y + worldY2 / Yunits);
 }
 
 void Cursor::EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY, float speed)
