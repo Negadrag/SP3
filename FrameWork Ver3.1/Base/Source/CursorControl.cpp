@@ -159,8 +159,8 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 bool CursorControl::SpawnTower(string name)
 {
 	Tower *tempTower;
-	if (name == string("Arrow"))
-		tempTower = new ArrowTower();
+	if (name == string("Speed"))
+		tempTower = new SpeedTower();
 	else if (name == string("Cannon"))
 		tempTower = new CannonTower();
 	else if (name == string("Capture"))
@@ -281,7 +281,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		if (bLButtonState && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Arrow");
+			SpawnTower("Speed");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
 
@@ -368,7 +368,7 @@ void CursorControl::Clicking(const TileMap &tileMap)
 		{
 			if (button->functionID == 0)
 			{
-				SpawnTower(string("Arrow"));
+				SpawnTower(string("Speed"));
 				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			}
 			else if (button->functionID == 1)
