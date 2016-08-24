@@ -10,7 +10,6 @@
 #include <vector>
 #include "Terrain.h"
 #include "Application.h"
-#include "GameObject.h"
 #include "ParticleGenerator.h"
 
 using std::vector;
@@ -28,6 +27,7 @@ public:
 	virtual void Exit();
 
 	//void RenderGO(GameObject *go);
+	void BannerManager(bool tower, bool enemy);
 	void CreateScene();
 	void ClearScene();
 
@@ -38,6 +38,8 @@ private:
 	GameplayCam camera;
 
 	float windmillRotateAngle;
+	float banner_forward;
+	float banner_backward;
 
 	Renderable grass;
 	Renderable demoObject;

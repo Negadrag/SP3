@@ -60,7 +60,7 @@ void LoseScene::Update(double dt)
 	redfall.f_lifeTime = 15.f;
 	redfall.minVel.Set(-800, -100, 0);
 	redfall.maxVel.Set(800, -100, 0);
-	redfall.scale.Set(10, 10, 10);
+	redfall.scale.Set(20, 20, 20);
 	redfall.f_maxDist = 1500.f;
 	redfall.isActive = false;
 	redfall.SpawnParticle(Vector3(0, 1000, 1));

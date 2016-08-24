@@ -14,7 +14,6 @@ public:
 	virtual bool LevelUp();
 
 	static int cost;
-
 private:
 
 };

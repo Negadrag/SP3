@@ -374,7 +374,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		if (bLButtonState && FindTower(checkPositionX,checkPositionY) == nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Arrow");
+			SpawnTower("Speed");
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			bLButtonState = false;
 

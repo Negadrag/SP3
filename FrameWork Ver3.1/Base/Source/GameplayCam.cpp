@@ -35,12 +35,13 @@ void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up, i
 	leftright = false;
 	turnSpeed_Mod = 0; 
 	started = false;
+	showcase_intro = false;
 
 }
 
 void GameplayCam::Update(double dt)
 {
-	static const float CAMERA_SPEED = 200.f;
+	static const float CAMERA_SPEED = 10.f;
 	
 	if (cameratype_no == 1)
 		PanCamera(CAMERA_SPEED, dt);
@@ -56,12 +57,29 @@ void GameplayCam::Update(double dt)
 
 void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 {
+	float turnCam_spd = cam_spd + turnSpeed_Mod;
+
+
 	if (!started)
 	{
-		Vector3 temp(200, 340, 400);
+		Vector3 temp(2, 3.4, 4);
 		position = targetpos + temp;
+
+		position.y = 100;
+		
 		started = true;
 		
+	}
+
+	if (started && !showcase_intro)
+	{
+		Vector3 view = (target - position).Normalized();
+		//position += view * turnCam_spd * (float)dt * 5;
+		position.y += view.y * turnCam_spd * (float)dt * 10;
+
+		if (position.y <= 5)
+			showcase_intro = true;
+
 	}
 
 	Vector3 view = (target - position).Normalized();
@@ -70,7 +88,7 @@ void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 	right.Normalize();
 	up = right.Cross(view).Normalized();
 
-	float turnCam_spd = cam_spd + turnSpeed_Mod;
+	
 
 	if (Application::IsKeyPressed('A'))
 		leftright = false;
@@ -85,7 +103,7 @@ void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 		Vector3 right = view.Cross(up);
 		right.y = 0;
 		right.Normalize();
-		position -= right * turnCam_spd * (float)dt;
+		position -= right * turnCam_spd * (float)dt *2;
 	}
 	else
 	{
@@ -93,7 +111,7 @@ void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 		Vector3 right = view.Cross(up);
 		right.y = 0;
 		right.Normalize();
-		position += right * turnCam_spd * (float)dt;
+		position += right * turnCam_spd * (float)dt *2;
 	}
 	
 	//Camera Zoom
@@ -101,6 +119,7 @@ void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 	{
 		Vector3 view = (target - position).Normalized();
 		position += view * turnCam_spd * (float)dt;
+
 	}
 	if (Application::IsKeyPressed('S'))
 	{
@@ -115,16 +134,16 @@ void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 		Vector3 view = (target - position).Normalized();
 		position.y += view.y * turnCam_spd * (float)dt * 10;
 
-		if (position.y <= 100)
-			position.y = 100;
+		if (position.y <= 1)
+			position.y = 1;
 	}
 	if (Application::IsKeyPressed(VK_DOWN))
 	{
 		Vector3 view = (target - position).Normalized();
 		position.y -= view.y * turnCam_spd * (float)dt * 10;
 
-		if (position.y >= 2000)
-			position.y = 2000;
+		if (position.y >= 30)
+			position.y = 30;
 	}
 
 
@@ -139,12 +158,12 @@ void GameplayCam::TurnTable(float cam_spd, double dt, Vector3& targetpos)
 	}
 	if (Application::IsKeyPressed(VK_RIGHT))
 	{
-		if (turnSpeed_Mod >= 1000)
-			turnSpeed_Mod = 1000;
+		if (turnSpeed_Mod >= 10)
+			turnSpeed_Mod = 10;
 		else
 			turnSpeed_Mod += 2;
 	}
-	std::cout << turnSpeed_Mod << std::endl;
+	//std::cout << turnSpeed_Mod << std::endl;
 }
 
 void GameplayCam::PanCamera(float cam_spd, double dt)
@@ -184,7 +203,7 @@ void GameplayCam::PanCamera(float cam_spd, double dt)
 	if (Application::IsKeyPressed(VK_LEFT))
 	{
 		Vector3 view = (target - position).Normalized();
-		float yaw = (float)(turnCam_spd * (float)dt);
+		float yaw = (float)(turnCam_spd * (float)dt * 2);
 		Mtx44 rotation;
 		rotation.SetToRotation(yaw, 0, 1, 0);
 		view = rotation * view;
@@ -197,7 +216,7 @@ void GameplayCam::PanCamera(float cam_spd, double dt)
 	if (Application::IsKeyPressed(VK_RIGHT))
 	{
 		Vector3 view = (target - position).Normalized();
-		float yaw = (float)(-turnCam_spd * (float)dt);
+		float yaw = (float)(-turnCam_spd * (float)dt * 2);
 		Mtx44 rotation;
 		rotation.SetToRotation(yaw, 0, 1, 0);
 		view = rotation * view;
@@ -209,7 +228,7 @@ void GameplayCam::PanCamera(float cam_spd, double dt)
 	}
 	if (Application::IsKeyPressed(VK_UP))
 	{
-		float pitch = (float)(turnCam_spd * (float)dt);
+		float pitch = (float)(turnCam_spd * (float)dt * 2);
 		Vector3 view = (target - position).Normalized();
 		Vector3 right = view.Cross(up);
 		right.y = 0;
@@ -222,7 +241,7 @@ void GameplayCam::PanCamera(float cam_spd, double dt)
 	}
 	if (Application::IsKeyPressed(VK_DOWN))
 	{
-		float pitch = (float)(-turnCam_spd * (float)dt);
+		float pitch = (float)(-turnCam_spd * (float)dt * 2);
 		Vector3 view = (target - position).Normalized();
 		Vector3 right = view.Cross(up);
 		right.y = 0;
@@ -260,6 +279,8 @@ void GameplayCam::PanCamera(float cam_spd, double dt)
 		target = position + view;
 	}*/
 }
+
+
 
 void GameplayCam::Reset()
 {

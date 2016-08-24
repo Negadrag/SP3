@@ -10,6 +10,7 @@
 #include "WinScene.h"
 #include "LoseScene.h"
 #include "Display.h"
+#include "MainMenu.h"
 
 SceneManager* SceneManager::instance = nullptr;
 
@@ -40,8 +41,10 @@ void SceneManager::Init()
 	CreateScene(new WinScene());
 	// Scene ID 6
 	CreateScene(new LoseScene());
-	// Scene ID 75
+	// Scene ID 7
 	CreateScene(new Display());
+	// Scene ID 8
+	CreateScene(new MainMenu());
 	
 
 	this->m_currentSceneID = 1;

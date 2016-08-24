@@ -42,7 +42,9 @@
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\LoseScene.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\MainMenu.cpp" />
     <ClCompile Include="Source\MapEditor.cpp" />
+    <ClCompile Include="Source\MenuCursor.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Minion.cpp" />
@@ -107,8 +109,10 @@
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
     <ClInclude Include="Source\LoseScene.h" />
+    <ClInclude Include="Source\MainMenu.h" />
     <ClInclude Include="Source\MapEditor.h" />
     <ClInclude Include="Source\Material.h" />
+    <ClInclude Include="Source\MenuCursor.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\Minion.h" />

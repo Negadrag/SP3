@@ -27,8 +27,10 @@ void Display::Init()
 	//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	testx = testy = testz = 0;
-	
-	camera.Init(Vector3(0, 700, 700), Vector3(0, 10, 0), Vector3(0, 1, 0), 2);
+	banner_forward = -45;
+	banner_backward = 80;
+
+	camera.Init(Vector3(0, 7, 7), Vector3(0, 2, 0), Vector3(0, 1, 0), 2);
 	camera.b_ortho = false;
 	camera.farPlane = 100000.f;
 	RenderManager::GetInstance()->SetCamera(&camera);
@@ -49,6 +51,14 @@ void Display::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+
+	banner_forward += dt * 30;
+	if (banner_forward >= 80)
+		banner_forward = -45;
+	banner_backward -= dt * 30;
+	if (banner_backward <= -45)
+		banner_backward = 80;
 
 
 	fps = (float)(1.f / dt);
@@ -99,11 +109,38 @@ void Display::Render()
 {
 	int spacing = 13;
 
+	//-45 , 80
 	//RenderManager::GetInstance()->RenderTextOnScreen("YOU ", Color(1, 0, 0), 15, 25, 30);
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testx), Color(1, 0, 0), 3, 25, 30);
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testy), Color(1, 0, 0), 3, 25, 25);
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testz), Color(1, 0, 0), 3, 25, 20);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.x), Color(1, 0, 0), 2, 15, 20);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.y), Color(1, 0, 0), 2, 15, 15);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.z), Color(1, 0, 0), 2, 15, 10);
 
+	BannerManager(false, true);
+
+	if (camera.showcase_intro == true)
+		RenderManager::GetInstance()->RenderTextOnScreen("Press any key to continue.", Color(1, 1, 0), 3, 20, 0);
+}
+
+void Display::BannerManager(bool tower, bool enemy)
+{
+	if (tower)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("NEW TOWER ", Color(1, 1, 0), 10, banner_forward, 50);
+		RenderManager::GetInstance()->RenderTextOnScreen("NEW TOWER ", Color(1, 1, 0), 10, banner_backward, 3);
+	}
+
+	else if (enemy)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("WARNING ", Color(1, 0.2, 0.2), 10, banner_forward, 50);
+		RenderManager::GetInstance()->RenderTextOnScreen("NEW ENEMY ", Color(1, 0.2, 0.2), 10, banner_backward, 3);
+	}
+
+	else
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("? ? ? ", Color(1, 1, 1), 10, banner_forward, 50);
+		RenderManager::GetInstance()->RenderTextOnScreen("? ? ? ", Color(1, 1, 1), 10, banner_backward, 3);
+	}
+	
 }
 
 void Display::CreateScene()
@@ -112,18 +149,18 @@ void Display::CreateScene()
 
 	grass.meshID = GEO_GRASS_DARKGREEN;
 	grass.pos.Set(0, 0, 0);
-	grass.scale.Set(2000, 2000, 2000);
+	grass.scale.Set(20, 20, 20);
 	grass.rotation.Set(-90, 0, 0);
 	//grass.rotation.Set(0, 0, 0);
-	grass.b_shadows = false;
+	grass.b_shadows = true;
 	grass.b_lightEnabled = false;
 
 	demoObject.meshID = GEO_ICETOWER;
-	demoObject.pos.Set(0, 0, 0);
+	demoObject.pos.Set(0, .1, 0);
 	demoObject.rotation.Set(-90, 0, 0);
-	demoObject.scale.Set(200, 200, 200);
-	demoObject.b_shadows = false;
-	demoObject.b_lightEnabled = false;
+	demoObject.scale.Set(1, 1, 1);
+	demoObject.b_shadows = true;
+	demoObject.b_lightEnabled = true;
 
 	CreateSkybox();
 
