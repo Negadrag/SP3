@@ -13,6 +13,8 @@ public:
 	virtual void Update(double dt);
 	virtual void LevelUp();
 
+
+	string towerUpgrade;
 	static int cost;
 
 private:

@@ -1,6 +1,7 @@
 #include "CursorControl.h"
 #include "Application.h"
 #include "MathUtility.h"
+
 #include "ArrowTower.h"
 #include "CannonTower.h"
 #include "PoisonTower.h"
@@ -170,7 +171,7 @@ bool CursorControl::SpawnTower(string name)
 {
 	Tower *tempTower;
 	if (name == string("Arrow"))
-		tempTower = new PoisonTower();
+		tempTower = new ArrowTower();
 	else if (name == string("Cannon"))
 		tempTower = new CannonTower();
 	else if (name == string("Capture"))
@@ -224,7 +225,7 @@ void CursorControl::TowerButtons()
 		else if (i == 2)
 		{
 			text = "Ice Tower (E)";
-			mesh = GEO_ICETOWER;
+			mesh = GEO_CAPTURETOWER;
 			offset.Set(0.5f, 0.15f);
 			cost = IceTower::cost;
 		}

@@ -204,7 +204,7 @@ void Tower::Fire(double dt)
 	projectile->meshID = this->projectile_meshID;
 	projectile->pos = this->pos + heightOffset;
 
-	if (projectile->meshID == GEO_ARROW)
+	if (projectile->meshID == GEO_ARROW || projectile->meshID == GEO_POISONARROW || projectile->meshID == GEO_ICESHOT)
 		projectile->scale.Set(2, 2, 2);
 	else
 		projectile->scale.Set(0.5f, 0.5f, 0.5f);

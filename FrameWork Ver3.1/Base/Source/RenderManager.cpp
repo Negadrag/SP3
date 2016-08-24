@@ -278,8 +278,9 @@ void RenderManager::InitMesh()
 	meshList[GEO_ICECRYSTAL]->textureArray[0] = LoadTGA("Image//ice.tga");
 	meshList[GEO_ICECRYSTAL]->material.kShininess = 0.8f;
 	meshList[GEO_ICECRYSTAL]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
-	meshList[GEO_ICESHOT] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 1), 18, 36, 0.5f);
-	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.f, 0.f, 1.f), 18, 36, 1.f);
+	meshList[GEO_ICESHOT] = MeshBuilder::GenerateOBJ("Iceshard", "OBJ//IceShard.obj");
+	meshList[GEO_ICESHOT]->textureArray[0] = LoadTGA("Image//IceShard.tga");
+	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.057f, 0.964f, 0.933f), 18, 36, 1.f);
 
 	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
@@ -288,6 +289,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_POISONMOB] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-POISONMOB.obj");
 	meshList[GEO_POISONMOB]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
 	meshList[GEO_POISONARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
+	meshList[GEO_POISONARROW]->textureArray[0] = LoadTGA("Image//PoisonArrow.tga");
 
 	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");

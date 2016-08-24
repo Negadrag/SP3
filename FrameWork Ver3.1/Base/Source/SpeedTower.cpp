@@ -55,15 +55,18 @@ void SpeedTower::Update(double dt)
 
 void SpeedTower::LevelUp()
 {
-	if (this->i_level >= 2)
+	if (this->i_level <= 2)
 	{
-		i_level = 2;
-	}
-	this->i_level++;
-	this->atkDamage += 5;
-	this->atkRange += 1;
-	if (atkRange > 7)
-	{
-		atkRange = 7;
+		this->i_level++;
+		this->atkDamage += 5;
+		this->atkRange += 1;
+		if (atkRange > 7)
+		{
+			atkRange = 7;
+		}
+		if (this->i_level >= 2)
+		{
+			i_level = 2;
+		}
 	}
 }
