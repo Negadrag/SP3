@@ -26,6 +26,8 @@ RenderManager::~RenderManager()
 	glDeleteProgram(m_programID);
 	glDeleteProgram(m_gPassShaderID);
 
+	
+
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		delete meshList[i];

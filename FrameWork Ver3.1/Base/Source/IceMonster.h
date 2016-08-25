@@ -12,7 +12,7 @@ public:
 
 	virtual void MoveTo(Vector2 dest, double dt);
 	virtual void UpdateAnim(double dt);
-	
+	virtual void GiveCurrency();
 private:
 	
 protected:

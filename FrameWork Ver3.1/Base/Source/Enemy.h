@@ -3,7 +3,9 @@
 
 #include "Renderable.h"
 #include "Node.h"
-#include "PlayerInfo.h"
+
+
+class PlayerInfo;
 
 class Enemy:public Renderable
 {
@@ -26,6 +28,7 @@ public:
 	void ReceiveSlowStatus(float slowAmount, float slowDuration);
 	void ReceivePoisonStatus(float poisonDamage,float slowAmount,float duration);
 	virtual void UpdateAnim(double dt);
+	virtual void GiveCurrency();
 private:
 
 protected:

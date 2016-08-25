@@ -2,11 +2,11 @@
 #define WAVE_MANAGER_H
 
 #include "Enemy.h"
-#include "PlayerInfo.h"
 #include <vector>
 
 using std::vector;
 
+class PlayerInfo;
 
 enum ENEMY_TYPE
 {

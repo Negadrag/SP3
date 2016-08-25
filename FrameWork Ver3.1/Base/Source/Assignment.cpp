@@ -102,7 +102,7 @@ void Assignment::Render()
 	std::ostringstream ss;
 	ss.precision(5);
 	ss << "FPS: " << fps;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 9);
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 21);
 	
 	ss.str("");
 	ss.precision(5);
@@ -113,6 +113,23 @@ void Assignment::Render()
 	ss.precision(5);
 	ss << "Currency: " << player.i_currency;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 6);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "ice: " << player.i_essenceIce;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 9);
+	ss.str("");
+	ss.precision(5);
+	ss << "basic: " << player.i_essenceBasic;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 12);
+	ss.str("");
+	ss.precision(5);
+	ss << "tank: " << player.i_essenceTanky;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 15);
+	ss.str("");
+	ss.precision(5);
+	ss << "Speed: " << player.i_essenceSpeed;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 18);
 }
 
 void Assignment::Exit()
