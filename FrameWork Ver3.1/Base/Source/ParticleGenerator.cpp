@@ -11,6 +11,7 @@ ParticleGenerator::ParticleGenerator(GEOMETRY_TYPE meshID)
 	this->scale.SetZero();
 	this->minVel.SetZero();
 	this->maxVel.SetZero();
+	this->b_gravity = false;
 	isActive = true;
 	i_spawnAmount = 0;
 	f_lifeTime = 0.f;
@@ -23,6 +24,7 @@ ParticleGenerator::ParticleGenerator(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 
 	this->scale = scale;
 	this->minVel = minVel;
 	this->maxVel = maxVel;
+	this->b_gravity = false;
 	f_frequency = 5.f;
 	f_spawnTimer = 0.f;
 	i_maxParticles = 300;
@@ -126,6 +128,7 @@ void ParticleGenerator::SpawnParticle()
 			particle->lifeTime = f_lifeTime;
 			particle->f_distTravelled = 0.f;
 			particle->f_maxDist = this->f_maxDist;
+			particle->b_gravity = this->b_gravity;
 		}
 	}
 }
@@ -145,6 +148,7 @@ void ParticleGenerator::SpawnParticle(Vector3 pos)
 			particle->lifeTime = f_lifeTime;
 			particle->f_distTravelled = 0.f;
 			particle->f_maxDist = this->f_maxDist;
+			particle->b_gravity = this->b_gravity;
 		}
 	}
 }

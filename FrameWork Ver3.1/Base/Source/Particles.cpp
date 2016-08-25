@@ -13,6 +13,7 @@ vel(0, 0, 0)
 	lifeTime = 0.f;
 	f_distTravelled = 0.f;
 	f_maxDist = 0.f;
+	b_gravity = false;
 }
 
 Particles::~Particles()
@@ -24,6 +25,11 @@ void Particles::Update(double dt, int& particle_count)
 	Vector3 m_gravity;
 	if (this->b_isActive)
 	{
+		if (this->b_gravity == true)
+		{
+			this->vel += Vector3(0, -0.98, 0);
+
+		}
 		if (meshID == GEO_WATER)//change to water later
 		{
 			this->vel += m_gravity * (float)dt;

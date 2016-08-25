@@ -35,8 +35,7 @@ public:
 	void ClearScene();
 
 	void SceneDeco();
-	void ButtonManager();
-	void MainButtons();
+	
 	void OptionButtons();
 
 	void CreateSkybox();
@@ -52,14 +51,7 @@ private:
 
 	Renderable grass;
 
-	/*play, editor, exit takes us out of the scene.
-	No spaces will be given within the deco space*/
-	Renderable demo_main;
-	Renderable demo_play;	//play represents play, edit and exit transition space
-	Renderable demo_instr;
-	Renderable demo_option;
-
-	
+	Renderable ren_menutown;
 
 
 	Renderable skytop;
@@ -71,11 +63,7 @@ private:
 	//Renderable forValor;
 	
 	
-	GUI* btn_play;				//  play	= 0
-	GUI* btn_editor;			//	editor	= 1
-	GUI* btn_instructions;		//	instr	= 2
-	GUI* btn_option;			//	options	= 3
-	GUI* btn_exit;				//	exit	= 4
+	
 
 	MenuCursor cursor;
 
@@ -86,6 +74,7 @@ private:
 	bool b_initScene;
 	//Terrain terrain;
 	ParticleGenerator redfall;
+	ParticleGenerator waterfountain;
 
 	float testx, testy, testz;
 

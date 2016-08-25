@@ -17,7 +17,11 @@ public:
 	float rotationSpeed;
 	float lifeTime;
 	virtual void Update(double dt, int& particle_count);
+	bool b_gravity;
+
 private:
+
+
 
 };
 

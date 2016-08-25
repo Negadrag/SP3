@@ -30,7 +30,7 @@ void MainMenu::Init()
 	banner_forward = -45;
 	banner_backward = 80;
 
-	camera.Init(Vector3(0, 4, 13), Vector3(0, 4, 12), Vector3(0, 1, 0), 1);
+	camera.Init(Vector3(0, 4, 11), Vector3(0, 4, 10), Vector3(0, 1, 0), 1);
 	camera.b_ortho = false;
 	camera.farPlane = 100000.f;
 	RenderManager::GetInstance()->SetCamera(&camera);
@@ -57,12 +57,7 @@ void MainMenu::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
-	banner_forward += dt * 30;
-	if (banner_forward >= 80)
-		banner_forward = -45;
-	banner_backward -= dt * 30;
-	if (banner_backward <= -45)
-		banner_backward = 80;
+
 
 	cursor.Update(dt);
 
@@ -84,19 +79,34 @@ void MainMenu::Update(double dt)
 	redfall.isActive = false;
 	redfall.SpawnParticle(Vector3(0, 1000, 1));*/
 
+	waterfountain.Update(dt);
+
+	waterfountain.SetType(GEO_PARTICLE_BLUE);
+	waterfountain.SetFrequency(1);
+	waterfountain.SetCap(1000);
+	waterfountain.i_spawnAmount = 1;
+	waterfountain.f_lifeTime = 15.f;
+	waterfountain.minVel.Set(-4, 10, -4);
+	waterfountain.maxVel.Set(4, 30, 4);
+	waterfountain.scale.Set(2, 2, 2);
+	waterfountain.f_maxDist = 1500.f;
+	waterfountain.b_gravity = true;
+	waterfountain.isActive = false;
+	waterfountain.SpawnParticle(Vector3(-0.4, 2, -119.5));
+
 
 	if (Application::IsKeyPressed('L'))
-		testx += dt * 50;
+		testx += dt * 10;
 	if (Application::IsKeyPressed('J'))
-		testx -= dt * 50;
+		testx -= dt * 10;
 	if (Application::IsKeyPressed('I'))
-		testy += dt * 50;
+		testy += dt * 10;
 	if (Application::IsKeyPressed('K'))
-		testy -= dt * 50;
+		testy -= dt * 10;
 	if (Application::IsKeyPressed('P'))
-		testz += dt * 50;
+		testz += dt * 10;
 	if (Application::IsKeyPressed('O'))
-		testz -= dt * 50;
+		testz -= dt * 10;
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
@@ -133,25 +143,40 @@ void MainMenu::Render()
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.target.z), Color(1, 0, 0), 2, 65, 5);
 
 
+	/*cam pos
+	main = 0 , 4 , 10
+	black = -27 , 4 , 10
+	alley = 58, 4 , 10
+	square = 0, 4 , -90*/
 	
 	
+	
+	grass.meshID = GEO_GRASS_DARKGREEN;
+	grass.pos.Set(10, 0, -80);
+	grass.scale.Set(140, 200, 140);
+	grass.rotation.Set(-90, 0, 0);
+	//grass.rotation.Set(0, 0, 0);
+	grass.b_shadows = true;
+	grass.b_lightEnabled = false;
 }
 
 
 void MainMenu::CreateScene()
 {
-	Mtx44 rotate;
-	grass.meshID = GEO_GRASS_DARKGREEN;
-	grass.pos.Set(0, 0, 0);
-	grass.scale.Set(200, 200, 200);
-	grass.rotation.Set(-90, 0, 0);
-	//grass.rotation.Set(0, 0, 0);
-	grass.b_shadows = true;
-	grass.b_lightEnabled = false;
 	
+	Mtx44 rotate;
+
+
+	ren_menutown.meshID = GEO_MENUTOWN;
+	ren_menutown.pos.Set(3, 0, 0);
+	//demo_main.rotation.Set(-90, 0, 0);
+	ren_menutown.scale.Set(1, 1, 1);
+	ren_menutown.b_shadows = true;
+	ren_menutown.b_lightEnabled = true;
+
 	CreateSkybox();
-	SceneDeco();
-	ButtonManager();
+	//SceneDeco();
+	
 
 
 }
@@ -209,96 +234,14 @@ void MainMenu::CreateSkybox()
 void MainMenu::SceneDeco()
 {
 	
-	//center
-	demo_main.meshID = GEO_ICETOWER;
-	demo_main.pos.Set(0, .1, 0);
-	demo_main.rotation.Set(-90, 0, 0);
-	demo_main.scale.Set(1, 1, 1);
-	demo_main.b_shadows = true;
-	demo_main.b_lightEnabled = true;
-
-	//north
-	demo_play.meshID = GEO_CANNONTOWER;
-	demo_play.pos.Set(0, .1, -40);
-	demo_play.rotation.Set(-90, 0, 0);
-	demo_play.scale.Set(1, 1, 1);
-	demo_play.b_shadows = true;
-	demo_play.b_lightEnabled = false;
-
-	//right
-	demo_instr.meshID = GEO_ARROWTOWER;
-	demo_instr.pos.Set(20, .1, 0);
-	demo_instr.rotation.Set(-90, 0, 0);
-	demo_instr.scale.Set(1, 1, 1);
-	demo_instr.b_shadows = true;
-	demo_instr.b_lightEnabled = true;
-
-	//left
-	demo_option.meshID = GEO_POISONTOWER;
-	demo_option.pos.Set(-20, .1, 0);
-	demo_option.rotation.Set(-90, 0, 0);
-	demo_option.scale.Set(1, 1, 1);
-	demo_option.b_shadows = true;
-	demo_option.b_lightEnabled = true;
 
 
 
 
 }
 
-void MainMenu::ButtonManager()
-{
-	MainButtons();
 
-}
 
-void MainMenu::MainButtons()
-{
-	btn_play = new GUI("Start Game");
-	btn_play->b_isActive = true;
-	btn_play->b_textActive = true;
-	btn_play->position.Set(3, 30);
-	btn_play->SetTextSize(3);
-	btn_play->buttonSize.Set(15, 5);
-	btn_play->functionID = 0;
-
-	btn_editor = new GUI("Level Editor");
-	btn_editor->b_isActive = true;
-	btn_editor->b_textActive = true;
-	btn_editor->position.Set(3, 25);
-	btn_editor->SetTextSize(3);
-	btn_editor->buttonSize.Set(20, 5);
-	btn_editor->functionID = 1;
-
-	btn_instructions = new GUI("Instructions");
-	btn_instructions->b_isActive = true;
-	btn_instructions->b_textActive = true;
-	btn_instructions->position.Set(3, 20);
-	btn_instructions->SetTextSize(3);
-	btn_instructions->buttonSize.Set(20, 5);
-	btn_instructions->functionID = 2;
-
-	btn_option = new GUI("Options");
-	btn_option->b_isActive = true;
-	btn_option->b_textActive = true;
-	btn_option->position.Set(3, 15);
-	btn_option->SetTextSize(3);
-	btn_option->buttonSize.Set(10, 5);
-	btn_option->functionID = 3;
-
-	btn_exit = new GUI("Exit");
-	btn_exit->b_isActive = true;
-	btn_exit->b_textActive = true;
-	btn_exit->position.Set(3, 10);
-	btn_exit->SetTextSize(3);
-	btn_exit->buttonSize.Set(5, 5);
-	btn_exit->functionID = 4;
-}
-
-void MainMenu::OptionButtons()
-{
-
-}
 
 void MainMenu::Exit()
 {

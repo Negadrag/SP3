@@ -25,7 +25,7 @@ public:
 
 	bool isActive;
 	vector<Particles*> particleList;
-
+	bool b_gravity;
 
 	float f_frequency;
 	Vector3 pos;
