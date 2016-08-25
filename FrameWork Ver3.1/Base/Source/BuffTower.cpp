@@ -72,12 +72,18 @@ void BuffTower::Buff()
 			Tower* temp = *it;
 			if (temp != this)
 			{
+				bool cont = false;
 				for (vector<Tower*>::iterator it2 = buffedTowers.begin(); it2 != buffedTowers.end(); ++it2)
 				{
 					if (temp == *it2)
 					{
-						return;
+						cont = true;
+						break;
 					}
+				}
+				if (cont)
+				{
+					continue;
 				}
 				if (temp->buffCounter < 1)
 				{
