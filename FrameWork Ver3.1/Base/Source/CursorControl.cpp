@@ -254,6 +254,14 @@ bool CursorControl::RemoveTower(Tower* tower)
 	{
 		for (vector<Tower*>::iterator it = towerList->begin(); it != towerList->end(); ++it)
 		{
+			if ((*it)->s_name == "Buff Tower")
+			{
+				BuffTower *tower2 = dynamic_cast<BuffTower*>(*it);
+				tower2->RemoveTower(tower);
+			}
+		}
+		for (vector<Tower*>::iterator it = towerList->begin(); it != towerList->end(); ++it)
+		{
 			if (tower == *it)
 			{
 				delete *it;

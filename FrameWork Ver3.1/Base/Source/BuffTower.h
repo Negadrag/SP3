@@ -13,7 +13,7 @@ public:
 	vector<Tower*> GetTowerInRange();
 	virtual bool LevelUp();
 	void Buff();
-	Tower* SearchTower(vector<Tower*> towerVec);
+	void RemoveTower(Tower *tower);
 
 	static int cost;
 
@@ -22,9 +22,7 @@ public:
 	float f_increaseRATE;
 
 	vector<Tower*>* towerList;
-private:
 	vector<Tower*> buffedTowers;
-
 };
 
 #endif
