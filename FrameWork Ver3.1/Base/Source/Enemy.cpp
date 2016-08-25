@@ -168,7 +168,7 @@ void Enemy::ReceiveDamage(int damage)
 	this->f_health -= dmg;
 	if (f_health <= 0)
 	{
-		player->i_currency += this->i_currency;
+		this->GiveCurrency();
 		this->b_isActive = false;
 	}
 }
@@ -196,4 +196,9 @@ void Enemy::ReceivePoisonStatus(float poisonDPS,float slowAmount,float duration)
 	{
 		this->f_poisonTimer = duration;
 	}
+}
+
+void Enemy::GiveCurrency()
+{
+	player->i_currency += this->i_currency;
 }
