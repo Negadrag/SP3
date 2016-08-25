@@ -88,7 +88,7 @@ void CaptureTower::Update(double dt)
 
 bool CaptureTower::LevelUp()
 {
-	if (this->i_level < 2)
+	if (this->i_level <= 2)
 	{
 		i_level++;
 		this->atkSpeed += 0.5f;

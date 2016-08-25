@@ -260,6 +260,10 @@ void Tower::ClearProjectile()
 vector<Enemy*> Tower::GetEnemyInRange()
 {
 	vector<Enemy*> enemyVec;
+	if (this->enemyList == nullptr)
+	{
+		return enemyVec;
+	}
 	if (this->enemyList->size() == 0)
 	{
 		return enemyVec;
