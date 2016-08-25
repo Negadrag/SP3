@@ -1,7 +1,7 @@
 #include "CaptureTower.h"
 #include "SingleTarget.h"
 
-int CaptureTower::cost = 5;
+int CaptureTower::cost = 10;
 
 CaptureTower::CaptureTower()
 :Tower()
@@ -10,7 +10,7 @@ CaptureTower::CaptureTower()
 	this->i_level = 1;
 	SetAtkDmg(0);
 	SetRange(5);
-	SetSpdRate(10.f);
+	SetSpdRate(1.f);
 	this->p_speed = 15.f;
 	this->towerCost = cost;
 	this->meshID = GEO_CAPTUREBASE;
@@ -84,14 +84,10 @@ void CaptureTower::Update(double dt)
 
 bool CaptureTower::LevelUp()
 {
-	if (this->i_level <= 2)
+	if (this->i_level < 2)
 	{
-		this->i_level++;
-		this->atkRange += 1;
-		if (atkRange > 7)
-		{
-			atkRange = 7;
-		}
+		i_level++;
+		this->atkSpeed += 0.5f;
 		return true;
 	}
 	return false;
@@ -110,6 +106,7 @@ void CaptureTower::Fire(double dt)
 			particleGenerator.maxVel = (this->pos - enemy->pos).Normalize() * p_speed;
 			particleGenerator.minVel = (this->pos - enemy->pos).Normalize() * p_speed;
 			particleGenerator.SpawnParticle();
+			enemy->GiveEssence();
 		}
 	}
 }

@@ -7,7 +7,7 @@ Minion::Minion() :Enemy()
 	this->f_movSpeed = 3.f;
 	this->f_health = 50;
 	this->i_damage = 1;
-	this->i_defence = 0;
+	this->i_defence = 10;
 	this->b_rotateUp = true;
 	this->f_rotateSpeed = 90.f;
 	this->f_clampRotate = 20.f;
@@ -20,7 +20,7 @@ Minion::Minion(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->f_movSpeed = 3.f;
 	this->f_health = 50;
 	this->i_damage = 1;
-	this->i_defence = 0;
+	this->i_defence = 10;
 	this->b_rotateUp = true;
 	this->f_rotateSpeed = 90.f;
 	this->f_clampRotate = 20.f;

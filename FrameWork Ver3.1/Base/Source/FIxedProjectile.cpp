@@ -1,34 +1,28 @@
-#include "IceProjectile.h"
+#include "FixedProjectile.h"
 
-IceProjectile::IceProjectile(GEOMETRY_TYPE ID) : SplashTarget(ID)
+FixedProjectile::FixedProjectile(GEOMETRY_TYPE ID) : SplashTarget(ID)
 {
-	this->meshID = GEO_ICESHOT;
-	this->f_slowDuration = 30.f;
+	this->meshID = GEO_CANNON;
 }
 
-IceProjectile::~IceProjectile()
+FixedProjectile::~FixedProjectile()
 {
 }
 
-void IceProjectile::Update(double dt)
+void FixedProjectile::Update(double dt)
 {
 	Vector3 d;
 	//if (this->b_isActive)
 	//{
 
-	if (meshID == GEO_ICESHOT)
-	{
-		Mtx44 rotate;
-		rotate.SetToRotation(45.f, 0, 0, 1);
-
-		iceparticle->minVel = rotate * -vel.Normalized();
-		rotate.SetToIdentity();
-		rotate.SetToRotation(-45.f, 0, 0, 1);
-		iceparticle->maxVel = rotate * -vel.Normalized();
-		iceparticle->pos = this->pos;
-		iceparticle->SpawnParticle();
-	}
-
+	//if (enemy->b_isActive == false)
+	//{
+	//	//iceparticle->ClearParticles();
+	//	//this->iceparticle.isActive = false;
+	//	this->b_isActive = false;
+	//	return;
+	//}
+	
 	d = enemyLastPos - this->pos;
 	//this->vel = (this->vel + d *( p_speed / 4.f)).Normalize() * p_speed;
 	if (d.IsZero())
@@ -59,22 +53,11 @@ void IceProjectile::Update(double dt)
 				if ((*it)->b_isActive == true)
 				{
 					if (((*it)->pos - this->pos).LengthSquared() < f_range*f_range)
-					if (meshID == GEO_ICESHOT)
-					{
-						(*it)->ReceiveSlowStatus(f_slowAmount,f_slowDuration);
-					}
-					(*it)->ReceiveDamage(i_damage / 2);
+					(*it)->ReceiveDamage(i_damage);
 				}
 			}
 		}
-
-		if (meshID == GEO_ICESHOT)
-		{
-			enemy->ReceiveSlowStatus(f_slowAmount,f_slowDuration);
-		}
-		enemy->ReceiveDamage(i_damage / 2);
 		//std::cout << d.LengthSquared() << std::endl;
 	}
 
 }
-

@@ -82,6 +82,9 @@
     <Filter Include="Source Files\System\Entity">
       <UniqueIdentifier>{86b902de-2abe-419e-82d0-b632a99c528c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\System\Render">
+      <UniqueIdentifier>{d58a53ff-10fb-4c07-a15f-ff0f0f071c05}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\System\Scene">
       <UniqueIdentifier>{f5792713-dc23-4f85-89ad-443f39b8b351}</UniqueIdentifier>
     </Filter>
@@ -111,9 +114,6 @@
     </Filter>
     <Filter Include="Source Files\System\Scene">
       <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\System\Entity\Render">
-      <UniqueIdentifier>{d58a53ff-10fb-4c07-a15f-ff0f0f071c05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -229,10 +229,10 @@
       <Filter>Source Files\System\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Source\Renderable.cpp">
-      <Filter>Source Files\System\Entity\Render</Filter>
+      <Filter>Source Files\System\Render</Filter>
     </ClCompile>
     <ClCompile Include="Source\RenderManager.cpp">
-      <Filter>Source Files\System\Entity\Render</Filter>
+      <Filter>Source Files\System\Render</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Source Files\System\Scene</Filter>
@@ -300,6 +300,9 @@
     <ClCompile Include="Source\BuffTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LoseScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -309,8 +312,8 @@
     <ClCompile Include="Source\Display.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LoseScene.cpp">
-      <Filter>Source Files\Scene</Filter>
+    <ClCompile Include="Source\FIxedProjectile.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="Source\MenuCursor.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FixedProjectile.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

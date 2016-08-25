@@ -2,18 +2,18 @@
 #include "SplashTarget.h"
 #include "IceProjectile.h"
 
-int IceTower::cost = 5;
+int IceTower::cost = 15;
 
 IceTower::IceTower()
 :Tower()
 {
 	//Tower Stat
 	this->i_level = 1;
-	SetAtkDmg(10);
-	SetRange(2);
-	SetSpdRate(0.5f);
+	SetAtkDmg(5);
+	SetRange(3);
+	SetSpdRate(0.75f);
 	this->p_speed = 5.f;
-	this->f_SlowAmount = 50.f;
+	this->f_SlowAmount = 30.f;
 	this->f_SlowDura = 10.f;
 	this->towerCost = cost;
 	this->pos.SetZero();
@@ -42,7 +42,7 @@ IceTower::IceTower()
 
 }
 
-Projectile* IceTower::GetProjectile()
+IceProjectile* IceTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
@@ -76,6 +76,37 @@ IceTower::~IceTower()
 
 }
 
+void IceTower::Fire(double dt)
+{
+	Enemy* enemy = SearchEnemy(GetEnemyInRange());
+	if (enemy == nullptr || enemy->b_isActive == false)
+	{
+		f_rotationToBe = 270.f;
+		return;
+	}
+	if (b_rotateWhenFire == true)
+	{
+		Vector3 view = enemy->pos - this->pos;
+		f_rotationToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
+
+		f_rotationToBe = round(f_rotationToBe);
+
+
+	}
+	IceProjectile* projectile = GetProjectile();
+	projectile->meshID = this->projectile_meshID;
+	projectile->pos = this->pos + heightOffset;
+	projectile->scale.Set(0.5f, 0.5f, 0.5f);
+	projectile->p_speed = this->p_speed;
+	projectile->enemy = enemy;
+	projectile->enemyLastPos = enemy->pos;
+	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
+	projectile->i_damage = this->atkDamage;
+
+	//projectileList.push_back(projectile);
+	//enemy->i_health -= 1;
+}
+
 void IceTower::Update(double dt)
 {
 	Tower::Update(dt);
@@ -91,13 +122,7 @@ bool IceTower::LevelUp()
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->atkDamage += 5;
-		this->atkRange += 1;
-		if (atkRange > 7)
-		{
-			atkRange = 7;
-		}
-		return true;
+		this->f_SlowAmount += 10.f;
 	}
 	return false;
 }

@@ -1,16 +1,16 @@
 #include "CannonTower.h"
 #include "SplashTarget.h"
 
-int CannonTower::cost = 8;
+int CannonTower::cost = 15;
 
 CannonTower::CannonTower()
 :Tower()
 {
 	//Tower Stat
 	this->i_level = 1;
-	SetAtkDmg(10);
-	SetRange(5.f);
-	SetSpdRate(0.5f);
+	SetAtkDmg(25);
+	SetRange(7.f);
+	SetSpdRate(0.75f);
 	this->p_speed = 12.f;
 	this->towerCost = cost;
 	this->meshID = GEO_CANNONTOWER;
@@ -79,15 +79,10 @@ void CannonTower::Update(double dt)
 
 bool CannonTower::LevelUp()
 {
-	if (this->i_level <= 3)
+	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->atkDamage += 5;
-		this->atkRange += 1;
-		if (atkRange > 7)
-		{
-			atkRange = 7;
-		}
+		this->atkDamage += 10;
 		return true;
 	}
 	return false;

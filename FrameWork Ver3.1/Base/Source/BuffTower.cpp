@@ -1,14 +1,14 @@
 #include "BuffTower.h"
 #include "SingleTarget.h"
 
-int BuffTower::cost = 5;
+int BuffTower::cost = 60;
 
 BuffTower::BuffTower(vector<Tower*> *tower)
 :Tower()
 {
 	//Tower Stat
 	this->i_level = 0;
-	SetRange(10);
+	SetRange(5);
 	this->atkDamage = 0;
 	this->atkSpeed = 0;
 	f_increaseATK = 10.f;
@@ -26,10 +26,13 @@ BuffTower::~BuffTower()
 	for (vector<Tower*>::iterator it = buffedTowers.begin(); it != buffedTowers.end(); ++it)
 	{
 		Tower* temp = *it;
-		temp->buffCounter--;
-		if (temp->buffCounter < 1)
+		if (temp)
 		{
-			temp->atkDamage -= f_increaseATK;
+			temp->buffCounter--;
+			if (temp->buffCounter < 1)
+			{
+				temp->atkDamage -= f_increaseATK;
+			}
 		}
 	}
 }
@@ -97,32 +100,19 @@ void BuffTower::Buff()
 
 }
 
-Tower* BuffTower::SearchTower(vector<Tower*> towerList)
-{
-	Tower* tower = nullptr;
-	if (towerList.empty())
-	{
-		return nullptr;
-	}
-
-	for (vector<Tower*>::iterator it = towerList.begin(); it != towerList.end(); ++it)
-	{
-		float d = (Vector2((*it)->pos.x, (*it)->pos.y) - Vector2(this->pos.x, this->pos.y)).LengthSquared();
-		if (d < atkRange * atkRange)
-		{
-			if (*it == this)
-			{
-				continue;
-			}
-			tower = (*it);
-		}
-
-	}
-
-
-}
-
 bool BuffTower::LevelUp()
 {
 	return false;
+}
+
+void BuffTower::RemoveTower(Tower *tower)
+{
+	for (vector<Tower*>::iterator it = buffedTowers.begin(); it != buffedTowers.end();++it)
+	{
+		if (*it == tower)
+		{
+			it = buffedTowers.erase(it);
+			return;
+		}
+	}
 }
