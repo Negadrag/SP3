@@ -29,6 +29,7 @@ public:
 	void ReceivePoisonStatus(float poisonDamage,float slowAmount,float duration);
 	virtual void UpdateAnim(double dt);
 	virtual void GiveCurrency();
+	virtual void GiveEssence();
 private:
 
 protected:

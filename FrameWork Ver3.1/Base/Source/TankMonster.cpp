@@ -32,8 +32,8 @@ void TankMonster::UpdateAnim(double dt)
 {
 }
 
-void TankMonster::GiveCurrency()
+void TankMonster::GiveEssence()
 {
-	Enemy::GiveCurrency();
+	//Enemy::GiveCurrency();
 	player->i_essenceTanky += 1;
 }

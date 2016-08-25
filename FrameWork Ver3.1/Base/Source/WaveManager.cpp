@@ -4,6 +4,7 @@
 #include "SpeedMonster.h"
 #include "TankMonster.h"
 #include "PlayerInfo.h"
+#include "SceneManager.h"
 
 Wave::Wave(vector<ENEMY_TYPE> typeVec,int revolution, float spawnFrequency)
 {
@@ -113,6 +114,11 @@ void WaveManager::Update(double dt)
 		else if (b_waveEnded == true)
 		{
 			ClearEnemyList();
+			if (player->enemyToShowcase.size() > 0)
+			{
+				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
+				SceneManager::GetInstance()->ChangeScene(7, true);//change to display Scene;
+			}
 		}
 	}
 }

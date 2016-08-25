@@ -10,7 +10,7 @@ public:
 	Minion(Vector3 pos, Node* node);
 	virtual ~Minion();
 	virtual void UpdateAnim(double dt);
-	virtual void GiveCurrency();
+	virtual void GiveEssence();
 private:
 
 protected:

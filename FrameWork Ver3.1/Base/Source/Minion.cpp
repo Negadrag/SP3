@@ -60,8 +60,8 @@ void Minion::UpdateAnim(double dt)
 	//}
 }
 
-void Minion::GiveCurrency()
+void Minion::GiveEssence()
 {
-	Enemy::GiveCurrency();
+	//Enemy::GiveCurrency();
 	player->i_essenceBasic += 1;
 }

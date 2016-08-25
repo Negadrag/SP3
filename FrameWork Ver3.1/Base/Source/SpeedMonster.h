@@ -11,7 +11,7 @@ public:
 	~SpeedMonster();
 
 	virtual void UpdateAnim(double dt);
-	virtual void GiveCurrency();
+	virtual void GiveEssence();
 private:
 
 protected:

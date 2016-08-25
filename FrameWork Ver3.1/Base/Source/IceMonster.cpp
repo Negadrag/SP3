@@ -52,8 +52,8 @@ void IceMonster::UpdateAnim(double dt)
 	}
 }
 
-void IceMonster::GiveCurrency()
+void IceMonster::GiveEssence()
 {
-	Enemy::GiveCurrency();
+	//Enemy::GiveCurrency();
 	player->i_essenceIce += 1;
 }

@@ -17,8 +17,12 @@ public:
 	int i_essenceTanky;
 	int i_essenceIce;
 
-	ENEMY_TYPE enemyToShowcase;
+	int i_showcaseIndex;
+
+	vector<ENEMY_TYPE> enemyToShowcase;
 	bool b_showcaseEnemy;
+
+	int m_sceneID;
 
 	vector<ENEMY_TYPE> encounteredEnemies;
 

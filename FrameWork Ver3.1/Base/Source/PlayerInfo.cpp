@@ -17,4 +17,5 @@ void PlayerInfo::Init()
 	i_essenceIce = 0;
 	i_essenceSpeed = 0;
 	i_essenceTanky = 0;
+	i_showcaseIndex = 0;
 }

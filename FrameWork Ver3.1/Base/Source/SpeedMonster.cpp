@@ -32,8 +32,8 @@ void SpeedMonster::UpdateAnim(double dt)
 {
 }
 
-void SpeedMonster::GiveCurrency()
+void SpeedMonster::GiveEssence()
 {
-	Enemy::GiveCurrency();
+	//Enemy::GiveCurrency();
 	player->i_essenceSpeed += 1;
 }
