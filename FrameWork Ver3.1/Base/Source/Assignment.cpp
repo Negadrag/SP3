@@ -21,7 +21,7 @@ Assignment::~Assignment()
 
 void Assignment::Init()
 {
-	testMap.LoadMap(std::fstream("Maps//keith.csv"));
+	testMap.LoadMap(std::fstream("Maps//dicknugget.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -72,6 +72,9 @@ void Assignment::Update(double dt)
 
 	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
+
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
+
 	RenderManager::GetInstance()->SetCamera(&camera);
 }
 

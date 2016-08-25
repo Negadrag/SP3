@@ -217,6 +217,7 @@ public:
 	void RemoveRenderable(Renderable* entity);
 	void SetCamera(Camera* cam);
 	void UpdateBillboard(int sceneID = 0);
+	void SetLight(Vector3 pos);
 
 private:
 	

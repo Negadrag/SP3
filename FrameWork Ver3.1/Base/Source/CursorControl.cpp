@@ -355,7 +355,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 
 	if (Application::IsKeyPressed('Q'))
 	{
-		if (bLButtonState && FindTower(checkPositionX,checkPositionY) == nullptr && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX,checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
 			if (Scene::player.i_currency >= ArrowTower::cost)
@@ -390,7 +390,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('W'))
 	{
-		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
 			if (Scene::player.i_currency >= CannonTower::cost)
@@ -425,7 +425,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 	else if (Application::IsKeyPressed('E'))
 	{
-		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
 			if (Scene::player.i_currency >= CaptureTower::cost)
