@@ -56,6 +56,8 @@ void CaptureGame::Init()
 	b_initScene = false;
 	f_ballSpawnTimer = 0.f;
 	std::cout << "entered";
+	
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
 
 }
 

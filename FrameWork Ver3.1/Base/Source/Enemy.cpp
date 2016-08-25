@@ -151,9 +151,9 @@ void Enemy::Update(double dt)
 		if (player)
 		{
 			player->i_health -= this->i_damage;
-			
+			this->b_isActive = false;
 		}
-		this->b_isActive = false;
+		
 	}
 
 }

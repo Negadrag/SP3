@@ -27,7 +27,7 @@ void TestScene::Init()
 
 	camera.Init(Vector3(120, 100, 200), Vector3(0, 50, 0), Vector3(0, 1, 0));
 	RenderManager::GetInstance()->SetCamera(&camera);
-
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
 }
 
 void TestScene::Update(double dt)

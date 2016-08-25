@@ -33,7 +33,7 @@ void WinScene::Init()
 
 	b_initScene = false;
 	std::cout << "entered";
-
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
 }
 
 void WinScene::Update(double dt)
