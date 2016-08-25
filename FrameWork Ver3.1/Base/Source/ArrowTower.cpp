@@ -12,12 +12,16 @@ ArrowTower::ArrowTower()
 	SetRange(5);
 	SetSpdRate(2.f);
 	this->p_speed = 10.f;
-
+	this->towerCost = cost;
 	this->meshID = GEO_ARROWTOWER;
+	this->fullMeshID = GEO_ARROWTOWER;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Arrow Tower";
+
+	upgrades[0] = "Poison";
+	upgrades[1] = "Speed";
 }
 
 ArrowTower::~ArrowTower()
@@ -53,7 +57,7 @@ void ArrowTower::Update(double dt)
 	Tower::Update(dt);
 }
 
-void ArrowTower::LevelUp()
+bool ArrowTower::LevelUp()
 {
 	if (this->i_level <= 3)
 	{
@@ -64,11 +68,9 @@ void ArrowTower::LevelUp()
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 3)
-		{
-			i_level = 3;
-		}
+		return true;
 	}
+	return false;
 
 	
 }

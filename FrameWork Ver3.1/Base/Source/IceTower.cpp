@@ -15,9 +15,10 @@ IceTower::IceTower()
 	this->p_speed = 5.f;
 	this->f_SlowAmount = 50.f;
 	this->f_SlowDura = 10.f;
-
+	this->towerCost = cost;
 	this->pos.SetZero();
 	this->meshID = GEO_ICEBASE;
+	this->fullMeshID = GEO_ICETOWER;
 	this->projectile_meshID = GEO_ICESHOT;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;
@@ -85,9 +86,8 @@ void IceTower::Update(double dt)
 }
 
 
-void IceTower::LevelUp()
+bool IceTower::LevelUp()
 {
-
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
@@ -97,9 +97,7 @@ void IceTower::LevelUp()
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 2)
-		{
-			i_level = 2;
-		}
+		return true;
 	}
+	return false;
 }

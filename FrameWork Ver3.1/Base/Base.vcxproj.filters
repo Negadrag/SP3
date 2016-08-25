@@ -85,9 +85,6 @@
     <Filter Include="Source Files\System\Render">
       <UniqueIdentifier>{d58a53ff-10fb-4c07-a15f-ff0f0f071c05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\System\Scene">
-      <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\System\Scene">
       <UniqueIdentifier>{f5792713-dc23-4f85-89ad-443f39b8b351}</UniqueIdentifier>
     </Filter>
@@ -114,6 +111,9 @@
     </Filter>
     <Filter Include="Source Files\ObjectClasses\Cursor">
       <UniqueIdentifier>{e8a03aa3-9b32-4d5f-8e26-9a511fbf67d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Scene">
+      <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -291,10 +291,7 @@
     <ClCompile Include="Source\WinScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BuffTower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LoseScene.cpp">
+    <ClCompile Include="Source\Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\IceProjectile.cpp">
@@ -303,8 +300,17 @@
     <ClCompile Include="Source\PoisonProjectile.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Display.cpp">
-      <Filter>Source Files\Scene</Filter>
+    <ClCompile Include="Source\BuffTower.cpp">
+      <Filter>Source Files\ObjectClasses\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoseScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuCursor.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +508,12 @@
     </ClInclude>
     <ClInclude Include="Source\PoisonProjectile.h">
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuCursor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

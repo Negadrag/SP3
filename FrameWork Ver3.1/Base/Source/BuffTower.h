@@ -6,12 +6,12 @@
 class BuffTower : public Tower
 {
 public:
-	BuffTower();
+	BuffTower(vector<Tower*> *tower);
 	~BuffTower();
 
 	virtual void Update(double dt);
 	vector<Tower*> GetTowerInRange();
-	virtual void LevelUp();
+	virtual bool LevelUp();
 	void Buff();
 	Tower* SearchTower(vector<Tower*> towerVec);
 
@@ -23,6 +23,7 @@ public:
 
 	vector<Tower*>* towerList;
 private:
+	vector<Tower*> buffedTowers;
 
 };
 

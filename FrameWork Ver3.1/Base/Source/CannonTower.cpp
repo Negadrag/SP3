@@ -12,8 +12,9 @@ CannonTower::CannonTower()
 	SetRange(5.f);
 	SetSpdRate(0.5f);
 	this->p_speed = 12.f;
-
+	this->towerCost = cost;
 	this->meshID = GEO_CANNONTOWER;
+	this->fullMeshID = GEO_CANNONTOWER;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;
@@ -31,7 +32,8 @@ CannonTower::CannonTower()
 	this->particleGenerator.isActive = false;
 	this->particleGenerator.i_spawnAmount = 15;
 
-	
+	upgrades[0] = "Ice";
+	upgrades[1] = "Mortar";
 }
 
 Projectile* CannonTower::GetProjectile()
@@ -75,7 +77,7 @@ void CannonTower::Update(double dt)
 }
 
 
-void CannonTower::LevelUp()
+bool CannonTower::LevelUp()
 {
 	if (this->i_level <= 3)
 	{
@@ -86,9 +88,7 @@ void CannonTower::LevelUp()
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 3)
-		{
-			i_level = 3;
-		}
+		return true;
 	}
+	return false;
 }

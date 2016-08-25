@@ -64,7 +64,7 @@ void Assignment::Update(double dt)
 	if (Application::IsKeyPressed('N'))
 	{
 		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		SceneManager::GetInstance()->ChangeScene(3, true);
+		SceneManager::GetInstance()->ChangeScene(4, true);
 	}
 
 	testMap.waves.Update(dt);
@@ -73,8 +73,6 @@ void Assignment::Update(double dt)
 	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
-
-	
 }
 
 void Assignment::Render()

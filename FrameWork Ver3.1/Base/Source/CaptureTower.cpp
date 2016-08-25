@@ -12,8 +12,9 @@ CaptureTower::CaptureTower()
 	SetRange(5);
 	SetSpdRate(10.f);
 	this->p_speed = 15.f;
-
+	this->towerCost = cost;
 	this->meshID = GEO_CAPTUREBASE;
+	this->fullMeshID = GEO_CAPTURETOWER;
 	this->heightOffset.Set(0, 0, 1);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Capture Tower";
@@ -81,7 +82,7 @@ void CaptureTower::Update(double dt)
 	}
 }
 
-void CaptureTower::LevelUp()
+bool CaptureTower::LevelUp()
 {
 	if (this->i_level <= 2)
 	{
@@ -91,12 +92,9 @@ void CaptureTower::LevelUp()
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 2)
-		{
-			i_level = 2;
-		}
+		return true;
 	}
-
+	return false;
 	
 }
 

@@ -14,7 +14,7 @@ public:
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	virtual void LevelUp();
+	virtual bool LevelUp();
 
 	static int cost;
 	float f_SlowDura;

@@ -11,10 +11,9 @@ class PlayerInfo;
 enum ENEMY_TYPE
 {
 	MINION = 1,
-	TANKY,
+	ICE_MONSTER,
 	SPEED,
-	ICE,
-
+	TANK,
 	NUM_ENEMY
 };
 
