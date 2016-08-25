@@ -25,6 +25,7 @@ Tower::Tower()
 	upgrades[0] = "";
 	upgrades[1] = "";
 	fullMeshID = GEO_NULL;
+	this->buffCounter = 0;
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
@@ -51,6 +52,7 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	child.meshID = GEO_NULL;
 	child.SetParent(this);
 	fullMeshID = GEO_NULL;
+	this->buffCounter = 0;
 }
 
 Tower::~Tower()

@@ -23,6 +23,7 @@ public:
 
 	vector<Tower*>* towerList;
 private:
+	vector<Tower*> buffedTowers;
 
 };
 

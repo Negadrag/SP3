@@ -57,6 +57,11 @@ public:
 	int i_MaxLevel;
 
 	string upgrades[2];
+
+	float atkDamage;
+	float atkSpeed;
+	float atkRange;
+	int buffCounter;
 private:
 
 protected:
@@ -68,9 +73,7 @@ protected:
 	float p_frequency;
 	float p_spawnTimer;
 	float towerCost;
-	float atkDamage;
-	float atkSpeed;
-	float atkRange;
+
 	float p_speed;
 	float newAngle;
 	int p_projectileCount;

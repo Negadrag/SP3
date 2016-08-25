@@ -9,6 +9,8 @@ BuffTower::BuffTower(vector<Tower*> *tower)
 	//Tower Stat
 	this->i_level = 0;
 	SetRange(10);
+	this->atkDamage = 0;
+	this->atkSpeed = 0;
 	f_increaseATK = 10.f;
 	f_increaseRANGE = 5.f;
 	f_increaseRATE = 2.f;
@@ -21,7 +23,15 @@ BuffTower::BuffTower(vector<Tower*> *tower)
 
 BuffTower::~BuffTower()
 {
-
+	for (vector<Tower*>::iterator it = buffedTowers.begin(); it != buffedTowers.end(); ++it)
+	{
+		Tower* temp = *it;
+		temp->buffCounter--;
+		if (temp->buffCounter < 1)
+		{
+			temp->atkDamage -= f_increaseATK;
+		}
+	}
 }
 
 vector<Tower*> BuffTower::GetTowerInRange()
@@ -48,11 +58,37 @@ void BuffTower::Update(double dt)
 {
 	Tower::Update(dt);
 	Buff();
+
+	this->rotation.z += 50.f * dt;
 }
 
 void BuffTower::Buff()
 {
-	Tower* tower = SearchTower(GetTowerInRange());
+	for (vector<Tower*>::iterator it = towerList->begin(); it != towerList->end(); ++it)
+	{
+		float d = (Vector2((*it)->pos.x, (*it)->pos.y) - Vector2(this->pos.x, this->pos.y)).LengthSquared();
+		if (d < atkRange * atkRange)
+		{
+			Tower* temp = *it;
+			if (temp != this)
+			{
+				for (vector<Tower*>::iterator it2 = buffedTowers.begin(); it2 != buffedTowers.end(); ++it2)
+				{
+					if (temp == *it2)
+					{
+						return;
+					}
+				}
+				if (temp->buffCounter < 1)
+				{
+					temp->atkDamage += f_increaseATK;
+				}
+				temp->buffCounter++;
+				buffedTowers.push_back(temp);
+			}
+		}
+	}
+
 }
 
 Tower* BuffTower::SearchTower(vector<Tower*> towerList)
@@ -66,14 +102,18 @@ Tower* BuffTower::SearchTower(vector<Tower*> towerList)
 	for (vector<Tower*>::iterator it = towerList.begin(); it != towerList.end(); ++it)
 	{
 		float d = (Vector2((*it)->pos.x, (*it)->pos.y) - Vector2(this->pos.x, this->pos.y)).LengthSquared();
-		if (d < atkRange)
+		if (d < atkRange * atkRange)
 		{
+			if (*it == this)
+			{
+				continue;
+			}
 			tower = (*it);
-			atkDamage += f_increaseATK;
-			atkRange += f_increaseRANGE;
-			atkSpeed += f_increaseRATE;
 		}
+
 	}
+
+
 }
 
 bool BuffTower::LevelUp()
