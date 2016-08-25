@@ -1,14 +1,14 @@
 #include "BuffTower.h"
 #include "SingleTarget.h"
 
-int BuffTower::cost = 5;
+int BuffTower::cost = 60;
 
 BuffTower::BuffTower(vector<Tower*> *tower)
 :Tower()
 {
 	//Tower Stat
 	this->i_level = 0;
-	SetRange(10);
+	SetRange(5);
 	this->atkDamage = 0;
 	this->atkSpeed = 0;
 	f_increaseATK = 10.f;

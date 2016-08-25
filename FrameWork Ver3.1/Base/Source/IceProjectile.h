@@ -13,6 +13,7 @@ public:
 
 	float f_slowDuration;
 	float f_slowAmount;
+	Vector3 enemyLastPos;
 private:
 
 

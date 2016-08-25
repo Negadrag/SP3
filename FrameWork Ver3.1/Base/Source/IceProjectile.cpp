@@ -16,14 +16,6 @@ void IceProjectile::Update(double dt)
 	//if (this->b_isActive)
 	//{
 
-	if (enemy->b_isActive == false)
-	{
-		//iceparticle->ClearParticles();
-		//this->iceparticle.isActive = false;
-		this->b_isActive = false;
-		return;
-	}
-
 	if (meshID == GEO_ICESHOT)
 	{
 		Mtx44 rotate;
@@ -37,7 +29,7 @@ void IceProjectile::Update(double dt)
 		iceparticle->SpawnParticle();
 	}
 
-	d = enemy->pos - this->pos;
+	d = enemyLastPos - this->pos;
 	//this->vel = (this->vel + d *( p_speed / 4.f)).Normalize() * p_speed;
 	if (d.IsZero())
 	{
@@ -46,10 +38,6 @@ void IceProjectile::Update(double dt)
 	this->vel = d.Normalized() * p_speed;
 	rotation.z = Math::RadianToDegree(atan2(this->vel.y, this->vel.x));
 	this->pos += vel * dt;
-	if (enemy->b_isActive == false)
-	{
-		this->b_isActive = false;
-	}
 	float distanceToCheck = 0.04f * p_speed;
 	if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 	{
@@ -89,3 +77,4 @@ void IceProjectile::Update(double dt)
 	}
 
 }
+

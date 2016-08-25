@@ -201,7 +201,7 @@ void Enemy::ReceivePoisonStatus(float poisonDPS,float slowAmount,float duration)
 void Enemy::GiveCurrency()
 {
 	player->i_currency += this->i_currency;
-	GiveEssence();
+	//GiveEssence();
 }
 
 void Enemy::GiveEssence()

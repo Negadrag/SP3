@@ -312,6 +312,9 @@
     <ClCompile Include="Source\Display.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FIxedProjectile.cpp">
+      <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="Source\MenuCursor.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FixedProjectile.h">
+      <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

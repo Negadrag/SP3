@@ -1,7 +1,7 @@
 #include "ArrowTower.h"
 #include "SingleTarget.h"
 
-int ArrowTower::cost = 5;
+int ArrowTower::cost = 10;
 
 ArrowTower::ArrowTower()
 :Tower()
@@ -59,12 +59,12 @@ void ArrowTower::Update(double dt)
 
 bool ArrowTower::LevelUp()
 {
-	if (this->i_level <= 3)
+	if (this->i_level <= 2)
 	{
 		this->i_level++;
 		this->atkDamage += 5;
-		this->atkRange += 1;
-		if (atkRange > 7)
+
+		if (i_level == 3)
 		{
 			atkRange = 7;
 		}

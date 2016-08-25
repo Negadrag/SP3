@@ -5,9 +5,9 @@ IceMonster::IceMonster() :Enemy()
 {
 	this->meshID = GEO_ICE;
 	this->f_movSpeed = 3.f;
-	this->f_health = 100;
+	this->f_health = 70;
 	this->i_damage = 1;
-	this->i_defence = 0;
+	this->i_defence = 15;
 	this->f_rotateSpeed = 90.f;
 	this->i_currency = 1;
 }
