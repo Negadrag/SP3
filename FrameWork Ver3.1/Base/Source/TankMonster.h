@@ -11,7 +11,7 @@ public:
 	~TankMonster();
 
 	virtual void UpdateAnim(double dt);
-
+	virtual void GiveCurrency();
 private:
 
 protected:

@@ -1,5 +1,5 @@
 #include "SpeedMonster.h"
-
+#include "PlayerInfo.h"
 
 SpeedMonster::SpeedMonster() :Enemy()
 {
@@ -30,4 +30,10 @@ SpeedMonster::~SpeedMonster()
 
 void SpeedMonster::UpdateAnim(double dt)
 {
+}
+
+void SpeedMonster::GiveCurrency()
+{
+	Enemy::GiveCurrency();
+	player->i_essenceSpeed += 1;
 }

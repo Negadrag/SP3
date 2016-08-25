@@ -1,4 +1,5 @@
 #include "IceMonster.h"
+#include "PlayerInfo.h"
 
 IceMonster::IceMonster() :Enemy()
 {
@@ -49,4 +50,10 @@ void IceMonster::UpdateAnim(double dt)
 	{
 		this->rotation.z -= 360.f;
 	}
+}
+
+void IceMonster::GiveCurrency()
+{
+	Enemy::GiveCurrency();
+	player->i_essenceIce += 1;
 }

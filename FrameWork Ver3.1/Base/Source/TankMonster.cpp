@@ -1,5 +1,5 @@
 #include "TankMonster.h"
-
+#include "PlayerInfo.h"
 
 TankMonster::TankMonster() :Enemy()
 {
@@ -30,4 +30,10 @@ TankMonster::~TankMonster()
 
 void TankMonster::UpdateAnim(double dt)
 {
+}
+
+void TankMonster::GiveCurrency()
+{
+	Enemy::GiveCurrency();
+	player->i_essenceTanky += 1;
 }

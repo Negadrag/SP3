@@ -3,6 +3,7 @@
 #include "IceMonster.h"
 #include "SpeedMonster.h"
 #include "TankMonster.h"
+#include "PlayerInfo.h"
 
 Wave::Wave(vector<ENEMY_TYPE> typeVec,int revolution, float spawnFrequency)
 {
@@ -144,28 +145,22 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 			enemy = new Minion(pos,root);
 		}
 			break;
-		case TANKY:
-		{
-			enemy = new TankMonster(pos, root);
-		}
-			break;
-		case SPEED:
-		{
-			enemy = new SpeedMonster(pos, root);
-		}
-			break;
-		case ICE:
+
+		case ICE_MONSTER:
 		{
 			enemy = new IceMonster(pos, root);
 		}
+			break;
 		case SPEED:
 		{
 			enemy = new SpeedMonster(pos, root);
 		}
+			break;
 		case TANK:
 		{
 			enemy = new TankMonster(pos, root);
 		}
+			break;
 		case NUM_ENEMY:
 			break;
 		default:
