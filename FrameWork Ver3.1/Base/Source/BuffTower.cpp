@@ -3,7 +3,7 @@
 
 int BuffTower::cost = 5;
 
-BuffTower::BuffTower()
+BuffTower::BuffTower(vector<Tower*> *tower)
 :Tower()
 {
 	//Tower Stat
@@ -16,6 +16,7 @@ BuffTower::BuffTower()
 	this->meshID = GEO_BUFFTOWER;
 	this->fullMeshID = GEO_BUFFTOWER;
 	s_name = "Buff Tower";
+	this->towerList = tower;
 }
 
 BuffTower::~BuffTower()

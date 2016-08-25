@@ -14,7 +14,7 @@ MortarTower::MortarTower()
 	this->p_speed = 5.f;
 	this->towerCost = cost;
 	this->meshID = GEO_MORTARBASE;
-	this->fullMeshID = GEO_MORTARTOWER;
+	this->fullMeshID = GEO_MORTARCANNON;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;

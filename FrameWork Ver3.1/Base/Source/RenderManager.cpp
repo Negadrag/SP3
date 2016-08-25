@@ -475,7 +475,6 @@ void RenderManager::RenderMain(int sceneID)
 	if (camera->b_ortho == false)
 	{
 		perspective.SetToPerspective(camera->FOV, camera->aspectRatio.x / camera->aspectRatio.y, camera->nearPlane, camera->farPlane);
-
 	}
 	else
 	{
@@ -611,7 +610,6 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 
 void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight, bool fog) 
 {
-
 	Mesh* mesh = meshList[meshID];
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 	modelStack.PushMatrix();
