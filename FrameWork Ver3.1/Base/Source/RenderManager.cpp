@@ -315,6 +315,9 @@ void RenderManager::InitMesh()
 	meshList[GEO_CAPTUREORB]->textureArray[0] = LoadTGA("Image//Orb.tga");
 	meshList[GEO_CAPTUREORB]->material.kShininess = 0.5f;
 	meshList[GEO_CAPTUREORB]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+
+	meshList[GEO_BUFFTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-BUFF.obj");
+	meshList[GEO_BUFFTOWER]->textureArray[0] = LoadTGA("Image//Tower-BUFF.tga");
 	//Particles
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
 	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");

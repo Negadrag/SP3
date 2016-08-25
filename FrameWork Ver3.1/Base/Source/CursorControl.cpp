@@ -293,7 +293,7 @@ void CursorControl::TowerButtons()
 		else if (i == 3)
 		{
 			text = "Buff Tower (R)";
-			mesh = GEO_ARROWTOWER;
+			mesh = GEO_BUFFTOWER;
 			offset.Set(0.7f, 0.15f);
 			cost = BuffTower::cost;
 		}

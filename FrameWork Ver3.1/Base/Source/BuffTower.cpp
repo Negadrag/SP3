@@ -13,8 +13,8 @@ BuffTower::BuffTower()
 	f_increaseRANGE = 5.f;
 	f_increaseRATE = 2.f;
 
-	//this->meshID = GEO_BuffTower;
-	//this->fullMeshID = GEO_BuffTower;
+	this->meshID = GEO_BUFFTOWER;
+	this->fullMeshID = GEO_BUFFTOWER;
 	s_name = "Buff Tower";
 }
 
@@ -26,11 +26,11 @@ BuffTower::~BuffTower()
 vector<Tower*> BuffTower::GetTowerInRange()
 {
 	vector<Tower*> towerVec;
-	if (this->towerList->size() == 0)
-	{
-		return towerVec;
-	}
-	for (vector<Tower*>::iterator it = (*towerList).begin(); it != (*towerList).end(); ++it)
+	//if (this->towerList->size() == 0)
+	//{
+	//	return towerVec;
+	//}
+	for (vector<Tower*>::iterator it = towerList->begin(); it != towerList->end(); ++it)
 	{
 		if ((Vector2(this->pos.x, this->pos.y) - Vector2((*it)->pos.x, (*it)->pos.y)).LengthSquared() <= this->atkRange* this->atkRange)
 		{
