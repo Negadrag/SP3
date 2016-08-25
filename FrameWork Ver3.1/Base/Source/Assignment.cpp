@@ -72,6 +72,9 @@ void Assignment::Update(double dt)
 
 	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
+
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
+
 	RenderManager::GetInstance()->SetCamera(&camera);
 }
 

@@ -215,6 +215,7 @@ void MapEditor::WriteToFile()
 		file << '\n';
 	}
 	file << "e,\n";
+	file << "/,0,0,\n";
 	for (vector<string>::iterator it = waves.begin(); it != waves.end(); ++it)
 	{
 		file << *it;

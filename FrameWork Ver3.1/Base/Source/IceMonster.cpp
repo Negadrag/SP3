@@ -10,6 +10,9 @@ IceMonster::IceMonster() :Enemy()
 	this->i_defence = 15;
 	this->f_rotateSpeed = 90.f;
 	this->i_currency = 1;
+	this->f_floatSpeed = 2.f;
+	this->b_floatUp = true;
+	this->f_translateTimer = 0.f;
 }
 
 IceMonster::IceMonster(Vector3 pos, Node* root) :Enemy(pos, root)
@@ -22,6 +25,9 @@ IceMonster::IceMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->i_defence = 0;
 	this->f_rotateSpeed = 90.f;
 	i_currency = 1;
+	this->f_floatSpeed = 3.f;
+	this->b_floatUp = true;
+	this->f_translateTimer = 0.f;
 }
 
 IceMonster::~IceMonster()
@@ -45,11 +51,34 @@ void IceMonster::MoveTo(Vector2 dest, double dt)
 
 void IceMonster::UpdateAnim(double dt)
 {
-	this->rotation.z += f_rotateSpeed*dt;
+	this->rotation.z += f_rotateSpeed * ((100.f - f_slow) / 100.f) * dt;
 	if (this->rotation.z > 360.f)
 	{
 		this->rotation.z -= 360.f;
 	}
+	/*if (b_floatUp == true)
+	{
+		this->pos.z += f_floatSpeed * ((100.f - f_slow) / 100.f) * dt;
+		if (this->pos.z > 1.f)
+		{
+			this->pos.z = 1.f;
+			this->b_floatUp = false;
+		}
+	}
+	else
+	{
+
+		this->pos.z -= f_floatSpeed * ((100.f - f_slow) / 100.f) * dt;
+		if (this->pos.z < 0.5f)
+		{
+			this->pos.z = 0.5f;
+			this->b_floatUp = true;
+		}
+	}*/
+	
+	this->f_translateTimer += f_floatSpeed * dt;
+
+	this->pos.z = (sin(f_translateTimer)/3.f) + 1.1f;
 }
 
 void IceMonster::GiveEssence()

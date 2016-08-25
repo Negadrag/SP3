@@ -15,7 +15,9 @@ public:
 	void Buff();
 	void RemoveTower(Tower *tower);
 
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 
 	float f_increaseATK;
 	float f_increaseRANGE;

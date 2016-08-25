@@ -18,7 +18,9 @@ public:
 	virtual bool LevelUp();
 	virtual void Fire(double dt);
 
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 	float f_SlowDura;
 	float f_SlowAmount;
 

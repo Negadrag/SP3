@@ -3,6 +3,8 @@
 #include "IceProjectile.h"
 
 int IceTower::cost = 15;
+int IceTower::ecost = 100;
+Tower::ESSENCE_TYPE IceTower::type = Tower::ESSENCE_TYPE::E_ICE;
 
 IceTower::IceTower()
 :Tower()
@@ -16,6 +18,8 @@ IceTower::IceTower()
 	this->f_SlowAmount = 10.f;
 	this->f_SlowDura = 10.f;
 	this->towerCost = cost;
+	this->essenceCost = 0;
+	this->essence = type;
 	this->pos.SetZero();
 	this->meshID = GEO_ICEBASE;
 	this->fullMeshID = GEO_ICETOWER;
@@ -122,7 +126,8 @@ bool IceTower::LevelUp()
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->f_SlowAmount += 20.f;
+		this->f_SlowAmount += 10.f;
+		return true;
 	}
 	return false;
 }

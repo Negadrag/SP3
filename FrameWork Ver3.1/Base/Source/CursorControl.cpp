@@ -22,58 +22,7 @@ CursorControl::CursorControl()
 
 CursorControl::~CursorControl()
 {
-	for (int i = 0; i < 4; ++i)
-	{
-		if (spawnTower[i] != nullptr)
-		{
-			delete spawnTower[i];
-		}
-		if (towerCosts[i] != nullptr)
-		{
-			delete towerCosts[i];
-		}
-	}
-
-	for (int i = 0; i < 3; ++i)
-	{
-		if (towerUpgrades[i] != nullptr)
-		{
-			delete towerUpgrades[i];
-		}
-		if (upgradeCosts[i] != nullptr)
-		{
-			delete upgradeCosts[i];
-		}
-	}
-
-	for (int i = 0; i < (int)T_TOTAL; ++i)
-	{
-		if (towerStats[i] != nullptr)
-		{
-			delete towerStats[i];
-		}
-	}
-
-	if (towerName != nullptr)
-	{
-		delete towerName;
-	}
-	if (background != nullptr)
-	{
-		delete background;
-	}
-	if (background2 != nullptr)
-	{
-		delete background2;
-	}
-	if (background3 != nullptr)
-	{
-		delete background3;
-	}
-	if (selling != nullptr)
-	{
-		delete selling;
-	}
+	Clear();
 }
 
 void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
@@ -120,12 +69,12 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	background3->b_lightEnabled = false;
 	background3->b_textActive = false;
 	background3->b_buttonActive = false;
-	background3->position.Set(5, -10);
+	background3->position.Set(7, -10);
 	background3->meshID = GEO_QUAD;
-	background3->scale.Set(14, 50, 1);
+	background3->scale.Set(18, 50, 1);
 	background3->SetParent(towerUpgrades[0]);
 
-	selling = new GUI("(Q) Sell:");
+	selling = new GUI("(f) Sell:");
 	selling->b_isActive = false;
 	selling->SetTextSize(2);
 	selling->textColor.Set(1, 0, 0);
@@ -375,6 +324,14 @@ void CursorControl::TowerButtons()
 		upgradeCosts[i]->b_buttonActive = false;
 		upgradeCosts[i]->position.Set(0, -1.5f);
 		upgradeCosts[i]->b_isActive = false;
+
+		essenceCost[i] = new GUI("essencecost");
+		essenceCost[i]->SetParent(towerUpgrades[i]);
+		essenceCost[i]->textColor.Set(1, 1, 0);
+		essenceCost[i]->SetTextSize(2);
+		essenceCost[i]->b_buttonActive = false;
+		essenceCost[i]->position.Set(0, -3.0f);
+		essenceCost[i]->b_isActive = false;
 	}
 }
 
@@ -398,53 +355,107 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 
 	if (Application::IsKeyPressed('Q'))
 	{
-		if (bLButtonState && FindTower(checkPositionX,checkPositionY) == nullptr && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX,checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Arrow");
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			bLButtonState = false;
-
-			for (int i = 0; i < 4; ++i)
+			if (Scene::player.i_currency >= ArrowTower::cost)
 			{
-				spawnTower[i]->b_isActive = false;
-				towerCosts[i]->b_isActive = false;
+				Scene::player.i_currency -= ArrowTower::cost;
+				SpawnTower("Arrow");
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				bLButtonState = false;
+
+				for (int i = 0; i < 4; ++i)
+				{
+					spawnTower[i]->b_isActive = false;
+					towerCosts[i]->b_isActive = false;
+				}
+				background->b_isActive = false;
 			}
-			background->b_isActive = false;
+		}
+		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
+		{
+			debounce = 0.f;
+			HandleButton(tileMap, towerUpgrades[0]);
+			for (int i = 0; i < 3; ++i)
+			{
+				towerUpgrades[i]->b_isActive = false;
+				upgradeCosts[i]->b_isActive = false;
+				essenceCost[i]->b_isActive = false;
+			}
+			bLButtonState = false;
+			bPlacingTower = false;
+			background3->b_isActive = false;
 		}
 	}
 	else if (Application::IsKeyPressed('W'))
 	{
-		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Cannon");
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			bLButtonState = false;
-
-			for (int i = 0; i < 4; ++i)
+			if (Scene::player.i_currency >= CannonTower::cost)
 			{
-				spawnTower[i]->b_isActive = false;
-				towerCosts[i]->b_isActive = false;
+				Scene::player.i_currency -= CannonTower::cost;
+				SpawnTower("Cannon");
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				bLButtonState = false;
+
+				for (int i = 0; i < 4; ++i)
+				{
+					spawnTower[i]->b_isActive = false;
+					towerCosts[i]->b_isActive = false;
+				}
+				background->b_isActive = false;
 			}
-			background->b_isActive = false;
+		}
+		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
+		{
+			debounce = 0.f;
+			HandleButton(tileMap, towerUpgrades[1]);
+			for (int i = 0; i < 3; ++i)
+			{
+				towerUpgrades[i]->b_isActive = false;
+				upgradeCosts[i]->b_isActive = false;
+				essenceCost[i]->b_isActive = false;
+			}
+			bLButtonState = false;
+			bPlacingTower = false;
+			background3->b_isActive = false;
 		}
 	}
 	else if (Application::IsKeyPressed('E'))
 	{
-		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
+		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Capture");
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			bLButtonState = false;
-
-			for (int i = 0; i < 4; ++i)
+			if (Scene::player.i_currency >= CaptureTower::cost)
 			{
-				spawnTower[i]->b_isActive = false;
-				towerCosts[i]->b_isActive = false;
+				Scene::player.i_currency -= CaptureTower::cost;
+				SpawnTower("Capture");
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				bLButtonState = false;
+
+				for (int i = 0; i < 4; ++i)
+				{
+					spawnTower[i]->b_isActive = false;
+					towerCosts[i]->b_isActive = false;
+				}
+				background->b_isActive = false;
 			}
-			background->b_isActive = false;
+		}
+		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
+		{
+			debounce = 0.f;
+			HandleButton(tileMap, towerUpgrades[2]);
+			for (int i = 0; i < 3; ++i)
+			{
+				towerUpgrades[i]->b_isActive = false;
+				upgradeCosts[i]->b_isActive = false;
+				essenceCost[i]->b_isActive = false;
+			}
+			bLButtonState = false;
+			bPlacingTower = false;
+			background3->b_isActive = false;
 		}
 	}
 	else if (Application::IsKeyPressed('R'))
@@ -452,16 +463,20 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
-			SpawnTower("Buff");
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			bLButtonState = false;
-
-			for (int i = 0; i < 4; ++i)
+			if (Scene::player.i_currency >= BuffTower::cost)
 			{
-				spawnTower[i]->b_isActive = false;
-				towerCosts[i]->b_isActive = false;
+				Scene::player.i_currency -= BuffTower::cost;
+				SpawnTower("Buff");
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				bLButtonState = false;
+
+				for (int i = 0; i < 4; ++i)
+				{
+					spawnTower[i]->b_isActive = false;
+					towerCosts[i]->b_isActive = false;
+				}
+				background->b_isActive = false;
 			}
-			background->b_isActive = false;
 		}
 	}
 	if (Application::IsKeyPressed('F'))
@@ -480,10 +495,10 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 
 void CursorControl::Clicking(const TileMap &tileMap)
 {
-	if (!bLButtonState && Application::IsMousePressed(0)) // -2 being a empty slot
+	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2)
+		if (tileMap.screenMap[checkPositionX][checkPositionY] == -2) // -2 being a tower slot
 		{
 			bPlacingTower = true;
 			for (int i = 0; i < 4; ++i)
@@ -497,7 +512,10 @@ void CursorControl::Clicking(const TileMap &tileMap)
 		{
 			bPlacingTower = true;
 			Tower* temp = FindTower(checkPositionX, checkPositionY);
-			UpgradeButtons(temp);
+			if (temp->i_level != 0)
+			{
+				UpgradeButtons(temp);
+			}
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -508,106 +526,7 @@ void CursorControl::Clicking(const TileMap &tileMap)
 		
 		if (button != nullptr)
 		{
-			if (button->functionID == 0)
-			{
-				if (Scene::player.i_currency >= ArrowTower::cost)
-				{
-					SpawnTower(string("Arrow"));
-					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-					Scene::player.i_currency -= ArrowTower::cost;
-				}
-			}
-			else if (button->functionID == 1)
-			{
-				if (Scene::player.i_currency >= CannonTower::cost)
-				{
-					SpawnTower(string("Cannon"));
-					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-					Scene::player.i_currency -= CannonTower::cost;
-				}
-			}
-			else if (button->functionID == 2)
-			{
-				if (Scene::player.i_currency >= CaptureTower::cost)
-				{
-					SpawnTower(string("Capture"));
-					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-					Scene::player.i_currency -= CaptureTower::cost;
-				}
-			}
-			else if (button->functionID == 3)
-			{
-				if (Scene::player.i_currency >= BuffTower::cost)
-				{
-					SpawnTower(string("Buff"));
-					tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-					Scene::player.i_currency -= BuffTower::cost;
-				}
-			}
-			else if (button->functionID == 5) // Level up
-			{
-				Tower* temp = FindTower(checkPositionX, checkPositionY);
-				if (Scene::player.i_currency >= temp->GetCost())
-				{
-					if (temp->LevelUp())
-					{
-						Scene::player.i_currency -= temp->GetCost();
-						temp->SetCost(temp->GetCost() * 2);
-					}
-				}
-			}
-			else if (button->functionID == 6)
-			{
-				Tower* temp = FindTower(checkPositionX, checkPositionY);
-				if (temp != nullptr)
-				{
-					if (Scene::player.i_currency >= IceTower::cost)
-					{
-						RemoveTower(temp);
-						SpawnTower("Ice");
-						Scene::player.i_currency -= IceTower::cost;
-					}
-				}
-			}
-			else if (button->functionID == 7)
-			{
-				Tower* temp = FindTower(checkPositionX, checkPositionY);
-				if (temp != nullptr)
-				{
-					if (Scene::player.i_currency >= PoisonTower::cost)
-					{
-						RemoveTower(temp);
-						SpawnTower("Poison");
-						Scene::player.i_currency -= PoisonTower::cost;
-					}
-				}
-			}
-			else if (button->functionID == 8)
-			{
-				Tower* temp = FindTower(checkPositionX, checkPositionY);
-				if (temp != nullptr)
-				{
-					if (Scene::player.i_currency >= MortarTower::cost)
-					{
-						RemoveTower(temp);
-						SpawnTower("Mortar");
-						Scene::player.i_currency -= MortarTower::cost;
-					}
-				}
-			}
-			else if (button->functionID == 9)
-			{
-				Tower* temp = FindTower(checkPositionX, checkPositionY);
-				if (temp != nullptr)
-				{
-					if (Scene::player.i_currency >= SpeedTower::cost)
-					{
-						RemoveTower(temp);
-						SpawnTower("Speed");
-						Scene::player.i_currency -= SpeedTower::cost;
-					}
-				}
-			}
+			HandleButton(tileMap, button);
 		}
 
 		for (int i = 0; i < 4; ++i)
@@ -620,6 +539,7 @@ void CursorControl::Clicking(const TileMap &tileMap)
 		{
 			towerUpgrades[i]->b_isActive = false;
 			upgradeCosts[i]->b_isActive = false;
+			essenceCost[i]->b_isActive = false;
 		}
 
 		background->b_isActive = false;
@@ -652,7 +572,7 @@ void CursorControl::UpgradeButtons(Tower* tower)
 	{
 		background3->b_isActive = true;
 
-		towerUpgrades[0]->SetText("Level up");
+		towerUpgrades[0]->SetText("Level up (Q)");
 		towerUpgrades[0]->b_isActive = true;
 		towerUpgrades[0]->meshID = tower->fullMeshID;
 		towerUpgrades[0]->functionID = 5;
@@ -660,22 +580,32 @@ void CursorControl::UpgradeButtons(Tower* tower)
 		os << "Cost:" << tower->GetCost();
 		upgradeCosts[0]->SetText(os.str());
 		upgradeCosts[0]->b_isActive = true;
+		if (tower->essenceCost > 0)
+		{
+			os.str("");
+			os << "ECost:" << tower->essenceCost;
+			essenceCost[0]->SetText(os.str());
+			CostColor(essenceCost[0], tower->essence);
+			essenceCost[0]->b_isActive = true;
+		}
 	}
 
 	if (tower->i_level == 1)
 	{
 		if (tower->upgrades[0] != "")
 		{
-			SetUpgradeButtons(towerUpgrades[1], upgradeCosts[1], tower->upgrades[0]);
+			SetUpgradeButtons(towerUpgrades[1], upgradeCosts[1], essenceCost[1], tower->upgrades[0]);
+			towerUpgrades[1]->SetText(towerUpgrades[1]->GetText() + "(W)");
 		}
 		if (tower->upgrades[1] != "")
 		{
-			SetUpgradeButtons(towerUpgrades[2], upgradeCosts[2], tower->upgrades[1]);
+			SetUpgradeButtons(towerUpgrades[2], upgradeCosts[2], essenceCost[2], tower->upgrades[1]);
+			towerUpgrades[2]->SetText(towerUpgrades[2]->GetText() + "(E)");
 		}
 	}
 }
 
-void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
+void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string tower)
 {
 	if (tower == string("Ice"))
 	{
@@ -686,6 +616,13 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
 		os << "Cost:" << IceTower::cost;
 		cost->SetText(os.str());
 		cost->b_isActive = true;
+
+		os.str("");
+		os << "ECost:" << IceTower::ecost;
+		ecost->SetText(os.str());
+		CostColor(ecost, IceTower::type);
+		ecost->b_isActive = true;
+
 		button->functionID = 6;
 	}
 	else if (tower == string("Poison"))
@@ -697,6 +634,13 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
 		os << "Cost:" << PoisonTower::cost;
 		cost->SetText(os.str());
 		cost->b_isActive = true;
+
+		os.str("");
+		os << "ECost:" << PoisonTower::ecost;
+		ecost->SetText(os.str());
+		CostColor(ecost, PoisonTower::type);
+		ecost->b_isActive = true;
+
 		button->functionID = 7;
 	}
 	else if (tower == string("Mortar"))
@@ -708,6 +652,13 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
 		os << "Cost:" << MortarTower::cost;
 		cost->SetText(os.str());
 		cost->b_isActive = true;
+
+		os.str("");
+		os << "ECost:" << MortarTower::ecost;
+		ecost->SetText(os.str());
+		CostColor(ecost, MortarTower::type);
+		ecost->b_isActive = true;
+
 		button->functionID = 8;
 	}
 	else if (tower == string("Speed"))
@@ -719,6 +670,270 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
 		os << "Cost:" << SpeedTower::cost;
 		cost->SetText(os.str());
 		cost->b_isActive = true;
+
+		os.str("");
+		os << "ECost:" << SpeedTower::ecost;
+		ecost->SetText(os.str());
+		CostColor(ecost, SpeedTower::type);
+		ecost->b_isActive = true;
+
 		button->functionID = 9;
+	}
+}
+
+void CursorControl::HandleButton(const TileMap &tileMap,GUI* button)
+{
+	if (button->functionID == 0)
+	{
+		if (Scene::player.i_currency >= ArrowTower::cost)
+		{
+			SpawnTower(string("Arrow"));
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			Scene::player.i_currency -= ArrowTower::cost;
+		}
+	}
+	else if (button->functionID == 1)
+	{
+		if (Scene::player.i_currency >= CannonTower::cost)
+		{
+			SpawnTower(string("Cannon"));
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			Scene::player.i_currency -= CannonTower::cost;
+		}
+	}
+	else if (button->functionID == 2)
+	{
+		if (Scene::player.i_currency >= CaptureTower::cost)
+		{
+			SpawnTower(string("Capture"));
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			Scene::player.i_currency -= CaptureTower::cost;
+		}
+	}
+	else if (button->functionID == 3)
+	{
+		if (Scene::player.i_currency >= BuffTower::cost)
+		{
+			SpawnTower(string("Buff"));
+			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+			Scene::player.i_currency -= BuffTower::cost;
+		}
+	}
+	else if (button->functionID == 5) // Level up
+	{
+		Tower* temp = FindTower(checkPositionX, checkPositionY);
+		if (Scene::player.i_currency >= temp->GetCost())
+		{
+			if (CheckPlayerEssence(temp->essence, temp->essenceCost))
+			{
+				if (temp->LevelUp())
+				{
+					RemovePlayerEssence(temp->essence, temp->essenceCost);
+					Scene::player.i_currency -= temp->GetCost();
+					temp->SetCost(temp->GetCost() * 2);
+				}
+			}
+		}
+	}
+	else if (button->functionID == 6)
+	{
+		Tower* temp = FindTower(checkPositionX, checkPositionY);
+		if (temp != nullptr)
+		{
+			if (Scene::player.i_currency >= IceTower::cost)
+			{
+				if (CheckPlayerEssence(IceTower::type, IceTower::ecost))
+				{
+					RemovePlayerEssence(IceTower::type, IceTower::ecost);
+					RemoveTower(temp);
+					SpawnTower("Ice");
+					Scene::player.i_currency -= IceTower::cost;
+				}
+			}
+		}
+	}
+	else if (button->functionID == 7)
+	{
+		Tower* temp = FindTower(checkPositionX, checkPositionY);
+		if (temp != nullptr)
+		{
+			if (Scene::player.i_currency >= PoisonTower::cost)
+			{
+				if (CheckPlayerEssence(PoisonTower::type, PoisonTower::ecost))
+				{
+					RemovePlayerEssence(PoisonTower::type, PoisonTower::ecost);
+					RemoveTower(temp);
+					SpawnTower("Poison");
+					Scene::player.i_currency -= PoisonTower::cost;
+				}
+			}
+		}
+	}
+	else if (button->functionID == 8)
+	{
+		Tower* temp = FindTower(checkPositionX, checkPositionY);
+		if (temp != nullptr)
+		{
+			if (Scene::player.i_currency >= MortarTower::cost)
+			{
+				if (CheckPlayerEssence(MortarTower::type, MortarTower::ecost))
+				{
+					RemovePlayerEssence(MortarTower::type, MortarTower::ecost);
+					RemoveTower(temp);
+					SpawnTower("Mortar");
+					Scene::player.i_currency -= MortarTower::cost;
+				}
+			}
+		}
+	}
+	else if (button->functionID == 9)
+	{
+		Tower* temp = FindTower(checkPositionX, checkPositionY);
+		if (temp != nullptr)
+		{
+			if (Scene::player.i_currency >= SpeedTower::cost)
+			{
+				if (CheckPlayerEssence(SpeedTower::type, SpeedTower::ecost))
+				{
+					RemovePlayerEssence(SpeedTower::type, SpeedTower::ecost);
+					RemoveTower(temp);
+					SpawnTower("Speed");
+					Scene::player.i_currency -= SpeedTower::cost;
+				}
+			}
+		}
+	}
+}
+
+void CursorControl::CostColor(GUI* cost,Tower::ESSENCE_TYPE type)
+{
+	if (type == Tower::E_BASIC)
+	{
+		cost->textColor.Set(0, 1.f, 0);
+	}
+	else if (type == Tower::E_ICE)
+	{
+		cost->textColor.Set(0.5f, 1.f, 1);
+	}
+	else if (type == Tower::E_SPEED)
+	{
+		cost->textColor.Set(1.f, 1.f, 0);
+	}
+	else if (type == Tower::E_HEAVY)
+	{
+		cost->textColor.Set(1.f, 0.3f, 0.3f);
+	}
+}
+
+bool CursorControl::CheckPlayerEssence(Tower::ESSENCE_TYPE type, int amount)
+{
+	if (type == Tower::E_BASIC)
+	{
+		if (Scene::player.i_essenceBasic >= amount)
+		{
+			return true;
+		}
+	}
+	else if (type == Tower::E_ICE)
+	{
+		if (Scene::player.i_essenceIce >= amount)
+		{
+			return true;
+		}
+	}
+	else if (type == Tower::E_SPEED)
+	{
+		if (Scene::player.i_essenceSpeed >= amount)
+		{
+			return true;
+		}
+	}
+	else if (type == Tower::E_HEAVY)
+	{
+		if (Scene::player.i_essenceTanky >= amount)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void CursorControl::RemovePlayerEssence(Tower::ESSENCE_TYPE type, int amount)
+{
+	if (type == Tower::E_BASIC)
+	{
+		Scene::player.i_essenceBasic -= amount;
+	}
+	else if (type == Tower::E_ICE)
+	{
+		Scene::player.i_essenceIce -= amount;
+	}
+	else if (type == Tower::E_SPEED)
+	{
+		Scene::player.i_essenceSpeed -= amount;
+	}
+	else if (type == Tower::E_HEAVY)
+	{
+		Scene::player.i_essenceTanky -= amount;
+	}
+}
+
+void CursorControl::Clear()
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		if (spawnTower[i] != nullptr)
+		{
+			delete spawnTower[i];
+		}
+		if (towerCosts[i] != nullptr)
+		{
+			delete towerCosts[i];
+		}
+	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		if (towerUpgrades[i] != nullptr)
+		{
+			delete towerUpgrades[i];
+		}
+		if (upgradeCosts[i] != nullptr)
+		{
+			delete upgradeCosts[i];
+		}
+		if (essenceCost[i] != nullptr)
+		{
+			delete essenceCost[i];
+		}
+	}
+
+	for (int i = 0; i < (int)T_TOTAL; ++i)
+	{
+		if (towerStats[i] != nullptr)
+		{
+			delete towerStats[i];
+		}
+	}
+
+	if (towerName != nullptr)
+	{
+		delete towerName;
+	}
+	if (background != nullptr)
+	{
+		delete background;
+	}
+	if (background2 != nullptr)
+	{
+		delete background2;
+	}
+	if (background3 != nullptr)
+	{
+		delete background3;
+	}
+	if (selling != nullptr)
+	{
+		delete selling;
 	}
 }

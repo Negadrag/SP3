@@ -16,7 +16,9 @@ public:
 	virtual void Update(double dt);
 	virtual bool LevelUp();
 
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 private:
 
 };

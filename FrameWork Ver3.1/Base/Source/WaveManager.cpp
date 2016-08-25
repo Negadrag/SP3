@@ -108,16 +108,48 @@ void WaveManager::Update(double dt)
 				{
 					b_allWaveEnded = true;
 				}
+				else
+				{
+					player->enemyToShowcase.clear();
+					for (vector<ENEMY_TYPE>::iterator it = waveList[i_currentWave].typeVec.begin(); it != waveList[i_currentWave].typeVec.end(); ++it)
+					{
+						bool haveEncountered = false;
+						for (vector<ENEMY_TYPE>::iterator it2 = player->encounteredEnemies.begin(); it2 != player->encounteredEnemies.end(); ++it2)
+						{
+							if (*it == *it2)
+							{
+								haveEncountered = true;
+							}
+						}
+						if (haveEncountered == false)
+						{
+							player->enemyToShowcase.push_back(*it);
+							player->encounteredEnemies.push_back(*it);
+						}
+					}
+
+					if (player->enemyToShowcase.empty() == false)
+					{
+						player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
+						player->b_showcaseEnemy = true;
+						player->i_showcaseIndex = 0;
+						SceneManager::GetInstance()->ChangeScene(7, true);//change to display Scene;
+					}
+				}
+
 			}
 		}
 
-		else if (b_waveEnded == true)
+		if (b_waveEnded == true)
 		{
 			ClearEnemyList();
 			if (player->enemyToShowcase.size() > 0)
 			{
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
+				player->b_showcaseEnemy = false;
+				player->i_showcaseIndex = 0;
 				SceneManager::GetInstance()->ChangeScene(7, true);//change to display Scene;
+				
 			}
 		}
 	}

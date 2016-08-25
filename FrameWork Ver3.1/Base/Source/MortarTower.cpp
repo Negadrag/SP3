@@ -3,6 +3,8 @@
 #include "FixedProjectile.h"
 
 int MortarTower::cost = 50;
+int MortarTower::ecost = 100;
+Tower::ESSENCE_TYPE MortarTower::type = Tower::ESSENCE_TYPE::E_HEAVY;
 
 MortarTower::MortarTower()
 :Tower()
@@ -14,6 +16,8 @@ MortarTower::MortarTower()
 	SetSpdRate(0.3f);
 	this->p_speed = 5.f;
 	this->towerCost = cost;
+	this->essenceCost = 0;
+	this->essence = type;
 	this->meshID = GEO_MORTARBASE;
 	this->fullMeshID = GEO_MORTARCANNON;
 	this->projectile_meshID = GEO_CANNON;

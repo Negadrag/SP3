@@ -516,6 +516,11 @@ void RenderManager::RenderMain(int sceneID)
 	}
 }
 
+void RenderManager::SetLight(Vector3 pos)
+{
+	this->lights[0].position.Set(pos.x,pos.y,pos.z);
+}
+
 void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) {
 
 	Mesh* mesh = meshList[meshID];
