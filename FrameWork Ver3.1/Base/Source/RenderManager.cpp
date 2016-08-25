@@ -270,6 +270,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
 
+	meshList[GEO_SPEEDMODEL] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-SpeedModel.obj");
+	meshList[GEO_SPEEDMODEL]->textureArray[0] = LoadTGA("Image//SpeedModel.tga");
 	meshList[GEO_SPEEDTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-SPEED.obj");
 	meshList[GEO_SPEEDTOWER]->textureArray[0] = LoadTGA("Image//Tower-SPEED.tga");
 	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Bullet.obj");

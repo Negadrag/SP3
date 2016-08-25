@@ -13,7 +13,7 @@ IceTower::IceTower()
 	SetRange(3);
 	SetSpdRate(0.75f);
 	this->p_speed = 5.f;
-	this->f_SlowAmount = 30.f;
+	this->f_SlowAmount = 10.f;
 	this->f_SlowDura = 10.f;
 	this->towerCost = cost;
 	this->pos.SetZero();
@@ -122,7 +122,7 @@ bool IceTower::LevelUp()
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->f_SlowAmount += 10.f;
+		this->f_SlowAmount += 20.f;
 	}
 	return false;
 }

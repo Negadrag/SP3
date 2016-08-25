@@ -714,7 +714,7 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
 	{
 		button->SetText("Speed Tower");
 		button->b_isActive = true;
-		button->meshID = GEO_SPEEDTOWER;
+		button->meshID = GEO_SPEEDMODEL;
 		std::ostringstream os;
 		os << "Cost:" << SpeedTower::cost;
 		cost->SetText(os.str());
