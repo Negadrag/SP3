@@ -208,6 +208,10 @@ void Tower::Update(double dt)
 
 void Tower::Fire(double dt)
 {
+	if (enemyList == nullptr)
+	{
+		return;
+	}
 	Enemy* enemy = SearchEnemy(GetEnemyInRange());
 	if (enemy == nullptr || enemy->b_isActive == false)
 	{
