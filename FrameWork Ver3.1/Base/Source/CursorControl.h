@@ -37,10 +37,12 @@ public:
 	GUI *towerStats[T_TOTAL];
 	GUI *towerUpgrades[3];
 	GUI *upgradeCosts[3];
+	GUI *essenceCost[3];
 	GUI *selling;
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
+	void Clear();
 private:
 	string StrategyToString(Tower::STRATEGY strats);
 	void TowerButtons();
@@ -48,7 +50,11 @@ private:
 	void HotKeys(const TileMap &tileMap);
 	void Clicking(const TileMap &tileMap);
 	void UpgradeButtons(Tower* tower);
-	void SetUpgradeButtons(GUI* button,GUI* cost,string tower);
+	void SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost,string tower);
+	void HandleButton(const TileMap &tileMap,GUI* button);
+	void CostColor(GUI* cost, Tower::ESSENCE_TYPE type);
+	bool CheckPlayerEssence(Tower::ESSENCE_TYPE type, int amount);
+	void RemovePlayerEssence(Tower::ESSENCE_TYPE type, int amount);
 };
 
 #endif

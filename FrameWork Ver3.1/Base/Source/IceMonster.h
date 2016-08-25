@@ -16,9 +16,6 @@ public:
 private:
 	
 protected:
-	float f_floatSpeed;
-	bool b_floatUp;
-	float f_translateTimer;
 	float f_rotateSpeed;
 
 };

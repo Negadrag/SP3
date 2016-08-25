@@ -7,6 +7,8 @@ Tower::Tower()
 	i_MaxLevel = 3;
 	p_spawnTimer = 0.f;
 	towerCost = 5.f;
+	essenceCost = 0.f;
+	essence = E_BASIC;
 	atkDamage = 0.f;
 	atkSpeed = 0.f;
 	atkRange = 0.f;
@@ -37,6 +39,8 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	this->pos = pos;
 	this->scale = scale;
 	towerCost = 5.f;
+	essenceCost = 0.f;
+	essence = E_BASIC;
 	atkDamage = 0.f;
 	atkSpeed = 0.f;
 	atkRange = 0.f;
@@ -204,10 +208,6 @@ void Tower::Update(double dt)
 
 void Tower::Fire(double dt)
 {
-	if (enemyList == nullptr)
-	{
-		return;
-	}
 	Enemy* enemy = SearchEnemy(GetEnemyInRange());
 	if (enemy == nullptr || enemy->b_isActive == false)
 	{

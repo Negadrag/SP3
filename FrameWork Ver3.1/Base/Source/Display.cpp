@@ -11,15 +11,8 @@
 #include <sstream>
 #include "SceneManager.h"
 
-#include "Minion.h"
-#include "IceMonster.h"
-#include "TankMonster.h"
-#include "SpeedMonster.h"
 
-#include "IceTower.h"
-#include "PoisonTower.h"
-#include "MortarTower.h"
-#include "SpeedTower.h"
+
 
 Display::Display() :Scene()
 {
@@ -40,13 +33,12 @@ void Display::Init()
 	camera.Init(Vector3(0, 7, 7), Vector3(0, 2, 0), Vector3(0, 1, 0), 2);
 	camera.b_ortho = false;
 	camera.farPlane = 100000.f;
-
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	b_initScene = false;
-	//std::cout << "entered";
+	std::cout << "entered";
 	CreateScene();
-	RenderManager::GetInstance()->SetLight(Vector3(0, 2, 0));
+	
 }
 
 void Display::Update(double dt)
@@ -104,21 +96,13 @@ void Display::Update(double dt)
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	float skyboxsize = 10000.f;
-	if (f_timer >= 3.f)
+
+
+	if (Application::IsKeyPressed('M'))
 	{
-		b_skipDebounce = true;
+		SceneManager::GetInstance()->ChangeScene(1, false);
 	}
 
-	//if (Application::IsKeyPressed('M'))
-	//{
-	//	SceneManager::GetInstance()->ChangeScene(1, false);
-	//}
-
-	if (b_skipDebounce == true && (Application::IsKeyPressed('C') || f_timer >= 30.f))
-	{
-		SceneManager::GetInstance()->ReinstanceScene(7);
-	}
-	f_timer += dt;
 }
 
 void Display::Render()
@@ -134,7 +118,7 @@ void Display::Render()
 	BannerManager(false, true);
 
 	if (camera.showcase_intro == true)
-		RenderManager::GetInstance()->RenderTextOnScreen("Press C to continue.", Color(1, 1, 0), 3, 20, 0);
+		RenderManager::GetInstance()->RenderTextOnScreen("Press any key to continue.", Color(1, 1, 0), 3, 20, 0);
 }
 
 void Display::BannerManager(bool tower, bool enemy)
@@ -156,14 +140,12 @@ void Display::BannerManager(bool tower, bool enemy)
 		RenderManager::GetInstance()->RenderTextOnScreen("? ? ? ", Color(1, 1, 1), 10, banner_forward, 50);
 		RenderManager::GetInstance()->RenderTextOnScreen("? ? ? ", Color(1, 1, 1), 10, banner_backward, 3);
 	}
+	
 }
 
 void Display::CreateScene()
 {
-
-
-	f_timer = 0.f;
-	b_skipDebounce = false;
+	Mtx44 rotate;
 
 	grass.meshID = GEO_GRASS_DARKGREEN;
 	grass.pos.Set(0, 0, 0);
@@ -173,70 +155,15 @@ void Display::CreateScene()
 	grass.b_shadows = true;
 	grass.b_lightEnabled = false;
 
-	if (player.b_showcaseEnemy == true)
-	{
-		if (player.i_showcaseIndex >= player.enemyToShowcase.size())
-		{
-			player.i_showcaseIndex = 0;
-			SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
-		}
-		ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
-		Vector3 pos(0, 1, 0);
-		if (showcase == MINION)
-		{
-			demoObject = new Minion(pos, nullptr);
-		}
-		else if (showcase == ICE_MONSTER)
-		{
-			demoObject = new IceMonster(pos, nullptr);
-		}
-		else if (showcase == TANK)
-		{
-			demoObject = new TankMonster(pos, nullptr);
-		}
-		else if (showcase == SPEED)
-		{
-			demoObject = new SpeedMonster(pos, nullptr);
-		}
-		demoObject->rotation.x = -90.f;
-		demoObject->scale.Set(2, 2, 2);
-	}
-	else
-	{
-		if (player.i_showcaseIndex >= player.enemyToShowcase.size())
-		{
-			SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
-			player.i_showcaseIndex = 0;
-			player.enemyToShowcase.clear();
-		}
-		if (player.enemyToShowcase.empty() == false)
-		{
-			ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
-			Vector3 pos(0, 1, 0);
-			if (showcase == MINION)
-			{
-				demoObject = new PoisonTower();
-			}
-			else if (showcase == ICE_MONSTER)
-			{
-				demoObject = new IceTower();
-			}
-			else if (showcase == TANK)
-			{
-				demoObject = new MortarTower();
-			}
-			else if (showcase == SPEED)
-			{
-				demoObject = new SpeedTower();
-			}
-			demoObject->rotation.x = -90.f;
-		}
-		
-	}
+	demoObject.meshID = GEO_ICETOWER;
+	demoObject.pos.Set(0, .1, 0);
+	demoObject.rotation.Set(-90, 0, 0);
+	demoObject.scale.Set(1, 1, 1);
+	demoObject.b_shadows = true;
+	demoObject.b_lightEnabled = true;
 
-	
 	CreateSkybox();
-	player.i_showcaseIndex++;
+
 
 }
 
@@ -295,9 +222,4 @@ void Display::Exit()
 {
 
 	redfall.ClearParticles();
-	if (demoObject != nullptr)
-	{
-		delete demoObject;
-	}
-	demoObject = nullptr;
 }

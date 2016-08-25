@@ -13,7 +13,9 @@ public:
 	virtual void Update(double dt);
 	virtual bool LevelUp();
 
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 	float f_PoisonDura;
 	float f_PoisonSlowAmount;
 	float f_PoisonDPS;

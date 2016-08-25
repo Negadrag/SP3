@@ -45,7 +45,6 @@ void MapEditor::Init()
 	grass.rotation.Set(0, 0, 0);
 	
 	cursor.Init(&tileMap);
-	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
 }
 
 void MapEditor::Update(double dt)
@@ -216,6 +215,7 @@ void MapEditor::WriteToFile()
 		file << '\n';
 	}
 	file << "e,\n";
+	file << "/,0,0,\n";
 	for (vector<string>::iterator it = waves.begin(); it != waves.end(); ++it)
 	{
 		file << *it;

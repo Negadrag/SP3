@@ -2,6 +2,8 @@
 #include "SingleTarget.h"
 
 int ArrowTower::cost = 10;
+int ArrowTower::ecost = 0;
+Tower::ESSENCE_TYPE ArrowTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 ArrowTower::ArrowTower()
 :Tower()
@@ -13,6 +15,8 @@ ArrowTower::ArrowTower()
 	SetSpdRate(2.f);
 	this->p_speed = 10.f;
 	this->towerCost = cost;
+	this->essenceCost = ecost;
+	this->essence = type;
 	this->meshID = GEO_ARROWTOWER;
 	this->fullMeshID = GEO_ARROWTOWER;
 	this->projectile_meshID = GEO_ARROW;

@@ -42,7 +42,7 @@ private:
 	float banner_backward;
 
 	Renderable grass;
-	Renderable* demoObject;
+	Renderable demoObject;
 
 	Renderable skytop;
 	Renderable skybottom;
@@ -61,9 +61,7 @@ private:
 	ParticleGenerator redfall;
 
 	float testx, testy, testz;
-	float f_timer;
 
-	bool b_skipDebounce;
 
 };
 

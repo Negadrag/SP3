@@ -2,6 +2,8 @@
 #include "SingleTarget.h"
 
 int CaptureTower::cost = 10;
+int CaptureTower::ecost = 0;
+Tower::ESSENCE_TYPE CaptureTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 CaptureTower::CaptureTower()
 :Tower()
@@ -13,6 +15,8 @@ CaptureTower::CaptureTower()
 	SetSpdRate(1.f);
 	this->p_speed = 15.f;
 	this->towerCost = cost;
+	this->essenceCost = ecost;
+	this->essence = type;
 	this->meshID = GEO_CAPTUREBASE;
 	this->fullMeshID = GEO_CAPTURETOWER;
 	this->heightOffset.Set(0, 0, 1);

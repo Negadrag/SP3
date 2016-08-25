@@ -21,7 +21,7 @@ Assignment::~Assignment()
 
 void Assignment::Init()
 {
-	testMap.LoadMap(std::fstream("Maps//dicknugget.csv"));
+	testMap.LoadMap(std::fstream("Maps//keith.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -43,8 +43,6 @@ void Assignment::Init()
 	grass.rotation.Set(0, 0, 0);
 
 	cursor.Init(&towerList,testMap.waves.GetEnemyList());
-
-	
 }
 
 void Assignment::Update(double dt)
@@ -63,16 +61,12 @@ void Assignment::Update(double dt)
 		ATower.upgrade = true;
 	}*/
 
-	//if (Application::IsKeyPressed('N'))
-	//{
-	//	//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-	//	player.enemyToShowcase.clear();
-	//	player.enemyToShowcase.push_back(MINION);
-	//	player.b_showcaseEnemy = true;
-	//	player.i_showcaseIndex = 0;
-	//	SceneManager::GetInstance()->ChangeScene(7, true);
-	//}
-	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
+	if (Application::IsKeyPressed('N'))
+	{
+		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+		SceneManager::GetInstance()->ChangeScene(4, true);
+	}
+
 	testMap.waves.Update(dt);
 	fps = (float)(1.f / dt);
 
@@ -149,5 +143,4 @@ void Assignment::Exit()
 		}
 	}
 	towerList.clear();
-	player.encounteredEnemies.clear();
 }

@@ -3,6 +3,8 @@
 #include "PoisonProjectile.h"
 
 int PoisonTower::cost = 10;
+int PoisonTower::ecost = 100;
+Tower::ESSENCE_TYPE PoisonTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 PoisonTower::PoisonTower()
 :Tower()
@@ -12,11 +14,14 @@ PoisonTower::PoisonTower()
 	SetAtkDmg(10);
 	SetRange(5);
 	SetSpdRate(2.f);
+	this->essenceCost = 0;
+	this->towerCost = cost;
+	this->essence = type;
 	this->p_speed = 10.f;
 	this->f_PoisonDPS = 1.f;
 	this->f_PoisonDura = 5.f;
 	this->f_PoisonSlowAmount = 25.f;
-	this->towerCost = cost;
+	
 	this->meshID = GEO_POISONBASE;
 	this->fullMeshID = GEO_POISONTOWER;
 	this->projectile_meshID = GEO_POISONARROW;

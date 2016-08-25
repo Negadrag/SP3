@@ -17,7 +17,9 @@ public:
 	virtual void Fire(double dt);
 
 	ParticleGenerator particleGenerator;
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 
 private:
 

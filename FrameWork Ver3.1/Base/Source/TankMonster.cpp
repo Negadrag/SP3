@@ -22,7 +22,6 @@ TankMonster::TankMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->i_defence = 30;
 	this->f_rotateSpeed = 90.f;
 	i_currency = 1;
-	this->scale.Set(0.75f, 0.75f, 0.75f);
 }
 
 TankMonster::~TankMonster()

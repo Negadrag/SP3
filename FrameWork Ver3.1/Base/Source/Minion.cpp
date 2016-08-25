@@ -35,7 +35,7 @@ void Minion::UpdateAnim(double dt)
 {
 	if (b_rotateUp == true)
 	{
-		this->rotation.y += f_rotateSpeed * ((100.f-f_slow)/100.f) * dt;
+		this->rotation.y += f_rotateSpeed * dt;
 		if (this->rotation.y >= f_clampRotate)
 		{
 			b_rotateUp = false;
@@ -45,7 +45,7 @@ void Minion::UpdateAnim(double dt)
 	}
 	else
 	{
-		this->rotation.y -= f_rotateSpeed * ((100.f - f_slow) / 100.f) * dt;
+		this->rotation.y -= f_rotateSpeed * dt;
 		if (this->rotation.y <= -f_clampRotate)
 		{
 			b_rotateUp = true;

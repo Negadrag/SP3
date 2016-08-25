@@ -22,6 +22,16 @@ public:
 
 		NUM_STRATEGY
 	};
+
+	enum ESSENCE_TYPE
+	{
+		E_BASIC,
+		E_SPEED,
+		E_ICE,
+		E_HEAVY,
+		E_TOTAL
+	};
+
 	STRATEGY strategy;
 	void SetType(GEOMETRY_TYPE meshID);
 	void SetCost(float c);
@@ -62,6 +72,9 @@ public:
 	float atkSpeed;
 	float atkRange;
 	int buffCounter;
+
+	ESSENCE_TYPE essence;
+	float essenceCost;
 private:
 
 protected:
@@ -73,6 +86,7 @@ protected:
 	float p_frequency;
 	float p_spawnTimer;
 	float towerCost;
+	
 
 	float p_speed;
 	float newAngle;

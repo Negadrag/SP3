@@ -2,6 +2,8 @@
 #include "SplashTarget.h"
 
 int CannonTower::cost = 15;
+int CannonTower::ecost = 0;
+Tower::ESSENCE_TYPE CannonTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 CannonTower::CannonTower()
 :Tower()
@@ -13,6 +15,8 @@ CannonTower::CannonTower()
 	SetSpdRate(0.75f);
 	this->p_speed = 12.f;
 	this->towerCost = cost;
+	this->essenceCost = ecost;
+	this->essence = type;
 	this->meshID = GEO_CANNONTOWER;
 	this->fullMeshID = GEO_CANNONTOWER;
 	this->projectile_meshID = GEO_CANNON;
