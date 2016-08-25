@@ -70,6 +70,10 @@ CursorControl::~CursorControl()
 	{
 		delete background3;
 	}
+	if (selling != nullptr)
+	{
+		delete selling;
+	}
 }
 
 void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
@@ -120,6 +124,13 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	background3->meshID = GEO_QUAD;
 	background3->scale.Set(14, 50, 1);
 	background3->SetParent(towerUpgrades[0]);
+
+	selling = new GUI("(Q) Sell:");
+	selling->b_isActive = false;
+	selling->SetTextSize(2);
+	selling->textColor.Set(1, 0, 0);
+	selling->SetParent(towerStats[0]);
+	selling->position.Set(0, -5.5f, 0);
 }
 
 static float debounce = 0.f;
@@ -177,21 +188,27 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 		towerStats[T_STRATEGY]->SetText(os.str());
 		towerStats[T_STRATEGY]->b_isActive = true;
 
+		os.str("");
+		os << "(F) Sell :" << (int)tower->GetCost() / 2;
+		selling->SetText(os.str());
+		selling->b_isActive = true;
+
 		background2->b_isActive = true;
 	}
 	else
 	{
 		towerName->b_isActive = false;
+		selling->b_isActive = false;
 		background2->b_isActive = false;
 		for (int i = 0; i < (int)T_TOTAL; ++i)
 		{
 			towerStats[i]->b_isActive = false;
 		}
 	}
-	HotKeys(tileMap);
 	AOEDisplay(tower);
-	CameraBounds(camera);
 	Clicking(tileMap);
+	CameraBounds(camera);
+	HotKeys(tileMap);
 }
 
 bool CursorControl::SpawnTower(string name)
@@ -204,7 +221,9 @@ bool CursorControl::SpawnTower(string name)
 	else if (name == string("Capture"))
 		tempTower = new CaptureTower();
 	else if (name == string("Buff"))
-		tempTower = new BuffTower();
+	{
+		tempTower = new BuffTower(towerList);
+	}
 	else if (name == string("Ice"))
 		tempTower = new IceTower();
 	else if (name == string("Poison"))
@@ -437,6 +456,18 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 			background->b_isActive = false;
 		}
 	}
+	if (Application::IsKeyPressed('F'))
+	{
+		if (FindTower(checkPositionX, checkPositionY) != nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -3)
+		{
+			Tower *tower = FindTower(checkPositionX, checkPositionY);
+			Scene::player.i_currency += (int)tower->GetCost() / 2;
+			if (RemoveTower(tower))
+			{
+				tileMap.screenMap[checkPositionX][checkPositionY] = -2;
+			}
+		}
+	}
 }
 
 void CursorControl::Clicking(const TileMap &tileMap)
@@ -664,7 +695,7 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
 	{
 		button->SetText("Mortar Tower");
 		button->b_isActive = true;
-		button->meshID = GEO_POISONTOWER;
+		button->meshID = GEO_MORTARCANNON;
 		std::ostringstream os;
 		os << "Cost:" << MortarTower::cost;
 		cost->SetText(os.str());
@@ -675,7 +706,7 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost, string tower)
 	{
 		button->SetText("Speed Tower");
 		button->b_isActive = true;
-		button->meshID = GEO_POISONTOWER;
+		button->meshID = GEO_SPEEDTOWER;
 		std::ostringstream os;
 		os << "Cost:" << SpeedTower::cost;
 		cost->SetText(os.str());

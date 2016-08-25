@@ -262,6 +262,18 @@ bool TileMap::LoadWaves(vector<string> wave)
 				{
 					enemyType.push_back(MINION);
 				}
+				else if (temp2 == string("ICE"))
+				{
+					enemyType.push_back(ICE_MONSTER);
+				}
+				else if (temp2 == string("SPEED"))
+				{
+					enemyType.push_back(SPEED);
+				}
+				else if (temp2 == string("TANK"))
+				{
+					enemyType.push_back(TANK);
+				}
 				else // Default enemy
 				{
 					enemyType.push_back(MINION);

@@ -146,7 +146,7 @@ void MapEditor::HandleInput()
 		for (int j = 0; j < 5; ++j)
 		{
 			int enemy;
-			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION):";
+			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION, 2 = ICE, 3 = SPEED, 4 = TANK):";
 			std::cin >> enemy;
 			switch (enemy)
 			{
@@ -154,6 +154,15 @@ void MapEditor::HandleInput()
 				break;
 			case (1) :
 				ss << "MINION,";
+				break;
+			case (2) :
+				ss << "ICE,";
+				break;
+			case (3) :
+				ss << "SPEED,";
+				break;
+			case (4) :
+				ss << "TANK,";
 				break;
 			default:
 				ss << "MINION,";

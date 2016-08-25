@@ -37,6 +37,7 @@ public:
 	GUI *towerStats[T_TOTAL];
 	GUI *towerUpgrades[3];
 	GUI *upgradeCosts[3];
+	GUI *selling;
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;

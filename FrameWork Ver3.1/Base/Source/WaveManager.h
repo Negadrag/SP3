@@ -12,7 +12,8 @@ enum ENEMY_TYPE
 {
 	MINION = 1,
 	ICE_MONSTER,
-
+	SPEED,
+	TANK,
 	NUM_ENEMY
 };
 
