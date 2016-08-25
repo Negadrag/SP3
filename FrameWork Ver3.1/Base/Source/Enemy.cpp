@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "PlayerInfo.h"
 
 Enemy::Enemy()
 {
@@ -104,7 +105,7 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
-	view = view * f_movSpeed *((float)(100 - f_slow) / 100.f) * dt;
+	view = view * f_movSpeed *((float)(100.f - f_slow) / 100.f) * dt;
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x ;
 	this->pos.y += view.y;
@@ -150,9 +151,9 @@ void Enemy::Update(double dt)
 		if (player)
 		{
 			player->i_health -= this->i_damage;
-			
+			this->b_isActive = false;
 		}
-		this->b_isActive = false;
+		
 	}
 
 }
@@ -167,7 +168,7 @@ void Enemy::ReceiveDamage(int damage)
 	this->f_health -= dmg;
 	if (f_health <= 0)
 	{
-		player->i_currency += this->i_currency;
+		this->GiveCurrency();
 		this->b_isActive = false;
 	}
 }
@@ -195,4 +196,14 @@ void Enemy::ReceivePoisonStatus(float poisonDPS,float slowAmount,float duration)
 	{
 		this->f_poisonTimer = duration;
 	}
+}
+
+void Enemy::GiveCurrency()
+{
+	player->i_currency += this->i_currency;
+	//GiveEssence();
+}
+
+void Enemy::GiveEssence()
+{
 }

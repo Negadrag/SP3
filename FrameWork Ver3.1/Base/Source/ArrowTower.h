@@ -11,11 +11,14 @@ public:
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	virtual void LevelUp();
+	virtual bool LevelUp();
 
-
+	
 	string towerUpgrade;
+
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 
 private:
 

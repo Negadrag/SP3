@@ -21,7 +21,7 @@ Assignment::~Assignment()
 
 void Assignment::Init()
 {
-	testMap.LoadMap(std::fstream("Maps//MapDesign.csv"));
+	testMap.LoadMap(std::fstream("Maps//dicknugget.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -64,7 +64,7 @@ void Assignment::Update(double dt)
 	if (Application::IsKeyPressed('N'))
 	{
 		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		SceneManager::GetInstance()->ChangeScene(3, true);
+		SceneManager::GetInstance()->ChangeScene(8, true);
 	}
 
 	testMap.waves.Update(dt);
@@ -72,9 +72,10 @@ void Assignment::Update(double dt)
 
 	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
-	RenderManager::GetInstance()->SetCamera(&camera);
 
-	
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
+
+	RenderManager::GetInstance()->SetCamera(&camera);
 }
 
 void Assignment::Render()
@@ -104,7 +105,7 @@ void Assignment::Render()
 	std::ostringstream ss;
 	ss.precision(5);
 	ss << "FPS: " << fps;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 9);
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 21);
 	
 	ss.str("");
 	ss.precision(5);
@@ -115,6 +116,23 @@ void Assignment::Render()
 	ss.precision(5);
 	ss << "Currency: " << player.i_currency;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 6);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "ice: " << player.i_essenceIce;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 9);
+	ss.str("");
+	ss.precision(5);
+	ss << "basic: " << player.i_essenceBasic;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 12);
+	ss.str("");
+	ss.precision(5);
+	ss << "tank: " << player.i_essenceTanky;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 15);
+	ss.str("");
+	ss.precision(5);
+	ss << "Speed: " << player.i_essenceSpeed;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 18);
 }
 
 void Assignment::Exit()

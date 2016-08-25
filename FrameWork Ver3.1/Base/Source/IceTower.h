@@ -3,6 +3,7 @@
 
 #include "Tower.h"
 #include "ParticleGenerator.h"
+#include "IceProjectile.h"
 
 class IceTower : public Tower
 {
@@ -12,11 +13,14 @@ public:
 
 	ParticleGenerator particleGenerator;
 
-	virtual Projectile* GetProjectile();
+	virtual IceProjectile* GetProjectile();
 	virtual void Update(double dt);
-	virtual void LevelUp();
+	virtual bool LevelUp();
+	virtual void Fire(double dt);
 
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 	float f_SlowDura;
 	float f_SlowAmount;
 

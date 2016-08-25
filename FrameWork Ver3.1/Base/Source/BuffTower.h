@@ -6,24 +6,25 @@
 class BuffTower : public Tower
 {
 public:
-	BuffTower();
+	BuffTower(vector<Tower*> *tower);
 	~BuffTower();
 
 	virtual void Update(double dt);
 	vector<Tower*> GetTowerInRange();
-	virtual void LevelUp();
+	virtual bool LevelUp();
 	void Buff();
-	Tower* SearchTower(vector<Tower*> towerVec);
+	void RemoveTower(Tower *tower);
 
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 
 	float f_increaseATK;
 	float f_increaseRANGE;
 	float f_increaseRATE;
 
 	vector<Tower*>* towerList;
-private:
-
+	vector<Tower*> buffedTowers;
 };
 
 #endif

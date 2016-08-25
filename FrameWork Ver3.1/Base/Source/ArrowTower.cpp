@@ -1,7 +1,9 @@
 #include "ArrowTower.h"
 #include "SingleTarget.h"
 
-int ArrowTower::cost = 5;
+int ArrowTower::cost = 10;
+int ArrowTower::ecost = 0;
+Tower::ESSENCE_TYPE ArrowTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 ArrowTower::ArrowTower()
 :Tower()
@@ -12,12 +14,18 @@ ArrowTower::ArrowTower()
 	SetRange(5);
 	SetSpdRate(2.f);
 	this->p_speed = 10.f;
-
+	this->towerCost = cost;
+	this->essenceCost = ecost;
+	this->essence = type;
 	this->meshID = GEO_ARROWTOWER;
+	this->fullMeshID = GEO_ARROWTOWER;
 	this->projectile_meshID = GEO_ARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
 	s_name = "Arrow Tower";
+
+	upgrades[0] = "Poison";
+	upgrades[1] = "Speed";
 }
 
 ArrowTower::~ArrowTower()
@@ -53,22 +61,20 @@ void ArrowTower::Update(double dt)
 	Tower::Update(dt);
 }
 
-void ArrowTower::LevelUp()
+bool ArrowTower::LevelUp()
 {
-	if (this->i_level <= 3)
+	if (this->i_level <= 2)
 	{
 		this->i_level++;
 		this->atkDamage += 5;
-		this->atkRange += 1;
-		if (atkRange > 7)
+
+		if (i_level == 3)
 		{
 			atkRange = 7;
 		}
-		if (this->i_level >= 3)
-		{
-			i_level = 3;
-		}
+		return true;
 	}
+	return false;
 
 	
 }

@@ -22,8 +22,10 @@ public:
 	void Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt);
 	int checkPositionX, checkPositionY;
 	bool SpawnTower(string name);
+	bool RemoveTower(Tower* tower);
 	Tower* FindTower(int x,int y);
 	bool bLButtonState;
+	bool bPlacingTower;
 	Renderable aoe;
 
 	GUI *spawnTower[4];
@@ -31,16 +33,28 @@ public:
 	GUI *towerName;
 	GUI *background;
 	GUI *background2;
+	GUI *background3;
 	GUI *towerStats[T_TOTAL];
+	GUI *towerUpgrades[3];
+	GUI *upgradeCosts[3];
+	GUI *essenceCost[3];
+	GUI *selling;
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
+	void Clear();
 private:
 	string StrategyToString(Tower::STRATEGY strats);
 	void TowerButtons();
 	void AOEDisplay(Tower* tower);
 	void HotKeys(const TileMap &tileMap);
 	void Clicking(const TileMap &tileMap);
+	void UpgradeButtons(Tower* tower);
+	void SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost,string tower);
+	void HandleButton(const TileMap &tileMap,GUI* button);
+	void CostColor(GUI* cost, Tower::ESSENCE_TYPE type);
+	bool CheckPlayerEssence(Tower::ESSENCE_TYPE type, int amount);
+	void RemovePlayerEssence(Tower::ESSENCE_TYPE type, int amount);
 };
 
 #endif

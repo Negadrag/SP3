@@ -12,10 +12,13 @@ public:
 
 	virtual void MoveTo(Vector2 dest, double dt);
 	virtual void UpdateAnim(double dt);
-	
+	virtual void GiveEssence();
 private:
 	
 protected:
+	float f_floatSpeed;
+	bool b_floatUp;
+	float f_translateTimer;
 	float f_rotateSpeed;
 
 };

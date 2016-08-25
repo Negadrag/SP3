@@ -4,8 +4,11 @@ Tower::Tower()
 : Renderable()
 {
 	i_level = 1;
+	i_MaxLevel = 3;
 	p_spawnTimer = 0.f;
-	towerCost = 0.f;
+	towerCost = 5.f;
+	essenceCost = 0.f;
+	essence = E_BASIC;
 	atkDamage = 0.f;
 	atkSpeed = 0.f;
 	atkRange = 0.f;
@@ -21,16 +24,23 @@ Tower::Tower()
 	this->f_rotationToBe = 0.f;
 	child.meshID = GEO_NULL;
 	child.SetParent(this);
+	upgrades[0] = "";
+	upgrades[1] = "";
+	fullMeshID = GEO_NULL;
+	this->buffCounter = 0;
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 : Renderable()
 {
 	i_level = 1;
+	i_MaxLevel = 3;
 	p_spawnTimer = 0.f;
 	this->pos = pos;
 	this->scale = scale;
-	towerCost = 0.f;
+	towerCost = 5.f;
+	essenceCost = 0.f;
+	essence = E_BASIC;
 	atkDamage = 0.f;
 	atkSpeed = 0.f;
 	atkRange = 0.f;
@@ -45,14 +55,13 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	this->f_rotationToBe = 0.f;
 	child.meshID = GEO_NULL;
 	child.SetParent(this);
+	fullMeshID = GEO_NULL;
+	this->buffCounter = 0;
 }
 
 Tower::~Tower()
 {
-	for (vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
-	{
-		delete(*it);
-	}
+	ClearProjectile();
 }
 
 void Tower::SetType(GEOMETRY_TYPE meshID)
@@ -108,10 +117,9 @@ Projectile* Tower::GetProjectile()
 		Projectile* projectile = (Projectile*)(*it);
 		if (!(projectile->b_isActive))
 		{
-				projectile->b_isActive = true;
-				projectile->meshID = projectile_meshID;
-				return projectile;
-
+			projectile->b_isActive = true;
+			projectile->meshID = projectile_meshID;
+			return projectile;
 		}
 	}
 	for (unsigned i = 0; i <= 10; ++i)
@@ -200,6 +208,10 @@ void Tower::Update(double dt)
 
 void Tower::Fire(double dt)
 {
+	if (enemyList == nullptr)
+	{
+		return;
+	}
 	Enemy* enemy = SearchEnemy(GetEnemyInRange());
 	if (enemy == nullptr || enemy->b_isActive == false)
 	{
@@ -232,7 +244,7 @@ void Tower::Fire(double dt)
 	projectile->vel = (enemy->pos - projectile->pos).Normalize() * p_speed;
 	projectile->i_damage = this->atkDamage;
 
-	projectileList.push_back(projectile);
+	//projectileList.push_back(projectile);
 	//enemy->i_health -= 1;
 }
 
@@ -379,9 +391,9 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 	return enemy;
 }
 
-void Tower::LevelUp()
+bool Tower::LevelUp()
 {
-
+	return true;
 }
 
 string Tower::StrategyToString(STRATEGY strats)

@@ -1,17 +1,23 @@
 #include "SpeedTower.h"
 #include "SingleTarget.h"
 
+int SpeedTower::cost = 10;
+int SpeedTower::ecost = 100;
+Tower::ESSENCE_TYPE SpeedTower::type = Tower::ESSENCE_TYPE::E_SPEED;
 SpeedTower::SpeedTower()
 :Tower()
 {
 	//Tower Stat
 	this->i_level = 1;
-	SetAtkDmg(10);
+	SetAtkDmg(5);
 	SetRange(5);
-	SetSpdRate(4.f);
+	SetSpdRate(7);
 	this->p_speed = 10.f;
-
+	this->towerCost = cost;
+	this->essenceCost = 0;
+	this->essence = type;
 	this->meshID = GEO_SPEEDTOWER;
+	this->fullMeshID = GEO_SPEEDTOWER;
 	this->projectile_meshID = GEO_BULLET;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;
@@ -56,20 +62,21 @@ void SpeedTower::Update(double dt)
 
 }
 
-void SpeedTower::LevelUp()
+bool SpeedTower::LevelUp()
 {
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->atkDamage += 5;
-		this->atkRange += 1;
-		if (atkRange > 7)
+		this->atkDamage += 1;
+		if (i_level == 2)
 		{
-			atkRange = 7;
+			this->atkSpeed = 8;
 		}
-		if (this->i_level >= 2)
+		if (i_level == 3)
 		{
-			i_level = 2;
+			this->atkSpeed = 10;
 		}
+		return true;
 	}
+	return false;
 }

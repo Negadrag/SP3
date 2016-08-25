@@ -22,7 +22,7 @@ void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up, i
 	Vector3 right = view.Cross(up);
 	right.y = 0;
 	right.Normalize();
-	up = right.Cross(view).Normalized();
+	this->up = right.Cross(view).Normalized();
 	this->b_ortho = true;
 	this->aspectRatio.Set(4, 3);
 	this->FOV = 45.f;

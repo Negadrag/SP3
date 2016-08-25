@@ -26,6 +26,8 @@ RenderManager::~RenderManager()
 	glDeleteProgram(m_programID);
 	glDeleteProgram(m_gPassShaderID);
 
+	
+
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		delete meshList[i];
@@ -270,6 +272,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW.tga");
 	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
 
+	meshList[GEO_SPEEDMODEL] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-SpeedModel.obj");
+	meshList[GEO_SPEEDMODEL]->textureArray[0] = LoadTGA("Image//SpeedModel.tga");
 	meshList[GEO_SPEEDTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-SPEED.obj");
 	meshList[GEO_SPEEDTOWER]->textureArray[0] = LoadTGA("Image//Tower-SPEED.tga");
 	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Bullet.obj");
@@ -317,6 +321,9 @@ void RenderManager::InitMesh()
 	meshList[GEO_CAPTUREORB]->textureArray[0] = LoadTGA("Image//Orb.tga");
 	meshList[GEO_CAPTUREORB]->material.kShininess = 0.5f;
 	meshList[GEO_CAPTUREORB]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+
+	meshList[GEO_BUFFTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-BUFF.obj");
+	meshList[GEO_BUFFTOWER]->textureArray[0] = LoadTGA("Image//Tower-BUFF.tga");
 	//Particles
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
 	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");
@@ -474,7 +481,6 @@ void RenderManager::RenderMain(int sceneID)
 	if (camera->b_ortho == false)
 	{
 		perspective.SetToPerspective(camera->FOV, camera->aspectRatio.x / camera->aspectRatio.y, camera->nearPlane, camera->farPlane);
-
 	}
 	else
 	{
@@ -510,6 +516,11 @@ void RenderManager::RenderMain(int sceneID)
 				RenderObj((*it));
 			}
 	}
+}
+
+void RenderManager::SetLight(Vector3 pos)
+{
+	this->lights[0].position.Set(pos.x,pos.y,pos.z);
 }
 
 void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) {
@@ -610,7 +621,6 @@ void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, bool enableLight,bool fog) 
 
 void RenderManager::RenderMesh(GEOMETRY_TYPE meshID, Vector3 pos, Vector3 scale, Vector3 rotation, bool enableLight, bool fog) 
 {
-
 	Mesh* mesh = meshList[meshID];
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 	modelStack.PushMatrix();

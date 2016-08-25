@@ -2,6 +2,9 @@
 #include "SingleTarget.h"
 #include "PoisonProjectile.h"
 
+int PoisonTower::cost = 10;
+int PoisonTower::ecost = 100;
+Tower::ESSENCE_TYPE PoisonTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 PoisonTower::PoisonTower()
 :Tower()
@@ -10,13 +13,17 @@ PoisonTower::PoisonTower()
 	this->i_level = 1;
 	SetAtkDmg(10);
 	SetRange(5);
-	SetSpdRate(0.5f);
+	SetSpdRate(2.f);
+	this->essenceCost = 0;
+	this->towerCost = cost;
+	this->essence = type;
 	this->p_speed = 10.f;
 	this->f_PoisonDPS = 1.f;
 	this->f_PoisonDura = 5.f;
 	this->f_PoisonSlowAmount = 25.f;
-
+	
 	this->meshID = GEO_POISONBASE;
+	this->fullMeshID = GEO_POISONTOWER;
 	this->projectile_meshID = GEO_POISONARROW;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = FIRST_ENEMY;
@@ -63,21 +70,22 @@ void PoisonTower::Update(double dt)
 	Tower::Update(dt);
 }
 
-void PoisonTower::LevelUp()
+bool PoisonTower::LevelUp()
 {
-
 	if (this->i_level <= 2)
 	{
-		this->i_level++;
-		this->atkDamage += 5;
-		this->atkRange += 1;
-		if (atkRange > 7)
+		i_level++;
+		if (i_level == 2)
 		{
-			atkRange = 7;
+			this->f_PoisonDPS = 2.f;
 		}
-		if (this->i_level >= 2)
+		if (i_level == 3)
 		{
-			i_level = 2;
+			this->f_PoisonDPS = 3.f;
+			this->atkDamage += 5;
+			this->atkRange += 2;
 		}
+		return true;
 	}
+	return false;
 }

@@ -11,9 +11,11 @@ public:
 
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
-	virtual void LevelUp();
+	virtual bool LevelUp();
 
+	static ESSENCE_TYPE type;
 	static int cost;
+	static int ecost;
 	float f_PoisonDura;
 	float f_PoisonSlowAmount;
 	float f_PoisonDPS;

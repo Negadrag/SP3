@@ -1,19 +1,24 @@
 #include "CannonTower.h"
 #include "SplashTarget.h"
 
-int CannonTower::cost = 8;
+int CannonTower::cost = 15;
+int CannonTower::ecost = 0;
+Tower::ESSENCE_TYPE CannonTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 CannonTower::CannonTower()
 :Tower()
 {
 	//Tower Stat
 	this->i_level = 1;
-	SetAtkDmg(10);
-	SetRange(5.f);
-	SetSpdRate(0.5f);
+	SetAtkDmg(25);
+	SetRange(7.f);
+	SetSpdRate(0.75f);
 	this->p_speed = 12.f;
-
+	this->towerCost = cost;
+	this->essenceCost = ecost;
+	this->essence = type;
 	this->meshID = GEO_CANNONTOWER;
+	this->fullMeshID = GEO_CANNONTOWER;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = LOWEST_HEALTH;
@@ -31,7 +36,8 @@ CannonTower::CannonTower()
 	this->particleGenerator.isActive = false;
 	this->particleGenerator.i_spawnAmount = 15;
 
-	
+	upgrades[0] = "Ice";
+	upgrades[1] = "Mortar";
 }
 
 Projectile* CannonTower::GetProjectile()
@@ -75,20 +81,13 @@ void CannonTower::Update(double dt)
 }
 
 
-void CannonTower::LevelUp()
+bool CannonTower::LevelUp()
 {
-	if (this->i_level <= 3)
+	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->atkDamage += 5;
-		this->atkRange += 1;
-		if (atkRange > 7)
-		{
-			atkRange = 7;
-		}
-		if (this->i_level >= 3)
-		{
-			i_level = 3;
-		}
+		this->atkDamage += 10;
+		return true;
 	}
+	return false;
 }

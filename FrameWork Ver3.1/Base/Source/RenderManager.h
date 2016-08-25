@@ -92,13 +92,14 @@ enum GEOMETRY_TYPE
 	GEO_POISONBASE,
 	GEO_POISONARROW,
 
+	GEO_SPEEDMODEL,
 	GEO_SPEEDTOWER,
 	GEO_BULLET,
 
 	GEO_MORTARTOWER,
 	GEO_MORTARBASE,
 	GEO_MORTARCANNON,
-
+	GEO_MORTARCANNONBALL,
 
 	//Monster
 	GEO_BASIC,
@@ -218,6 +219,7 @@ public:
 	void RemoveRenderable(Renderable* entity);
 	void SetCamera(Camera* cam);
 	void UpdateBillboard(int sceneID = 0);
+	void SetLight(Vector3 pos);
 
 private:
 	
