@@ -411,16 +411,19 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
-			HandleButton(tileMap, towerUpgrades[1]);
-			for (int i = 0; i < 3; ++i)
+			if (towerUpgrades[1]->b_isActive)
 			{
-				towerUpgrades[i]->b_isActive = false;
-				upgradeCosts[i]->b_isActive = false;
-				essenceCost[i]->b_isActive = false;
+				HandleButton(tileMap, towerUpgrades[1]);
+				for (int i = 0; i < 3; ++i)
+				{
+					towerUpgrades[i]->b_isActive = false;
+					upgradeCosts[i]->b_isActive = false;
+					essenceCost[i]->b_isActive = false;
+				}
+				bLButtonState = false;
+				bPlacingTower = false;
+				background3->b_isActive = false;
 			}
-			bLButtonState = false;
-			bPlacingTower = false;
-			background3->b_isActive = false;
 		}
 	}
 	else if (Application::IsKeyPressed('E'))
@@ -446,16 +449,19 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
-			HandleButton(tileMap, towerUpgrades[2]);
-			for (int i = 0; i < 3; ++i)
+			if (towerUpgrades[2]->b_isActive)
 			{
-				towerUpgrades[i]->b_isActive = false;
-				upgradeCosts[i]->b_isActive = false;
-				essenceCost[i]->b_isActive = false;
+				HandleButton(tileMap, towerUpgrades[2]);
+				for (int i = 0; i < 3; ++i)
+				{
+					towerUpgrades[i]->b_isActive = false;
+					upgradeCosts[i]->b_isActive = false;
+					essenceCost[i]->b_isActive = false;
+				}
+				bLButtonState = false;
+				bPlacingTower = false;
+				background3->b_isActive = false;
 			}
-			bLButtonState = false;
-			bPlacingTower = false;
-			background3->b_isActive = false;
 		}
 	}
 	else if (Application::IsKeyPressed('R'))
