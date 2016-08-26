@@ -200,6 +200,7 @@ void SceneManager::Exit()
 	delete EntityManager::GetInstance();
 	delete RenderManager::GetInstance();
 	delete GUIManager::GetInstance();
+	delete Music::GetInstance();
 }
 
 bool SceneManager::ChangeScene(int sceneID,bool freezeScene)
