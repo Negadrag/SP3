@@ -250,6 +250,10 @@ void Tower::Fire(double dt)
 
 void Tower::ClearProjectile()
 {
+	if (projectileList.empty())
+	{
+		return;
+	}
 	for (vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
 	{
 		delete(*it);

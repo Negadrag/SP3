@@ -106,3 +106,7 @@ void Cursor::CameraBounds(OrthoCamera &camera)
 		camera.position.y += offset;
 	}
 }
+
+void Cursor::Clear()
+{
+}

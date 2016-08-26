@@ -35,7 +35,7 @@ WaveManager::WaveManager(Node* root)
 
 WaveManager::~WaveManager()
 {
-	ClearEnemyList();
+	Exit();
 }
 
 void WaveManager::SetRoot(Node* root)
@@ -233,4 +233,21 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 vector<Enemy*>* WaveManager::GetEnemyList()
 {
 	return &enemyList;
+}
+
+void WaveManager::Exit()
+{
+	f_spawnTimer = 0.f;
+	i_currentWave = 0;
+	i_currentRevolution = 0;
+	i_typeVecIndex = 0;
+	f_waveStartTimer = 0.f;
+
+	this->root = nullptr;
+	this->b_allWaveEnded = false;
+	this->player = nullptr;
+	b_miniGame = true;
+
+	ClearEnemyList();
+	waveList.clear();
 }

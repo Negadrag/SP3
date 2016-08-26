@@ -127,6 +127,7 @@ void MenuCursor::Clicking(double dt)
 				std::cout << "BUTTON EXIT" << std::endl;
 				menu_states = 1;
 				istransition = true;
+				Application::GetInstance().b_Exit = true;
 			}
 
 

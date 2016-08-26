@@ -52,6 +52,7 @@ public:
 	bool WaveEnded(int waveIndex);
 	Enemy* SpawnEnemy(ENEMY_TYPE type);
 	void ClearEnemyList();
+	void Exit();
 	void Update(double dt);
 	vector<Enemy*>* GetEnemyList();
 	PlayerInfo* player;

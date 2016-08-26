@@ -17,7 +17,7 @@ SpeedTower::SpeedTower()
 	this->essenceCost = 0;
 	this->essence = type;
 	this->meshID = GEO_SPEEDTOWER;
-	this->fullMeshID = GEO_SPEEDTOWER;
+	this->fullMeshID = GEO_SPEEDMODEL;
 	this->projectile_meshID = GEO_BULLET;
 	this->heightOffset.Set(0, 0, 2);
 	this->strategy = NEAREST_ENEMY;
