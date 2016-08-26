@@ -187,6 +187,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_DUNGEONWALL]->textureArray[0] = LoadTGA("Image//dungeonwall2.tga");
 	meshList[GEO_MENUTOWN] = MeshBuilder::GenerateOBJ("Cube", "OBJ/SSS.obj");
 	meshList[GEO_MENUTOWN]->textureArray[0] = LoadTGA("Image//menutown_tga.tga");
+	meshList[GEO_HUD_BG] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_HUD_BG]->textureArray[0] = LoadTGA("Image//HUD_BG.tga");
 
 	meshList[GEO_CUBE] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");

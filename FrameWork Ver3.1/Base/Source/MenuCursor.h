@@ -5,6 +5,7 @@
 #include "GameplayCam.h"
 #include "GUI.h"
 #include "RenderManager.h"
+#include "ParticleGenerator.h"
 
 
 class MenuCursor : public Cursor
@@ -20,6 +21,7 @@ public:
 	void SceneMoveNorth(float cam_spd, double dt);
 	void SceneMoveRight(float cam_spd, double dt);
 	void SceneMoveLeft(float cam_spd, double dt);
+	void SceneCredit(float cam_spd, double dt);
 	void SceneMoveBack(float cam_spd, double dt);	//Back returns to any previous scene
 
 	//void MovementManager();
@@ -55,7 +57,7 @@ private:
 	GUI* btn_option;			//	options	= 3
 	GUI* btn_exit;				//	exit	= 4
 
-	GUI* instr_txt;
+	GUI* instr_title;
 
 	GUI* option_1;
 	GUI* option_2;
@@ -67,7 +69,14 @@ private:
 	GUI* option_7;
 	GUI* option_8;
 
+	GUI* pressrighttoreturn;
+	ParticleGenerator smoke1;
+	ParticleGenerator smoke2;
+	ParticleGenerator smoke3;
+
 	int menu_states;
+
+	float testx, testy, testz;
 };
 
 #endif
