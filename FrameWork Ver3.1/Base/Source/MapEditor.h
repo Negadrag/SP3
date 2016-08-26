@@ -30,6 +30,9 @@ private:
 	void HandleInput();
 	void WriteToFile();
 
+	float f_runTimer;
+	bool b_startScene;
+
 	vector<string> waves;
 
 	OrthoCamera camera;

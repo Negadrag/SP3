@@ -22,7 +22,7 @@ Minion::Minion(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->f_maxHealth = 50.f;
 	this->f_health = f_maxHealth;
 	this->i_damage = 1;
-	this->i_defence = 10;
+	this->i_defence = 100;
 	this->b_rotateUp = true;
 	this->f_rotateSpeed = 90.f;
 	this->f_clampRotate = 20.f;
