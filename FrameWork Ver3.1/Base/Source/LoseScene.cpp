@@ -73,12 +73,12 @@ void LoseScene::Update(double dt)
 
 	if (Application::IsKeyPressed('M'))
 	{
-		SceneManager::GetInstance()->ChangeScene(1, false);
+		SceneManager::GetInstance()->ChangeScene(8, false);
 	}
-	if (Application::IsKeyPressed(VK_SPACE))
+	/*if (Application::IsKeyPressed(VK_SPACE))
 	{
 		SceneManager::GetInstance()->ChangeScene(7, false);
-	}
+	}*/
 
 }
 

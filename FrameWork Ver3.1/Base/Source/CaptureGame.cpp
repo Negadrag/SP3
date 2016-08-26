@@ -38,8 +38,8 @@ void CaptureGame::Init()
 	top_rarest = 0;
 	total_active_switches = 0; 
 
-	blueswitch = true;
-	redswitch = false;
+	blueswitch = false;
+	redswitch = false; 
 	yellowswitch = false;
 	greenswitch = false;
 
@@ -154,12 +154,7 @@ void CaptureGame::Update(double dt)
 	yellowbang.Update(dt);
 	greenbang.Update(dt);
 
-	if (b_allBallsdespawned == true)
-	{
-		balls = bonuscount;
-		bonuscount = 0;
-		b_allBallsdespawned = false;
-	}
+
 
 	b_allBallsdespawned = true;
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end();)
@@ -241,6 +236,21 @@ void CaptureGame::Update(double dt)
 		b_allBallsdespawned = false;
 	}
 
+	if (b_allBallsdespawned == true)
+	{
+		if (bonuscount == 0)
+		{
+			player.i_essenceBasic += resource4;
+			player.i_essenceIce += resource1;
+			player.i_essenceSpeed += resource3;
+			player.i_essenceTanky += resource2;
+			SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
+		}
+		balls = bonuscount;
+		bonuscount = 0;
+		b_allBallsdespawned = false;
+
+	}
 
 	if (Application::IsKeyPressed('M'))
 	{
@@ -1088,6 +1098,29 @@ void CaptureGame::CreateTypeFOUR()
 void CaptureGame::CreateScene()
 {
 	Mtx44 rotate;
+
+	for (vector<ENEMY_TYPE>::iterator it = player.encounteredEnemies.begin(); it != player.encounteredEnemies.end(); ++it)
+	{
+		if (*it == ICE_MONSTER)
+		{
+			blueswitch = true;
+		}
+		if (*it == TANK)
+		{
+			redswitch = true;
+		}
+		if (*it == SPEED)
+		{
+			yellowswitch = true;
+		}
+		if (*it == MINION)
+		{
+			greenswitch = true;
+		}
+	
+	
+	}
+	
 
 	grass.meshID = GEO_DUNGEONWALL;
 	grass.pos.Set(0, 0, 0);

@@ -2,6 +2,8 @@
 #include "RenderManager.h"
 #include "EntityManager.h"
 #include "GUIManager.h"
+#include "Music.h"
+
 #include "Assignment.h"
 #include "TestScene.h"
 #include "CaptureGame.h"
@@ -11,6 +13,7 @@
 #include "LoseScene.h"
 #include "Display.h"
 #include "MainMenu.h"
+
 
 SceneManager* SceneManager::instance = nullptr;
 
@@ -28,6 +31,7 @@ void SceneManager::Init()
 {
 
 	RenderManager::GetInstance()->Init();
+	Music::GetInstance()->Init();
 	//create scenes here
 	//EntityManager::GetInstance()->m_currentSceneID = 1;
 	CreateScene(new Assignment());
@@ -110,6 +114,7 @@ void SceneManager::Update(double dt)
 		else
 		{
 			nxtScene->b_frozen = false;
+			nxtScene->Init2();
 		}
 	}
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
@@ -203,6 +208,9 @@ bool SceneManager::ChangeScene(int sceneID,bool freezeScene)
 	{
 		return false;
 	}
+	Music::GetInstance()->StopAllSound(); 
+	// stop the music that are playing in the current scene
+
 	if (SceneExist(sceneID) == true)
 	{
 		//Scene* nxtScene;

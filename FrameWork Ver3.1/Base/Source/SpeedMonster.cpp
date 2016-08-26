@@ -5,7 +5,8 @@ SpeedMonster::SpeedMonster() :Enemy()
 {
 	this->meshID = GEO_SPEED;
 	this->f_movSpeed = 5.f;
-	this->f_health = 30;
+	this->f_maxHealth = 30.f;
+	this->f_health = f_maxHealth;
 	this->i_damage = 1;
 	this->i_defence = 0;
 	this->f_rotateSpeed = 90.f;
@@ -16,7 +17,8 @@ SpeedMonster::SpeedMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 {
 	this->meshID = GEO_SPEED;
 	this->f_movSpeed = 5.f;
-	this->f_health = 30;
+	this->f_maxHealth = 30.f;
+	this->f_health = f_maxHealth;
 
 	this->i_damage = 1;
 	this->i_defence = 0;

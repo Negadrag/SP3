@@ -5,7 +5,8 @@ IceMonster::IceMonster() :Enemy()
 {
 	this->meshID = GEO_ICE;
 	this->f_movSpeed = 3.f;
-	this->f_health = 70;
+	this->f_maxHealth = 50.f;
+	this->f_health = f_maxHealth;
 	this->i_damage = 1;
 	this->i_defence = 15;
 	this->f_rotateSpeed = 90.f;
@@ -19,7 +20,8 @@ IceMonster::IceMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 {
 	this->meshID = GEO_ICE;
 	this->f_movSpeed = 3.f;
-	this->f_health = 50;
+	this->f_maxHealth = 50.f;
+	this->f_health = f_maxHealth;
 
 	this->i_damage = 1;
 	this->i_defence = 0;

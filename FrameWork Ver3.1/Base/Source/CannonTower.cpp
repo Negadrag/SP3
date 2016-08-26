@@ -51,6 +51,7 @@ Projectile* CannonTower::GetProjectile()
 			projectile->meshID = projectile_meshID;
 			projectile->enemyVec = this->enemyList;
 			projectile->iceparticle = &particleGenerator;
+			Music::GetInstance()->PlayMusic(1, false, 0.15f);
 			return projectile;
 
 		}

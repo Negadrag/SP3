@@ -1,6 +1,7 @@
 #include "CaptureTower.h"
 #include "SingleTarget.h"
 
+
 int CaptureTower::cost = 10;
 int CaptureTower::ecost = 0;
 Tower::ESSENCE_TYPE CaptureTower::type = Tower::ESSENCE_TYPE::E_BASIC;
@@ -111,6 +112,7 @@ void CaptureTower::Fire(double dt)
 			particleGenerator.minVel = (this->pos - enemy->pos).Normalize() * p_speed;
 			particleGenerator.SpawnParticle();
 			enemy->GiveEssence();
+			Music::GetInstance()->PlayMusic(2, false, 0.15f);
 		}
 	}
 }

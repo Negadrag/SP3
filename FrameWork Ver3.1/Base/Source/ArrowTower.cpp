@@ -1,6 +1,7 @@
 #include "ArrowTower.h"
 #include "SingleTarget.h"
 
+
 int ArrowTower::cost = 10;
 int ArrowTower::ecost = 0;
 Tower::ESSENCE_TYPE ArrowTower::type = Tower::ESSENCE_TYPE::E_BASIC;
@@ -43,6 +44,7 @@ Projectile* ArrowTower::GetProjectile()
 		{
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
+			Music::GetInstance()->PlayMusic(0, false, 0.15f);
 			return projectile;
 		}
 	}
@@ -53,6 +55,7 @@ Projectile* ArrowTower::GetProjectile()
 		projectileList.push_back(projectile);
 	}
 	projectileList.back()->b_isActive = true;
+	Music::GetInstance()->PlayMusic(0, false, 0.15f);
 	return projectileList.back();
 }
 

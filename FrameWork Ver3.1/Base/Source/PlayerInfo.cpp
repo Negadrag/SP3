@@ -18,4 +18,7 @@ void PlayerInfo::Init()
 	i_essenceSpeed = 1000;
 	i_essenceTanky = 1000;
 	i_showcaseIndex = 0;
+	enemyToShowcase.clear();
+	encounteredEnemies.clear();
+	b_showcaseEnemy = true;
 }

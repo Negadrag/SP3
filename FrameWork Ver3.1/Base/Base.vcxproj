@@ -50,6 +50,7 @@
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Minion.cpp" />
     <ClCompile Include="Source\MortarTower.cpp" />
+    <ClCompile Include="Source\Music.cpp" />
     <ClCompile Include="Source\Node.cpp" />
     <ClCompile Include="Source\OrthoCamera.cpp" />
     <ClCompile Include="Source\ParticleGenerator.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\Minion.h" />
     <ClInclude Include="Source\MortarTower.h" />
+    <ClInclude Include="Source\Music.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\OrthoCamera.h" />
     <ClInclude Include="Source\ParticleGenerator.h" />
@@ -191,13 +193,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_VARIADIC_MAX=10;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Common/Source;$(SolutionDir)/glew/include;$(SolutionDir)/glfw/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Common/Source;$(SolutionDir)/glew/include;$(SolutionDir)/glfw/include;$(SolutionDir)/irrKlang/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);$(SolutionDir)/glfw/lib-msvc100;$(SolutionDir)/glew/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Common.lib;winmm.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);$(SolutionDir)/glfw/lib-msvc100;$(SolutionDir)/glew/lib;$(SolutionDir)/irrKlang/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Common.lib;winmm.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

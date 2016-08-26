@@ -45,6 +45,7 @@ public:
 	float f_waveStartTimer;
 	int i_typeVecIndex;
 	bool b_waveEnded;
+	bool b_miniGame;
 
 	void SetRoot(Node* root);
 	void AddWave(vector<ENEMY_TYPE> typeVec , int revolution , float spawnFrequency);

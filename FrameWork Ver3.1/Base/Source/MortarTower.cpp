@@ -50,6 +50,7 @@ FixedProjectile* MortarTower::GetProjectile()
 			projectile->meshID = projectile_meshID;
 			projectile->enemyVec = this->enemyList;
 			projectile->iceparticle = &particleGenerator;
+			Music::GetInstance()->PlayMusic(4, false, 0.15f);
 			return projectile;
 
 		}

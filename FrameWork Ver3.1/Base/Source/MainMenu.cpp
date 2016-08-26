@@ -10,8 +10,7 @@
 #include "LoadTGA.h"
 #include <sstream>
 #include "SceneManager.h"
-
-
+#include "Music.h"
 
 
 MainMenu::MainMenu() :Scene()
@@ -25,6 +24,8 @@ MainMenu::~MainMenu()
 void MainMenu::Init()
 {
 	//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+
+	this->Init2();
 
 	testx = testy = testz = 0;
 	banner_forward = -45;
@@ -43,6 +44,11 @@ void MainMenu::Init()
 
 	cursor.Init(&camera);
 
+}
+
+void MainMenu::Init2()
+{
+	Music::GetInstance()->PlayMusic(6, true, 0.1f);
 }
 
 void MainMenu::Update(double dt)

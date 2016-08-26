@@ -5,6 +5,8 @@
 #include <vector>
 #include "Renderable.h"
 #include "Enemy.h"
+#include "Music.h"
+
 using std::vector;
 
 class Tower : public Renderable

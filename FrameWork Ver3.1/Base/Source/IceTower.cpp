@@ -15,8 +15,8 @@ IceTower::IceTower()
 	SetRange(3);
 	SetSpdRate(0.75f);
 	this->p_speed = 5.f;
-	this->f_SlowAmount = 10.f;
-	this->f_SlowDura = 10.f;
+	this->f_SlowAmount = 20.f;
+	this->f_SlowDura = 5.f;
 	this->towerCost = cost;
 	this->essenceCost = 0;
 	this->essence = type;
@@ -59,6 +59,7 @@ IceProjectile* IceTower::GetProjectile()
 			projectile->iceparticle = &(particleGenerator);
 			projectile->f_slowAmount = this->f_SlowAmount;
 			projectile->f_slowDuration = this->f_SlowDura;
+			Music::GetInstance()->PlayMusic(3, false, 0.15f);
 			return projectile;
 
 		}

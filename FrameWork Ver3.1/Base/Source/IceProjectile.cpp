@@ -4,6 +4,7 @@ IceProjectile::IceProjectile(GEOMETRY_TYPE ID) : SplashTarget(ID)
 {
 	this->meshID = GEO_ICESHOT;
 	this->f_slowDuration = 30.f;
+	this->f_range = 2.f;
 }
 
 IceProjectile::~IceProjectile()
@@ -41,15 +42,7 @@ void IceProjectile::Update(double dt)
 	float distanceToCheck = 0.04f * p_speed;
 	if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 	{
-		if (meshID == GEO_CANNON)
-		{
 
-			f_particleSpawnTimer = 0.f;
-
-			iceparticle->pos = this->pos;
-			iceparticle->pos.z = 2.f;
-			iceparticle->SpawnParticle();
-		}
 		//this->iceparticle.isActive = false;
 		this->b_isActive = false;
 		if (enemyVec != nullptr)
@@ -59,21 +52,17 @@ void IceProjectile::Update(double dt)
 				if ((*it)->b_isActive == true)
 				{
 					if (((*it)->pos - this->pos).LengthSquared() < f_range*f_range)
-					if (meshID == GEO_ICESHOT)
 					{
-						(*it)->ReceiveSlowStatus(f_slowAmount,f_slowDuration);
+
+						(*it)->ReceiveSlowStatus(f_slowAmount, f_slowDuration);
+
+						(*it)->ReceiveDamage(i_damage);
 					}
-					(*it)->ReceiveDamage(i_damage / 2);
 				}
 			}
+		
 		}
 
-		if (meshID == GEO_ICESHOT)
-		{
-			enemy->ReceiveSlowStatus(f_slowAmount,f_slowDuration);
-		}
-		enemy->ReceiveDamage(i_damage / 2);
-		//std::cout << d.LengthSquared() << std::endl;
 	}
 
 }

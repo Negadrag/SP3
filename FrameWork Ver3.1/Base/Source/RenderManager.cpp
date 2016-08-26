@@ -237,7 +237,8 @@ void RenderManager::InitMesh()
 	meshList[GEO_SKYBACK]->textureArray[0] = LoadTGA("Image//skyback.tga");
 
 
-
+	meshList[GEO_HP] = MeshBuilder::GenerateCube("hp", Color(0, 1.f, 0), 1.f);
+	meshList[GEO_HP2] = MeshBuilder::GenerateCube("hp", Color(1.f, 0, 0), 1.f);
 
 	//Monster
 	meshList[GEO_BASIC] = MeshBuilder::GenerateOBJ("Basic", "OBJ/BasicMonster.obj");

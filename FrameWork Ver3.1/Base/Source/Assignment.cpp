@@ -9,6 +9,7 @@
 #include "LoadTGA.h"
 #include <sstream>
 #include "SceneManager.h"
+#include "Music.h"
 
 
 Assignment::Assignment():Scene()
@@ -21,13 +22,15 @@ Assignment::~Assignment()
 
 void Assignment::Init()
 {
-	testMap.LoadMap(std::fstream("Maps//dicknugget.csv"));
+	this->Init2();
+	testMap.LoadMap(std::fstream("Maps//ABC.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
 
 	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
+	player.Init();
 
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	camera.b_ortho = true;
@@ -43,6 +46,11 @@ void Assignment::Init()
 	grass.rotation.Set(0, 0, 0);
 
 	cursor.Init(&towerList,testMap.waves.GetEnemyList());
+}
+
+void Assignment::Init2()
+{
+	//Music::GetInstance()->PlayMusic(6, true, 0.2f);
 }
 
 void Assignment::Update(double dt)
@@ -72,6 +80,11 @@ void Assignment::Update(double dt)
 
 	cursor.Update(camera, testMap, dt);
 	camera.Update(dt);
+
+	if (player.i_health <= 0)
+	{
+		SceneManager::GetInstance()->ChangeScene(6,false);
+	}
 
 	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
 

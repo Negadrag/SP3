@@ -30,6 +30,7 @@ WaveManager::WaveManager(Node* root)
 	this->root = root;
 	this->b_allWaveEnded = false;
 	this->player = nullptr;
+	b_miniGame = true;
 }
 
 WaveManager::~WaveManager()
@@ -94,12 +95,19 @@ void WaveManager::Update(double dt)
 		else if (WaveEnded(i_currentWave))
 		{
 			f_waveStartTimer += dt;
-			if (f_waveStartTimer >= 0.5f)
+			if (f_waveStartTimer >= 2.f)
 			{
 				b_waveEnded = true;
 			}
+			if ( ( (i_currentWave)% 2 == 0) && i_currentWave>0 && f_waveStartTimer >= 2.25f && b_miniGame == true && i_currentWave < waveList.size())
+			{
+				b_miniGame = false;
+				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
+				SceneManager::GetInstance()->ChangeScene(3,true);
+			}
 			if (f_waveStartTimer >= 10.f)
 			{
+				b_miniGame = true;
 				f_waveStartTimer = 0.f;
 				i_currentRevolution = 0;
 				i_currentWave++;
@@ -139,6 +147,10 @@ void WaveManager::Update(double dt)
 
 			}
 		}
+		else
+		{
+			f_waveStartTimer = 0.f;
+		}
 
 		if (b_waveEnded == true)
 		{
@@ -148,11 +160,16 @@ void WaveManager::Update(double dt)
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
 				player->b_showcaseEnemy = false;
 				player->i_showcaseIndex = 0;
-				SceneManager::GetInstance()->ChangeScene(7, true);//change to display Scene;
+				SceneManager::GetInstance()->ChangeScene(7, true);//change to display Scene;x`
 				
 			}
 		}
 	}
+	if (b_allWaveEnded)
+	{
+		SceneManager::GetInstance()->ChangeScene(5, false);
+	}
+
 }
 
 void WaveManager::ClearEnemyList()

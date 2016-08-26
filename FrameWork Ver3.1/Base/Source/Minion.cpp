@@ -5,7 +5,8 @@ Minion::Minion() :Enemy()
 {
 	this->meshID = GEO_BASIC;
 	this->f_movSpeed = 3.f;
-	this->f_health = 50;
+	this->f_maxHealth = 50.f;
+	this->f_health = f_maxHealth;
 	this->i_damage = 1;
 	this->i_defence = 10;
 	this->b_rotateUp = true;
@@ -18,7 +19,8 @@ Minion::Minion(Vector3 pos, Node* root) :Enemy(pos, root)
 {
 	this->meshID = GEO_BASIC;
 	this->f_movSpeed = 3.f;
-	this->f_health = 50;
+	this->f_maxHealth = 50.f;
+	this->f_health = f_maxHealth;
 	this->i_damage = 1;
 	this->i_defence = 10;
 	this->b_rotateUp = true;

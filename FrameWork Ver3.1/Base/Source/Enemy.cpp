@@ -4,7 +4,8 @@
 Enemy::Enemy()
 {
 	f_movSpeed = 5.f;
-	f_health = 10;
+	f_maxHealth = 10.f;
+	f_health = f_maxHealth;
 	i_defence = 0;
 	i_damage = 0;
 	f_slow = 0;
@@ -12,12 +13,22 @@ Enemy::Enemy()
 	this->rotation.Set(0, 0, 0);
 	this->scale.Set(1, 1, 1);
 	this->pos.Set(0, 0, 0);
-	this->player = nullptr;}
+	this->player = nullptr;
+
+	hp.meshID = GEO_HP;
+	hp2.meshID = GEO_HP2;
+	hp.b_lightEnabled = false;
+	hp2.b_lightEnabled = false;
+	hp.b_Render = false;
+	hp2.b_Render = false;
+	f_showHealthTimer = 0.f;
+}
 
 Enemy::Enemy(Vector3 pos, Node* root)
 {
 	f_movSpeed = 5.f;
-	f_health = 10;
+	f_maxHealth = 10;
+	f_health = f_maxHealth;
 	i_defence = 0;
 	i_damage = 0;
 	f_slow = 0;
@@ -27,6 +38,17 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	this->pos = pos;
 	this->nxtTile = root;
 	this->player = nullptr;
+
+	hp.meshID = GEO_HP;
+	hp2.meshID = GEO_HP2;
+	hp.b_shadows = false;
+	hp2.b_shadows = false;
+	hp.b_lightEnabled = false;
+	hp2.b_lightEnabled = false;
+	hp.b_Render = false;
+	hp2.b_Render = false;
+	f_showHealthTimer = 0.f;
+	
 }
 
 Enemy::~Enemy()
@@ -114,6 +136,7 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 void Enemy::Update(double dt)
 {
 	//std::cout << "Updating" << std::endl;
+
 	if (nxtTile != nullptr)
 	{
 		if ((Vector3(nxtTile->coords.x, nxtTile->coords.y, 0) - Vector3(this->pos.x, this->pos.y, 0)).LengthSquared() < 0.1f*0.1f)
@@ -124,23 +147,37 @@ void Enemy::Update(double dt)
 				return;
 			}
 		}
-		if (f_poisonTimer>0.f)
+		if (f_poisonTimer > 0.f)
 		{
-			ReceiveDamage(f_poisonDps*dt);
+			ReceivePoisonDamage(f_poisonDps*dt);
 			f_poisonTimer -= dt;
 			if (f_poisonTimer <= 0.f)
 			{
 				f_poisonTimer = 0.f;
 			}
 		}
-		if (f_slowTimer > 0)
+		if (f_slowTimer > 0.f)
 		{
 			f_slowTimer -= dt;
 			if (f_slowTimer <= 0.f)
 			{
-				f_slow = 0;
-				f_slowTimer = 0;
+				f_slow = 0.f;
+				f_slowTimer = 0.f;
 			}
+		}
+		if (this->f_showHealthTimer > 0.f)
+		{
+			f_showHealthTimer -= dt;
+			hp.pos.Set(0, 0, 1);
+			hp.b_Render = true;
+			hp.pos = this->pos + Vector3(0, 0, 1);
+			hp.rotation.z = this->rotation.z;
+			hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
+		}
+		else if (this->f_showHealthTimer < 0.f)
+		{
+			f_showHealthTimer = 0.f;
+			hp.b_Render = false;
 		}
 
 		MoveTo(nxtTile->coords, dt);
@@ -151,25 +188,50 @@ void Enemy::Update(double dt)
 		if (player)
 		{
 			player->i_health -= this->i_damage;
+			this->hp.b_isActive = false;
+			this->hp2.b_isActive = false;
 			this->b_isActive = false;
 		}
 		
 	}
-
+	
 }
 
 void Enemy::UpdateAnim(double dt)
 {
 }
 
-void Enemy::ReceiveDamage(int damage)
+void Enemy::ReceiveDamage(float damage)
 {
-	int dmg = damage * ((100.f - (float)i_defence) / 100.f);
+	float dmg = damage * ((100.f - (float)i_defence) / 100.f);
 	this->f_health -= dmg;
 	if (f_health <= 0)
 	{
 		this->GiveCurrency();
+		this->hp.b_isActive = false;
+		this->hp2.b_isActive = false;
 		this->b_isActive = false;
+	}
+	else
+	{
+		f_showHealthTimer = 1.5f;
+	}
+}
+
+void Enemy::ReceivePoisonDamage(float damage)
+{
+
+	this->f_health -= damage;
+	if (f_health <= 0)
+	{
+		this->GiveCurrency();
+		this->hp.b_isActive = false;
+		this->hp2.b_isActive = false;
+		this->b_isActive = false;
+	}
+	else
+	{
+		f_showHealthTimer = 1.5f;
 	}
 }
 

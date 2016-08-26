@@ -115,6 +115,12 @@
     <Filter Include="Source Files\System\Scene">
       <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System\Music">
+      <UniqueIdentifier>{1c976c6d-7464-4f67-9ff7-6874af51763f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Music">
+      <UniqueIdentifier>{96dc96d6-f3fa-4b8a-97cf-97b940bf8cd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -300,12 +306,6 @@
     <ClCompile Include="Source\BuffTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LoseScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\MenuCursor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -314,6 +314,15 @@
     </ClCompile>
     <ClCompile Include="Source\FIxedProjectile.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Music.cpp">
+      <Filter>Source Files\System\Music</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MainMenu.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoseScene.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -512,14 +521,17 @@
     <ClInclude Include="Source\PoisonProjectile.h">
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MenuCursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\FixedProjectile.h">
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Music.h">
+      <Filter>Header Files\System\Music</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MainMenu.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

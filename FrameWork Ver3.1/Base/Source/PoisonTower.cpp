@@ -18,7 +18,7 @@ PoisonTower::PoisonTower()
 	this->towerCost = cost;
 	this->essence = type;
 	this->p_speed = 10.f;
-	this->f_PoisonDPS = 1.f;
+	this->f_PoisonDPS = 5.f;
 	this->f_PoisonDura = 5.f;
 	this->f_PoisonSlowAmount = 25.f;
 	
@@ -50,6 +50,7 @@ Projectile* PoisonTower::GetProjectile()
 			projectile->f_poisondmg = this->f_PoisonDPS;
 			projectile->f_poisondura = this->f_PoisonDura;
 			projectile->f_slowAmount = this->f_PoisonSlowAmount;
+			Music::GetInstance()->PlayMusic(0, false, 0.15f);
 			return projectile;
 
 		}
@@ -61,8 +62,7 @@ Projectile* PoisonTower::GetProjectile()
 		projectile->b_isActive = false;
 		projectileList.push_back(projectile);
 	}
-	projectileList.back()->b_isActive = true;
-	return projectileList.back();
+	return GetProjectile();
 }
 
 void PoisonTower::Update(double dt)
