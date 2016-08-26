@@ -68,6 +68,7 @@ private:
 	GUI* option_8;
 
 	int menu_states;
+	int scene_change;
 };
 
 #endif

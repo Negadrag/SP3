@@ -78,8 +78,6 @@ private:
 	ParticleGenerator waterfountain;
 
 	float testx, testy, testz;
-
-
 };
 
 #endif
