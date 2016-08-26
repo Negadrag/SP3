@@ -27,6 +27,10 @@ BuffTower::BuffTower(vector<Tower*> *tower)
 
 BuffTower::~BuffTower()
 {
+	if (towerList == nullptr)
+	{
+		return;
+	}
 	for (vector<Tower*>::iterator it = buffedTowers.begin(); it != buffedTowers.end(); ++it)
 	{
 		Tower* temp = *it;

@@ -79,8 +79,6 @@ private:
 	
 
 	float testx, testy, testz;
-
-
 };
 
 #endif

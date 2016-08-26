@@ -77,6 +77,9 @@ private:
 	int menu_states;
 
 	float testx, testy, testz;
+
+	int scene_change;
+
 };
 
 #endif

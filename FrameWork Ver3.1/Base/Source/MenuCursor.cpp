@@ -33,7 +33,7 @@ void MenuCursor::Init(GameplayCam *camera)
 
 	istransition = false;
 	menu_states = 0;
-	testx = testy = testz = 0;
+	scene_change = 1;
 
 	MainButtonsInit();
 	InstructionsInit();
@@ -192,12 +192,14 @@ void MenuCursor::Clicking(double dt)
 			{
 				std::cout << "BUTTON PLAY" << std::endl;
 				menu_states = 1;
+				scene_change = 1;
 				istransition = true;
 			}
 			if (temp->functionID == 1)
 			{
 				std::cout << "BUTTON EDITING" << std::endl;
 				menu_states = 1;
+				scene_change = 4;
 				istransition = true;
 			}
 			if (temp->functionID == 2)
@@ -217,6 +219,7 @@ void MenuCursor::Clicking(double dt)
 				std::cout << "BUTTON EXIT" << std::endl;
 				menu_states = 1;
 				istransition = true;
+				Application::GetInstance().b_Exit = true;
 			}
 
 
@@ -338,7 +341,7 @@ void MenuCursor::ButtonManager()
 	else if (menu_states == 3)
 		OptionsRender();
 	else if (menu_states == 1)
-		SceneManager::GetInstance()->ChangeScene(1, false);
+		SceneManager::GetInstance()->ChangeScene(scene_change, false);
 }
 
 void MenuCursor::MainButtonsInit()
