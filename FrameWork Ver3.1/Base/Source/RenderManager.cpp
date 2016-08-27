@@ -169,7 +169,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 0), 1.f);
 	meshList[GEO_QUAD]->textureArray[0] = LoadTGA("Image//background.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
+	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//Consolas.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_RING] = MeshBuilder::GenerateRing("ring", Color(1, 1, 0), 36, 1, 0.99f);
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 0.5f);
