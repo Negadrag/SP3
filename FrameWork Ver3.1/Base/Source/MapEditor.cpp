@@ -148,33 +148,41 @@ void MapEditor::Render()
 
 void MapEditor::HandleInput()
 {
-	string input1, input2;
+	{
+		string input1, input2;
 
-	std::cout << "MAP EDITOR" << std::endl;
-	std::cout << "Map Name:";
-	std::cin >> s_mapName;
-	std::cout << "Number of columns (x - axis) :";
-	std::cin >> input1;
-	tileMap.i_columns = atoi(input1.c_str());
-	std::cout << "Number of rows (y - axis) :";
-	std::cin >> input2;
-	tileMap.i_rows = atoi(input2.c_str());
+		std::cout << "MAP EDITOR" << std::endl;
+		std::cout << "Map Name:";
+		std::cin >> s_mapName;
+		std::cout << "Number of columns (x - axis) :";
+		std::cin >> input1;
+		tileMap.i_columns = atoi(input1.c_str());
+		std::cout << "Number of rows (y - axis) :";
+		std::cin >> input2;
+		tileMap.i_rows = atoi(input2.c_str());
+	}
 
 	int numWaves;
-	std::cout << "Number of waves:";
-	std::cin >> numWaves;
+	{
+		string input;
+		std::cout << "Number of waves:";
+		std::cin >> input;
+		numWaves = atoi(input.c_str());
+	}
 
 	for (int i = 0; i < numWaves; ++i)
 	{
 		std::cout << "Wave " << i << " enemies:" << std::endl;
-		
+
 		std::ostringstream ss;
 		// enemies
 		for (int j = 0; j < 5; ++j)
 		{
 			int enemy;
+			string input;
 			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION, 2 = ICE, 3 = SPEED, 4 = TANK):";
-			std::cin >> enemy;
+			std::cin >> input;
+			enemy = atoi(input.c_str());
 			switch (enemy)
 			{
 			case (0) :
@@ -224,7 +232,6 @@ void MapEditor::HandleInput()
 		waves.push_back(ss.str());
 	}
 }
-
 void MapEditor::WriteToFile()
 {
 	std::ofstream file;
