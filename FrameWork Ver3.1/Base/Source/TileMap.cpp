@@ -227,7 +227,7 @@ bool TileMap::LoadWaves(vector<string> wave)
 		bool checkFrequency = false;
 
 		int revolutions = 0;
-		int frequency = 0;
+		float frequency = 0;
 
 		vector<ENEMY_TYPE> enemyType;
 
@@ -270,7 +270,11 @@ bool TileMap::LoadWaves(vector<string> wave)
 			}
 			else if (checkRevolutions && checkFrequency)
 			{
-				frequency = atoi(temp2.c_str());
+				frequency = atof(temp2.c_str());
+				if (frequency <= 0)
+				{
+					frequency = 1;
+				}
 				break;
 			}
 		}

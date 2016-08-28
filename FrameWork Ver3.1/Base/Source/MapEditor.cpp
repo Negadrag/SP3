@@ -156,10 +156,18 @@ void MapEditor::HandleInput()
 		std::cin >> s_mapName;
 		std::cout << "Number of columns (x - axis) :";
 		std::cin >> input1;
-		tileMap.i_columns = atoi(input1.c_str());
+		tileMap.i_columns = atoi(input1.c_str()); 
+		if (tileMap.i_columns <= 0)
+		{
+			tileMap.i_columns = 1;
+		}
 		std::cout << "Number of rows (y - axis) :";
 		std::cin >> input2;
 		tileMap.i_rows = atoi(input2.c_str());
+		if (tileMap.i_rows <= 0)
+		{
+			tileMap.i_rows = 1;
+		}
 	}
 
 	int numWaves;
@@ -223,7 +231,7 @@ void MapEditor::HandleInput()
 			string input;
 			std::cout << "Frequency:";
 			std::cin >> input;
-			ss << atoi(input.c_str()) << ',';
+			ss << atof(input.c_str()) << ',';
 			if (i != numWaves - 1)
 			{
 				ss << '\n';
