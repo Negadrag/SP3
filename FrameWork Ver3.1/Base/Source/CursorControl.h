@@ -19,7 +19,7 @@ public:
 	CursorControl();
 	~CursorControl();
 	void Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList);
-	void Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt);
+	void Update(OrthoCamera &camera, TileMap &tileMap, const double &dt);
 	int checkPositionX, checkPositionY;
 	bool SpawnTower(string name);
 	bool RemoveTower(Tower* tower);
@@ -39,6 +39,7 @@ public:
 	GUI *upgradeCosts[3];
 	GUI *essenceCost[3];
 	GUI *selling;
+	GUI *skip;
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
@@ -47,11 +48,11 @@ private:
 	string StrategyToString(Tower::STRATEGY strats);
 	void TowerButtons();
 	void AOEDisplay(Tower* tower);
-	void HotKeys(const TileMap &tileMap);
-	void Clicking(const TileMap &tileMap);
+	void HotKeys(TileMap &tileMap);
+	void Clicking(TileMap &tileMap);
 	void UpgradeButtons(Tower* tower);
 	void SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost,string tower);
-	void HandleButton(const TileMap &tileMap,GUI* button);
+	void HandleButton(TileMap &tileMap,GUI* button);
 	void CostColor(GUI* cost, Tower::ESSENCE_TYPE type);
 	bool CheckPlayerEssence(Tower::ESSENCE_TYPE type, int amount);
 	void RemovePlayerEssence(Tower::ESSENCE_TYPE type, int amount);

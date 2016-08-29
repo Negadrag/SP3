@@ -54,13 +54,13 @@ public:
 	void SetRoot(Node* root);
 	void AddWave(vector<ENEMY_TYPE> typeVec , int revolution , float spawnFrequency);
 	bool WaveEnded(int waveIndex);
+	void StartWave();
 	Enemy* SpawnEnemy(ENEMY_TYPE type);
 	void ClearEnemyList();
 	void Exit();
 	void Update(double dt);
 	vector<Enemy*>* GetEnemyList();
 	PlayerInfo* player;
-
 private:
 	vector<Enemy*> enemyList;
 	vector<Wave> waveList;
