@@ -1,7 +1,7 @@
 #include "BuffTower.h"
 #include "SingleTarget.h"
 
-int BuffTower::cost = 60;
+int BuffTower::cost = 500;
 int BuffTower::ecost = 0;
 Tower::ESSENCE_TYPE BuffTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 

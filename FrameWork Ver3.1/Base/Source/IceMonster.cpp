@@ -10,7 +10,7 @@ IceMonster::IceMonster() :Enemy()
 	this->i_damage = 1;
 	this->i_defence = 15;
 	this->f_rotateSpeed = 90.f;
-	this->i_currency = 1;
+	this->i_currency = 2;
 	this->f_floatSpeed = 2.f;
 	this->b_floatUp = true;
 	this->f_translateTimer = 0.f;
@@ -26,7 +26,7 @@ IceMonster::IceMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->i_damage = 1;
 	this->i_defence = 0;
 	this->f_rotateSpeed = 90.f;
-	i_currency = 1;
+	i_currency = 2;
 	this->f_floatSpeed = 3.f;
 	this->b_floatUp = true;
 	this->f_translateTimer = 0.f;

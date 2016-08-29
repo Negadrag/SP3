@@ -2,7 +2,7 @@
 #include "SingleTarget.h"
 
 
-int CaptureTower::cost = 10;
+int CaptureTower::cost = 20;
 int CaptureTower::ecost = 0;
 Tower::ESSENCE_TYPE CaptureTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 

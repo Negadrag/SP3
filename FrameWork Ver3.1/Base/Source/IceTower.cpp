@@ -2,7 +2,7 @@
 #include "SplashTarget.h"
 #include "IceProjectile.h"
 
-int IceTower::cost = 15;
+int IceTower::cost = 45;
 int IceTower::ecost = 100;
 Tower::ESSENCE_TYPE IceTower::type = Tower::ESSENCE_TYPE::E_ICE;
 
