@@ -177,6 +177,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_CONE] = MeshBuilder::GenerateSphere("cone", Color(0.5f, 1, 0.3f), 18, 36, 0.5f);
 	meshList[GEO_CONE]->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
 	meshList[GEO_CONE]->material.kSpecular.Set(0.f, 0.f, 0.f);
+	meshList[GEO_ADJUSTBAR] = MeshBuilder::GenerateOBJ("slidebar", "OBJ/bar_bar.obj");
 
 	meshList[GEO_BLUECUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0, 1), 1.f);
 	meshList[GEO_REDCUBE] = MeshBuilder::GenerateCube("bluecube", Color(1, 0, 0), 1.f);

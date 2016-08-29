@@ -92,7 +92,7 @@ void MainMenu::Update(double dt)
 	waterfountain.SetFrequency(1);
 	waterfountain.SetCap(1000);
 	waterfountain.i_spawnAmount = 1;
-	waterfountain.f_lifeTime = 3.f;
+	waterfountain.f_lifeTime = 1.f;
 	waterfountain.minVel.Set(-4, 10, -4);
 	waterfountain.maxVel.Set(4, 30, 4);
 	waterfountain.scale.Set(2, 2, 2);
