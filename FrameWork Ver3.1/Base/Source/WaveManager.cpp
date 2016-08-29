@@ -103,7 +103,7 @@ void WaveManager::Update(double dt)
 			{
 				b_waveEnded = true;
 			}
-			if ( ( (i_currentWave)% 2 == 0) && i_currentWave>0 && f_waveStartTimer >= 2.25f && b_miniGame == true && i_currentWave < waveList.size())
+			if ( ( (i_currentWave)% 5 == 0) && i_currentWave>0 && f_waveStartTimer >= 2.25f && b_miniGame == true && i_currentWave < waveList.size())
 			{
 				b_miniGame = false;
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
@@ -113,6 +113,7 @@ void WaveManager::Update(double dt)
 			{
 				f_currScaling *= (1.f + (f_hpScaling / 100.f));
 				b_miniGame = true;
+				player->i_currency += 5;
 				f_waveStartTimer = 0.f;
 				i_currentRevolution = 0;
 				i_currentWave++;

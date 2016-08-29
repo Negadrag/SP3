@@ -3,7 +3,7 @@
 #include "PoisonProjectile.h"
 
 int PoisonTower::cost = 50;
-int PoisonTower::ecost = 200;
+int PoisonTower::ecost = 300;
 Tower::ESSENCE_TYPE PoisonTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 PoisonTower::PoisonTower()
@@ -18,7 +18,7 @@ PoisonTower::PoisonTower()
 	this->towerCost = cost;
 	this->essence = type;
 	this->p_speed = 10.f;
-	this->f_PoisonDPS = 5.f;
+	this->f_PoisonDPS = 20.f;
 	this->f_PoisonDura = 5.f;
 	this->f_PoisonSlowAmount = 25.f;
 	
@@ -77,11 +77,11 @@ bool PoisonTower::LevelUp()
 		i_level++;
 		if (i_level == 2)
 		{
-			this->f_PoisonDPS = 2.f;
+			this->f_PoisonDPS = 30.f;
 		}
 		if (i_level == 3)
 		{
-			this->f_PoisonDPS = 3.f;
+			this->f_PoisonDPS = 50.f;
 			this->atkDamage += 5;
 			this->atkRange += 2;
 		}

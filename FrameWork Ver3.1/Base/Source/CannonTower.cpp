@@ -11,7 +11,7 @@ CannonTower::CannonTower()
 	//Tower Stat
 	this->i_level = 1;
 	SetAtkDmg(25);
-	SetRange(7.f);
+	SetRange(3.f);
 	SetSpdRate(0.50f);
 	this->p_speed = 15.f;
 	this->towerCost = cost;
