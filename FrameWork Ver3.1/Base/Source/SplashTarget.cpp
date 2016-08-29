@@ -2,7 +2,7 @@
 
 SplashTarget::SplashTarget(GEOMETRY_TYPE ID) : Projectile(ID)
 {
-	f_range = 1.5f;
+	f_range = 2.f;
 	f_particleSpawnTimer = 0.f;
 }
 

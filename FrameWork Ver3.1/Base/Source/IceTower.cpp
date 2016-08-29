@@ -18,7 +18,7 @@ IceTower::IceTower()
 	this->f_SlowAmount = 20.f;
 	this->f_SlowDura = 5.f;
 	this->towerCost = cost;
-	this->essenceCost = 0;
+	this->essenceCost = 100;
 	this->essence = type;
 	this->pos.SetZero();
 	this->meshID = GEO_ICEBASE;

@@ -69,7 +69,7 @@ bool ArrowTower::LevelUp()
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->atkDamage += 5;
+		this->atkDamage += 8;
 
 		if (i_level == 3)
 		{
