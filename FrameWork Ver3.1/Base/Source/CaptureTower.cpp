@@ -15,8 +15,8 @@ CaptureTower::CaptureTower()
 	SetRange(5);
 	SetSpdRate(1.f);
 	this->p_speed = 15.f;
-	this->towerCost = cost;
-	this->essenceCost = ecost;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	this->meshID = GEO_CAPTUREBASE;
 	this->fullMeshID = GEO_CAPTURETOWER;

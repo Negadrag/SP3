@@ -15,8 +15,8 @@ ArrowTower::ArrowTower()
 	SetRange(5);
 	SetSpdRate(2.f);
 	this->p_speed = 10.f;
-	this->towerCost = cost;
-	this->essenceCost = ecost;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	this->meshID = GEO_ARROWTOWER;
 	this->fullMeshID = GEO_ARROWTOWER;

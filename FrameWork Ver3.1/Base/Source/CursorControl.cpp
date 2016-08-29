@@ -672,7 +672,6 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 		cost->meshOffset.Set(1, 1, 0);
 		cost->SetText(os.str());
 		cost->b_isActive = true;
-
 		os.str("");
 		os << "  " << IceTower::ecost;
 		ecost->meshID = GEO_ICEESSENCE;
@@ -800,11 +799,11 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 		Tower* temp = FindTower(checkPositionX, checkPositionY);
 		if (Scene::player.i_currency >= temp->GetCost())
 		{
-			if (CheckPlayerEssence(temp->essence, temp->essenceCost))
+			if (CheckPlayerEssence(temp->essence, temp->essenceUpgradeCost))
 			{
 				if (temp->LevelUp())
 				{
-					RemovePlayerEssence(temp->essence, temp->essenceCost);
+					RemovePlayerEssence(temp->essence, temp->essenceUpgradeCost);
 					Scene::player.i_currency -= temp->GetCost();
 					temp->SetCost(temp->GetCost() * 2);
 				}

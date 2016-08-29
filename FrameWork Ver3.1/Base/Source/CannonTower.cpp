@@ -14,8 +14,8 @@ CannonTower::CannonTower()
 	SetRange(3.f);
 	SetSpdRate(0.50f);
 	this->p_speed = 15.f;
-	this->towerCost = cost;
-	this->essenceCost = ecost;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	this->meshID = GEO_CANNONTOWER;
 	this->fullMeshID = GEO_CANNONTOWER;

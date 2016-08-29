@@ -76,7 +76,7 @@ public:
 	int buffCounter;
 
 	ESSENCE_TYPE essence;
-	float essenceCost;
+	float essenceUpgradeCost;
 private:
 
 protected:
@@ -87,7 +87,7 @@ protected:
 	
 	float p_frequency;
 	float p_spawnTimer;
-	float towerCost;
+	float towerUpgradeCost;
 	
 
 	float p_speed;
