@@ -246,7 +246,7 @@ void CursorControl::TowerButtons()
 		int atk = 0;
 		if (i == 0)
 		{
-			text = "Arrow Tower (Q)";
+			text = "Arrow Tower(Q)";
 			mesh = GEO_ARROWTOWER;
 			offset.Set(0.1f, 0.15f);
 			
@@ -254,21 +254,21 @@ void CursorControl::TowerButtons()
 		}
 		else if (i == 1)
 		{
-			text = "Cannon Tower (W)";
+			text = "Cannon Tower(W)";
 			mesh = GEO_CANNONTOWER;
 			offset.Set(0.3f, 0.15f);
 			cost = CannonTower::cost;
 		}
 		else if (i == 2)
 		{
-			text = "Capture Tower (E)";
+			text = "Capture Tower(E)";
 			mesh = GEO_CAPTURETOWER;
 			offset.Set(0.5f, 0.15f);
 			cost = CaptureTower::cost;
 		}
 		else if (i == 3)
 		{
-			text = "Buff Tower (R)";
+			text = "Buff Tower(R)";
 			mesh = GEO_BUFFTOWER;
 			offset.Set(0.7f, 0.15f);
 			cost = BuffTower::cost;

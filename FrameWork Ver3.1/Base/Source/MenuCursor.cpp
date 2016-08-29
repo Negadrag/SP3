@@ -21,7 +21,7 @@ MenuCursor::~MenuCursor()
 
 	delete btn_exit;
 
-	delete instr_txt;
+	delete instr_title;
 }
 
 void MenuCursor::Init(GameplayCam *camera)
@@ -51,21 +51,105 @@ void MenuCursor::Update(const double &dt)
 	worldX = x / w - 0.5f; // -0.5 - 0.5
 	worldY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
+	smoke1.Update(dt);
+	smoke2.Update(dt);
+	smoke3.Update(dt);
+
+
+	if (Application::IsKeyPressed('L'))
+		testx += dt * 10;
+	if (Application::IsKeyPressed('J'))
+		testx -= dt * 10;
+	if (Application::IsKeyPressed('I'))
+		testy += dt * 10;
+	if (Application::IsKeyPressed('K'))
+		testy -= dt * 10;
+	if (Application::IsKeyPressed('P'))
+		testz += dt * 10;
+	if (Application::IsKeyPressed('O'))
+		testz -= dt * 10;
+
+
 	static const float CAMERA_SPEED = 60.f;
 
 	if (menu_states == 3)
 		SceneMoveRight(CAMERA_SPEED, dt);
 
 	if (menu_states == 2)
+	{
 		SceneMoveNorth(CAMERA_SPEED, dt);
+
+
+		smoke1.SetType(GEO_SMOKEPARTICLES);
+		smoke1.SetFrequency(5);
+		smoke1.SetCap(1000);
+		smoke1.i_spawnAmount = 1;
+		smoke1.f_lifeTime = 10.f;
+		smoke1.minVel.Set(0.2f, 1, 0);
+		smoke1.maxVel.Set(0.5f, 1, 0);
+		smoke1.scale.Set(1, 1, 1);
+		smoke1.f_maxDist = 1500.f;
+		smoke1.isActive = true;
+		smoke1.pos.Set(-20, 14, -165);
+
+		smoke2.SetType(GEO_SMOKEPARTICLES);
+		smoke2.SetFrequency(5);
+		smoke2.SetCap(1000);
+		smoke2.i_spawnAmount = 1;
+		smoke2.f_lifeTime = 10.f;
+		smoke2.minVel.Set(0.2f, 1, 0);
+		smoke2.maxVel.Set(0.5f, 1, 0);
+		smoke2.scale.Set(1, 1, 1);
+		smoke2.f_maxDist = 1500.f;
+		smoke2.isActive = true;
+		smoke2.pos.Set(10, 14, -165);
+
+		smoke3.SetType(GEO_SMOKEPARTICLES);
+		smoke3.SetFrequency(5);
+		smoke3.SetCap(1000);
+		smoke3.i_spawnAmount = 1;
+		smoke3.f_lifeTime = 10.f;
+		smoke3.minVel.Set(-0.2f, 1, 0);
+		smoke3.maxVel.Set(-0.5f, 1, 0);
+		smoke3.scale.Set(1, 1, 1);
+		smoke3.f_maxDist = 1500.f;
+		smoke3.isActive = true;
+		smoke3.pos.Set(30, 14, -165);
+	}
 
 	if (menu_states == 1)
 		SceneMoveLeft(CAMERA_SPEED, dt);
 
 	if (menu_states == 0)
+	{
 		SceneMoveBack(CAMERA_SPEED, dt);
 
+		smoke1.SetType(GEO_SMOKEPARTICLES);
+		smoke1.SetFrequency(5);
+		smoke1.SetCap(1000);
+		smoke1.i_spawnAmount = 1;
+		smoke1.f_lifeTime = 6.f;
+		smoke1.minVel.Set(0.2f, 1, 0);
+		smoke1.maxVel.Set(0.5f, 1, 0);
+		smoke1.scale.Set(1, 1, 1);
+		smoke1.f_maxDist = 1500.f;
+		smoke1.isActive = true;
+		smoke1.pos.Set(-13, 15, -30);
 
+		smoke3.SetType(GEO_SMOKEPARTICLES);
+		smoke3.SetFrequency(5);
+		smoke3.SetCap(1000);
+		smoke3.i_spawnAmount = 1;
+		smoke3.f_lifeTime = 10.f;
+		smoke3.minVel.Set(-0.2f, 1, 0);
+		smoke3.maxVel.Set(-0.5f, 1, 0);
+		smoke3.scale.Set(1, 1, 1);
+		smoke3.f_maxDist = 1500.f;
+		smoke3.isActive = true;
+		smoke3.pos.Set(17, 14, -40);
+	}
+
+	//backsmoke -20,14,-165, smoke2 
 	if (istransition)
 		ButtonDeactivator();
 	else
@@ -76,8 +160,16 @@ void MenuCursor::Update(const double &dt)
 	}
 
 	
+
 	Clicking(dt);
 	HotKeys();
+
+
+	
+
+	
+
+
 }
 
 void MenuCursor::HotKeys()
@@ -199,6 +291,11 @@ void MenuCursor::SceneMoveLeft(float cam_spd, double dt)
 		istransition = false;
 }
 
+void MenuCursor::SceneCredit(float cam_spd, double dt)
+{
+	//credits : 32,20,-25
+}
+
 void MenuCursor::SceneMoveBack(float cam_spd, double dt)
 {
 	float turnCam_spd = cam_spd + 30;
@@ -307,25 +404,39 @@ void MenuCursor::MainButtonRender()
 
 void MenuCursor::InstructionsInit()
 {
-	instr_txt = new GUI("Just some Instructions...blahblahblah ");
-	instr_txt->position.Set(3, 30);
-	instr_txt->SetTextSize(3);
-	instr_txt->b_isActive = false;
-	instr_txt->b_textActive = false;
-	//, Color(1, 0.7, 0.3), 3, 18, 30);
+	instr_title = new GUI("Instructions");
+	instr_title->position.Set(30, 44);
+	instr_title->SetTextSize(3);
+	instr_title->meshID = GEO_HUD_BG;
+	instr_title->scale.Set(70, 43, 1);
+	instr_title->meshOffset.Set(10, -18, 0);
+	instr_title->b_isActive = false;
+	instr_title->b_textActive = false;
+	instr_title->b_lightEnabled = false;
+	
+	pressrighttoreturn = new GUI("Press Right-Click to return");
+	pressrighttoreturn->position.Set(20, 2);
+	pressrighttoreturn->SetTextSize(3);
+	pressrighttoreturn->textColor.Set(1, 1, 0);
+	pressrighttoreturn->b_isActive = false;
+	pressrighttoreturn->b_textActive = false;
+
 }
 
 void MenuCursor::InstructionsRender()
 {
-	instr_txt->b_isActive = true;
-	instr_txt->b_textActive = true;
+	instr_title->b_isActive = true;
+	instr_title->b_textActive = true;
+
+	pressrighttoreturn->b_isActive = true;
+	pressrighttoreturn->b_textActive = true;
 }
 
 void MenuCursor::OptionsInit()
 {
 
 	option_1 = new GUI("Some Options...");
-	option_1->position.Set(3, 30);
+	option_1->position.Set(10, 35);
 	option_1->SetTextSize(3);
 	option_1->buttonSize.Set(15, 5);
 	option_1->functionID = 0;
@@ -333,7 +444,7 @@ void MenuCursor::OptionsInit()
 	option_1->b_textActive = false;
 
 	option_2 = new GUI("Some Options...");
-	option_2->position.Set(3, 25);
+	option_2->position.Set(10, 30);
 	option_2->SetTextSize(3);
 	option_2->buttonSize.Set(15, 5);
 	option_2->functionID = 0;
@@ -341,7 +452,7 @@ void MenuCursor::OptionsInit()
 	option_2->b_textActive = false;
 
 	option_3 = new GUI("Some Options...");
-	option_3->position.Set(3, 20);
+	option_3->position.Set(10, 25);
 	option_3->SetTextSize(3);
 	option_3->buttonSize.Set(15, 5);
 	option_3->functionID = 0;
@@ -349,7 +460,7 @@ void MenuCursor::OptionsInit()
 	option_3->b_textActive = false;
 
 	option_4 = new GUI("Some Options...");
-	option_4->position.Set(30, 30);
+	option_4->position.Set(40, 35);
 	option_4->SetTextSize(3);
 	option_4->buttonSize.Set(15, 5);
 	option_4->functionID = 0;
@@ -357,7 +468,7 @@ void MenuCursor::OptionsInit()
 	option_4->b_textActive = false;
 
 	option_5 = new GUI("Some Options...");
-	option_5->position.Set(30, 25);
+	option_5->position.Set(40, 30);
 	option_5->SetTextSize(3);
 	option_5->buttonSize.Set(15, 5);
 	option_5->functionID = 0;
@@ -365,7 +476,7 @@ void MenuCursor::OptionsInit()
 	option_5->b_textActive = false;
 
 	option_6 = new GUI("Some Options...");
-	option_6->position.Set(30, 20);
+	option_6->position.Set(40, 25);
 	option_6->SetTextSize(3);
 	option_6->buttonSize.Set(15, 5);
 	option_6->functionID = 0;
@@ -374,7 +485,12 @@ void MenuCursor::OptionsInit()
 
 
 
-
+	pressrighttoreturn = new GUI("Press Right-Click to return");
+	pressrighttoreturn->position.Set(20, 2);
+	pressrighttoreturn->SetTextSize(3);
+	pressrighttoreturn->textColor.Set(1, 1, 0);
+	pressrighttoreturn->b_isActive = false;
+	pressrighttoreturn->b_textActive = false;
 }
 
 void MenuCursor::OptionsRender()
@@ -396,6 +512,10 @@ void MenuCursor::OptionsRender()
 
 	option_6->b_isActive = true;
 	option_6->b_textActive = true;
+
+
+	pressrighttoreturn->b_isActive = true;
+	pressrighttoreturn->b_textActive = true;
 }
 
 void MenuCursor::ButtonDeactivator()
@@ -418,9 +538,8 @@ void MenuCursor::ButtonDeactivator()
 
 
 
-	instr_txt->b_isActive = false;
-	instr_txt->b_textActive = false;
-
+	instr_title->b_isActive = false;
+	instr_title->b_textActive = false;
 
 
 
@@ -442,5 +561,11 @@ void MenuCursor::ButtonDeactivator()
 
 	option_6->b_isActive = false;
 	option_6->b_textActive = false;
+
+
+
+
+	pressrighttoreturn->b_isActive = false;
+	pressrighttoreturn->b_textActive = false;
 }
 

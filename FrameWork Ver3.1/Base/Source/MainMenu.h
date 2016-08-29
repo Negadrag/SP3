@@ -76,6 +76,7 @@ private:
 	//Terrain terrain;
 	ParticleGenerator redfall;
 	ParticleGenerator waterfountain;
+	
 
 	float testx, testy, testz;
 };

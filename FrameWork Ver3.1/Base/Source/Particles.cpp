@@ -43,11 +43,12 @@ void Particles::Update(double dt, int& particle_count)
 		if (this->meshID == GEO_SMOKEPARTICLES)
 		{
 			lifeTime -= dt;
-			this->pos += vel;
-			if (this->lifeTime<0.f)
+			this->pos += vel * dt;
+			this->f_distTravelled += vel.Length() * dt;
+			if (this->lifeTime<0.f || f_distTravelled >= f_maxDist)
 			{
 				this->b_isActive = false;
-				//--particle_count;
+				--particle_count;
 			}
 		}
 
