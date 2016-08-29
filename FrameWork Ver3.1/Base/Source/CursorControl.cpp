@@ -630,10 +630,10 @@ void CursorControl::UpgradeButtons(Tower* tower)
 		upgradeCosts[0]->SetText(os.str());
 		upgradeCosts[0]->b_isActive = true;
 		upgradeCosts[0]->b_lightEnabled = false;
-		if (tower->essenceCost > 0)
+		if (tower->essenceUpgradeCost > 0)
 		{
 			os.str("");
-			os << "  " << tower->essenceCost;
+			os << "  " << tower->essenceUpgradeCost;
 			essenceCost[0]->scale.Set(1.5f, 1.5f, 1.5f);
 			essenceCost[0]->meshOffset.Set(1, 1, 0);
 			essenceCost[0]->SetText(os.str());
