@@ -127,6 +127,15 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 			}
 		}
 	}
+
+	if (this->f_showHealthTimer > 0.f)
+	{
+		hp.pos.Set(0, 0, 1);
+		hp.b_Render = true;
+		hp.pos = this->pos + Vector3(0, 0, 1);
+		hp.rotation.z = this->rotation.z;
+		hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
+	}
 	view = view * f_movSpeed *((float)(100.f - f_slow) / 100.f) * dt;
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x ;
@@ -168,11 +177,6 @@ void Enemy::Update(double dt)
 		if (this->f_showHealthTimer > 0.f)
 		{
 			f_showHealthTimer -= dt;
-			hp.pos.Set(0, 0, 1);
-			hp.b_Render = true;
-			hp.pos = this->pos + Vector3(0, 0, 1);
-			hp.rotation.z = this->rotation.z;
-			hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
 		}
 		else if (this->f_showHealthTimer < 0.f)
 		{
@@ -263,7 +267,7 @@ void Enemy::ReceivePoisonStatus(float poisonDPS,float slowAmount,float duration)
 void Enemy::GiveCurrency()
 {
 	player->i_currency += this->i_currency;
-	//GiveEssence();
+	GiveEssence();
 }
 
 void Enemy::GiveEssence()

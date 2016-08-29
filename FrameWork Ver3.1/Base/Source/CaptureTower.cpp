@@ -2,7 +2,7 @@
 #include "SingleTarget.h"
 
 
-int CaptureTower::cost = 10;
+int CaptureTower::cost = 20;
 int CaptureTower::ecost = 0;
 Tower::ESSENCE_TYPE CaptureTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
@@ -15,8 +15,8 @@ CaptureTower::CaptureTower()
 	SetRange(5);
 	SetSpdRate(1.f);
 	this->p_speed = 15.f;
-	this->towerCost = cost;
-	this->essenceCost = ecost;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	this->meshID = GEO_CAPTUREBASE;
 	this->fullMeshID = GEO_CAPTURETOWER;
@@ -112,7 +112,7 @@ void CaptureTower::Fire(double dt)
 			particleGenerator.minVel = (this->pos - enemy->pos).Normalize() * p_speed;
 			particleGenerator.SpawnParticle();
 			enemy->GiveEssence();
-			Music::GetInstance()->PlayMusic(2, false, 0.15f);
+			//Music::GetInstance()->PlayMusic(2, false, 0.15f);
 		}
 	}
 }

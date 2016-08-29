@@ -1,7 +1,7 @@
 #include "BuffTower.h"
 #include "SingleTarget.h"
 
-int BuffTower::cost = 60;
+int BuffTower::cost = 500;
 int BuffTower::ecost = 0;
 Tower::ESSENCE_TYPE BuffTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
@@ -13,7 +13,7 @@ BuffTower::BuffTower(vector<Tower*> *tower)
 	SetRange(5);
 	this->atkDamage = 0;
 	this->atkSpeed = 0;
-	this->essenceCost = ecost;
+	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	f_increaseATK = 10.f;
 	f_increaseRANGE = 5.f;

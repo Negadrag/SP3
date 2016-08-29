@@ -1,7 +1,7 @@
 #include "SpeedTower.h"
 #include "SingleTarget.h"
 
-int SpeedTower::cost = 10;
+int SpeedTower::cost = 50;
 int SpeedTower::ecost = 100;
 Tower::ESSENCE_TYPE SpeedTower::type = Tower::ESSENCE_TYPE::E_SPEED;
 SpeedTower::SpeedTower()
@@ -13,8 +13,8 @@ SpeedTower::SpeedTower()
 	SetRange(5);
 	SetSpdRate(7);
 	this->p_speed = 10.f;
-	this->towerCost = cost;
-	this->essenceCost = 0;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = 100;
 	this->essence = type;
 	this->meshID = GEO_SPEEDTOWER;
 	this->fullMeshID = GEO_SPEEDMODEL;

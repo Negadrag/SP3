@@ -2,7 +2,7 @@
 #include "SplashTarget.h"
 #include "IceProjectile.h"
 
-int IceTower::cost = 15;
+int IceTower::cost = 45;
 int IceTower::ecost = 100;
 Tower::ESSENCE_TYPE IceTower::type = Tower::ESSENCE_TYPE::E_ICE;
 
@@ -17,8 +17,8 @@ IceTower::IceTower()
 	this->p_speed = 5.f;
 	this->f_SlowAmount = 20.f;
 	this->f_SlowDura = 5.f;
-	this->towerCost = cost;
-	this->essenceCost = 0;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = 100;
 	this->essence = type;
 	this->pos.SetZero();
 	this->meshID = GEO_ICEBASE;

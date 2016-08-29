@@ -2,8 +2,8 @@
 #include "SplashTarget.h"
 #include "FixedProjectile.h"
 
-int MortarTower::cost = 50;
-int MortarTower::ecost = 100;
+int MortarTower::cost = 200;
+int MortarTower::ecost = 200;
 Tower::ESSENCE_TYPE MortarTower::type = Tower::ESSENCE_TYPE::E_HEAVY;
 
 MortarTower::MortarTower()
@@ -11,12 +11,12 @@ MortarTower::MortarTower()
 {
 	//Tower Stat
 	this->i_level = 1;
-	SetAtkDmg(50);
+	SetAtkDmg(400);
 	SetRange(10);
-	SetSpdRate(0.3f);
+	SetSpdRate(0.1f);
 	this->p_speed = 5.f;
-	this->towerCost = cost;
-	this->essenceCost = 0;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = 100;
 	this->essence = type;
 	this->meshID = GEO_MORTARBASE;
 	this->fullMeshID = GEO_MORTARCANNON;

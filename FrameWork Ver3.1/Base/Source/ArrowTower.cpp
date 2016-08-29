@@ -15,8 +15,8 @@ ArrowTower::ArrowTower()
 	SetRange(5);
 	SetSpdRate(2.f);
 	this->p_speed = 10.f;
-	this->towerCost = cost;
-	this->essenceCost = ecost;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	this->meshID = GEO_ARROWTOWER;
 	this->fullMeshID = GEO_ARROWTOWER;
@@ -69,7 +69,8 @@ bool ArrowTower::LevelUp()
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->atkDamage += 5;
+		this->atkDamage += 8;
+		this->atkSpeed += 0.5f;
 
 		if (i_level == 3)
 		{

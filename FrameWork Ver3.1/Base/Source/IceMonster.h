@@ -13,6 +13,7 @@ public:
 	virtual void MoveTo(Vector2 dest, double dt);
 	virtual void UpdateAnim(double dt);
 	virtual void GiveEssence();
+	virtual void ReceiveSlowStatus(float slowAmount, float slowDuration);
 private:
 	
 protected:

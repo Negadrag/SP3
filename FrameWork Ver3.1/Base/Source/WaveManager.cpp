@@ -26,6 +26,10 @@ WaveManager::WaveManager(Node* root)
 	i_currentRevolution = 0;
 	i_typeVecIndex = 0;
 	f_waveStartTimer = 0.f;
+	f_startingHp = 90.f;
+	f_hpScaling = 10.f; 
+	f_currScaling = f_startingHp;
+
 
 	this->root = root;
 	this->b_allWaveEnded = false;
@@ -95,11 +99,11 @@ void WaveManager::Update(double dt)
 		else if (WaveEnded(i_currentWave))
 		{
 			f_waveStartTimer += dt;
-			if (f_waveStartTimer >= 2.f)
+			if (f_waveStartTimer >= 0.9f)
 			{
 				b_waveEnded = true;
 			}
-			if ( ( (i_currentWave)% 2 == 0) && i_currentWave>0 && f_waveStartTimer >= 2.25f && b_miniGame == true && i_currentWave < waveList.size())
+			if ( ( (i_currentWave)% 5 == 0) && i_currentWave>0 && f_waveStartTimer >= 2.25f && b_miniGame == true && i_currentWave < waveList.size())
 			{
 				b_miniGame = false;
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
@@ -107,7 +111,10 @@ void WaveManager::Update(double dt)
 			}
 			if (f_waveStartTimer >= 10.f)
 			{
+				f_currScaling *= (1.f + (f_hpScaling / 100.f));
+				player->i_currency += 5;
 				b_miniGame = true;
+				player->i_currency += 5;
 				f_waveStartTimer = 0.f;
 				i_currentRevolution = 0;
 				i_currentWave++;
@@ -185,6 +192,11 @@ void WaveManager::ClearEnemyList()
 	enemyList.clear();
 }
 
+void WaveManager::StartWave()
+{
+	f_waveStartTimer = 10.f;
+}
+
 Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 {
 	if (root == nullptr)
@@ -224,6 +236,8 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 	if (enemy != nullptr)
 	{
 		enemy->player = this->player;
+		enemy->f_health *= (f_currScaling/100.f);
+		enemy->f_maxHealth *= (f_currScaling / 100.f);
 		enemyList.push_back(enemy);
 	}
 
