@@ -108,11 +108,11 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
 
 		camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 2.f, camera.defaultOrtho); // scrolling in and out
-		EdgePanning(dt, camera, worldX, worldY, 6 * tileMap.i_rows);
+		EdgePanning(dt, camera, screenX, screenY, 6 * tileMap.i_rows);
 	}
 	else // If LClick is being held down
 	{
-		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* button = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		if (button != nullptr)
 		{
 			button->rotation.y = Math::Wrap(button->rotation.y + 50.f * (float)dt,0.f,360.f);
@@ -178,11 +178,11 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		skip->b_isActive = true;
 	}
 
-	if (GUIManager::GetInstance()->FindGUI(worldX, worldY))
+	if (GUIManager::GetInstance()->FindGUI(screenX, screenY))
 	{
-		if (GUIManager::GetInstance()->FindGUI(worldX, worldY)->functionID == 10)
+		if (GUIManager::GetInstance()->FindGUI(screenX, screenY)->functionID == 10)
 		{
-			GUIManager::GetInstance()->FindGUI(worldX, worldY)->rotation.Set(10, 0, 0);
+			GUIManager::GetInstance()->FindGUI(screenX, screenY)->rotation.Set(10, 0, 0);
 		}
 	}
 	else
@@ -568,7 +568,7 @@ void CursorControl::Clicking(TileMap &tileMap)
 	{
 		bLButtonState = false;
 		bPlacingTower = false;
-		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* button = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		
 		if (button != nullptr)
 		{

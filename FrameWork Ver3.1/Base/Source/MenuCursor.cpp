@@ -53,8 +53,8 @@ void MenuCursor::Update(const double &dt)
 	float w = Application::GetWindowWidth();
 	float h = Application::GetWindowHeight();
 
-	worldX = x / w - 0.5f; // -0.5 - 0.5
-	worldY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
+	screenX = x / w - 0.5f; // -0.5 - 0.5
+	screenY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
 	smoke1.Update(dt);
 	smoke2.Update(dt);
@@ -92,13 +92,13 @@ void MenuCursor::Update(const double &dt)
 	{
 		SceneMoveRight(CAMERA_SPEED, dt);
 		//option_6->scale.x += testx;
-		//float temphold = worldX;
+		//float temphold = screenX;
 	
 		
 		if (holdingdrag)
 		{
-			float mouseX = (worldX + 0.5f) * 80.f;
-			//float mouseY = (worldY + 0.5f) * 60.f;
+			float mouseX = (screenX + 0.5f) * 80.f;
+			//float mouseY = (screenY + 0.5f) * 60.f;
 
 			float buttonPosX = option_6->position.x;
 			//float buttonPosY = option_6->position.y;
@@ -114,11 +114,11 @@ void MenuCursor::Update(const double &dt)
 				option_6->scale.x += 20 * dt;
 			}
 
-			/*if (temphold >= worldX)
+			/*if (temphold >= screenX)
 			{
 				option_6->scale.x -= 10 * dt;
 			}
-			if (temphold <= worldX)
+			if (temphold <= screenX)
 			{
 				option_6->scale.x += 10 * dt;
 			}*/
@@ -171,7 +171,7 @@ void MenuCursor::Clicking(double dt)
 	{
 		bLButtonState = true;
 
-		GUI* temp = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* temp = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		if (temp != nullptr)
 		{
 			static const float CAMERA_SPEED = 10.f;
@@ -212,7 +212,7 @@ void MenuCursor::Clicking(double dt)
 			if (temp->functionID == 8)
 			{
 				holdingdrag = true;
-				//temphold = worldX;
+				//temphold = screenX;
 
 				
 				
