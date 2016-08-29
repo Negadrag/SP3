@@ -73,7 +73,7 @@ void Assignment::Update(double dt)
 	if (Application::IsKeyPressed('N'))
 	{
 		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		SceneManager::GetInstance()->ChangeScene(8, true);
+		SceneManager::GetInstance()->ChangeScene(8, false);
 	}
 
 	testMap.waves.Update(dt);
@@ -115,16 +115,19 @@ void Assignment::Render()
 		}
 	}
 
+	float tempStatsX = 68;
+	float tempStatsY = 30;
+
 	//On screen text
 	std::ostringstream ss;
 	ss.precision(5);
 	ss << "FPS: " << fps;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 21);
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 55);
 	
 	ss.str("");
 	ss.precision(5);
-	ss << "Health left: " << player.i_health;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 3);
+	ss << "  " << player.i_health;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, tempStatsX+2, tempStatsY + 5);
 
 	ss.str("");
 	ss.precision(1);
@@ -139,25 +142,34 @@ void Assignment::Render()
 
 	ss.str("");
 	ss.precision(5);
-	ss << "Currency: " << player.i_currency;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 6);
+	ss << player.i_currency;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, tempStatsX + 5, tempStatsY+25);
+
+	RenderManager::GetInstance()->RenderMeshOnScreen(GEO_COIN, false, Vector3(tempStatsX + 1.9f, tempStatsY+26.5f, 0), Vector3(2.8f, 2.8f, 2.8f), Vector3(0, 0, 0));
+	RenderManager::GetInstance()->RenderMeshOnScreen(GEO_ICEESSENCE, false, Vector3(tempStatsX + 2, tempStatsY+10.5f, 0), Vector3(3, 3, 3), Vector3(0, 0, 0));
+	RenderManager::GetInstance()->RenderMeshOnScreen(GEO_POISONESSENCE, false, Vector3(tempStatsX + 2, tempStatsY+14.5f, 0), Vector3(3, 3, 3), Vector3(0, 0, 0));
+	RenderManager::GetInstance()->RenderMeshOnScreen(GEO_TANKESSENCE, false, Vector3(tempStatsX + 2, tempStatsY+18.5f, 0), Vector3(3, 3, 3), Vector3(0, 0, 0));
+	RenderManager::GetInstance()->RenderMeshOnScreen(GEO_SPEEDESSENCE, false, Vector3(tempStatsX + 2, tempStatsY+22.5f, 0), Vector3(3, 3, 3), Vector3(0, 0, 0));
+	RenderManager::GetInstance()->RenderMeshOnScreen(GEO_LIVES, false, Vector3(tempStatsX+2.f, tempStatsY+6.5f, 0), Vector3(2.5f, 2.5f, 2.5f), Vector3(0, 0, 0));
+
+
 
 	ss.str("");
 	ss.precision(5);
-	ss << "ice: " << player.i_essenceIce;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 9);
+	ss << player.i_essenceIce;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, tempStatsX + 5, tempStatsY+9);
 	ss.str("");
 	ss.precision(5);
-	ss << "basic: " << player.i_essenceBasic;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 12);
+	ss << player.i_essenceBasic;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, tempStatsX + 5, tempStatsY+13);
 	ss.str("");
 	ss.precision(5);
-	ss << "tank: " << player.i_essenceTanky;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 15);
+	ss << player.i_essenceTanky;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, tempStatsX + 5, tempStatsY+17);
 	ss.str("");
 	ss.precision(5);
-	ss << "Speed: " << player.i_essenceSpeed;
-	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 18);
+	ss << player.i_essenceSpeed;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, tempStatsX + 5, tempStatsY+ 21);
 }
 
 void Assignment::Exit()

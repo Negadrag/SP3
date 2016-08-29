@@ -343,6 +343,27 @@ void RenderManager::InitMesh()
 	meshList[GEO_PARTICLE_GREEN] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	meshList[GEO_PARTICLE_GREEN]->textureArray[0] = LoadTGA("Image//GreenParticle.tga");
 
+	meshList[GEO_COIN] = MeshBuilder::GenerateSpriteAnimation("coin", 1, 10);
+	meshList[GEO_COIN]->textureArray[0] = LoadTGA("Image//Coin.tga");
+	SpriteAnimation* sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_COIN]);
+	if (sa)
+	{
+		sa->m_anim = new Animation();
+		sa->m_anim->Set(0, 9, 0, 1, true);
+	}
+
+	meshList[GEO_LIVES] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_LIVES]->textureArray[0] = LoadTGA("Image//Heart.tga");
+	meshList[GEO_ICEESSENCE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_ICEESSENCE]->textureArray[0] = LoadTGA("Image//IceEssence.tga");
+	meshList[GEO_POISONESSENCE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_POISONESSENCE]->textureArray[0] = LoadTGA("Image//PoisonEssence.tga");
+	meshList[GEO_TANKESSENCE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_TANKESSENCE]->textureArray[0] = LoadTGA("Image//TankEssence.tga");
+	meshList[GEO_SPEEDESSENCE] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	meshList[GEO_SPEEDESSENCE]->textureArray[0] = LoadTGA("Image//SpeedEssence.tga");
+
+
 	meshList[GEO_SAVE] = MeshBuilder::GenerateQuad("Save", Color(1, 1, 1), 1.f);
 	meshList[GEO_SAVE]->textureArray[0] = LoadTGA("Image//save.tga");
 }
@@ -751,6 +772,13 @@ void RenderManager::Update(double dt)
 	if (Application::IsKeyPressed('B'))
 	{
 		viewStack.LoadIdentity();
+	}
+
+	SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_COIN]);
+	if (sa)
+	{
+		sa->Update(dt);
+		sa->m_anim->animActive = true;
 	}
 }
 

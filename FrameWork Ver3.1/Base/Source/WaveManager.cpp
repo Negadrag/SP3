@@ -238,7 +238,6 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 		enemy->player = this->player;
 		enemy->f_health *= (f_currScaling/100.f);
 		enemy->f_maxHealth *= (f_currScaling / 100.f);
-		std::cout << enemy->f_maxHealth << std::endl;
 		enemyList.push_back(enemy);
 	}
 
