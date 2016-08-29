@@ -26,6 +26,10 @@ WaveManager::WaveManager(Node* root)
 	i_currentRevolution = 0;
 	i_typeVecIndex = 0;
 	f_waveStartTimer = 0.f;
+	f_startingHp = 90.f;
+	f_hpScaling = 10.f; 
+	f_currScaling = f_startingHp;
+
 
 	this->root = root;
 	this->b_allWaveEnded = false;
@@ -107,6 +111,7 @@ void WaveManager::Update(double dt)
 			}
 			if (f_waveStartTimer >= 10.f)
 			{
+				f_currScaling *= (1.f + (f_hpScaling / 100.f));
 				b_miniGame = true;
 				f_waveStartTimer = 0.f;
 				i_currentRevolution = 0;
@@ -224,6 +229,9 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 	if (enemy != nullptr)
 	{
 		enemy->player = this->player;
+		enemy->f_health *= (f_currScaling/100.f);
+		enemy->f_maxHealth *= (f_currScaling / 100.f);
+		std::cout << enemy->f_maxHealth << std::endl;
 		enemyList.push_back(enemy);
 	}
 

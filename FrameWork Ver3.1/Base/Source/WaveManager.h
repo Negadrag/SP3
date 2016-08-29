@@ -28,6 +28,7 @@ public:
 	
 	int i_revolution;
 	
+
 	float f_spawnFrequency;
 private:
 
@@ -46,6 +47,9 @@ public:
 	int i_typeVecIndex;
 	bool b_waveEnded;
 	bool b_miniGame;
+	float f_startingHp; // the starting percentage of the monster base hp for wave 1
+	float f_hpScaling; // percentage of the health scaling per wave;
+	float f_currScaling; // percentage scaling of the current wave
 
 	void SetRoot(Node* root);
 	void AddWave(vector<ENEMY_TYPE> typeVec , int revolution , float spawnFrequency);

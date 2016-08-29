@@ -44,7 +44,77 @@ void IceMonster::MoveTo(Vector2 dest, double dt)
 		return;
 	}
 	view.Normalize();
+	float rotationZToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
+	float rotationSpeed = 360.f;
+	rotationZToBe = round(rotationZToBe);
+	if (this->f_showHealthTimer > 0.f)
+	{
+		if (this->hp.rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
+		{
+			if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
+			{
+				rotationZToBe += 360;
+			}
+			else if (rotationZToBe == -0)
+			{
+				rotationZToBe = 0;
+			}
 
+			if (abs(rotationZToBe - hp.rotation.z) <180)
+			{
+				if (rotationZToBe > hp.rotation.z)
+				{
+
+					hp.rotation.z += rotationSpeed * dt;
+					if (rotationZToBe < hp.rotation.z)
+					{
+						hp.rotation.z = rotationZToBe;
+					}
+
+
+				}
+				else if (rotationZToBe < hp.rotation.z)
+				{
+					hp.rotation.z -= rotationSpeed * dt;
+					if (rotationZToBe > hp.rotation.z)
+					{
+						hp.rotation.z = rotationZToBe;
+					}
+				}
+			}
+			else
+			{
+				if (rotationZToBe > hp.rotation.z)
+				{
+
+					hp.rotation.z -= rotationSpeed * dt;
+					if (hp.rotation.z < 0.f) // wind around if negative numbers
+					{
+						hp.rotation.z += 360;
+					}
+					else if (hp.rotation.z == -0.f) // negate negative 0;
+					{
+						hp.rotation.z = 0;
+					}
+
+				}
+				else if (rotationZToBe < hp.rotation.z)
+				{
+					hp.rotation.z += rotationSpeed * dt;
+					if (hp.rotation.z >360.f)
+					{
+						hp.rotation.z -= 360;
+					}
+				}
+			}
+		
+		}
+		hp.pos.Set(0, 0, 1);
+		hp.b_Render = true;
+		hp.pos = this->pos + Vector3(0, 0, 1);
+		//hp.rotation.z = rotationZToBe;
+		hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
+	}
 	view = view * f_movSpeed *((float)(100 - f_slow) / 100.f) * dt;
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x;

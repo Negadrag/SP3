@@ -259,6 +259,7 @@ void Tower::ClearProjectile()
 		delete(*it);
 	}
 	projectileList.clear();
+
 }
 
 vector<Enemy*> Tower::GetEnemyInRange()
