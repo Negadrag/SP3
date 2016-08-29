@@ -265,7 +265,3 @@ void WaveManager::Exit()
 	ClearEnemyList();
 	waveList.clear();
 }
-
-void WaveManager::StartWave()
-{
-}

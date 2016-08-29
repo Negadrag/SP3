@@ -158,3 +158,7 @@ void IceMonster::GiveEssence()
 	//Enemy::GiveCurrency();
 	player->i_essenceIce += 1;
 }
+
+void IceMonster::ReceiveSlowStatus(float slowAmount, float slowDuration)
+{
+}
