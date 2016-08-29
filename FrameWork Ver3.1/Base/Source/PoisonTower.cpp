@@ -2,8 +2,8 @@
 #include "SingleTarget.h"
 #include "PoisonProjectile.h"
 
-int PoisonTower::cost = 10;
-int PoisonTower::ecost = 100;
+int PoisonTower::cost = 50;
+int PoisonTower::ecost = 200;
 Tower::ESSENCE_TYPE PoisonTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
 PoisonTower::PoisonTower()

@@ -1,7 +1,7 @@
 #include "SpeedTower.h"
 #include "SingleTarget.h"
 
-int SpeedTower::cost = 10;
+int SpeedTower::cost = 50;
 int SpeedTower::ecost = 100;
 Tower::ESSENCE_TYPE SpeedTower::type = Tower::ESSENCE_TYPE::E_SPEED;
 SpeedTower::SpeedTower()

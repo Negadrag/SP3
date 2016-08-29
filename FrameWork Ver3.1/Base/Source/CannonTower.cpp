@@ -12,8 +12,8 @@ CannonTower::CannonTower()
 	this->i_level = 1;
 	SetAtkDmg(25);
 	SetRange(7.f);
-	SetSpdRate(0.75f);
-	this->p_speed = 12.f;
+	SetSpdRate(0.50f);
+	this->p_speed = 15.f;
 	this->towerCost = cost;
 	this->essenceCost = ecost;
 	this->essence = type;
@@ -21,7 +21,7 @@ CannonTower::CannonTower()
 	this->fullMeshID = GEO_CANNONTOWER;
 	this->projectile_meshID = GEO_CANNON;
 	this->heightOffset.Set(0, 0, 2);
-	this->strategy = LOWEST_HEALTH;
+	this->strategy = NEAREST_ENEMY;
 	s_name = "Cannon Tower";
 
 	this->particleGenerator.SetType(GEO_CANNONBLAST);
