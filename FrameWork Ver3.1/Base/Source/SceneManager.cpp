@@ -51,7 +51,7 @@ void SceneManager::Init()
 	CreateScene(new MainMenu());
 	
 
-	this->m_currentSceneID = 8;
+	this->m_currentSceneID = 1;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
 	GUIManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
