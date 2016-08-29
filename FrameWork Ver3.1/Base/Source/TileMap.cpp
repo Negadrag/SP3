@@ -12,23 +12,7 @@ TileMap::TileMap(const int tileSize)
 
 TileMap::~TileMap()
 {
-	for (int i = 0; i < i_columns; ++i)
-	{
-		if (screenMap[i] != nullptr)
-		{
-			delete screenMap[i];
-		}
-	}
-
-	if (screenMap != nullptr)
-	{
-		delete screenMap;
-	}
-
-	if (root != nullptr)
-	{
-		delete root;
-	}
+	Exit();
 }
 
 bool TileMap::LoadMap(std::fstream &file)
@@ -243,7 +227,7 @@ bool TileMap::LoadWaves(vector<string> wave)
 		bool checkFrequency = false;
 
 		int revolutions = 0;
-		int frequency = 0;
+		float frequency = 0;
 
 		vector<ENEMY_TYPE> enemyType;
 
@@ -286,7 +270,11 @@ bool TileMap::LoadWaves(vector<string> wave)
 			}
 			else if (checkRevolutions && checkFrequency)
 			{
-				frequency = atoi(temp2.c_str());
+				frequency = atof(temp2.c_str());
+				if (frequency <= 0)
+				{
+					frequency = 1;
+				}
 				break;
 			}
 		}
@@ -294,4 +282,30 @@ bool TileMap::LoadWaves(vector<string> wave)
 		waves.AddWave(enemyType, revolutions, frequency);
 	}
 	return true;
+}
+
+void TileMap::Exit()
+{
+	for (int i = 0; i < i_columns; ++i)
+	{
+		if (screenMap[i] != nullptr)
+		{
+			delete screenMap[i];
+			screenMap[i] = nullptr;
+		}
+	}
+
+	if (screenMap != nullptr)
+	{
+		delete screenMap;
+		screenMap = nullptr;
+	}
+
+	if (root != nullptr)
+	{
+		delete root;
+		root = nullptr;
+	}
+
+	waves.Exit();
 }

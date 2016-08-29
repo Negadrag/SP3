@@ -10,6 +10,7 @@
 #include <sstream>
 #include "SceneManager.h"
 #include "Music.h"
+#include "BuffTower.h"
 
 
 Assignment::Assignment():Scene()
@@ -155,8 +156,15 @@ void Assignment::Exit()
 	{
 		if (*it != nullptr)
 		{
+			BuffTower* temp = dynamic_cast<BuffTower*>(*it);
+			if (temp)
+			{
+				temp->towerList = nullptr;
+			}
 			delete *it;
 		}
 	}
 	towerList.clear();
+	cursor.Clear();
+	testMap.Exit();
 }

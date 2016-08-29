@@ -86,12 +86,13 @@ void MainMenu::Update(double dt)
 	redfall.SpawnParticle(Vector3(0, 1000, 1));*/
 
 	waterfountain.Update(dt);
+	
 
 	waterfountain.SetType(GEO_PARTICLE_BLUE);
 	waterfountain.SetFrequency(1);
 	waterfountain.SetCap(1000);
 	waterfountain.i_spawnAmount = 1;
-	waterfountain.f_lifeTime = 15.f;
+	waterfountain.f_lifeTime = 3.f;
 	waterfountain.minVel.Set(-4, 10, -4);
 	waterfountain.maxVel.Set(4, 30, 4);
 	waterfountain.scale.Set(2, 2, 2);
@@ -100,6 +101,7 @@ void MainMenu::Update(double dt)
 	waterfountain.isActive = false;
 	waterfountain.SpawnParticle(Vector3(-0.4, 2, -119.5));
 
+	
 
 	if (Application::IsKeyPressed('L'))
 		testx += dt * 10;

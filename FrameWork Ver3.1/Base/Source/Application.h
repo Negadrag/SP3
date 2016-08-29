@@ -13,6 +13,7 @@ public:
 		static Application app;
 		return app;
 	}
+	bool b_Exit;
 	void Init();
 	void Run();
 	void Exit();
@@ -33,9 +34,10 @@ private:
 
 	// Declare the window width and height as constant integer
 	const static int m_window_deadzone = 30;
-	const static int m_window_width = 1600;
-	const static int m_window_height = 900;
+	const static int m_window_width = 1920;
+	const static int m_window_height = 1080;
 	//Declare a window object
+
 	StopWatch m_timer;
 };
 
