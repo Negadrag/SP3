@@ -191,6 +191,11 @@ void WaveManager::ClearEnemyList()
 	enemyList.clear();
 }
 
+void WaveManager::StartWave()
+{
+	f_waveStartTimer = 10.f;
+}
+
 Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 {
 	if (root == nullptr)

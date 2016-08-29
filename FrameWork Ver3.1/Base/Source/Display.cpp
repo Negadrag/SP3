@@ -131,7 +131,7 @@ void Display::Render()
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.y), Color(1, 0, 0), 2, 15, 15);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.z), Color(1, 0, 0), 2, 15, 10);
 
-	BannerManager(false, true);
+	BannerManager(!player.b_showcaseEnemy, true);
 
 	if (camera.showcase_intro == true)
 		RenderManager::GetInstance()->RenderTextOnScreen("Press C to continue.", Color(1, 1, 0), 3, 20, 0);

@@ -80,11 +80,25 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	selling->textColor.Set(1, 0, 0);
 	selling->SetParent(towerStats[0]);
 	selling->position.Set(0, -5.5f, 0);
+
+	skip = new GUI("Skip");
+	skip->b_isActive = true;
+	skip->b_lightEnabled = false;
+	skip->SetTextSize(2);
+	skip->textColor.Set(1, 1, 0);
+	skip->position.Set(70, 5, 5);
+	skip->buttonSize.Set(10, 10);
+	skip->meshID = GEO_QUAD;
+	skip->scale.Set(10, 10, 1);
+	skip->meshOffset.Set(5, 2.5f, 0);
+	skip->textOffset.Set(2.5, 1.5, 0);
+	skip->b_buttonActive = true;
+	skip->functionID = 10;
 }
 
 static float debounce = 0.f;
 
-void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt)
+void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &dt)
 {
 	Cursor::Update(camera, tileMap, dt);
 	debounce += (float)dt;
@@ -154,6 +168,28 @@ void CursorControl::Update(OrthoCamera &camera, const TileMap &tileMap, const do
 			towerStats[i]->b_isActive = false;
 		}
 	}
+
+	if (!tileMap.waves.b_waveEnded)
+	{
+		skip->b_isActive = false;
+	}
+	else
+	{
+		skip->b_isActive = true;
+	}
+
+	if (GUIManager::GetInstance()->FindGUI(worldX, worldY))
+	{
+		if (GUIManager::GetInstance()->FindGUI(worldX, worldY)->functionID == 10)
+		{
+			GUIManager::GetInstance()->FindGUI(worldX, worldY)->rotation.Set(10, 0, 0);
+		}
+	}
+	else
+	{
+		skip->rotation.Set(0, 0, 0);
+	}
+
 	AOEDisplay(tower);
 	Clicking(tileMap);
 	CameraBounds(camera);
@@ -349,7 +385,7 @@ void CursorControl::AOEDisplay(Tower* tower)
 	}
 }
 
-void CursorControl::HotKeys(const TileMap &tileMap)
+void CursorControl::HotKeys(TileMap &tileMap)
 {
 	float cooldown = 0.5f;
 
@@ -499,7 +535,7 @@ void CursorControl::HotKeys(const TileMap &tileMap)
 	}
 }
 
-void CursorControl::Clicking(const TileMap &tileMap)
+void CursorControl::Clicking(TileMap &tileMap)
 {
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
@@ -687,7 +723,7 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 	}
 }
 
-void CursorControl::HandleButton(const TileMap &tileMap,GUI* button)
+void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 {
 	if (button->functionID == 0)
 	{
@@ -808,6 +844,11 @@ void CursorControl::HandleButton(const TileMap &tileMap,GUI* button)
 				}
 			}
 		}
+	}
+	else if (button->functionID == 10)
+	{
+		tileMap.waves.StartWave();
+		//std::cout << "WAVE STARTED" << std::endl;
 	}
 }
 
@@ -941,5 +982,9 @@ void CursorControl::Clear()
 	if (selling != nullptr)
 	{
 		delete selling;
+	}
+	if (skip != nullptr)
+	{
+		delete skip;
 	}
 }
