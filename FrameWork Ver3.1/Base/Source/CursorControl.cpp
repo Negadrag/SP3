@@ -622,10 +622,10 @@ void CursorControl::UpgradeButtons(Tower* tower)
 		os << "Cost:" << tower->GetCost();
 		upgradeCosts[0]->SetText(os.str());
 		upgradeCosts[0]->b_isActive = true;
-		if (tower->essenceCost > 0)
+		if (tower->essenceUpgradeCost > 0)
 		{
 			os.str("");
-			os << "ECost:" << tower->essenceCost;
+			os << "ECost:" << tower->essenceUpgradeCost;
 			essenceCost[0]->SetText(os.str());
 			CostColor(essenceCost[0], tower->essence);
 			essenceCost[0]->b_isActive = true;
@@ -658,7 +658,6 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 		os << "Cost:" << IceTower::cost;
 		cost->SetText(os.str());
 		cost->b_isActive = true;
-
 		os.str("");
 		os << "ECost:" << IceTower::ecost;
 		ecost->SetText(os.str());
@@ -766,11 +765,11 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 		Tower* temp = FindTower(checkPositionX, checkPositionY);
 		if (Scene::player.i_currency >= temp->GetCost())
 		{
-			if (CheckPlayerEssence(temp->essence, temp->essenceCost))
+			if (CheckPlayerEssence(temp->essence, temp->essenceUpgradeCost))
 			{
 				if (temp->LevelUp())
 				{
-					RemovePlayerEssence(temp->essence, temp->essenceCost);
+					RemovePlayerEssence(temp->essence, temp->essenceUpgradeCost);
 					Scene::player.i_currency -= temp->GetCost();
 					temp->SetCost(temp->GetCost() * 2);
 				}

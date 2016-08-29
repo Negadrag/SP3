@@ -13,8 +13,8 @@ SpeedTower::SpeedTower()
 	SetRange(5);
 	SetSpdRate(7);
 	this->p_speed = 10.f;
-	this->towerCost = cost;
-	this->essenceCost = 100;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = 100;
 	this->essence = type;
 	this->meshID = GEO_SPEEDTOWER;
 	this->fullMeshID = GEO_SPEEDMODEL;

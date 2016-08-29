@@ -13,7 +13,7 @@ BuffTower::BuffTower(vector<Tower*> *tower)
 	SetRange(5);
 	this->atkDamage = 0;
 	this->atkSpeed = 0;
-	this->essenceCost = ecost;
+	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	f_increaseATK = 10.f;
 	f_increaseRANGE = 5.f;
