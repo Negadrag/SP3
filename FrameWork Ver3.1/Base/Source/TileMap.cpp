@@ -12,23 +12,7 @@ TileMap::TileMap(const int tileSize)
 
 TileMap::~TileMap()
 {
-	for (int i = 0; i < i_columns; ++i)
-	{
-		if (screenMap[i] != nullptr)
-		{
-			delete screenMap[i];
-		}
-	}
-
-	if (screenMap != nullptr)
-	{
-		delete screenMap;
-	}
-
-	if (root != nullptr)
-	{
-		delete root;
-	}
+	Exit();
 }
 
 bool TileMap::LoadMap(std::fstream &file)
@@ -294,4 +278,30 @@ bool TileMap::LoadWaves(vector<string> wave)
 		waves.AddWave(enemyType, revolutions, frequency);
 	}
 	return true;
+}
+
+void TileMap::Exit()
+{
+	for (int i = 0; i < i_columns; ++i)
+	{
+		if (screenMap[i] != nullptr)
+		{
+			delete screenMap[i];
+			screenMap[i] = nullptr;
+		}
+	}
+
+	if (screenMap != nullptr)
+	{
+		delete screenMap;
+		screenMap = nullptr;
+	}
+
+	if (root != nullptr)
+	{
+		delete root;
+		root = nullptr;
+	}
+
+	waves.Exit();
 }

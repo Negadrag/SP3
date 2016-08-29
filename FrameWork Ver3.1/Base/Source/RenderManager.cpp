@@ -23,15 +23,16 @@ RenderManager::RenderManager()
 
 RenderManager::~RenderManager()
 {
-	glDeleteProgram(m_programID);
-	glDeleteProgram(m_gPassShaderID);
-
-	
-
+	// Cleanup VBO
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
-		delete meshList[i];
+		if (meshList[i])
+			delete meshList[i];
 	}
+	
+	glDeleteProgram(m_programID);
+	glDeleteProgram(m_gPassShaderID);
+	glDeleteVertexArrays(1, &m_vertexArrayID);
 }
 
 void RenderManager::Init()

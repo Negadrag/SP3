@@ -42,7 +42,7 @@ public:
 
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
-	void Clear();
+	virtual void Clear();
 private:
 	string StrategyToString(Tower::STRATEGY strats);
 	void TowerButtons();

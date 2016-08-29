@@ -10,6 +10,7 @@
 #include <sstream>
 #include "SceneManager.h"
 
+#include <windows.h>
 
 MapEditor::MapEditor() :Scene()
 {
@@ -25,8 +26,9 @@ void MapEditor::Init()
 {
 	if (b_startScene == true)
 	{
+		HWND hwnd = GetConsoleWindow();
+		SetForegroundWindow(hwnd);
 		HandleInput();
-
 		tileMap.LoadEmpty();
 		//this->m_sceneID = 1;
 

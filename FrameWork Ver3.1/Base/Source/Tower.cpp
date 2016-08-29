@@ -250,15 +250,16 @@ void Tower::Fire(double dt)
 
 void Tower::ClearProjectile()
 {
-	if (projectileList.empty() == false)
+	if (projectileList.empty())
 	{
-		for (vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
-		{
-			delete(*it);
-		}
-		projectileList.clear();
+		return;
 	}
-	
+	for (vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
+	{
+		delete(*it);
+	}
+	projectileList.clear();
+
 }
 
 vector<Enemy*> Tower::GetEnemyInRange()

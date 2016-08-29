@@ -25,6 +25,8 @@ public:
 	Node *root;
 	WaveManager waves;
 
+	void Exit();
+
 	bool LoadMap(std::fstream &file);
 	bool LoadWaves(vector<string> wave);
 	bool LoadEmpty();

@@ -26,6 +26,10 @@ WaveManager::WaveManager(Node* root)
 	i_currentRevolution = 0;
 	i_typeVecIndex = 0;
 	f_waveStartTimer = 0.f;
+	f_startingHp = 90.f;
+	f_hpScaling = 10.f; 
+	f_currScaling = f_startingHp;
+
 
 	this->root = root;
 	this->b_allWaveEnded = false;
@@ -35,7 +39,7 @@ WaveManager::WaveManager(Node* root)
 
 WaveManager::~WaveManager()
 {
-	ClearEnemyList();
+	Exit();
 }
 
 void WaveManager::SetRoot(Node* root)
@@ -107,6 +111,7 @@ void WaveManager::Update(double dt)
 			}
 			if (f_waveStartTimer >= 10.f)
 			{
+				f_currScaling *= (1.f + (f_hpScaling / 100.f));
 				b_miniGame = true;
 				f_waveStartTimer = 0.f;
 				i_currentRevolution = 0;
@@ -224,6 +229,9 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 	if (enemy != nullptr)
 	{
 		enemy->player = this->player;
+		enemy->f_health *= (f_currScaling/100.f);
+		enemy->f_maxHealth *= (f_currScaling / 100.f);
+		std::cout << enemy->f_maxHealth << std::endl;
 		enemyList.push_back(enemy);
 	}
 
@@ -233,4 +241,21 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 vector<Enemy*>* WaveManager::GetEnemyList()
 {
 	return &enemyList;
+}
+
+void WaveManager::Exit()
+{
+	f_spawnTimer = 0.f;
+	i_currentWave = 0;
+	i_currentRevolution = 0;
+	i_typeVecIndex = 0;
+	f_waveStartTimer = 0.f;
+
+	this->root = nullptr;
+	this->b_allWaveEnded = false;
+	this->player = nullptr;
+	b_miniGame = true;
+
+	ClearEnemyList();
+	waveList.clear();
 }
