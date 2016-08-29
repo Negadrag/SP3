@@ -32,7 +32,7 @@ public:
 	void Update(double dt);
 	void ReceiveDamage(float damage);
 	void ReceivePoisonDamage(float damage);
-	void ReceiveSlowStatus(float slowAmount, float slowDuration);
+	virtual void ReceiveSlowStatus(float slowAmount, float slowDuration);
 	void ReceivePoisonStatus(float poisonDamage,float slowAmount,float duration);
 	virtual void UpdateAnim(double dt);
 	virtual void GiveCurrency();

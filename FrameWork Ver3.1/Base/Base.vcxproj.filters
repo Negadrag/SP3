@@ -324,6 +324,9 @@
     <ClCompile Include="Source\LoseScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Boss.cpp">
+      <Filter>Source Files\ObjectClasses\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -532,6 +535,9 @@
     </ClInclude>
     <ClInclude Include="Source\MainMenu.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss.h">
+      <Filter>Header Files\ObjectClasses\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

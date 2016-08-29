@@ -127,6 +127,17 @@ void Assignment::Render()
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 3);
 
 	ss.str("");
+	ss.precision(1);
+	{
+		int timer = 10.f - testMap.waves.f_waveStartTimer;
+		if (timer > 0 && testMap.waves.b_waveEnded)
+		{
+			ss << "Time: " << timer;
+		}	
+	}
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 50, 3);
+
+	ss.str("");
 	ss.precision(5);
 	ss << "Currency: " << player.i_currency;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 0, 6);

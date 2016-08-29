@@ -99,7 +99,7 @@ void WaveManager::Update(double dt)
 		else if (WaveEnded(i_currentWave))
 		{
 			f_waveStartTimer += dt;
-			if (f_waveStartTimer >= 2.f)
+			if (f_waveStartTimer >= 0.9f)
 			{
 				b_waveEnded = true;
 			}
@@ -112,6 +112,7 @@ void WaveManager::Update(double dt)
 			if (f_waveStartTimer >= 10.f)
 			{
 				f_currScaling *= (1.f + (f_hpScaling / 100.f));
+				player->i_currency += 5;
 				b_miniGame = true;
 				player->i_currency += 5;
 				f_waveStartTimer = 0.f;
@@ -189,6 +190,11 @@ void WaveManager::ClearEnemyList()
 		delete (*it);
 	}
 	enemyList.clear();
+}
+
+void WaveManager::StartWave()
+{
+	f_waveStartTimer = 10.f;
 }
 
 Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
