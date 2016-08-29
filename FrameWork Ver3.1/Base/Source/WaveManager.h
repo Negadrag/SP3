@@ -58,6 +58,7 @@ public:
 	void ClearEnemyList();
 	void Exit();
 	void Update(double dt);
+	void StartWave();
 	vector<Enemy*>* GetEnemyList();
 	PlayerInfo* player;
 

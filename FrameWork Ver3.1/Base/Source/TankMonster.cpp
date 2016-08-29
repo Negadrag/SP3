@@ -10,7 +10,7 @@ TankMonster::TankMonster() :Enemy()
 	this->i_damage = 1;
 	this->i_defence = 30;
 	this->f_rotateSpeed = 90.f;
-	this->i_currency = 1;
+	this->i_currency = 2;
 }
 
 TankMonster::TankMonster(Vector3 pos, Node* root) :Enemy(pos, root)
@@ -23,7 +23,7 @@ TankMonster::TankMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->i_damage = 1;
 	this->i_defence = 30;
 	this->f_rotateSpeed = 90.f;
-	i_currency = 1;
+	i_currency = 2;
 	this->scale.Set(0.75f, 0.75f, 0.75f);
 }
 
