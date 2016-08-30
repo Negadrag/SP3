@@ -14,6 +14,7 @@ enum ENEMY_TYPE
 	ICE_MONSTER,
 	SPEED,
 	TANK,
+	BOSS,
 	NUM_ENEMY
 };
 
