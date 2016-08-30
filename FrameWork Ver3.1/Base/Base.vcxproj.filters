@@ -112,14 +112,14 @@
     <Filter Include="Source Files\ObjectClasses\Cursor">
       <UniqueIdentifier>{e8a03aa3-9b32-4d5f-8e26-9a511fbf67d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\System\Scene">
-      <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\System\Music">
       <UniqueIdentifier>{1c976c6d-7464-4f67-9ff7-6874af51763f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\System\Music">
       <UniqueIdentifier>{96dc96d6-f3fa-4b8a-97cf-97b940bf8cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Render\Scene">
+      <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -241,10 +241,10 @@
       <Filter>Source Files\System\Render</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
-      <Filter>Source Files\System\Scene</Filter>
+      <Filter>Source Files\System\Render\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source Files\System\Scene</Filter>
+      <Filter>Source Files\System\Render\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\ArrowTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>

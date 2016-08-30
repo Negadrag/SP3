@@ -6,6 +6,7 @@
 #include "GUI.h"
 #include "RenderManager.h"
 #include "ParticleGenerator.h"
+#include "Music.h"
 
 
 class MenuCursor : public Cursor
@@ -70,15 +71,17 @@ private:
 	GUI* option_1;
 	GUI* option_2;
 
-
 	GUI* option_5;
 	GUI* option_6;
+	GUI* optionborder;	//bar border
 	
 
 	GUI* pressrighttoreturn;
 	ParticleGenerator smoke1;
 	ParticleGenerator smoke2;
 	ParticleGenerator smoke3;
+
+	
 
 	bool holdingdrag;
 
@@ -93,6 +96,9 @@ private:
 
 	float testx, testy, testz;
 	float clickoffsetX;
+
+	float adjsizeX;	//size of volume bar and scale
+	float adjsizeY;	
 
 	int scene_change;
 

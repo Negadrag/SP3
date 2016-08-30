@@ -11,6 +11,7 @@
 #include "Terrain.h"
 #include "Application.h"
 #include "ParticleGenerator.h"
+#include "GUI.h"
 
 using std::vector;
 
@@ -52,6 +53,8 @@ private:
 	Renderable skyback;
 	//Renderable forValor;
 
+	GUI* descriptBG;
+
 	bool bLightEnabled;
 	Vector3 distance;
 	float angle;
@@ -64,6 +67,9 @@ private:
 	float f_timer;
 
 	bool b_skipDebounce;
+	bool b_opendescript;
+	bool b_showdescript;
+	int i_diplayedObject;
 
 };
 
