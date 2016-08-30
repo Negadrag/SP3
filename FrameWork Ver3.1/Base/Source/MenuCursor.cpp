@@ -37,6 +37,9 @@ void MenuCursor::Init(GameplayCam *camera)
 	menu_states = 0;
 	scene_change = 1;
 
+	adjsizeX = 0;	//size of volume bar to set to relative of music
+	adjsizeY = 0;
+
 	clickoffsetX = 0;
 
 	MainButtonsInit();
@@ -75,8 +78,8 @@ void MenuCursor::Update(const double &dt)
 		testz -= dt * 10.f;
 
 	
-	
-	
+
+
 	static const float CAMERA_SPEED = 60.f;
 
 	if (menu_states == 5) //4 is used for exit
@@ -85,16 +88,15 @@ void MenuCursor::Update(const double &dt)
 
 		SmokeInit();
 
-		
+
 
 	}
+	std::cout << Music::GetInstance()->f_masterVolume << std::endl;
 	if (menu_states == 3)
 	{
 		SceneMoveRight(CAMERA_SPEED, dt);
 		//option_6->scale.x += testx;
-		//float temphold = screenX;
-	
-		
+
 		if (holdingdrag)
 		{
 			float mouseX = (screenX + 0.5f) * 80.f;
@@ -105,23 +107,17 @@ void MenuCursor::Update(const double &dt)
 
 			clickoffsetX = mouseX - buttonPosX;		//dist of click from button pos
 
-			if (option_6->scale.x >= clickoffsetX)
+			if (option_6->scale.x >= clickoffsetX && option_6->scale.x >= 1)
 			{
 				option_6->scale.x -= 20.f * dt;
 			}
-			if (option_6->scale.x <= clickoffsetX)
+			if (option_6->scale.x <= clickoffsetX && option_6->scale.x <= adjsizeX)
 			{
 				option_6->scale.x += 20.f * dt;
 			}
 
-			/*if (temphold >= screenX)
-			{
-				option_6->scale.x -= 10 * dt;
-			}
-			if (temphold <= screenX)
-			{
-				option_6->scale.x += 10 * dt;
-			}*/
+			Music::GetInstance()->f_masterVolume = (option_6->scale.x / adjsizeX) * 4;
+
 		}
 	}
 	if (menu_states == 2)
@@ -141,7 +137,7 @@ void MenuCursor::Update(const double &dt)
 		SmokeInit();
 	}
 
-	
+
 	if (istransition)
 		ButtonDeactivator();
 	else
@@ -151,7 +147,7 @@ void MenuCursor::Update(const double &dt)
 		ButtonManager();
 	}
 
-	
+
 
 	Clicking(dt);
 	HotKeys();
@@ -214,9 +210,9 @@ void MenuCursor::Clicking(double dt)
 				holdingdrag = true;
 				//temphold = screenX;
 
-				
-				
-				
+
+
+
 			}
 			if (temp->functionID == 11)
 			{
@@ -224,7 +220,7 @@ void MenuCursor::Clicking(double dt)
 				menu_states = 1;
 				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
 				istransition = true;
-				
+
 			}
 			if (temp->functionID == 12)
 			{
@@ -285,7 +281,7 @@ void MenuCursor::SceneMoveNorth(float cam_spd, double dt)
 	}
 	else
 		istransition = false;
-		
+
 }
 
 void MenuCursor::SceneMoveRight(float cam_spd, double dt)
@@ -318,7 +314,7 @@ void MenuCursor::SceneMoveDark(float cam_spd, double dt)
 		camera->position -= right * turnCam_spd * (float)dt;
 		camera->target -= right * turnCam_spd * (float)dt;
 
-		
+
 	}
 	else if (camera->position.y >= 4)
 	{
@@ -367,7 +363,7 @@ void MenuCursor::SceneMoveBack(float cam_spd, double dt)
 		camera->position -= view * turnCam_spd * (float)dt;
 		camera->target -= view * turnCam_spd * (float)dt;
 	}
-	
+
 	else if (camera->position.x < -1)
 	{
 		Vector3 view = (camera->target - camera->position).Normalized();
@@ -413,7 +409,7 @@ void MenuCursor::ButtonManager()
 
 void MenuCursor::MainButtonsInit()
 {
-	
+
 	btn_play = new GUI("Start Game");
 	btn_play->position.Set(3, 30);
 	btn_play->SetTextSize(3);
@@ -444,7 +440,7 @@ void MenuCursor::MainButtonsInit()
 	btn_exit->buttonSize.Set(5, 5);
 	btn_exit->functionID = 4;
 
-	
+
 }
 
 void MenuCursor::MainButtonRender()
@@ -464,7 +460,7 @@ void MenuCursor::MainButtonRender()
 	btn_exit->b_isActive = true;
 	btn_exit->b_textActive = true;
 
-	
+
 
 
 }
@@ -536,7 +532,7 @@ void MenuCursor::InstructionsInit()
 	instr_title->b_isActive = false;
 	instr_title->b_textActive = false;
 	instr_title->b_lightEnabled = false;
-	
+
 	pressrighttoreturn = new GUI("Press Right-Click to return");
 	pressrighttoreturn->position.Set(20, 2);
 	pressrighttoreturn->SetTextSize(3);
@@ -559,7 +555,7 @@ void MenuCursor::OptionsInit()
 {
 
 	option_1 = new GUI("Shadow Options...");
-	option_1->position.Set(10, 35);
+	option_1->position.Set(10, 40);
 	option_1->SetTextSize(3);
 	option_1->buttonSize.Set(15, 5);
 	option_1->functionID = 9;
@@ -577,22 +573,38 @@ void MenuCursor::OptionsInit()
 
 
 	option_5 = new GUI("Set Shadow...");
-	option_5->position.Set(40, 30);
+	option_5->position.Set(40, 40);
 	option_5->SetTextSize(3);
 	option_5->buttonSize.Set(15, 5);
 	option_5->functionID = 9;
 	option_5->b_isActive = false;
 	option_5->b_textActive = false;
 
+	
+	adjsizeX = 25;
+	adjsizeY = 5;
+	float adjposX = 40;
+	float adjposY = 30;
+
 	option_6 = new GUI();
 	option_6->meshID = GEO_ADJUSTBAR;
-	option_6->scale.Set(30, 3, 1);
-	option_6->position.Set(40, 25);
+	option_6->scale.Set(adjsizeX, 3, 1);
+	option_6->position.Set(adjposX, adjposY);
 	option_6->SetTextSize(3);
-	option_6->buttonSize.Set(15, 5);
+	option_6->buttonSize.Set(adjsizeX, adjsizeY);
 	option_6->functionID = 8;
 	option_6->b_isActive = false;
 	option_6->b_textActive = false;
+
+	optionborder = new GUI();
+	optionborder->meshID = GEO_QUAD;
+	optionborder->scale.Set(adjsizeX+2, 4, 1);
+	optionborder->position.Set(adjposX + (adjsizeX / 2) , adjposY);
+	optionborder->SetTextSize(3);
+	optionborder->buttonSize.Set(adjsizeX, adjsizeY);
+	optionborder->functionID = 9;
+	optionborder->b_isActive = false;
+	optionborder->b_textActive = false;
 
 
 
@@ -618,7 +630,9 @@ void MenuCursor::OptionsRender()
 
 	option_6->b_isActive = true;
 	option_6->b_textActive = true;
-	
+
+	optionborder->b_isActive = true;
+	optionborder->b_textActive = true;
 
 	pressrighttoreturn->b_isActive = true;
 	pressrighttoreturn->b_textActive = true;
@@ -705,6 +719,18 @@ void MenuCursor::SmokeInit()
 		smoke2.f_maxDist = 1500.f;
 		smoke2.isActive = true;
 		smoke2.pos.Set(-35, 14, -10);
+
+		smoke3.SetType(GEO_SMOKEPARTICLES);
+		smoke3.SetFrequency(5);
+		smoke3.SetCap(1000);
+		smoke3.i_spawnAmount = 1;
+		smoke3.f_lifeTime = 10.f;
+		smoke3.minVel.Set(-0.2f, 1, 0);
+		smoke3.maxVel.Set(-0.5f, 1, 0);
+		smoke3.scale.Set(1, 1, 1);
+		smoke3.f_maxDist = 1500.f;
+		smoke3.isActive = true;
+		smoke3.pos.Set(-27, 14, -70);
 	}
 }
 
@@ -756,6 +782,8 @@ void MenuCursor::ButtonDeactivator()
 		option_6->b_isActive = false;
 		option_6->b_textActive = false;
 
+		optionborder->b_isActive = false;
+		optionborder->b_textActive = false;
 
 	pressrighttoreturn->b_isActive = false;
 	pressrighttoreturn->b_textActive = false;

@@ -34,7 +34,7 @@ void Display::Init()
 {
 	//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	testx = testy = testz = 0;
+	testx = testy = testz = 1;
 	banner_forward = -45;
 	banner_backward = 80;
 
@@ -44,6 +44,8 @@ void Display::Init()
 
 	RenderManager::GetInstance()->SetCamera(&camera);
 
+	b_opendescript = false;
+	b_showdescript = false;
 	b_initScene = false;
 	//std::cout << "entered";
 	if (player.i_showcaseIndex >= player.enemyToShowcase.size())
@@ -85,20 +87,44 @@ void Display::Update(double dt)
 
 
 	if (Application::IsKeyPressed('L'))
-		testx += dt * 100;
+		testx += dt * 50;
 	if (Application::IsKeyPressed('J'))
-		testx -= dt * 100;
+		testx -= dt * 50;
 	if (Application::IsKeyPressed('I'))
-		testy += dt * 100;
+		testy += dt * 50;
 	if (Application::IsKeyPressed('K'))
-		testy -= dt * 100;
+		testy -= dt * 50;
 	if (Application::IsKeyPressed('P'))
-		testz += dt * 100;
+		testz += dt * 50;
 	if (Application::IsKeyPressed('O'))
-		testz -= dt * 100;
+		testz -= dt * 50;
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
+
+	if (camera.showcase_intro == true)
+	{
+		descriptBG->b_isActive = true;
+		descriptBG->b_textActive = true;
+
+		b_opendescript = true;
+		//descriptBG->scale.x = testy;	//20
+		//descriptBG->scale.y = testx;	//30
+	}
+	if (b_opendescript == true)
+	{
+		if (descriptBG->scale.y < 20)
+		{
+			descriptBG->scale.y += 50 * dt;
+		}
+		else if (descriptBG->scale.x < 30)
+		{
+			descriptBG->scale.x += 40 * dt;
+		}
+		else
+			b_showdescript = true;
+		
+	}
 
 	float skyboxsize = 10000.f;
 	if (f_timer >= 1.5f)
@@ -113,6 +139,8 @@ void Display::Update(double dt)
 
 	if (b_skipDebounce == true && (Application::IsKeyPressed('C') || f_timer >= 30.f))
 	{
+		descriptBG->b_isActive = false;
+		descriptBG->b_textActive = false;
 		SceneManager::GetInstance()->ReinstanceScene(7);
 
 	}
@@ -124,12 +152,88 @@ void Display::Render()
 	int spacing = 13;
 
 	//-45 , 80
-	//RenderManager::GetInstance()->RenderTextOnScreen("YOU ", Color(1, 0, 0), 15, 25, 30);
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.x), Color(1, 0, 0), 2, 15, 20);
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.y), Color(1, 0, 0), 2, 15, 15);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testx), Color(1, 0, 1), 2, 15, 20);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testy), Color(1, 0, 1), 2, 15, 15);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.position.z), Color(1, 0, 0), 2, 15, 10);
 
 	BannerManager(!player.b_showcaseEnemy, true);
+
+	if (b_showdescript)
+	{
+		switch (i_diplayedObject)
+		{
+			case 1:
+				RenderManager::GetInstance()->RenderTextOnScreen("Minion", Color(0.3, 1, 0.3), 3, 60, 40);
+				RenderManager::GetInstance()->RenderTextOnScreen("Speed:   Med", Color(0.3, 1, 0.3), 2, 55, 33);
+				RenderManager::GetInstance()->RenderTextOnScreen("Base HP:   50", Color(0.3, 1, 0.3), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("Def:   10", Color(0.3, 1, 0.3), 2, 55, 27);
+				RenderManager::GetInstance()->RenderTextOnScreen("Notes: ", Color(0.3, 1, 0.3), 2, 55, 24);
+				RenderManager::GetInstance()->RenderTextOnScreen("  Immune to poison!", Color(0.3, 1, 0.3), 2, 55, 21);
+				break;
+			case 2:
+				RenderManager::GetInstance()->RenderTextOnScreen("IceCrystal", Color(0.6, 0.6, 1), 3, 57, 40);
+				RenderManager::GetInstance()->RenderTextOnScreen("Speed:   Med", Color(0.6, 0.6, 1), 2, 55, 33);
+				RenderManager::GetInstance()->RenderTextOnScreen("Base HP:   50", Color(0.6, 0.6, 1), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("Def:   15", Color(0.6, 0.6, 1), 2, 55, 27);
+				RenderManager::GetInstance()->RenderTextOnScreen("Notes: ", Color(0.6, 0.6, 1), 2, 55, 24);
+				RenderManager::GetInstance()->RenderTextOnScreen("  Immune to slow!", Color(0.6, 0.6, 1), 2, 55, 21);
+				break;
+			case 3:
+				RenderManager::GetInstance()->RenderTextOnScreen("Tanker", Color(1, 0.4, 0.4), 3, 60, 40);
+				RenderManager::GetInstance()->RenderTextOnScreen("Speed:   Slow", Color(1, 0.4, 0.4), 2, 55, 33);
+				RenderManager::GetInstance()->RenderTextOnScreen("Base HP:   100", Color(1, 0.4, 0.4), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("Def:   30", Color(1, 0.4, 0.4), 2, 55, 27);
+				RenderManager::GetInstance()->RenderTextOnScreen("Notes: ", Color(1, 0.4, 0.4), 2, 55, 24);
+				RenderManager::GetInstance()->RenderTextOnScreen(" Its slow but thick.", Color(1, 0.4, 0.4), 2, 55, 21);
+				break;
+			case 4:
+				RenderManager::GetInstance()->RenderTextOnScreen("Speeder", Color(0.6, 0.6, 0.6), 3, 60, 40);
+				RenderManager::GetInstance()->RenderTextOnScreen("Speed:   Fast", Color(0.6, 0.6, 0.6), 2, 55, 33);
+				RenderManager::GetInstance()->RenderTextOnScreen("Base HP:   30", Color(0.6, 0.6, 0.6), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("Def:   0", Color(0.6, 0.6, 0.6), 2, 55, 27);
+				RenderManager::GetInstance()->RenderTextOnScreen("Notes: ", Color(0.6, 0.6, 0.6), 2, 55, 24);
+				RenderManager::GetInstance()->RenderTextOnScreen("  Its fast but weak.", Color(0.6, 0.6, 0.6), 2, 55, 21);
+				break;
+
+			case 11:
+				RenderManager::GetInstance()->RenderTextOnScreen("PoisonTower", Color(0.3, 1, 0.3), 3, 57, 41);
+				RenderManager::GetInstance()->RenderTextOnScreen("Description: ", Color(0.3, 1, 0.3), 2, 55, 35);
+				RenderManager::GetInstance()->RenderTextOnScreen("Does damage while ", Color(0.3, 1, 0.3), 2, 55, 32);
+				RenderManager::GetInstance()->RenderTextOnScreen("poisoning enemies", Color(0.3, 1, 0.3), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("which slows and ", Color(0.3, 1, 0.3), 2, 55, 28);
+				RenderManager::GetInstance()->RenderTextOnScreen("reduces Hp over time ", Color(0.3, 1, 0.3), 2, 55, 26);
+				RenderManager::GetInstance()->RenderTextOnScreen("(Poison ignores defence!) ", Color(0.3, 1, 0.3), 1.5f, 55, 19);
+				break;
+			case 12:
+				RenderManager::GetInstance()->RenderTextOnScreen("IceTower", Color(0.6, 0.6, 1), 3, 59, 41);
+				RenderManager::GetInstance()->RenderTextOnScreen("Description: ", Color(0.6, 0.6, 1), 2, 55, 35);
+				RenderManager::GetInstance()->RenderTextOnScreen("Very Low Damage ", Color(0.6, 0.6, 1), 2, 55, 32);
+				RenderManager::GetInstance()->RenderTextOnScreen("but slows enemies", Color(0.6, 0.6, 1), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("more than the ", Color(0.6, 0.6, 1), 2, 55, 28);
+				RenderManager::GetInstance()->RenderTextOnScreen("Poison towers ", Color(0.6, 0.6, 1), 2, 55, 26);
+				RenderManager::GetInstance()->RenderTextOnScreen(" ", Color(0.6, 0.6, 1), 1.5f, 55, 19);
+				break;
+			case 13:
+				RenderManager::GetInstance()->RenderTextOnScreen("MortarTower", Color(0.1, 0.7, 0.7), 3, 57, 41);
+				RenderManager::GetInstance()->RenderTextOnScreen("Description: ", Color(0.1, 0.7, 0.7), 2, 55, 35);
+				RenderManager::GetInstance()->RenderTextOnScreen("Does super heavy ", Color(0.1, 0.7, 0.7), 2, 55, 32);
+				RenderManager::GetInstance()->RenderTextOnScreen("damage. But slow", Color(0.1, 0.7, 0.7), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("to recharge  ", Color(0.1, 0.7, 0.7), 2, 55, 28);
+				RenderManager::GetInstance()->RenderTextOnScreen(" ", Color(0.1, 0.7, 0.7), 2, 55, 26);
+				RenderManager::GetInstance()->RenderTextOnScreen(" ", Color(0.1, 0.7, 0.7), 1.5f, 55, 19);
+				break;
+			case 14:
+				RenderManager::GetInstance()->RenderTextOnScreen("SpeedTower", Color(0.7, 0.7, 0.7), 3, 57, 41);
+				RenderManager::GetInstance()->RenderTextOnScreen("Description: ", Color(0.7, 0.7, 0.7), 2, 55, 35);
+				RenderManager::GetInstance()->RenderTextOnScreen("This tower has ", Color(0.7, 0.7, 0.7), 2, 55, 32);
+				RenderManager::GetInstance()->RenderTextOnScreen("very fast shooting", Color(0.7, 0.7, 0.7), 2, 55, 30);
+				RenderManager::GetInstance()->RenderTextOnScreen("speed but low ", Color(0.7, 0.7, 0.7), 2, 55, 28);
+				RenderManager::GetInstance()->RenderTextOnScreen("damage ", Color(0.7, 0.7, 0.7), 2, 55, 26);
+				RenderManager::GetInstance()->RenderTextOnScreen(" ", Color(0.7, 0.7, 0.7), 1.5f, 55, 19);
+				break;
+		}
+
+	}
 
 	if (camera.showcase_intro == true)
 		RenderManager::GetInstance()->RenderTextOnScreen("Press C to continue.", Color(1, 1, 0), 3, 20, 0);
@@ -165,11 +269,23 @@ void Display::CreateScene()
 
 	grass.meshID = GEO_GRASS_DARKGREEN;
 	grass.pos.Set(0, 0, 0);
-	grass.scale.Set(20, 20, 20);
+	grass.scale.Set(30, 30, 30);
 	grass.rotation.Set(-90, 0, 0);
 	//grass.rotation.Set(0, 0, 0);
 	grass.b_shadows = true;
 	grass.b_lightEnabled = false;
+
+	descriptBG = new GUI();
+	descriptBG->meshID = GEO_ADJUSTBAR;
+	descriptBG->scale.Set(1, 1, 1);
+	descriptBG->rotation.Set(0, 0, -90);
+	descriptBG->position.Set(65, 45, -5);
+	descriptBG->SetTextSize(3);
+	descriptBG->buttonSize.Set(1, 1);
+	descriptBG->functionID = 8;
+	descriptBG->b_lightEnabled = false;
+	descriptBG->b_isActive = false;
+	descriptBG->b_textActive = false;
 
 	if (player.b_showcaseEnemy == true)
 	{
@@ -179,18 +295,22 @@ void Display::CreateScene()
 		if (showcase == MINION)
 		{
 			demoObject = new Minion(pos, nullptr);
+			i_diplayedObject = 1;
 		}
 		else if (showcase == ICE_MONSTER)
 		{
 			demoObject = new IceMonster(pos, nullptr);
+			i_diplayedObject = 2;
 		}
 		else if (showcase == TANK)
 		{
 			demoObject = new TankMonster(pos, nullptr);
+			i_diplayedObject = 3;
 		}
 		else if (showcase == SPEED)
 		{
 			demoObject = new SpeedMonster(pos, nullptr);
+			i_diplayedObject = 4;
 		}
 		if (showcase == BOSS)
 		{
@@ -214,18 +334,22 @@ void Display::CreateScene()
 			if (showcase == MINION)
 			{
 				demoObject = new PoisonTower();
+				i_diplayedObject = 11;
 			}
 			else if (showcase == ICE_MONSTER)
 			{
 				demoObject = new IceTower();
+				i_diplayedObject = 12;
 			}
 			else if (showcase == TANK)
 			{
 				demoObject = new MortarTower();
+				i_diplayedObject = 13;
 			}
 			else if (showcase == SPEED)
 			{
 				demoObject = new SpeedTower();
+				i_diplayedObject = 14;
 			}
 			else if (showcase == BOSS)
 			{

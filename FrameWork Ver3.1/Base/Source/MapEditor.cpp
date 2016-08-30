@@ -157,7 +157,7 @@ void MapEditor::HandleInput()
 		std::cin >> s_mapName;
 		std::cout << "Number of columns (x - axis) :";
 		std::cin >> input1;
-		tileMap.i_columns = atoi(input1.c_str()); 
+		tileMap.i_columns = atoi(input1.c_str());
 		if (tileMap.i_columns <= 0)
 		{
 			tileMap.i_columns = 1;
@@ -169,6 +169,16 @@ void MapEditor::HandleInput()
 		{
 			tileMap.i_rows = 1;
 		}
+	}
+
+	{
+		string input, input2;
+		std::cout << "Starting HP Scale:";
+		std::cin >> input;
+		std::cout << "Wave HP Scaling:";
+		std::cin >> input2;
+		tileMap.waves.f_startingHp = atoi(input.c_str());
+		tileMap.waves.f_hpScaling = atoi(input2.c_str());
 	}
 
 	int numWaves;
@@ -260,7 +270,7 @@ void MapEditor::WriteToFile()
 		}
 		file << '\n';
 	}
-	file << "e,\n";
+	file << "e,"<< tileMap.waves.f_startingHp << ',' << tileMap.waves.f_hpScaling << ",\n";
 	file << "/,0,0,\n";
 	for (vector<string>::iterator it = waves.begin(); it != waves.end(); ++it)
 	{
