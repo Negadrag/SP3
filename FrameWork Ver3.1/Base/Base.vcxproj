@@ -25,6 +25,7 @@
     <ClCompile Include="Source\CaptureTower.cpp" />
     <ClCompile Include="Source\Cursor.cpp" />
     <ClCompile Include="Source\CursorControl.cpp" />
+    <ClCompile Include="Source\CustomLevel.cpp" />
     <ClCompile Include="Source\DepthFBO.cpp" />
     <ClCompile Include="Source\Display.cpp" />
     <ClCompile Include="Source\EditorCursor.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="Source\CaptureTower.h" />
     <ClInclude Include="Source\Cursor.h" />
     <ClInclude Include="Source\CursorControl.h" />
+    <ClInclude Include="Source\CustomLevel.h" />
     <ClInclude Include="Source\DepthFBO.h" />
     <ClInclude Include="Source\EditorCursor.h" />
     <ClInclude Include="Source\Enemy.h" />

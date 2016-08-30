@@ -15,6 +15,7 @@
 #include "MainMenu.h"
 #include "LevelTwo.h"
 #include "Pause.h"
+#include "CustomLevel.h"
 
 
 SceneManager* SceneManager::instance = nullptr;
@@ -55,6 +56,8 @@ void SceneManager::Init()
 	CreateScene(new LevelTwo());
 	// Scene ID 10
 	CreateScene(new Pause());
+	// Scene ID 11
+	CreateScene(new CustomLevel());
 
 	this->m_currentSceneID = 8;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
@@ -83,7 +86,10 @@ void SceneManager::Update(double dt)
 	{
 		dt = 0.1;
 	}
-	//dt *= 2;
+	if (Application::IsKeyPressed('B'))
+	{
+		dt *= 3;
+	}
 	Scene* currScene;
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
 	{

@@ -246,6 +246,13 @@ void MenuCursor::Clicking(double dt)
 				istransition = true;
 
 			}
+			if (temp->functionID == 15)
+			{
+				std::cout << "Custom Entered" << std::endl;
+				menu_states = 1;
+				scene_change = 11;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				istransition = true;
+			}
 
 
 
@@ -498,6 +505,14 @@ void MenuCursor::LvlSelectInit()
 	btn_lvl4->functionID = 14;
 	btn_lvl4->b_isActive = false;
 	btn_lvl4->b_textActive = false;
+
+	btn_custom = new GUI("Custom Level");
+	btn_custom->position.Set(50, 15);
+	btn_custom->SetTextSize(3);
+	btn_custom->buttonSize.Set(15, 5);
+	btn_custom->functionID = 15;
+	btn_custom->b_isActive = false;
+	btn_custom->b_textActive = false;
 }
 
 void MenuCursor::LvlSelectRender()
@@ -514,6 +529,9 @@ void MenuCursor::LvlSelectRender()
 
 	btn_lvl4->b_isActive = true;
 	btn_lvl4->b_textActive = true;
+
+	btn_custom->b_isActive = true;
+	btn_custom->b_textActive = true;
 
 
 	pressrighttoreturn->b_isActive = true;
@@ -764,6 +782,9 @@ void MenuCursor::ButtonDeactivator()
 
 		btn_lvl4->b_isActive = false;
 		btn_lvl4->b_textActive = false;
+
+		btn_custom->b_isActive = false;
+		btn_custom->b_textActive = false;
 
 	//instruction gui
 	instr_title->b_isActive = false;

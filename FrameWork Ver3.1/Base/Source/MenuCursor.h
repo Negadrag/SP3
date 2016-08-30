@@ -65,6 +65,7 @@ private:
 	GUI* btn_lvl2;
 	GUI* btn_lvl3;
 	GUI* btn_lvl4;
+	GUI* btn_custom;
 
 	GUI* instr_title;
 

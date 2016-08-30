@@ -336,6 +336,9 @@
     <ClCompile Include="Source\PauseCursor.cpp">
       <Filter>Source Files\ObjectClasses\Cursor</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CustomLevel.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -556,6 +559,9 @@
     </ClInclude>
     <ClInclude Include="Source\PauseCursor.h">
       <Filter>Header Files\ObjectClasses\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CustomLevel.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

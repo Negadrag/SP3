@@ -7,3 +7,5 @@ Music//Speed.mp3
 Music//bgm.mp3
 Music//Death.wav
 Music//Ding.wav
+Music//Placing.wav
+Music//NotEnough.mp3

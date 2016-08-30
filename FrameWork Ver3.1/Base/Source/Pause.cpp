@@ -51,16 +51,6 @@ void Pause::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	/*if (Application::IsKeyPressed('9'))
-	{
-		ATower.upgrade = true;
-	}*/
-
-	if (Application::IsKeyPressed('N'))
-	{
-		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		SceneManager::GetInstance()->ChangeScene(8, false);
-	}
 
 	fps = (float)(1.f / dt);
 	camera.Update(dt);

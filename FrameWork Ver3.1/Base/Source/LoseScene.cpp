@@ -89,7 +89,7 @@ void LoseScene::Render()
 	RenderManager::GetInstance()->RenderTextOnScreen("YOU ", Color(1, 0, 0), 15, 25, 30);
 	RenderManager::GetInstance()->RenderTextOnScreen("LOSE ", Color(1, 0, 0), 15, 23, 20);
 	//RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(balls), Color(1, 1, 1), 2, spacing, 40);
-
+	RenderManager::GetInstance()->RenderTextOnScreen("PRESS M TO EXIT", Color(1, 1, 1), 5, 18, 17);
 
 }
 

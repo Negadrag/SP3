@@ -44,6 +44,7 @@ public:
 	vector<Tower*> *towerList;
 	vector<Enemy*> *enemyList;
 	virtual void Clear();
+	bool b_warning;
 private:
 	string StrategyToString(Tower::STRATEGY strats);
 	void TowerButtons();
@@ -56,6 +57,9 @@ private:
 	void CostColor(GUI* cost, Tower::ESSENCE_TYPE type);
 	bool CheckPlayerEssence(Tower::ESSENCE_TYPE type, int amount);
 	void RemovePlayerEssence(Tower::ESSENCE_TYPE type, int amount);
+
+	float f_warningDebounce;
+	
 };
 
 #endif

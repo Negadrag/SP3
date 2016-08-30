@@ -79,6 +79,10 @@ void Assignment::Update(double dt)
 		SceneManager::GetInstance()->ChangeScene(10, true);
 	}
 
+	if (Application::IsKeyPressed('M'))
+	{
+	}
+
 	testMap.waves.Update(dt);
 	fps = (float)(1.f / dt);
 
@@ -135,7 +139,7 @@ void Assignment::Render()
 	ss.str("");
 	ss.precision(1);
 	{
-		int timer = 10.f - testMap.waves.f_waveStartTimer;
+		int timer = 30.f - testMap.waves.f_waveStartTimer;
 		if (timer > 0 && testMap.waves.b_waveEnded)
 		{
 			ss << "Time: " << timer;
@@ -178,6 +182,11 @@ void Assignment::Render()
 	ss.precision(5);
 	ss << "Wave :" << testMap.waves.i_currentWave;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 1, 3);
+
+	if (cursor.b_warning)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("Not enough resources!", Color(1, 0, 0), 3, 23, 30);
+	}
 }
 
 void Assignment::Exit()
