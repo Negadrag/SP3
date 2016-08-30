@@ -25,10 +25,6 @@ Boss::~Boss()
 {
 }
 
-void Boss::MoveTo(Vector2 dest, double dt)
-{
-}
-
 void Boss::Update(double dt)
 {
 	if (b_onGround == true)
