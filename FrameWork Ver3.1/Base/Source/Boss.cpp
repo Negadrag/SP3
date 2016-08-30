@@ -8,14 +8,14 @@ Boss::Boss() :Enemy()
 }
 
 
-Boss::Boss(Vector3 pos, Node* root) :Enemy(pos,root)
+Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 {
 	this->meshID = GEO_DOGOO;
 	this->f_movSpeed = 1.5f;
 	this->f_maxHealth = 500.f;
 	this->f_health = f_maxHealth;
 
-	towerList = nullptr;
+	this->towerList = towerlist;
 	this->i_damage = 1;
 	this->i_defence = 50;
 	this->i_currency = 50;

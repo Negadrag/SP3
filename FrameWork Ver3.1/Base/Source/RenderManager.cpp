@@ -261,6 +261,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_DOGOO] = MeshBuilder::GenerateOBJ("Dogoo", "OBJ/Boss.obj");
 	meshList[GEO_DOGOO]->textureArray[0] = LoadTGA("Image//Boss.tga");
 
+
 	meshList[GEO_PATH] = MeshBuilder::GenerateQuad("Path", Color(1, 1, 1), 1.f);
 	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//Path.tga");
 

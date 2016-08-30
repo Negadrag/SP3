@@ -9,7 +9,7 @@ class Boss :public Enemy
 {
 public:
 	Boss();
-	Boss(Vector3 pos, Node* root);
+	Boss(Vector3 pos, Node* root,vector<Tower*>* towerlist);
 	~Boss();
 
 	bool b_onGround;
@@ -17,6 +17,7 @@ public:
 	float zVel;
 
 	vector<Tower*>* towerList;
+	float f_freezeTimer;
 
 	virtual void MoveTo(Vector2 dest, double dt);
 	virtual void Update(double dt);

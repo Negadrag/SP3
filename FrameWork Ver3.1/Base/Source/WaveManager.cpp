@@ -231,7 +231,8 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 			break;
 		case BOSS:
 		{
-			enemy = new Boss(pos, root);
+			enemy = new Boss(pos, root,towerList);
+			
 		}
 			break;
 		case NUM_ENEMY:
