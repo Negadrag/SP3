@@ -39,14 +39,14 @@ void MapEditor::Init()
 
 		//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 		camera.b_ortho = true;
-		camera.orthoSize = (tileMap.i_rows / 2) + 1;
+		camera.orthoSize = (tileMap.i_rows / 2.f) + 1.f;
 		camera.defaultOrtho = camera.orthoSize;
 		camera.aspectRatio.Set(4, 3);
 		RenderManager::GetInstance()->SetCamera(&camera);
 
 		grass.meshID = GEO_GRASS_DARKGREEN;
 		grass.pos.Set((float)(tileMap.i_columns - 1) / 2.f, (float)tileMap.i_rows / 2.f, 0);
-		grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
+		grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2.f, camera.orthoSize * 2.5f, 1.f);
 		grass.rotation.Set(0, 0, 0);
 
 		cursor.Init(&tileMap);
@@ -90,7 +90,7 @@ void MapEditor::Render()
 {
 	if (b_startScene)
 	{
-		RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
+		RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90.f, 0, 0), false, false);
 
 		for (int i = 0; i < tileMap.i_rows; ++i) // y - axis
 		{
@@ -98,22 +98,22 @@ void MapEditor::Render()
 			{
 				if (tileMap.screenMap[j][i] == -2)
 				{
-					RenderManager::GetInstance()->RenderMesh(GEO_CUBE2, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(0, -90, 0), true, false);
+					RenderManager::GetInstance()->RenderMesh(GEO_CUBE2, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0), Vector3(1.f, 1.f, 1.f), Vector3(0, -90.f, 0), true, false);
 				}
 				else if (tileMap.screenMap[j][i] == -1)
 				{
-					RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+					RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1f), Vector3(1.f, 1.f, 1.f), Vector3(0, 0, 0), true, false);
 				}
 				else if (tileMap.screenMap[j][i] == 0)
 				{
-					RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+					RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1f), Vector3(1.f, 1.f, 1.f), Vector3(0, 0, 0), true, false);
 				}
 				else if (tileMap.screenMap[j][i] > 0)
 				{
 					//RenderManager::GetInstance()->RenderMesh(GEO_SPHERE, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 					std::ostringstream ss;
 					ss << tileMap.screenMap[j][i];
-					RenderManager::GetInstance()->RenderText(ss.str(), Color(1, 1, 0), Vector3((float)(j * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, (float)(i  * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0));
+					RenderManager::GetInstance()->RenderText(ss.str(), Color(1, 1, 0), Vector3((float)(j * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, (float)(i  * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, 0.1f), Vector3(1, 1, 1), Vector3(0, 0, 0));
 				}
 			}
 		}

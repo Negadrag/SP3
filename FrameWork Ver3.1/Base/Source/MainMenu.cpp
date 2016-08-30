@@ -99,22 +99,22 @@ void MainMenu::Update(double dt)
 	waterfountain.f_maxDist = 1500.f;
 	waterfountain.b_gravity = true;
 	waterfountain.isActive = false;
-	waterfountain.SpawnParticle(Vector3(-0.4, 2, -119.5));
+	waterfountain.SpawnParticle(Vector3(-0.4f, 2.f, -119.5f));
 
 	
 
 	if (Application::IsKeyPressed('L'))
-		testx += dt * 10;
+		testx += dt * 10.f;
 	if (Application::IsKeyPressed('J'))
-		testx -= dt * 10;
+		testx -= dt * 10.f;
 	if (Application::IsKeyPressed('I'))
-		testy += dt * 10;
+		testy += dt * 10.f;
 	if (Application::IsKeyPressed('K'))
-		testy -= dt * 10;
+		testy -= dt * 10.f;
 	if (Application::IsKeyPressed('P'))
-		testz += dt * 10;
+		testz += dt * 10.f;
 	if (Application::IsKeyPressed('O'))
-		testz -= dt * 10;
+		testz -= dt * 10.f;
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
@@ -134,7 +134,7 @@ void MainMenu::Render()
 	int spacing = 13;
 
 	//-45 , 80
-	RenderManager::GetInstance()->RenderTextOnScreen("CAPTURE DEFENCE ", Color(0.7, 0.7, 1), 5, 18, 50);
+	RenderManager::GetInstance()->RenderTextOnScreen("CAPTURE DEFENCE ", Color(0.7f, 0.7f, 1.f), 5, 18, 50);
 
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(fps), Color(1, 1, 1), 2, 45, 55);
 

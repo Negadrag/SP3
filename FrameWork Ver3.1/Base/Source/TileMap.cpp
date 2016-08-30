@@ -227,7 +227,7 @@ bool TileMap::LoadWaves(vector<string> wave)
 		bool checkFrequency = false;
 
 		int revolutions = 0;
-		float frequency = 0;
+		double frequency = 0;
 
 		vector<ENEMY_TYPE> enemyType;
 

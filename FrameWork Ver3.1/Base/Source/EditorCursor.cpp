@@ -52,7 +52,7 @@ void EditorCursor::Update(OrthoCamera &camera, const double &dt)
 	checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap->i_rows - 1.f);
 
 	camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 2.f, camera.defaultOrtho); // scrolling in and out
-	EdgePanning(dt, camera, screenX, screenY, 6 * tileMap->i_rows);
+	EdgePanning(dt, camera, screenX, screenY, 6.f * tileMap->i_rows);
 	CameraBounds(camera);
 
 	Clicking();

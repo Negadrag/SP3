@@ -183,7 +183,7 @@ void RenderManager::InitMesh()
 	meshList[GEO_BLUECUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0, 1), 1.f);
 	meshList[GEO_REDCUBE] = MeshBuilder::GenerateCube("bluecube", Color(1, 0, 0), 1.f);
 	meshList[GEO_YELLOWCUBE] = MeshBuilder::GenerateCube("bluecube", Color(1, 1, 0), 1.f);
-	meshList[GEO_GREENCUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0.7, 0), 1.f);
+	meshList[GEO_GREENCUBE] = MeshBuilder::GenerateCube("bluecube", Color(0, 0.7f, 0), 1.f);
 
 	meshList[GEO_DUNGEONWALL] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
 	meshList[GEO_DUNGEONWALL]->textureArray[0] = LoadTGA("Image//dungeonwall2.tga");

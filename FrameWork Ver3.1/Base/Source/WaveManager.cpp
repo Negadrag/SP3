@@ -98,7 +98,7 @@ void WaveManager::Update(double dt)
 		}
 		else if (WaveEnded(i_currentWave))
 		{
-			f_waveStartTimer += dt;
+			f_waveStartTimer += (float)dt;
 			if (f_waveStartTimer >= 0.9f)
 			{
 				b_waveEnded = true;

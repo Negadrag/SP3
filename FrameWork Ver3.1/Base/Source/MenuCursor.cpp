@@ -62,17 +62,17 @@ void MenuCursor::Update(const double &dt)
 
 
 	if (Application::IsKeyPressed('L'))
-		testx += dt * 10;
+		testx += dt * 10.f;
 	if (Application::IsKeyPressed('J'))
-		testx -= dt * 10;
+		testx -= dt * 10.f;
 	if (Application::IsKeyPressed('I'))
-		testy += dt * 10;
+		testy += dt * 10.f;
 	if (Application::IsKeyPressed('K'))
-		testy -= dt * 10;
+		testy -= dt * 10.f;
 	if (Application::IsKeyPressed('P'))
-		testz += dt * 10;
+		testz += dt * 10.f;
 	if (Application::IsKeyPressed('O'))
-		testz -= dt * 10;
+		testz -= dt * 10.f;
 
 	
 	
@@ -107,11 +107,11 @@ void MenuCursor::Update(const double &dt)
 
 			if (option_6->scale.x >= clickoffsetX)
 			{
-				option_6->scale.x -= 20 * dt;
+				option_6->scale.x -= 20.f * dt;
 			}
 			if (option_6->scale.x <= clickoffsetX)
 			{
-				option_6->scale.x += 20 * dt;
+				option_6->scale.x += 20.f * dt;
 			}
 
 			/*if (temphold >= screenX)
