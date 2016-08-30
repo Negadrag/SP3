@@ -42,6 +42,7 @@ Enemy::Enemy(Vector3 pos, Node* root)
 
 	hp.meshID = GEO_HP;
 	hp2.meshID = GEO_HP2;
+	hp.pos.z = 1.f;
 	hp.b_shadows = false;
 	hp2.b_shadows = false;
 	hp.b_lightEnabled = false;
@@ -131,9 +132,10 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 
 	if (this->f_showHealthTimer > 0.f)
 	{
-		hp.pos.Set(0, 0, 1);
+		//hp.pos.Set(0, 0, 1);
 		hp.b_Render = true;
-		hp.pos = this->pos + Vector3(0, 0, 1);
+		hp.pos.x = this->pos.x;
+		hp.pos.y = this->pos.y;
 		hp.rotation.z = this->rotation.z;
 		hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
 	}
