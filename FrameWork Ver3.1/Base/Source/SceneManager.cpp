@@ -13,6 +13,8 @@
 #include "LoseScene.h"
 #include "Display.h"
 #include "MainMenu.h"
+#include "LevelTwo.h"
+#include "Pause.h"
 
 
 SceneManager* SceneManager::instance = nullptr;
@@ -49,7 +51,10 @@ void SceneManager::Init()
 	CreateScene(new Display());
 	// Scene ID 8
 	CreateScene(new MainMenu());
-	
+	// Scene ID 9
+	CreateScene(new LevelTwo());
+	// Scene ID 10
+	CreateScene(new Pause());
 
 	this->m_currentSceneID = 8;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
@@ -146,7 +151,7 @@ void SceneManager::Render()
 		}
 	}
 	//RenderManager::GetInstance()->ClearShadows();
-	GUIManager::GetInstance()->RenderAllGUI();
+	GUIManager::GetInstance()->RenderAllGUI(m_currentSceneID);
 	
 }
 
@@ -184,6 +189,8 @@ void SceneManager::ReinstanceScene(int sceneID)
 		{
 			if ((*it)->m_sceneID == sceneID)
 			{
+				GUIManager::GetInstance()->m_currentSceneID = sceneID;
+				EntityManager::GetInstance()->m_currentSceneID = sceneID;
 				(*it)->Exit();
 				(*it)->Init();
 			}

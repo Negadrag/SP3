@@ -122,10 +122,10 @@ void MainMenu::Update(double dt)
 	float skyboxsize = 10000.f;
 
 
-	if (Application::IsKeyPressed('M'))
-	{
-		SceneManager::GetInstance()->ChangeScene(1, false);
-	}
+	//if (Application::IsKeyPressed('M'))
+	//{
+	//	SceneManager::GetInstance()->ChangeScene(1, false);
+	//}
 
 }
 

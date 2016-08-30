@@ -11,6 +11,7 @@ PlayerInfo::~PlayerInfo()
 
 void PlayerInfo::Init()
 {
+	tempCamera = nullptr;
 	i_health = 30;
 	i_currency = 3000;
 	i_essenceBasic = 1000;

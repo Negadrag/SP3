@@ -2,6 +2,7 @@
 #define PLAYER_INFO_H
 
 #include "WaveManager.h"
+#include "OrthoCamera.h"
 
 class PlayerInfo
 {
@@ -28,7 +29,7 @@ public:
 
 	void Init();
 
-
+	OrthoCamera* tempCamera;
 private:
 
 protected:
