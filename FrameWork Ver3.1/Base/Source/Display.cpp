@@ -194,7 +194,7 @@ void Display::CreateScene()
 		}
 		if (showcase == BOSS)
 		{
-			demoObject = new Boss(pos, nullptr);
+			demoObject = new Boss(pos, nullptr,nullptr);
 		}
 		demoObject->rotation.x = -90.f;
 		demoObject->scale.Set(2, 2, 2);

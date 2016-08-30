@@ -18,6 +18,7 @@ public:
 
 	vector<Tower*>* towerList;
 	float f_freezeTimer;
+	float f_freezeFrequency;
 
 	virtual void MoveTo(Vector2 dest, double dt);
 	virtual void Update(double dt);

@@ -10,10 +10,14 @@ Boss::Boss() :Enemy()
 
 Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 {
+	this->zVel = 0.f;
+	this->b_onGround = true;
 	this->meshID = GEO_DOGOO;
 	this->f_movSpeed = 1.5f;
 	this->f_maxHealth = 500.f;
 	this->f_health = f_maxHealth;
+	this->f_freezeTimer = 0.f;
+	this->f_freezeFrequency = 1.f;
 
 	this->towerList = towerlist;
 	this->i_damage = 1;
@@ -170,6 +174,34 @@ void Boss::Update(double dt)
 			{
 				player->i_health -= i_damage;
 			}
+		}
+	}
+
+	f_freezeTimer += dt;
+	if (f_freezeTimer >= 1.f / f_freezeFrequency)
+	{
+		if (towerList != nullptr)
+		{
+			f_freezeTimer = 0.f;
+			float closestDist = FLT_MAX;
+			Tower* closestTwr = nullptr;
+			for (vector<Tower*>::iterator it = (*towerList).begin(); it != (*towerList).end(); ++it)
+			{
+				if ((*it)->b_isActive == true && (*it)->b_isFrozen == false)
+				{
+					if (((*it)->pos - this->pos).LengthSquared() < closestDist)
+					{
+						closestDist = ((*it)->pos - this->pos).LengthSquared();
+						closestTwr = *it;
+					}
+				}
+			}
+			if (closestTwr != nullptr)
+			{
+				(closestTwr)->b_isFrozen = true;
+				(closestTwr)->f_frozenTimer = 1.f;
+			}
+			
 		}
 	}
 }
