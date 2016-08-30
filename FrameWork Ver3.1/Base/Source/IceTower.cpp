@@ -132,3 +132,17 @@ bool IceTower::LevelUp()
 	}
 	return false;
 }
+
+void IceTower::UpdateMesh()
+{
+	if (b_isFrozen == true)
+	{
+		meshID = GEO_ICETOWER_FROST;
+		child.meshID = GEO_ICE_POISON;
+	}
+	else
+	{
+		meshID = GEO_ICEBASE;
+		child.meshID = GEO_ICE;
+	}
+}

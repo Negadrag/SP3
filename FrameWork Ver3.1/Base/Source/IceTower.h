@@ -17,6 +17,8 @@ public:
 	virtual void Update(double dt);
 	virtual bool LevelUp();
 	virtual void Fire(double dt);
+	virtual void UpdateMesh();
+
 
 	static ESSENCE_TYPE type;
 	static int cost;

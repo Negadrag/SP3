@@ -50,6 +50,7 @@ public:
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
 	virtual bool LevelUp();
+	virtual void UpdateMesh();
 
 	static string StrategyToString(STRATEGY strats);
 

@@ -120,3 +120,17 @@ bool MortarTower::LevelUp()
 	}
 	return false;
 }
+
+void MortarTower::UpdateMesh()
+{
+	if (b_isFrozen == true)
+	{
+		meshID = GEO_MORTARTOWER_FROST;
+		child.meshID = GEO_TANKY_FROST;
+	}
+	else
+	{
+		meshID = GEO_MORTARBASE;
+		child.meshID = GEO_MORTARCANNON;
+	}
+}

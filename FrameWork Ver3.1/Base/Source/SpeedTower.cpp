@@ -82,3 +82,17 @@ bool SpeedTower::LevelUp()
 	}
 	return false;
 }
+
+void SpeedTower::UpdateMesh()
+{
+	if (b_isFrozen == true)
+	{
+		meshID = GEO_SPEEDTOWER_FROST;
+		child.meshID = GEO_SPEED_FROST;
+	}
+	else
+	{
+		meshID = GEO_SPEEDTOWER;
+		child.meshID = GEO_SPEED;
+	}
+}

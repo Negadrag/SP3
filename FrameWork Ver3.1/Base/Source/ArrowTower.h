@@ -28,7 +28,7 @@ public:
 	virtual Projectile* GetProjectile();	//Get Projectile
 	virtual void Update(double dt);
 	virtual bool LevelUp();					//Level up function
-
+	virtual void UpdateMesh();
 	
 	string towerUpgrade;
 

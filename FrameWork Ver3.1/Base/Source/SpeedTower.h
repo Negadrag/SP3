@@ -12,6 +12,8 @@ public:
 	virtual Projectile* GetProjectile();
 	virtual void Update(double dt);
 	virtual bool LevelUp();
+	virtual void UpdateMesh();
+
 
 	static ESSENCE_TYPE type;
 	static int cost;

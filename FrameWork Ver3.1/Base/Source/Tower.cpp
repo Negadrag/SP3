@@ -138,6 +138,8 @@ Projectile* Tower::GetProjectile()
 
 void Tower::Update(double dt)
 {
+	UpdateMesh();
+
 	if (b_isFrozen == true)
 	{
 		f_frozenTimer -= dt;
@@ -442,4 +444,9 @@ string Tower::StrategyToString(STRATEGY strats)
 	}
 
 	return false;
+}
+
+void Tower::UpdateMesh()
+{
+
 }

@@ -89,3 +89,17 @@ bool PoisonTower::LevelUp()
 	}
 	return false;
 }
+
+void PoisonTower::UpdateMesh()
+{
+	if (b_isFrozen == true)
+	{
+		meshID = GEO_ARROWTOWER_FROST;
+		child.meshID = GEO_BASIC_FROST;
+	}
+	else
+	{
+		meshID = GEO_ARROWTOWER;
+		child.meshID = GEO_BASIC;
+	}
+}

@@ -92,3 +92,15 @@ bool CannonTower::LevelUp()
 	}
 	return false;
 }
+
+void CannonTower::UpdateMesh()
+{
+	if (b_isFrozen == true)
+	{
+		meshID = GEO_CANNONTOWER_FROST;
+	}
+	else
+	{
+		meshID = GEO_CANNONTOWER;
+	}
+}
