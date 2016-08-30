@@ -10,7 +10,7 @@ Boss::Boss() :Enemy()
 
 Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 {
-	this->meshID = GEO_DOGOO;
+	this->meshID = GEO_BOSS;
 	this->f_movSpeed = 1.5f;
 	this->f_maxHealth = 500.f;
 	this->f_health = f_maxHealth;
@@ -28,6 +28,8 @@ Boss::~Boss()
 
 void Boss::Update(double dt)
 {
+	UpdateMesh();
+
 	if (nxtTile != nullptr)
 	{
 		if (b_onGround == true)
@@ -209,4 +211,20 @@ void Boss::MoveTo(Vector2 dest, double dt)
 	//view = view * f_movSpeed *dt;
 	this->pos.x += view.x;
 	this->pos.y += view.y;
+}
+
+void  Boss::UpdateMesh()
+{
+	if (f_poisonTimer > 0)
+	{
+		this->meshID = GEO_BOSS_POISON;
+	}
+	else if (f_slowTimer > 0)
+	{
+		this->meshID = GEO_BOSS_FROST;
+	}
+	else
+	{
+		this->meshID = GEO_BOSS;
+	}
 }

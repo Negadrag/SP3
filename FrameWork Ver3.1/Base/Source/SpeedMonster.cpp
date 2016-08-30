@@ -39,3 +39,19 @@ void SpeedMonster::GiveEssence()
 	//Enemy::GiveCurrency();
 	player->i_essenceSpeed += 1;
 }
+
+void SpeedMonster::UpdateMesh()
+{
+	if (f_poisonTimer > 0)
+	{
+		this->meshID = GEO_SPEED_POISON;
+	}
+	else if (f_slowTimer > 0)
+	{
+		this->meshID = GEO_SPEED_FROST;
+	}
+	else
+	{
+		this->meshID = GEO_SPEED;
+	}
+}

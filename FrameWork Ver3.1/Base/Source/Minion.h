@@ -12,6 +12,8 @@ public:
 	virtual void UpdateAnim(double dt);
 	virtual void ReceivePoisonStatus(float poisonDamage, float slowAmount, float duration);
 	virtual void GiveEssence();
+	virtual void UpdateMesh();
+
 private:
 
 protected:

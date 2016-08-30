@@ -162,3 +162,15 @@ void IceMonster::GiveEssence()
 void IceMonster::ReceiveSlowStatus(float slowAmount, float slowDuration)
 {
 }
+
+void  IceMonster::UpdateMesh()
+{
+	if (f_poisonTimer > 0)
+	{
+		this->meshID = GEO_ICE_POISON;
+	}
+	else
+	{
+		this->meshID = GEO_ICE;
+	}
+}

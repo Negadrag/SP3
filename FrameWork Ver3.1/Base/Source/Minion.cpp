@@ -72,3 +72,15 @@ void Minion::ReceivePoisonStatus(float poisonDPS, float slowAmount, float durati
 {
 	this->ReceiveSlowStatus(slowAmount, duration);
 }
+
+void Minion::UpdateMesh()
+{
+	if (f_slowTimer > 0)
+	{
+		this->meshID = GEO_BASIC_FROST;
+	}
+	else
+	{
+		this->meshID = GEO_BASIC;
+	}
+}

@@ -23,6 +23,8 @@ public:
 	virtual void Update(double dt);
 	virtual void UpdateAnim(double dt);
 	virtual void GiveEssence();
+	virtual void UpdateMesh();
+
 private:
 
 protected:

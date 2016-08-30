@@ -186,6 +186,7 @@ void Enemy::Update(double dt)
 
 		MoveTo(nxtTile->coords, dt);
 		UpdateAnim(dt);
+		UpdateMesh();
 	}
 	else
 	{
@@ -272,4 +273,9 @@ void Enemy::GiveCurrency()
 
 void Enemy::GiveEssence()
 {
+}
+
+void Enemy::UpdateMesh()
+{
+
 }

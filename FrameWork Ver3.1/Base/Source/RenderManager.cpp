@@ -257,10 +257,38 @@ void RenderManager::InitMesh()
 	meshList[GEO_ICE]->textureArray[0] = LoadTGA("Image//ice.tga");
 	meshList[GEO_ICE]->material.kShininess = 0.8f;
 	meshList[GEO_ICE]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
+	meshList[GEO_BOSS] = MeshBuilder::GenerateOBJ("Dogoo", "OBJ/Boss.obj");
+	meshList[GEO_BOSS]->textureArray[0] = LoadTGA("Image//Boss.tga");
 
-	meshList[GEO_DOGOO] = MeshBuilder::GenerateOBJ("Dogoo", "OBJ/Boss.obj");
-	meshList[GEO_DOGOO]->textureArray[0] = LoadTGA("Image//Boss.tga");
+	meshList[GEO_BASIC_FROST] = MeshBuilder::GenerateOBJ("Basic", "OBJ/BasicMonster.obj");
+	meshList[GEO_BASIC_FROST]->textureArray[0] = LoadTGA("Image//BasicMonster.tga");
+	meshList[GEO_BASIC_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	/*meshList[GEO_BASIC]->material.kShininess = 0.8f;
+	meshList[GEO_BASIC]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);*/
+	meshList[GEO_SPEED_FROST] = MeshBuilder::GenerateOBJ("Speed", "OBJ/SpeedMonster.obj");
+	meshList[GEO_SPEED_FROST]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
+	meshList[GEO_SPEED_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_TANKY_FROST] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
+	meshList[GEO_TANKY_FROST]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
+	meshList[GEO_TANKY_FROST]->textureArray[0] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_BOSS_FROST] = MeshBuilder::GenerateOBJ("Dogoo", "OBJ/Boss.obj");
+	meshList[GEO_BOSS_FROST]->textureArray[0] = LoadTGA("Image//Boss.tga");
+	meshList[GEO_BOSS_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
 
+	meshList[GEO_SPEED_POISON] = MeshBuilder::GenerateOBJ("Speed", "OBJ/SpeedMonster.obj");
+	meshList[GEO_SPEED_POISON]->textureArray[0] = LoadTGA("Image//SpeedMonster.tga");
+	meshList[GEO_SPEED_POISON]->textureArray[1] = LoadTGA("Image//Poison.tga");
+	meshList[GEO_TANKY_POISON] = MeshBuilder::GenerateOBJ("Tanky", "OBJ/TankyMonster.obj");
+	meshList[GEO_TANKY_POISON]->textureArray[0] = LoadTGA("Image//TankyMonster.tga");
+	meshList[GEO_TANKY_POISON]->textureArray[1] = LoadTGA("Image//Poison.tga");
+	meshList[GEO_ICE_POISON] = MeshBuilder::GenerateOBJ("Basic", "OBJ/ice.obj");
+	meshList[GEO_ICE_POISON]->textureArray[0] = LoadTGA("Image//ice.tga");
+	meshList[GEO_ICE_POISON]->textureArray[1] = LoadTGA("Image//Poison.tga");
+	meshList[GEO_ICE_POISON]->material.kShininess = 0.8f;
+	meshList[GEO_ICE_POISON]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
+	meshList[GEO_BOSS_POISON] = MeshBuilder::GenerateOBJ("Dogoo", "OBJ/Boss.obj");
+	meshList[GEO_BOSS_POISON]->textureArray[0] = LoadTGA("Image//Boss.tga");
+	meshList[GEO_BOSS_POISON]->textureArray[1] = LoadTGA("Image//Poison.tga");
 
 	meshList[GEO_PATH] = MeshBuilder::GenerateQuad("Path", Color(1, 1, 1), 1.f);
 	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//Path.tga");

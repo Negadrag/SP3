@@ -32,3 +32,19 @@ void TankMonster::GiveEssence()
 	//Enemy::GiveCurrency();
 	player->i_essenceTanky += 1;
 }
+
+void TankMonster::UpdateMesh()
+{
+	if (f_poisonTimer > 0)
+	{
+		this->meshID = GEO_TANKY_POISON;
+	}
+	else if (f_slowTimer > 0)
+	{
+		this->meshID = GEO_TANKY_FROST;
+	}
+	else
+	{
+		this->meshID = GEO_TANKY;
+	}
+}

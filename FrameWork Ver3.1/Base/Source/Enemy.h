@@ -37,6 +37,7 @@ public:
 	virtual void UpdateAnim(double dt);
 	virtual void GiveCurrency();
 	virtual void GiveEssence();
+	virtual void UpdateMesh();
 private:
 
 protected:
