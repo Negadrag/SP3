@@ -228,6 +228,7 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 		{
 			enemy = new TankMonster(pos, root);
 		}
+			break;
 		case BOSS:
 		{
 			enemy = new Boss(pos, root);

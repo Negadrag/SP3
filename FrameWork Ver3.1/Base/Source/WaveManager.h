@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include <vector>
+#include "Tower.h"
 
 using std::vector;
 
@@ -51,6 +52,7 @@ public:
 	float f_startingHp; // the starting percentage of the monster base hp for wave 1
 	float f_hpScaling; // percentage of the health scaling per wave;
 	float f_currScaling; // percentage scaling of the current wave
+	vector<Tower*>* towerList;
 
 	void SetRoot(Node* root);
 	void AddWave(vector<ENEMY_TYPE> typeVec , int revolution , float spawnFrequency);
@@ -61,6 +63,7 @@ public:
 	void Exit();
 	void Update(double dt);
 	vector<Enemy*>* GetEnemyList();
+	
 	PlayerInfo* player;
 private:
 	vector<Enemy*> enemyList;

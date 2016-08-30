@@ -10,15 +10,16 @@ Boss::Boss() :Enemy()
 
 Boss::Boss(Vector3 pos, Node* root) :Enemy(pos,root)
 {
-	this->meshID = GEO_TANKY;
+	this->meshID = GEO_DOGOO;
 	this->f_movSpeed = 1.5f;
 	this->f_maxHealth = 500.f;
 	this->f_health = f_maxHealth;
 
+	towerList = nullptr;
 	this->i_damage = 1;
 	this->i_defence = 50;
 	this->i_currency = 50;
-	this->scale.Set(0.75f, 0.75f, 0.75f);
+	this->scale.Set(1.5f,1.5f,1.5f);
 }
 
 Boss::~Boss()
@@ -27,26 +28,19 @@ Boss::~Boss()
 
 void Boss::Update(double dt)
 {
-	if (b_onGround == true)
+	if (nxtTile != nullptr)
 	{
-		if (nxtTile != nullptr)
+		if (b_onGround == true)
 		{
+
 			if ((Vector3(nxtTile->coords.x, nxtTile->coords.y, 0) - Vector3(this->pos.x, this->pos.y, 0)).LengthSquared() < 0.1f*0.1f)
 			{
 				nxtTile = nxtTile->next;
-				if (nxtTile == nullptr)
+				if (nxtTile)
 				{
-					this->b_isActive = false;
-					this->hp.b_isActive = false;
-					this->b_isActive = false;
-
-					if (player)
-					{
-						player->i_health -= i_damage;
-					}
-					
+					targetPos = nxtTile->coords;
 				}
-				targetPos = nxtTile->coords;
+				
 			}
 
 			float rotationSpeed = 360.f;
@@ -59,7 +53,7 @@ void Boss::Update(double dt)
 			float rotationZToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
 
 			rotationZToBe = round(rotationZToBe);
-
+			bool finishedRotating = true;
 			if (this->rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
 			{
 				if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
@@ -82,7 +76,6 @@ void Boss::Update(double dt)
 							rotation.z = rotationZToBe;
 						}
 
-
 					}
 					else if (rotationZToBe < rotation.z)
 					{
@@ -91,6 +84,7 @@ void Boss::Update(double dt)
 						{
 							rotation.z = rotationZToBe;
 						}
+						
 					}
 				}
 				else
@@ -107,6 +101,7 @@ void Boss::Update(double dt)
 						{
 							rotation.z = 0;
 						}
+						
 
 					}
 					else if (rotationZToBe < rotation.z)
@@ -116,49 +111,66 @@ void Boss::Update(double dt)
 						{
 							rotation.z -= 360;
 						}
+						
 					}
 				}
+				if (rotation.z != rotationZToBe)
+				{
+					finishedRotating = false;
+				}
 			}
-			else
+			if (finishedRotating == true)
 			{
 				b_onGround = false;
 				zVel = 4.f;
 			}
+		}
+		else
+		{
+			MoveTo(targetPos, dt);
+			UpdateAnim(dt);
+		}
+		if (f_poisonTimer > 0.f)
+		{
+			ReceivePoisonDamage(f_poisonDps*dt);
+			f_poisonTimer -= dt;
+			if (f_poisonTimer <= 0.f)
+			{
+				f_poisonTimer = 0.f;
+			}
+		}
+		if (f_slowTimer > 0.f)
+		{
+			f_slowTimer -= dt;
+			if (f_slowTimer <= 0.f)
+			{
+				f_slow = 0.f;
+				f_slowTimer = 0.f;
+			}
+		}
+		if (this->f_showHealthTimer > 0.f)
+		{
+			f_showHealthTimer -= dt;
+		}
+		else if (this->f_showHealthTimer < 0.f)
+		{
+			f_showHealthTimer = 0.f;
+			hp.b_Render = false;
+		}
+	}
+	if (nxtTile)
+	{
+		if (nxtTile->next == nullptr && (Vector3(nxtTile->coords.x, nxtTile->coords.y, 0) - Vector3(this->pos.x, this->pos.y, 0)).LengthSquared() < 0.1f*0.1f)
+		{
+			this->b_isActive = false;
+			this->hp.b_isActive = false;
+			this->b_isActive = false;
 
-			
+			if (player)
+			{
+				player->i_health -= i_damage;
+			}
 		}
-	}
-	else
-	{
-		MoveTo(targetPos, dt);
-		UpdateAnim(dt);
-	}
-	if (f_poisonTimer > 0.f)
-	{
-		ReceivePoisonDamage(f_poisonDps*dt);
-		f_poisonTimer -= dt;
-		if (f_poisonTimer <= 0.f)
-		{
-			f_poisonTimer = 0.f;
-		}
-	}
-	if (f_slowTimer > 0.f)
-	{
-		f_slowTimer -= dt;
-		if (f_slowTimer <= 0.f)
-		{
-			f_slow = 0.f;
-			f_slowTimer = 0.f;
-		}
-	}
-	if (this->f_showHealthTimer > 0.f)
-	{
-		f_showHealthTimer -= dt;
-	}
-	else if (this->f_showHealthTimer < 0.f)
-	{
-		f_showHealthTimer = 0.f;
-		hp.b_Render = false;
 	}
 }
 
