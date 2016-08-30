@@ -52,7 +52,7 @@ void EditorCursor::Update(OrthoCamera &camera, const double &dt)
 	checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap->i_rows - 1.f);
 
 	camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 2.f, camera.defaultOrtho); // scrolling in and out
-	EdgePanning(dt, camera, worldX, worldY, 6 * tileMap->i_rows);
+	EdgePanning(dt, camera, screenX, screenY, 6 * tileMap->i_rows);
 	CameraBounds(camera);
 
 	Clicking();
@@ -77,7 +77,7 @@ void EditorCursor::HotKeys()
 
 void EditorCursor::Clicking()
 {
-	GUI* temp = GUIManager::GetInstance()->FindGUI(this->worldX, this->worldY);
+	GUI* temp = GUIManager::GetInstance()->FindGUI(this->screenX, this->screenY);
 	if (save == temp)
 	{
 		save->rotation.Set(10, 0, 0);
@@ -90,7 +90,7 @@ void EditorCursor::Clicking()
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		GUI* temp = GUIManager::GetInstance()->FindGUI(this->worldX, this->worldY);
+		GUI* temp = GUIManager::GetInstance()->FindGUI(this->screenX, this->screenY);
 		if (temp != nullptr)
 		{
 			if (temp->functionID == 0)

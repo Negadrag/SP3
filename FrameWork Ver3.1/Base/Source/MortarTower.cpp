@@ -15,8 +15,8 @@ MortarTower::MortarTower()
 	SetRange(10);
 	SetSpdRate(0.1f);
 	this->p_speed = 5.f;
-	this->towerCost = cost;
-	this->essenceCost = 100;
+	this->towerUpgradeCost = cost;
+	this->essenceUpgradeCost = 100;
 	this->essence = type;
 	this->meshID = GEO_MORTARBASE;
 	this->fullMeshID = GEO_MORTARCANNON;

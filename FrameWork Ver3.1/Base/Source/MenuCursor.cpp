@@ -28,16 +28,21 @@ void MenuCursor::Init(GameplayCam *camera)
 {
 	this->camera = camera;
 	movenorth = false;
-	moveleft = false;
+	movedark = false;
 	moveright = false;
+
+	holdingdrag = false;
 
 	istransition = false;
 	menu_states = 0;
 	scene_change = 1;
 
+	clickoffsetX = 0;
+
 	MainButtonsInit();
 	InstructionsInit();
 	OptionsInit();
+	LvlSelectInit();
 	//ButtonManager();
 }
 
@@ -48,8 +53,8 @@ void MenuCursor::Update(const double &dt)
 	float w = Application::GetWindowWidth();
 	float h = Application::GetWindowHeight();
 
-	worldX = x / w - 0.5f; // -0.5 - 0.5
-	worldY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
+	screenX = x / w - 0.5f; // -0.5 - 0.5
+	screenY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
 	smoke1.Update(dt);
 	smoke2.Update(dt);
@@ -69,87 +74,74 @@ void MenuCursor::Update(const double &dt)
 	if (Application::IsKeyPressed('O'))
 		testz -= dt * 10;
 
-
+	
+	
+	
 	static const float CAMERA_SPEED = 60.f;
 
-	if (menu_states == 3)
-		SceneMoveRight(CAMERA_SPEED, dt);
+	if (menu_states == 5) //4 is used for exit
+	{
+		SceneLevelSelect(CAMERA_SPEED, dt);//
 
+		SmokeInit();
+
+		
+
+	}
+	if (menu_states == 3)
+	{
+		SceneMoveRight(CAMERA_SPEED, dt);
+		//option_6->scale.x += testx;
+		//float temphold = screenX;
+	
+		
+		if (holdingdrag)
+		{
+			float mouseX = (screenX + 0.5f) * 80.f;
+			//float mouseY = (screenY + 0.5f) * 60.f;
+
+			float buttonPosX = option_6->position.x;
+			//float buttonPosY = option_6->position.y;
+
+			clickoffsetX = mouseX - buttonPosX;		//dist of click from button pos
+
+			if (option_6->scale.x >= clickoffsetX)
+			{
+				option_6->scale.x -= 20 * dt;
+			}
+			if (option_6->scale.x <= clickoffsetX)
+			{
+				option_6->scale.x += 20 * dt;
+			}
+
+			/*if (temphold >= screenX)
+			{
+				option_6->scale.x -= 10 * dt;
+			}
+			if (temphold <= screenX)
+			{
+				option_6->scale.x += 10 * dt;
+			}*/
+		}
+	}
 	if (menu_states == 2)
 	{
 		SceneMoveNorth(CAMERA_SPEED, dt);
 
-
-		smoke1.SetType(GEO_SMOKEPARTICLES);
-		smoke1.SetFrequency(5);
-		smoke1.SetCap(1000);
-		smoke1.i_spawnAmount = 1;
-		smoke1.f_lifeTime = 10.f;
-		smoke1.minVel.Set(0.2f, 1, 0);
-		smoke1.maxVel.Set(0.5f, 1, 0);
-		smoke1.scale.Set(1, 1, 1);
-		smoke1.f_maxDist = 1500.f;
-		smoke1.isActive = true;
-		smoke1.pos.Set(-20, 14, -165);
-
-		smoke2.SetType(GEO_SMOKEPARTICLES);
-		smoke2.SetFrequency(5);
-		smoke2.SetCap(1000);
-		smoke2.i_spawnAmount = 1;
-		smoke2.f_lifeTime = 10.f;
-		smoke2.minVel.Set(0.2f, 1, 0);
-		smoke2.maxVel.Set(0.5f, 1, 0);
-		smoke2.scale.Set(1, 1, 1);
-		smoke2.f_maxDist = 1500.f;
-		smoke2.isActive = true;
-		smoke2.pos.Set(10, 14, -165);
-
-		smoke3.SetType(GEO_SMOKEPARTICLES);
-		smoke3.SetFrequency(5);
-		smoke3.SetCap(1000);
-		smoke3.i_spawnAmount = 1;
-		smoke3.f_lifeTime = 10.f;
-		smoke3.minVel.Set(-0.2f, 1, 0);
-		smoke3.maxVel.Set(-0.5f, 1, 0);
-		smoke3.scale.Set(1, 1, 1);
-		smoke3.f_maxDist = 1500.f;
-		smoke3.isActive = true;
-		smoke3.pos.Set(30, 14, -165);
+		SmokeInit();
 	}
 
 	if (menu_states == 1)
-		SceneMoveLeft(CAMERA_SPEED, dt);
+		SceneMoveDark(CAMERA_SPEED, dt);
 
 	if (menu_states == 0)
 	{
 		SceneMoveBack(CAMERA_SPEED, dt);
 
-		smoke1.SetType(GEO_SMOKEPARTICLES);
-		smoke1.SetFrequency(5);
-		smoke1.SetCap(1000);
-		smoke1.i_spawnAmount = 1;
-		smoke1.f_lifeTime = 6.f;
-		smoke1.minVel.Set(0.2f, 1, 0);
-		smoke1.maxVel.Set(0.5f, 1, 0);
-		smoke1.scale.Set(1, 1, 1);
-		smoke1.f_maxDist = 1500.f;
-		smoke1.isActive = true;
-		smoke1.pos.Set(-13, 15, -30);
-
-		smoke3.SetType(GEO_SMOKEPARTICLES);
-		smoke3.SetFrequency(5);
-		smoke3.SetCap(1000);
-		smoke3.i_spawnAmount = 1;
-		smoke3.f_lifeTime = 10.f;
-		smoke3.minVel.Set(-0.2f, 1, 0);
-		smoke3.maxVel.Set(-0.5f, 1, 0);
-		smoke3.scale.Set(1, 1, 1);
-		smoke3.f_maxDist = 1500.f;
-		smoke3.isActive = true;
-		smoke3.pos.Set(17, 14, -40);
+		SmokeInit();
 	}
 
-	//backsmoke -20,14,-165, smoke2 
+	
 	if (istransition)
 		ButtonDeactivator();
 	else
@@ -165,10 +157,6 @@ void MenuCursor::Update(const double &dt)
 	HotKeys();
 
 
-	
-
-	
-
 
 }
 
@@ -183,7 +171,7 @@ void MenuCursor::Clicking(double dt)
 	{
 		bLButtonState = true;
 
-		GUI* temp = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* temp = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		if (temp != nullptr)
 		{
 			static const float CAMERA_SPEED = 10.f;
@@ -191,8 +179,8 @@ void MenuCursor::Clicking(double dt)
 			if (temp->functionID == 0)
 			{
 				std::cout << "BUTTON PLAY" << std::endl;
-				menu_states = 1;
-				scene_change = 1;
+				menu_states = 5;
+				//scene_change = 1;
 				istransition = true;
 			}
 			if (temp->functionID == 1)
@@ -221,6 +209,48 @@ void MenuCursor::Clicking(double dt)
 				istransition = true;
 				Application::GetInstance().b_Exit = true;
 			}
+			if (temp->functionID == 8)
+			{
+				holdingdrag = true;
+				//temphold = screenX;
+
+				
+				
+				
+			}
+			if (temp->functionID == 11)
+			{
+				std::cout << "Level 1 Entered" << std::endl;
+				menu_states = 1;
+				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				istransition = true;
+				
+			}
+			if (temp->functionID == 12)
+			{
+				std::cout << "Level 2 Entered" << std::endl;
+				menu_states = 1;
+				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				istransition = true;
+
+			}
+			if (temp->functionID == 13)
+			{
+				std::cout << "Level 3 Entered" << std::endl;
+				menu_states = 1;
+				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				istransition = true;
+
+			}
+			if (temp->functionID == 14)
+			{
+				std::cout << "Level 4 Entered" << std::endl;
+				menu_states = 1;
+				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				istransition = true;
+
+			}
+
 
 
 		}
@@ -228,13 +258,14 @@ void MenuCursor::Clicking(double dt)
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
+		holdingdrag = false;
 		//istransition = true;
 	}
 
 	if (Application::IsMousePressed(1))
 	{
 		movenorth = false;
-		moveleft = false;
+		movedark = false;
 		moveright = false;
 
 		istransition = true;
@@ -274,7 +305,7 @@ void MenuCursor::SceneMoveRight(float cam_spd, double dt)
 		istransition = false;
 }
 
-void MenuCursor::SceneMoveLeft(float cam_spd, double dt)
+void MenuCursor::SceneMoveDark(float cam_spd, double dt)
 {
 	float turnCam_spd = cam_spd + 30;
 
@@ -286,14 +317,43 @@ void MenuCursor::SceneMoveLeft(float cam_spd, double dt)
 		right.Normalize();
 		camera->position -= right * turnCam_spd * (float)dt;
 		camera->target -= right * turnCam_spd * (float)dt;
+
+		
 	}
+	else if (camera->position.y >= 4)
+	{
+		camera->position.y -= (turnCam_spd * (float)dt) / 4;
+		camera->target.y -= (turnCam_spd * (float)dt) / 4;
+	}
+
 	else
 		istransition = false;
 }
 
-void MenuCursor::SceneCredit(float cam_spd, double dt)
+void MenuCursor::SceneLevelSelect(float cam_spd, double dt)
 {
-	//credits : 32,20,-25
+	//levelselect : -28.2, 15.78, 9.45	pos.y at 15, moves up to roof view
+
+	float turnCam_spd = cam_spd + 30;
+
+	if (camera->position.x >= -26.5)
+	{
+		Vector3 view = (camera->target - camera->position).Normalized();
+		Vector3 right = view.Cross(camera->up);
+		right.y = 0;
+		right.Normalize();
+		camera->position -= right * turnCam_spd * (float)dt;
+		camera->target -= right * turnCam_spd * (float)dt;
+
+		if (camera->position.y <= 15.7)
+		{
+			camera->position.y += turnCam_spd* (float)dt;
+			camera->target.y += turnCam_spd* (float)dt;
+		}
+	}
+	else
+		istransition = false;
+
 }
 
 void MenuCursor::SceneMoveBack(float cam_spd, double dt)
@@ -326,6 +386,11 @@ void MenuCursor::SceneMoveBack(float cam_spd, double dt)
 		camera->position -= right * turnCam_spd * (float)dt;
 		camera->target -= right * turnCam_spd * (float)dt;
 	}
+	else if (camera->position.y >= 5)
+	{
+		camera->position.y -= turnCam_spd*(float)dt;
+		camera->target.y -= turnCam_spd*(float)dt;
+	}
 	else
 	{
 		istransition = false;
@@ -342,6 +407,8 @@ void MenuCursor::ButtonManager()
 		OptionsRender();
 	else if (menu_states == 1)
 		SceneManager::GetInstance()->ChangeScene(scene_change, false);
+	else if (menu_states == 5)
+		LvlSelectRender();
 }
 
 void MenuCursor::MainButtonsInit()
@@ -402,6 +469,62 @@ void MenuCursor::MainButtonRender()
 
 }
 
+void MenuCursor::LvlSelectInit()
+{
+	btn_lvl1 = new GUI("Level 1");
+	btn_lvl1->position.Set(50, 35);
+	btn_lvl1->SetTextSize(3);
+	btn_lvl1->buttonSize.Set(15, 5);
+	btn_lvl1->functionID = 11;
+	btn_lvl1->b_isActive = false;
+	btn_lvl1->b_textActive = false;
+
+	btn_lvl2 = new GUI("Level 2");
+	btn_lvl2->position.Set(50, 30);
+	btn_lvl2->SetTextSize(3);
+	btn_lvl2->buttonSize.Set(15, 5);
+	btn_lvl2->functionID = 12;
+	btn_lvl2->b_isActive = false;
+	btn_lvl2->b_textActive = false;
+
+	btn_lvl3 = new GUI("Level 3");
+	btn_lvl3->position.Set(50, 25);
+	btn_lvl3->SetTextSize(3);
+	btn_lvl3->buttonSize.Set(15, 5);
+	btn_lvl3->functionID = 13;
+	btn_lvl3->b_isActive = false;
+	btn_lvl3->b_textActive = false;
+
+	btn_lvl4 = new GUI("Level 4");
+	btn_lvl4->position.Set(50, 20);
+	btn_lvl4->SetTextSize(3);
+	btn_lvl4->buttonSize.Set(15, 5);
+	btn_lvl4->functionID = 14;
+	btn_lvl4->b_isActive = false;
+	btn_lvl4->b_textActive = false;
+}
+
+void MenuCursor::LvlSelectRender()
+{
+
+	btn_lvl1->b_isActive = true;
+	btn_lvl1->b_textActive = true;
+
+	btn_lvl2->b_isActive = true;
+	btn_lvl2->b_textActive = true;
+
+	btn_lvl3->b_isActive = true;
+	btn_lvl3->b_textActive = true;
+
+	btn_lvl4->b_isActive = true;
+	btn_lvl4->b_textActive = true;
+
+
+	pressrighttoreturn->b_isActive = true;
+	pressrighttoreturn->b_textActive = true;
+
+}
+
 void MenuCursor::InstructionsInit()
 {
 	instr_title = new GUI("Instructions");
@@ -435,51 +558,39 @@ void MenuCursor::InstructionsRender()
 void MenuCursor::OptionsInit()
 {
 
-	option_1 = new GUI("Some Options...");
+	option_1 = new GUI("Shadow Options...");
 	option_1->position.Set(10, 35);
 	option_1->SetTextSize(3);
 	option_1->buttonSize.Set(15, 5);
-	option_1->functionID = 0;
+	option_1->functionID = 9;
 	option_1->b_isActive = false;
 	option_1->b_textActive = false;
 
-	option_2 = new GUI("Some Options...");
+	option_2 = new GUI("Volume Options...");
 	option_2->position.Set(10, 30);
 	option_2->SetTextSize(3);
 	option_2->buttonSize.Set(15, 5);
-	option_2->functionID = 0;
+	option_2->functionID = 9;
 	option_2->b_isActive = false;
 	option_2->b_textActive = false;
 
-	option_3 = new GUI("Some Options...");
-	option_3->position.Set(10, 25);
-	option_3->SetTextSize(3);
-	option_3->buttonSize.Set(15, 5);
-	option_3->functionID = 0;
-	option_3->b_isActive = false;
-	option_3->b_textActive = false;
 
-	option_4 = new GUI("Some Options...");
-	option_4->position.Set(40, 35);
-	option_4->SetTextSize(3);
-	option_4->buttonSize.Set(15, 5);
-	option_4->functionID = 0;
-	option_4->b_isActive = false;
-	option_4->b_textActive = false;
 
-	option_5 = new GUI("Some Options...");
+	option_5 = new GUI("Set Shadow...");
 	option_5->position.Set(40, 30);
 	option_5->SetTextSize(3);
 	option_5->buttonSize.Set(15, 5);
-	option_5->functionID = 0;
+	option_5->functionID = 9;
 	option_5->b_isActive = false;
 	option_5->b_textActive = false;
 
-	option_6 = new GUI("Some Options...");
+	option_6 = new GUI();
+	option_6->meshID = GEO_ADJUSTBAR;
+	option_6->scale.Set(30, 3, 1);
 	option_6->position.Set(40, 25);
 	option_6->SetTextSize(3);
 	option_6->buttonSize.Set(15, 5);
-	option_6->functionID = 0;
+	option_6->functionID = 8;
 	option_6->b_isActive = false;
 	option_6->b_textActive = false;
 
@@ -501,25 +612,105 @@ void MenuCursor::OptionsRender()
 	option_2->b_isActive = true;
 	option_2->b_textActive = true;
 
-	option_3->b_isActive = true;
-	option_3->b_textActive = true;
-
-	option_4->b_isActive = true;
-	option_4->b_textActive = true;
 
 	option_5->b_isActive = true;
 	option_5->b_textActive = true;
 
 	option_6->b_isActive = true;
 	option_6->b_textActive = true;
-
+	
 
 	pressrighttoreturn->b_isActive = true;
 	pressrighttoreturn->b_textActive = true;
 }
 
+void MenuCursor::SmokeInit()
+{
+	if (menu_states == 2)
+	{
+		smoke1.SetType(GEO_SMOKEPARTICLES);
+		smoke1.SetFrequency(5);
+		smoke1.SetCap(1000);
+		smoke1.i_spawnAmount = 1;
+		smoke1.f_lifeTime = 10.f;
+		smoke1.minVel.Set(0.2f, 1, 0);
+		smoke1.maxVel.Set(0.5f, 1, 0);
+		smoke1.scale.Set(1, 1, 1);
+		smoke1.f_maxDist = 1500.f;
+		smoke1.isActive = true;
+		smoke1.pos.Set(-20, 14, -165);
+
+		smoke2.SetType(GEO_SMOKEPARTICLES);
+		smoke2.SetFrequency(5);
+		smoke2.SetCap(1000);
+		smoke2.i_spawnAmount = 1;
+		smoke2.f_lifeTime = 10.f;
+		smoke2.minVel.Set(0.2f, 1, 0);
+		smoke2.maxVel.Set(0.5f, 1, 0);
+		smoke2.scale.Set(1, 1, 1);
+		smoke2.f_maxDist = 1500.f;
+		smoke2.isActive = true;
+		smoke2.pos.Set(10, 14, -165);
+
+		smoke3.SetType(GEO_SMOKEPARTICLES);
+		smoke3.SetFrequency(5);
+		smoke3.SetCap(1000);
+		smoke3.i_spawnAmount = 1;
+		smoke3.f_lifeTime = 10.f;
+		smoke3.minVel.Set(-0.2f, 1, 0);
+		smoke3.maxVel.Set(-0.5f, 1, 0);
+		smoke3.scale.Set(1, 1, 1);
+		smoke3.f_maxDist = 1500.f;
+		smoke3.isActive = true;
+		smoke3.pos.Set(30, 14, -165);
+	}
+
+	if (menu_states == 0)
+	{
+		smoke1.SetType(GEO_SMOKEPARTICLES);
+		smoke1.SetFrequency(5);
+		smoke1.SetCap(1000);
+		smoke1.i_spawnAmount = 1;
+		smoke1.f_lifeTime = 6.f;
+		smoke1.minVel.Set(0.2f, 1, 0);
+		smoke1.maxVel.Set(0.5f, 1, 0);
+		smoke1.scale.Set(1, 1, 1);
+		smoke1.f_maxDist = 1500.f;
+		smoke1.isActive = true;
+		smoke1.pos.Set(-13, 15, -30);
+
+		smoke3.SetType(GEO_SMOKEPARTICLES);
+		smoke3.SetFrequency(5);
+		smoke3.SetCap(1000);
+		smoke3.i_spawnAmount = 1;
+		smoke3.f_lifeTime = 10.f;
+		smoke3.minVel.Set(-0.2f, 1, 0);
+		smoke3.maxVel.Set(-0.5f, 1, 0);
+		smoke3.scale.Set(1, 1, 1);
+		smoke3.f_maxDist = 1500.f;
+		smoke3.isActive = true;
+		smoke3.pos.Set(17, 14, -40);
+	}
+
+	if (menu_states == 5)
+	{
+		smoke2.SetType(GEO_SMOKEPARTICLES);
+		smoke2.SetFrequency(5);
+		smoke2.SetCap(1000);
+		smoke2.i_spawnAmount = 1;
+		smoke2.f_lifeTime = 10.f;
+		smoke2.minVel.Set(0.2f, 1, 0);
+		smoke2.maxVel.Set(0.5f, 1, 0);
+		smoke2.scale.Set(1, 1, 1);
+		smoke2.f_maxDist = 1500.f;
+		smoke2.isActive = true;
+		smoke2.pos.Set(-35, 14, -10);
+	}
+}
+
 void MenuCursor::ButtonDeactivator()
 {
+	//main buttons
 	btn_play->b_isActive = false;
 	btn_play->b_textActive = false;
 
@@ -535,34 +726,35 @@ void MenuCursor::ButtonDeactivator()
 	btn_exit->b_isActive = false;
 	btn_exit->b_textActive = false;
 
+		//Level select buttons
+		btn_lvl1->b_isActive = false;
+		btn_lvl1->b_textActive = false;
 
+		btn_lvl2->b_isActive = false;
+		btn_lvl2->b_textActive = false;
 
+		btn_lvl3->b_isActive = false;
+		btn_lvl3->b_textActive = false;
 
+		btn_lvl4->b_isActive = false;
+		btn_lvl4->b_textActive = false;
+
+	//instruction gui
 	instr_title->b_isActive = false;
 	instr_title->b_textActive = false;
 
+		//option buttons
+		option_1->b_isActive = false;
+		option_1->b_textActive = false;
 
+		option_2->b_isActive = false;
+		option_2->b_textActive = false;
 
+		option_5->b_isActive = false;
+		option_5->b_textActive = false;
 
-	option_1->b_isActive = false;
-	option_1->b_textActive = false;
-
-	option_2->b_isActive = false;
-	option_2->b_textActive = false;
-
-	option_3->b_isActive = false;
-	option_3->b_textActive = false;
-
-	option_4->b_isActive = false;
-	option_4->b_textActive = false;
-
-	option_5->b_isActive = false;
-	option_5->b_textActive = false;
-
-	option_6->b_isActive = false;
-	option_6->b_textActive = false;
-
-
+		option_6->b_isActive = false;
+		option_6->b_textActive = false;
 
 
 	pressrighttoreturn->b_isActive = false;

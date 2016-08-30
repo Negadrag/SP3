@@ -108,11 +108,11 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
 
 		camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 2.f, camera.defaultOrtho); // scrolling in and out
-		EdgePanning(dt, camera, worldX, worldY, 6 * tileMap.i_rows);
+		EdgePanning(dt, camera, screenX, screenY, 6 * tileMap.i_rows);
 	}
 	else // If LClick is being held down
 	{
-		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* button = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		if (button != nullptr)
 		{
 			button->rotation.y = Math::Wrap(button->rotation.y + 50.f * (float)dt,0.f,360.f);
@@ -178,11 +178,11 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		skip->b_isActive = true;
 	}
 
-	if (GUIManager::GetInstance()->FindGUI(worldX, worldY))
+	if (GUIManager::GetInstance()->FindGUI(screenX, screenY))
 	{
-		if (GUIManager::GetInstance()->FindGUI(worldX, worldY)->functionID == 10)
+		if (GUIManager::GetInstance()->FindGUI(screenX, screenY)->functionID == 10)
 		{
-			GUIManager::GetInstance()->FindGUI(worldX, worldY)->rotation.Set(10, 0, 0);
+			GUIManager::GetInstance()->FindGUI(screenX, screenY)->rotation.Set(10, 0, 0);
 		}
 	}
 	else
@@ -322,14 +322,18 @@ void CursorControl::TowerButtons()
 		spawnTower[i]->b_isActive = false;
 
 		std::ostringstream os;
-		os << "Cost: " << cost;
+		os << "  " << cost;
 		towerCosts[i] = new GUI(os.str());
+		towerCosts[i]->meshID = GEO_COIN;
+		towerCosts[i]->scale.Set(1.f, 1.f, 1.f);
+		towerCosts[i]->meshOffset.Set(1, 1, 1);
 		towerCosts[i]->SetParent(spawnTower[i]);
 		towerCosts[i]->textColor.Set(1, 1, 0);
 		towerCosts[i]->SetTextSize(2);
 		towerCosts[i]->b_buttonActive = false;
 		towerCosts[i]->position.Set(0, -1.5f);
 		towerCosts[i]->b_isActive = false;
+		towerCosts[i]->b_lightEnabled = false;
 	}
 
 	for (int i = 0; i < (int)T_TOTAL; ++i)
@@ -564,7 +568,7 @@ void CursorControl::Clicking(TileMap &tileMap)
 	{
 		bLButtonState = false;
 		bPlacingTower = false;
-		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* button = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		
 		if (button != nullptr)
 		{
@@ -619,16 +623,23 @@ void CursorControl::UpgradeButtons(Tower* tower)
 		towerUpgrades[0]->meshID = tower->fullMeshID;
 		towerUpgrades[0]->functionID = 5;
 		std::ostringstream os;
-		os << "Cost:" << tower->GetCost();
+		os << "  " << tower->GetCost();
+		upgradeCosts[0]->meshID = GEO_COIN;
+		upgradeCosts[0]->scale.Set(1.f, 1.f, 1.f);
+		upgradeCosts[0]->meshOffset.Set(1, 1, 0);
 		upgradeCosts[0]->SetText(os.str());
 		upgradeCosts[0]->b_isActive = true;
-		if (tower->essenceCost > 0)
+		upgradeCosts[0]->b_lightEnabled = false;
+		if (tower->essenceUpgradeCost > 0)
 		{
 			os.str("");
-			os << "ECost:" << tower->essenceCost;
+			os << "  " << tower->essenceUpgradeCost;
+			essenceCost[0]->scale.Set(1.5f, 1.5f, 1.5f);
+			essenceCost[0]->meshOffset.Set(1, 1, 0);
 			essenceCost[0]->SetText(os.str());
 			CostColor(essenceCost[0], tower->essence);
 			essenceCost[0]->b_isActive = true;
+			essenceCost[0]->b_lightEnabled = false;
 		}
 	}
 
@@ -655,12 +666,17 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 		button->b_isActive = true;
 		button->meshID = GEO_ICETOWER;
 		std::ostringstream os;
-		os << "Cost:" << IceTower::cost;
+		os << "  " << IceTower::cost;
+		cost->meshID = GEO_COIN;
+		cost->scale.Set(1.f, 1.f, 1.f);
+		cost->meshOffset.Set(1, 1, 0);
 		cost->SetText(os.str());
 		cost->b_isActive = true;
-
 		os.str("");
-		os << "ECost:" << IceTower::ecost;
+		os << "  " << IceTower::ecost;
+		ecost->meshID = GEO_ICEESSENCE;
+		ecost->scale.Set(1.5f, 1.5f, 1.5f);
+		ecost->meshOffset.Set(1, 1, 0);
 		ecost->SetText(os.str());
 		CostColor(ecost, IceTower::type);
 		ecost->b_isActive = true;
@@ -673,12 +689,18 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 		button->b_isActive = true;
 		button->meshID = GEO_POISONTOWER;
 		std::ostringstream os;
-		os << "Cost:" << PoisonTower::cost;
+		os << "  " << PoisonTower::cost;
+		cost->meshID = GEO_COIN;
+		cost->scale.Set(1.f, 1.f, 1.f);
+		cost->meshOffset.Set(1, 1, 0);
 		cost->SetText(os.str());
 		cost->b_isActive = true;
 
 		os.str("");
-		os << "ECost:" << PoisonTower::ecost;
+		os << "  " << PoisonTower::ecost;
+		ecost->meshID = GEO_POISONESSENCE;
+		ecost->scale.Set(1.5f, 1.5f, 1.5f);
+		ecost->meshOffset.Set(1, 1, 0);
 		ecost->SetText(os.str());
 		CostColor(ecost, PoisonTower::type);
 		ecost->b_isActive = true;
@@ -691,13 +713,18 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 		button->b_isActive = true;
 		button->meshID = GEO_MORTARCANNON;
 		std::ostringstream os;
-		os << "Cost:" << MortarTower::cost;
+		os << "  " << MortarTower::cost;
+		cost->meshID = GEO_COIN;
+		cost->scale.Set(1.f, 1.f, 1.f);
+		cost->meshOffset.Set(1, 1, 0);
 		cost->SetText(os.str());
 		cost->b_isActive = true;
 
 		os.str("");
-		os << "ECost:" << MortarTower::ecost;
-		ecost->SetText(os.str());
+		os << "  " << MortarTower::ecost;
+		ecost->meshID = GEO_TANKESSENCE;
+		ecost->scale.Set(1.5f, 1.5f, 1.5f);
+		ecost->meshOffset.Set(1, 1, 0);		ecost->SetText(os.str());
 		CostColor(ecost, MortarTower::type);
 		ecost->b_isActive = true;
 
@@ -709,12 +736,18 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 		button->b_isActive = true;
 		button->meshID = GEO_SPEEDMODEL;
 		std::ostringstream os;
-		os << "Cost:" << SpeedTower::cost;
+		os << "  " << SpeedTower::cost;
+		cost->meshID = GEO_COIN;
+		cost->scale.Set(1.f, 1.f, 1.f);
+		cost->meshOffset.Set(1, 1, 0);
 		cost->SetText(os.str());
 		cost->b_isActive = true;
 
 		os.str("");
-		os << "ECost:" << SpeedTower::ecost;
+		os << "  " << SpeedTower::ecost;
+		ecost->meshID = GEO_SPEEDESSENCE;
+		ecost->scale.Set(1.5f, 1.5f, 1.5f);
+		ecost->meshOffset.Set(1, 1, 0);
 		ecost->SetText(os.str());
 		CostColor(ecost, SpeedTower::type);
 		ecost->b_isActive = true;
@@ -766,11 +799,11 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 		Tower* temp = FindTower(checkPositionX, checkPositionY);
 		if (Scene::player.i_currency >= temp->GetCost())
 		{
-			if (CheckPlayerEssence(temp->essence, temp->essenceCost))
+			if (CheckPlayerEssence(temp->essence, temp->essenceUpgradeCost))
 			{
 				if (temp->LevelUp())
 				{
-					RemovePlayerEssence(temp->essence, temp->essenceCost);
+					RemovePlayerEssence(temp->essence, temp->essenceUpgradeCost);
 					Scene::player.i_currency -= temp->GetCost();
 					temp->SetCost(temp->GetCost() * 2);
 				}
@@ -857,18 +890,22 @@ void CursorControl::CostColor(GUI* cost,Tower::ESSENCE_TYPE type)
 	if (type == Tower::E_BASIC)
 	{
 		cost->textColor.Set(0, 1.f, 0);
+		cost->meshID = GEO_POISONESSENCE;
 	}
 	else if (type == Tower::E_ICE)
 	{
 		cost->textColor.Set(0.5f, 1.f, 1);
+		cost->meshID = GEO_ICEESSENCE;
 	}
 	else if (type == Tower::E_SPEED)
 	{
 		cost->textColor.Set(1.f, 1.f, 0);
+		cost->meshID = GEO_SPEEDESSENCE;
 	}
 	else if (type == Tower::E_HEAVY)
 	{
 		cost->textColor.Set(1.f, 0.3f, 0.3f);
+		cost->meshID = GEO_TANKESSENCE;
 	}
 }
 

@@ -6,8 +6,8 @@ Tower::Tower()
 	i_level = 1;
 	i_MaxLevel = 3;
 	p_spawnTimer = 0.f;
-	towerCost = 5.f;
-	essenceCost = 0.f;
+	towerUpgradeCost = 5.f;
+	essenceUpgradeCost = 0.f;
 	essence = E_BASIC;
 	atkDamage = 0.f;
 	atkSpeed = 0.f;
@@ -38,8 +38,8 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	p_spawnTimer = 0.f;
 	this->pos = pos;
 	this->scale = scale;
-	towerCost = 5.f;
-	essenceCost = 0.f;
+	towerUpgradeCost = 5.f;
+	essenceUpgradeCost = 0.f;
 	essence = E_BASIC;
 	atkDamage = 0.f;
 	atkSpeed = 0.f;
@@ -71,12 +71,12 @@ void Tower::SetType(GEOMETRY_TYPE meshID)
 
 void Tower::SetCost(float c)
 {
-	this->towerCost = c;
+	this->towerUpgradeCost = c;
 }
 
 float Tower::GetCost()
 {
-	return towerCost;
+	return towerUpgradeCost;
 }
 
 void Tower::SetAtkDmg(float ad)

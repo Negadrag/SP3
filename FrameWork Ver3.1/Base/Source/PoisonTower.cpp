@@ -14,8 +14,8 @@ PoisonTower::PoisonTower()
 	SetAtkDmg(10);
 	SetRange(5);
 	SetSpdRate(2.f);
-	this->essenceCost = 125;
-	this->towerCost = cost;
+	this->essenceUpgradeCost = 125;
+	this->towerUpgradeCost = cost;
 	this->essence = type;
 	this->p_speed = 10.f;
 	this->f_PoisonDPS = 15.f;

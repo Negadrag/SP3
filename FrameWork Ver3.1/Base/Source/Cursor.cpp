@@ -5,7 +5,7 @@
 Cursor::Cursor()
 {
 	worldCoords.SetZero();
-	worldX = worldY = 0.f;
+	screenX = screenY = 0.f;
 }
 
 Cursor::~Cursor()
@@ -19,41 +19,41 @@ void Cursor::Update(OrthoCamera &camera, const TileMap &tileMap, const double &d
 	float w = Application::GetWindowWidth();
 	float h = Application::GetWindowHeight();
 
-	worldX = x / w - 0.5f; // -0.5 - 0.5
-	worldY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
+	screenX = x / w - 0.5f; // -0.5 - 0.5
+	screenY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
-	float worldY2 = worldY / cos(Math::DegreeToRadian(camera.rotation)); // Slanting the camera by getting the hypotenuse
+	float screenY2 = screenY / cos(Math::DegreeToRadian(camera.rotation)); // Slanting the camera by getting the hypotenuse
 
 	float Xunits = 0.5f / (camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y)); // 1 unit in world space
 	float Yunits = 0.5f / (camera.orthoSize);
 
 	Vector3 center = camera.target;
 
-	worldCoords.Set(center.x + worldX / Xunits + 0.5f, center.y + worldY2 / Yunits);
+	worldCoords.Set(center.x + screenX / Xunits + 0.5f, center.y + screenY2 / Yunits);
 }
 
-void Cursor::EdgePanning(const double &dt, OrthoCamera &camera, float worldX, float worldY, float speed)
+void Cursor::EdgePanning(const double &dt, OrthoCamera &camera, float screenX, float screenY, float speed)
 {
-	if (worldX > 0.4)
+	if (screenX > 0.4)
 	{
-		camera.target.x += (worldX - 0.4f) * speed * (float)dt;
-		camera.position.x += (worldX - 0.4f) * speed * (float)dt;
+		camera.target.x += (screenX - 0.4f) * speed * (float)dt;
+		camera.position.x += (screenX - 0.4f) * speed * (float)dt;
 	}
-	if (worldX < -0.4)
+	if (screenX < -0.4)
 	{
-		camera.target.x += (worldX + 0.4f) * speed * (float)dt;
-		camera.position.x += (worldX + 0.4f) * speed * (float)dt;
+		camera.target.x += (screenX + 0.4f) * speed * (float)dt;
+		camera.position.x += (screenX + 0.4f) * speed * (float)dt;
 	}
 
-	if (worldY > 0.4)
+	if (screenY > 0.4)
 	{
-		camera.target.y += (worldY - 0.4f) * speed * (float)dt;
-		camera.position.y += (worldY - 0.4f) * speed * (float)dt;
+		camera.target.y += (screenY - 0.4f) * speed * (float)dt;
+		camera.position.y += (screenY - 0.4f) * speed * (float)dt;
 	}
-	if (worldY < -0.4)
+	if (screenY < -0.4)
 	{
-		camera.target.y += (worldY + 0.4f) * speed * (float)dt;
-		camera.position.y += (worldY + 0.4f) * speed * (float)dt;
+		camera.target.y += (screenY + 0.4f) * speed * (float)dt;
+		camera.position.y += (screenY + 0.4f) * speed * (float)dt;
 	}
 
 	if (Application::IsKeyPressed(VK_UP))

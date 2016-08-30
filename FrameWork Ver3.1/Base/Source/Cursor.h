@@ -16,7 +16,7 @@ public:
 	void Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt);
 	Vector3 worldCoords;
 	
-	float worldX, worldY;
+	float screenX, screenY;
 
 protected:
 	void CameraBounds(OrthoCamera &camera);
