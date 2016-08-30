@@ -67,3 +67,8 @@ void Minion::GiveEssence()
 	//Enemy::GiveCurrency();
 	player->i_essenceBasic += 1;
 }
+
+void Minion::ReceivePoisonStatus(float poisonDPS, float slowAmount, float duration)
+{
+	this->ReceiveSlowStatus(slowAmount, duration);
+}

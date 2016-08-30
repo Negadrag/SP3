@@ -29,11 +29,11 @@ public:
 
 	//to move the enemy to a specific point handles rotation based on vel as well. Rotation speed set within the function
 	virtual void MoveTo(Vector2 dest,double dt);
-	void Update(double dt);
+	virtual void Update(double dt);
 	void ReceiveDamage(float damage);
 	void ReceivePoisonDamage(float damage);
 	virtual void ReceiveSlowStatus(float slowAmount, float slowDuration);
-	void ReceivePoisonStatus(float poisonDamage,float slowAmount,float duration);
+	virtual void ReceivePoisonStatus(float poisonDamage,float slowAmount,float duration);
 	virtual void UpdateAnim(double dt);
 	virtual void GiveCurrency();
 	virtual void GiveEssence();
