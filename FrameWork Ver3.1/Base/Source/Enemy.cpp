@@ -136,6 +136,7 @@ void Enemy::MoveTo(Vector2 dest, double dt)
 		hp.b_Render = true;
 		hp.pos.x = this->pos.x;
 		hp.pos.y = this->pos.y;
+		hp.pos.z = this->pos.z + 1.f;
 		hp.rotation.z = this->rotation.z;
 		hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
 	}
