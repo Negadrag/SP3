@@ -99,6 +99,8 @@ void BuffTower::Buff()
 				if (temp->buffCounter < 1)
 				{
 					temp->atkDamage += f_increaseATK;
+					temp->atkSpeed += f_increaseRATE;
+					temp->atkRange += f_increaseRANGE;
 				}
 				temp->buffCounter++;
 				buffedTowers.push_back(temp);
