@@ -56,8 +56,8 @@ void MenuCursor::Update(const double &dt)
 	float w = Application::GetWindowWidth();
 	float h = Application::GetWindowHeight();
 
-	worldX = x / w - 0.5f; // -0.5 - 0.5
-	worldY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
+	screenX = x / w - 0.5f; // -0.5 - 0.5
+	screenY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
 	smoke1.Update(dt);
 	smoke2.Update(dt);
@@ -99,8 +99,8 @@ void MenuCursor::Update(const double &dt)
 
 		if (holdingdrag)
 		{
-			float mouseX = (worldX + 0.5f) * 80.f;
-			//float mouseY = (worldY + 0.5f) * 60.f;
+			float mouseX = (screenX + 0.5f) * 80.f;
+			//float mouseY = (screenY + 0.5f) * 60.f;
 
 			float buttonPosX = option_6->position.x;
 			//float buttonPosY = option_6->position.y;
@@ -167,7 +167,7 @@ void MenuCursor::Clicking(double dt)
 	{
 		bLButtonState = true;
 
-		GUI* temp = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* temp = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		if (temp != nullptr)
 		{
 			static const float CAMERA_SPEED = 10.f;
