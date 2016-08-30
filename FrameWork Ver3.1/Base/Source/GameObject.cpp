@@ -1,4 +1,4 @@
-
+#include "Music.h"
 #include "GameObject.h"
 
 GameObject::GameObject(GAMEOBJECT_TYPE typeValue) 
@@ -237,7 +237,7 @@ void GameObject::CollisionResponse(GameObject* go2)
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 		(*score)++;
-
+		Music::GetInstance()->PlayMusic(8, false, 0.5);
 
 		(*particleGenerator).SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
 
@@ -248,7 +248,7 @@ void GameObject::CollisionResponse(GameObject* go2)
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 		(*score)++;
-
+		Music::GetInstance()->PlayMusic(8, false, 0.5);
 
 		(*particleGenerator).SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
 
@@ -259,7 +259,7 @@ void GameObject::CollisionResponse(GameObject* go2)
 		uN = u.Dot(N)*N;
 		go->vel = u - 2 * uN;
 		(*score)++;
-
+		Music::GetInstance()->PlayMusic(8, false, 0.5);
 
 		(*particleGenerator).SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
 		break;
@@ -270,7 +270,7 @@ void GameObject::CollisionResponse(GameObject* go2)
 		go->vel = u - 2 * uN;
 
 		(*score)++;
-
+		Music::GetInstance()->PlayMusic(8, false, 0.5);
 
 		(*particleGenerator).SpawnParticle(Vector3(other->pos.x, other->pos.y, 10));
 

@@ -14,6 +14,7 @@ public:
 	virtual void UpdateAnim(double dt);
 	virtual void GiveEssence();
 	virtual void ReceiveSlowStatus(float slowAmount, float slowDuration);
+	virtual void UpdateMesh();
 private:
 	
 protected:

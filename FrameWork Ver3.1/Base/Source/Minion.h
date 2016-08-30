@@ -10,7 +10,10 @@ public:
 	Minion(Vector3 pos, Node* node);
 	virtual ~Minion();
 	virtual void UpdateAnim(double dt);
+	virtual void ReceivePoisonStatus(float poisonDamage, float slowAmount, float duration);
 	virtual void GiveEssence();
+	virtual void UpdateMesh();
+
 private:
 
 protected:

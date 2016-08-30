@@ -39,14 +39,14 @@ void MapEditor::Init()
 
 		//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 		camera.b_ortho = true;
-		camera.orthoSize = (tileMap.i_rows / 2) + 1;
+		camera.orthoSize = (tileMap.i_rows / 2.f) + 1.f;
 		camera.defaultOrtho = camera.orthoSize;
 		camera.aspectRatio.Set(4, 3);
 		RenderManager::GetInstance()->SetCamera(&camera);
 
 		grass.meshID = GEO_GRASS_DARKGREEN;
 		grass.pos.Set((float)(tileMap.i_columns - 1) / 2.f, (float)tileMap.i_rows / 2.f, 0);
-		grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2, camera.orthoSize * 2.5, 1);
+		grass.scale.Set(camera.orthoSize * (camera.aspectRatio.x / camera.aspectRatio.y) * 2.f, camera.orthoSize * 2.5f, 1.f);
 		grass.rotation.Set(0, 0, 0);
 
 		cursor.Init(&tileMap);
@@ -64,7 +64,8 @@ void MapEditor::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
+
 	if (f_runTimer < 1.f)
 	{
 		f_runTimer += (float)dt;
@@ -90,7 +91,7 @@ void MapEditor::Render()
 {
 	if (b_startScene)
 	{
-		RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90, 0, 0), false, false);
+		RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.5f, 1.5f, 1.5f), Vector3(90.f, 0, 0), false, false);
 
 		for (int i = 0; i < tileMap.i_rows; ++i) // y - axis
 		{
@@ -98,22 +99,22 @@ void MapEditor::Render()
 			{
 				if (tileMap.screenMap[j][i] == -2)
 				{
-					RenderManager::GetInstance()->RenderMesh(GEO_CUBE2, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0), Vector3(1, 1, 1), Vector3(0, -90, 0), true, false);
+					RenderManager::GetInstance()->RenderMesh(GEO_CUBE2, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0), Vector3(1.f, 1.f, 1.f), Vector3(0, -90.f, 0), true, false);
 				}
 				else if (tileMap.screenMap[j][i] == -1)
 				{
-					RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+					RenderManager::GetInstance()->RenderMesh(GEO_PATH, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1f), Vector3(1.f, 1.f, 1.f), Vector3(0, 0, 0), true, false);
 				}
 				else if (tileMap.screenMap[j][i] == 0)
 				{
-					RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+					RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1f), Vector3(1.f, 1.f, 1.f), Vector3(0, 0, 0), true, false);
 				}
 				else if (tileMap.screenMap[j][i] > 0)
 				{
 					//RenderManager::GetInstance()->RenderMesh(GEO_SPHERE, Vector3(j * tileMap.i_tileSize, i  * tileMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 					std::ostringstream ss;
 					ss << tileMap.screenMap[j][i];
-					RenderManager::GetInstance()->RenderText(ss.str(), Color(1, 1, 0), Vector3((float)(j * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, (float)(i  * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0));
+					RenderManager::GetInstance()->RenderText(ss.str(), Color(1, 1, 0), Vector3((float)(j * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, (float)(i  * tileMap.i_tileSize) - (float)tileMap.i_tileSize * 0.5f, 0.1f), Vector3(1, 1, 1), Vector3(0, 0, 0));
 				}
 			}
 		}
@@ -156,7 +157,7 @@ void MapEditor::HandleInput()
 		std::cin >> s_mapName;
 		std::cout << "Number of columns (x - axis) :";
 		std::cin >> input1;
-		tileMap.i_columns = atoi(input1.c_str()); 
+		tileMap.i_columns = atoi(input1.c_str());
 		if (tileMap.i_columns <= 0)
 		{
 			tileMap.i_columns = 1;
@@ -168,6 +169,16 @@ void MapEditor::HandleInput()
 		{
 			tileMap.i_rows = 1;
 		}
+	}
+
+	{
+		string input, input2;
+		std::cout << "Starting HP Scale:";
+		std::cin >> input;
+		std::cout << "Wave HP Scaling:";
+		std::cin >> input2;
+		tileMap.waves.f_startingHp = atoi(input.c_str());
+		tileMap.waves.f_hpScaling = atoi(input2.c_str());
 	}
 
 	int numWaves;
@@ -188,7 +199,7 @@ void MapEditor::HandleInput()
 		{
 			int enemy;
 			string input;
-			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION, 2 = ICE, 3 = SPEED, 4 = TANK):";
+			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION, 2 = ICE, 3 = SPEED, 4 = TANK, 5 = BOSS):";
 			std::cin >> input;
 			enemy = atoi(input.c_str());
 			switch (enemy)
@@ -206,6 +217,9 @@ void MapEditor::HandleInput()
 				break;
 			case (4) :
 				ss << "TANK,";
+				break;
+			case (5) :
+				ss << "BOSS,";
 				break;
 			default:
 				ss << "MINION,";
@@ -256,7 +270,7 @@ void MapEditor::WriteToFile()
 		}
 		file << '\n';
 	}
-	file << "e,\n";
+	file << "e,"<< tileMap.waves.f_startingHp << ',' << tileMap.waves.f_hpScaling << ",\n";
 	file << "/,0,0,\n";
 	for (vector<string>::iterator it = waves.begin(); it != waves.end(); ++it)
 	{

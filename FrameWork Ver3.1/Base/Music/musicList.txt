@@ -5,3 +5,5 @@ Music//Frost.mp3
 Music//Mortar.mp3
 Music//Speed.mp3
 Music//bgm.mp3
+Music//Death.wav
+Music//Ding.wav

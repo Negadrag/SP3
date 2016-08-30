@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include <vector>
+#include "Tower.h"
 
 using std::vector;
 
@@ -14,6 +15,7 @@ enum ENEMY_TYPE
 	ICE_MONSTER,
 	SPEED,
 	TANK,
+	BOSS,
 	NUM_ENEMY
 };
 
@@ -51,6 +53,8 @@ public:
 	float f_hpScaling; // percentage of the health scaling per wave;
 	float f_currScaling; // percentage scaling of the current wave
 
+	vector<Tower*>* towerList;
+
 	void SetRoot(Node* root);
 	void AddWave(vector<ENEMY_TYPE> typeVec , int revolution , float spawnFrequency);
 	bool WaveEnded(int waveIndex);
@@ -60,14 +64,17 @@ public:
 	void Exit();
 	void Update(double dt);
 	vector<Enemy*>* GetEnemyList();
+	
 	PlayerInfo* player;
+	int i_currentWave;
 private:
+	
 	vector<Enemy*> enemyList;
 	vector<Wave> waveList;
 	
 	Node* root;
 	float f_spawnTimer;
-	int i_currentWave;
+	
 	int i_currentRevolution;
 protected:
 

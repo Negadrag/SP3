@@ -27,7 +27,7 @@ void Particles::Update(double dt, int& particle_count)
 	{
 		if (this->b_gravity == true)
 		{
-			this->vel += Vector3(0, -0.98, 0);
+			this->vel += Vector3(0, -0.98f, 0);
 
 		}
 		if (meshID == GEO_WATER)//change to water later
@@ -56,7 +56,7 @@ void Particles::Update(double dt, int& particle_count)
 		{
 			lifeTime -= dt;
 			this->pos += vel * dt;
-			this->scale -= Vector3(dt * 5, dt * 5, 0);
+			this->scale -= Vector3(dt * 5.f, dt * 5.f, 0);
 			if (scale.x <= 0.2f || scale.y <= 0.2f)
 			{
 				this->b_isActive = false;
@@ -84,7 +84,7 @@ void Particles::Update(double dt, int& particle_count)
 		{
 			lifeTime -= dt;
 			this->pos += vel * dt;
-			this->scale -= Vector3(dt/2 , dt/2 , 0);
+			this->scale -= Vector3(dt/2.f , dt/2.f , 0);
 			if (scale.x <= 0.2f || scale.y <= 0.2f)
 			{
 				this->b_isActive = false;

@@ -65,17 +65,17 @@ void MenuCursor::Update(const double &dt)
 
 
 	if (Application::IsKeyPressed('L'))
-		testx += dt * 10;
+		testx += dt * 10.f;
 	if (Application::IsKeyPressed('J'))
-		testx -= dt * 10;
+		testx -= dt * 10.f;
 	if (Application::IsKeyPressed('I'))
-		testy += dt * 10;
+		testy += dt * 10.f;
 	if (Application::IsKeyPressed('K'))
-		testy -= dt * 10;
+		testy -= dt * 10.f;
 	if (Application::IsKeyPressed('P'))
-		testz += dt * 10;
+		testz += dt * 10.f;
 	if (Application::IsKeyPressed('O'))
-		testz -= dt * 10;
+		testz -= dt * 10.f;
 
 	
 
@@ -96,8 +96,6 @@ void MenuCursor::Update(const double &dt)
 	{
 		SceneMoveRight(CAMERA_SPEED, dt);
 		//option_6->scale.x += testx;
-		//float temphold = worldX;
-
 
 		if (holdingdrag)
 		{
@@ -111,11 +109,11 @@ void MenuCursor::Update(const double &dt)
 
 			if (option_6->scale.x >= clickoffsetX && option_6->scale.x >= 1)
 			{
-				option_6->scale.x -= 20 * dt;
+				option_6->scale.x -= 20.f * dt;
 			}
 			if (option_6->scale.x <= clickoffsetX && option_6->scale.x <= adjsizeX)
 			{
-				option_6->scale.x += 20 * dt;
+				option_6->scale.x += 20.f * dt;
 			}
 
 			Music::GetInstance()->f_masterVolume = (option_6->scale.x / adjsizeX) * 4;
@@ -210,7 +208,7 @@ void MenuCursor::Clicking(double dt)
 			if (temp->functionID == 8)
 			{
 				holdingdrag = true;
-				//temphold = worldX;
+				//temphold = screenX;
 
 
 
@@ -228,7 +226,7 @@ void MenuCursor::Clicking(double dt)
 			{
 				std::cout << "Level 2 Entered" << std::endl;
 				menu_states = 1;
-				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				scene_change = 9;		//SCENE CHANGE FOR LEVEL SELECTION HERE
 				istransition = true;
 
 			}

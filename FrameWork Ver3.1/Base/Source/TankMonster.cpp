@@ -3,14 +3,6 @@
 
 TankMonster::TankMonster() :Enemy()
 {
-	this->meshID = GEO_TANKY;
-	this->f_movSpeed = 1.5f;
-	this->f_maxHealth = 100.f;
-	this->f_health = f_maxHealth;
-	this->i_damage = 1;
-	this->i_defence = 30;
-	this->f_rotateSpeed = 90.f;
-	this->i_currency = 2;
 }
 
 TankMonster::TankMonster(Vector3 pos, Node* root) :Enemy(pos, root)
@@ -39,4 +31,20 @@ void TankMonster::GiveEssence()
 {
 	//Enemy::GiveCurrency();
 	player->i_essenceTanky += 1;
+}
+
+void TankMonster::UpdateMesh()
+{
+	if (f_poisonTimer > 0)
+	{
+		this->meshID = GEO_TANKY_POISON;
+	}
+	else if (f_slowTimer > 0)
+	{
+		this->meshID = GEO_TANKY_FROST;
+	}
+	else
+	{
+		this->meshID = GEO_TANKY;
+	}
 }

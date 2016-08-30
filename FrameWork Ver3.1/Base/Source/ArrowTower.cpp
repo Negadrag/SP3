@@ -1,3 +1,10 @@
+/****************************************************************************/
+/*!
+\file ArrowTower.cpp
+\author Matsuda Kenichi
+\par email: blackdarkrose91@gmail.com
+*/
+/****************************************************************************/
 #include "ArrowTower.h"
 #include "SingleTarget.h"
 
@@ -6,6 +13,12 @@ int ArrowTower::cost = 10;
 int ArrowTower::ecost = 0;
 Tower::ESSENCE_TYPE ArrowTower::type = Tower::ESSENCE_TYPE::E_BASIC;
 
+/****************************************************************************/
+/*!
+\brief
+	Constructor of Arrow Tower
+*/
+/****************************************************************************/
 ArrowTower::ArrowTower()
 :Tower()
 {
@@ -29,12 +42,25 @@ ArrowTower::ArrowTower()
 	upgrades[1] = "Speed";
 }
 
+/****************************************************************************/
+/*!
+\brief
+	Destructor of Arrow Tower
+*/
+/****************************************************************************/
 ArrowTower::~ArrowTower()
 {
 
 }
 
-
+/****************************************************************************/
+/*!
+\brief
+	Return a vector of projectile
+\return
+	Resulting the projectile
+*/
+/****************************************************************************/
 Projectile* ArrowTower::GetProjectile()
 {
 	for (std::vector<Projectile*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
@@ -64,6 +90,14 @@ void ArrowTower::Update(double dt)
 	Tower::Update(dt);
 }
 
+/****************************************************************************/
+/*!
+\brief
+	Return result of tower if upgraded
+\return
+	Resulting upgraded tower
+*/
+/****************************************************************************/
 bool ArrowTower::LevelUp()
 {
 	if (this->i_level <= 2)
@@ -81,4 +115,16 @@ bool ArrowTower::LevelUp()
 	return false;
 
 	
+}
+
+void ArrowTower::UpdateMesh()
+{
+	if (b_isFrozen == true)
+	{
+		meshID = GEO_ARROWTOWER_FROST;
+	}
+	else
+	{
+		meshID = GEO_ARROWTOWER;
+	}
 }

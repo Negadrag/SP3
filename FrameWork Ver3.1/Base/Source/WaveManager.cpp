@@ -5,6 +5,7 @@
 #include "TankMonster.h"
 #include "PlayerInfo.h"
 #include "SceneManager.h"
+#include "Boss.h"
 
 Wave::Wave(vector<ENEMY_TYPE> typeVec,int revolution, float spawnFrequency)
 {
@@ -98,7 +99,7 @@ void WaveManager::Update(double dt)
 		}
 		else if (WaveEnded(i_currentWave))
 		{
-			f_waveStartTimer += dt;
+			f_waveStartTimer += (float)dt;
 			if (f_waveStartTimer >= 0.9f)
 			{
 				b_waveEnded = true;
@@ -109,7 +110,7 @@ void WaveManager::Update(double dt)
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
 				SceneManager::GetInstance()->ChangeScene(3,true);
 			}
-			if (f_waveStartTimer >= 10.f)
+			if (f_waveStartTimer >= 30.f)
 			{
 				f_currScaling *= (1.f + (f_hpScaling / 100.f));
 				player->i_currency += 5;
@@ -194,7 +195,7 @@ void WaveManager::ClearEnemyList()
 
 void WaveManager::StartWave()
 {
-	f_waveStartTimer = 10.f;
+	f_waveStartTimer = 30.f;
 }
 
 Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
@@ -226,6 +227,12 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 		case TANK:
 		{
 			enemy = new TankMonster(pos, root);
+		}
+			break;
+		case BOSS:
+		{
+			enemy = new Boss(pos, root,towerList);
+			
 		}
 			break;
 		case NUM_ENEMY:

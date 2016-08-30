@@ -30,6 +30,8 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	this->towerList = towerList;
 	this->enemyList = enemyList;
 
+	
+
 	aoe.b_isActive = false;
 	aoe.b_lightEnabled = false;
 	aoe.meshID = GEO_RING;
@@ -100,7 +102,7 @@ static float debounce = 0.f;
 
 void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &dt)
 {
-	Cursor::Update(camera, tileMap, dt);
+	Cursor::Update(camera, dt);
 	debounce += (float)dt;
 	if (!bPlacingTower) // If LClick is NOT being held down
 	{
@@ -108,11 +110,11 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap.i_rows - 1.f);
 
 		camera.orthoSize = Math::Clamp(camera.orthoSize - (float)Application::mouse_scroll, 2.f, camera.defaultOrtho); // scrolling in and out
-		EdgePanning(dt, camera, worldX, worldY, 6 * tileMap.i_rows);
+		EdgePanning(dt, camera, screenX, screenY, 6.f * tileMap.i_rows);
 	}
 	else // If LClick is being held down
 	{
-		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* button = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		if (button != nullptr)
 		{
 			button->rotation.y = Math::Wrap(button->rotation.y + 50.f * (float)dt,0.f,360.f);
@@ -178,11 +180,11 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		skip->b_isActive = true;
 	}
 
-	if (GUIManager::GetInstance()->FindGUI(worldX, worldY))
+	if (GUIManager::GetInstance()->FindGUI(screenX, screenY))
 	{
-		if (GUIManager::GetInstance()->FindGUI(worldX, worldY)->functionID == 10)
+		if (GUIManager::GetInstance()->FindGUI(screenX, screenY)->functionID == 10)
 		{
-			GUIManager::GetInstance()->FindGUI(worldX, worldY)->rotation.Set(10, 0, 0);
+			GUIManager::GetInstance()->FindGUI(screenX, screenY)->rotation.Set(10, 0, 0);
 		}
 	}
 	else
@@ -568,7 +570,7 @@ void CursorControl::Clicking(TileMap &tileMap)
 	{
 		bLButtonState = false;
 		bPlacingTower = false;
-		GUI* button = GUIManager::GetInstance()->FindGUI(worldX, worldY);
+		GUI* button = GUIManager::GetInstance()->FindGUI(screenX, screenY);
 		
 		if (button != nullptr)
 		{
@@ -969,10 +971,12 @@ void CursorControl::Clear()
 		if (spawnTower[i] != nullptr)
 		{
 			delete spawnTower[i];
+			spawnTower[i] = nullptr;
 		}
 		if (towerCosts[i] != nullptr)
 		{
 			delete towerCosts[i];
+			towerCosts[i] = nullptr;
 		}
 	}
 
@@ -981,14 +985,17 @@ void CursorControl::Clear()
 		if (towerUpgrades[i] != nullptr)
 		{
 			delete towerUpgrades[i];
+			towerUpgrades[i] = nullptr;
 		}
 		if (upgradeCosts[i] != nullptr)
 		{
 			delete upgradeCosts[i];
+			upgradeCosts[i] = nullptr;
 		}
 		if (essenceCost[i] != nullptr)
 		{
 			delete essenceCost[i];
+			essenceCost[i] = nullptr;
 		}
 	}
 
@@ -997,31 +1004,38 @@ void CursorControl::Clear()
 		if (towerStats[i] != nullptr)
 		{
 			delete towerStats[i];
+			towerStats[i] = nullptr;
 		}
 	}
 
 	if (towerName != nullptr)
 	{
 		delete towerName;
+		towerName = nullptr;
 	}
 	if (background != nullptr)
 	{
 		delete background;
+		background = nullptr;
 	}
 	if (background2 != nullptr)
 	{
 		delete background2;
+		background2 = nullptr;
 	}
 	if (background3 != nullptr)
 	{
 		delete background3;
+		background3 = nullptr;
 	}
 	if (selling != nullptr)
 	{
 		delete selling;
+		selling = nullptr;
 	}
 	if (skip != nullptr)
 	{
 		delete skip;
+		skip = nullptr;
 	}
 }

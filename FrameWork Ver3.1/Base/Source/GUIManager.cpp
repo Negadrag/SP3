@@ -43,16 +43,16 @@ void GUIManager::RemoveGUI(GUI* gui)
 	this->GUIList[gui->m_sceneID].remove(gui);
 }
 
-void GUIManager::RenderAllGUI()
+void GUIManager::RenderAllGUI(int sceneID)
 {
-	if (m_currentSceneID >= GUIList.size())
+	if (sceneID >= GUIList.size())
 	{
 		return;
 	}
 
 	// Render twice because mesh will be behind text ( render order issues )
 
-	for (list<GUI*>::iterator it = GUIList[m_currentSceneID].begin(); it != GUIList[m_currentSceneID].end(); ++it)
+	for (list<GUI*>::iterator it = GUIList[sceneID].begin(); it != GUIList[sceneID].end(); ++it)
 	{
 		GUI* gui = *it;
 		if (gui->b_isActive)
@@ -69,7 +69,7 @@ void GUIManager::RenderAllGUI()
 		}
 	}
 
-	for (list<GUI*>::iterator it = GUIList[m_currentSceneID].begin(); it != GUIList[m_currentSceneID].end(); ++it)
+	for (list<GUI*>::iterator it = GUIList[sceneID].begin(); it != GUIList[sceneID].end(); ++it)
 	{
 		GUI* gui = *it;
 		if (gui->b_isActive)

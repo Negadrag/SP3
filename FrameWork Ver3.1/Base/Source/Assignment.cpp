@@ -28,6 +28,7 @@ void Assignment::Init()
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
+	testMap.waves.towerList = &(this->towerList);
 
 	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
@@ -70,10 +71,12 @@ void Assignment::Update(double dt)
 		ATower.upgrade = true;
 	}*/
 
-	if (Application::IsKeyPressed('N'))
+	if (Application::IsKeyPressed('P'))
 	{
 		//glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-		SceneManager::GetInstance()->ChangeScene(8, false);
+		player.m_sceneID = this->m_sceneID;
+		player.tempCamera = &this->camera;
+		SceneManager::GetInstance()->ChangeScene(10, true);
 	}
 
 	testMap.waves.Update(dt);
@@ -170,6 +173,11 @@ void Assignment::Render()
 	ss.precision(5);
 	ss << player.i_essenceSpeed;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, tempStatsX + 5, tempStatsY+ 21);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "Wave :" << testMap.waves.i_currentWave;
+	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 1, 3);
 }
 
 void Assignment::Exit()

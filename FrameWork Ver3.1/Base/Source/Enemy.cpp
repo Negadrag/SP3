@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "PlayerInfo.h"
+#include "Music.h"
 
 Enemy::Enemy()
 {
@@ -186,6 +187,7 @@ void Enemy::Update(double dt)
 
 		MoveTo(nxtTile->coords, dt);
 		UpdateAnim(dt);
+		UpdateMesh();
 	}
 	else
 	{
@@ -195,6 +197,7 @@ void Enemy::Update(double dt)
 			this->hp.b_isActive = false;
 			this->hp2.b_isActive = false;
 			this->b_isActive = false;
+			Music::GetInstance()->PlayMusic(7, false, 0.5);
 		}
 		
 	}
@@ -272,4 +275,9 @@ void Enemy::GiveCurrency()
 
 void Enemy::GiveEssence()
 {
+}
+
+void Enemy::UpdateMesh()
+{
+
 }

@@ -6,10 +6,10 @@ Tower::Tower()
 	i_level = 1;
 	i_MaxLevel = 3;
 	p_spawnTimer = 0.f;
-	towerUpgradeCost = 5.f;
-	essenceUpgradeCost = 0.f;
+	towerUpgradeCost = 5;
+	essenceUpgradeCost = 0;
 	essence = E_BASIC;
-	atkDamage = 0.f;
+	atkDamage = 0;
 	atkSpeed = 0.f;
 	atkRange = 0.f;
 	p_speed = 10.0f;
@@ -28,6 +28,8 @@ Tower::Tower()
 	upgrades[1] = "";
 	fullMeshID = GEO_NULL;
 	this->buffCounter = 0;
+	b_isFrozen = false;
+	f_frozenTimer = 0.f;
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
@@ -38,10 +40,10 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	p_spawnTimer = 0.f;
 	this->pos = pos;
 	this->scale = scale;
-	towerUpgradeCost = 5.f;
-	essenceUpgradeCost = 0.f;
+	towerUpgradeCost = 5;
+	essenceUpgradeCost = 0;
 	essence = E_BASIC;
-	atkDamage = 0.f;
+	atkDamage = 0;
 	atkSpeed = 0.f;
 	atkRange = 0.f;
 	p_projectileCount = 0;
@@ -57,6 +59,8 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	child.SetParent(this);
 	fullMeshID = GEO_NULL;
 	this->buffCounter = 0;
+	b_isFrozen = false;
+	f_frozenTimer = 0.f;
 }
 
 Tower::~Tower()
@@ -69,22 +73,22 @@ void Tower::SetType(GEOMETRY_TYPE meshID)
 	this->meshID = meshID;
 }
 
-void Tower::SetCost(float c)
+void Tower::SetCost(int c)
 {
 	this->towerUpgradeCost = c;
 }
 
-float Tower::GetCost()
+int Tower::GetCost()
 {
 	return towerUpgradeCost;
 }
 
-void Tower::SetAtkDmg(float ad)
+void Tower::SetAtkDmg(int ad)
 {
 	this->atkDamage = ad;
 }
 
-float Tower::GetAtkDmg()
+int Tower::GetAtkDmg()
 {
 	return atkDamage;
 }
@@ -134,7 +138,18 @@ Projectile* Tower::GetProjectile()
 
 void Tower::Update(double dt)
 {
+	UpdateMesh();
 
+	if (b_isFrozen == true)
+	{
+		f_frozenTimer -= dt;
+		if (f_frozenTimer < 0.f)
+		{
+			f_frozenTimer = 0.f;
+			b_isFrozen = false;
+		}
+		return;
+	}
 	p_spawnTimer += (float)dt;
 	if (p_spawnTimer >= 1.f /this->atkSpeed)// p_frequency) && p_projectileCount<p_maxProjectile)
 	{
@@ -368,10 +383,10 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 
 	else if (strategy == LOWEST_HEALTH)
 	{
-		int lowestHP = INT_MAX;
+		float lowestHP = FLT_MAX;
 		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 		{
-			int hp = (*it)->f_health;
+			float hp = (*it)->f_health;
 			if (hp < lowestHP)
 			{
 				lowestHP = hp;
@@ -383,10 +398,10 @@ Enemy* Tower::SearchEnemy(vector<Enemy*> enemyList)
 	}
 	else if (strategy == HIGHEST_HEALTH)
 	{
-		int highestHP = 0;
+		float highestHP = 0;
 		for (vector<Enemy*>::iterator it = enemyList.begin(); it != enemyList.end(); ++it)
 		{
-			int hp = (*it)->f_health;
+			float hp = (*it)->f_health;
 			if (hp > highestHP)
 			{
 				highestHP = hp;
@@ -427,4 +442,11 @@ string Tower::StrategyToString(STRATEGY strats)
 	{
 		return string("Highest Health");
 	}
+
+	return false;
+}
+
+void Tower::UpdateMesh()
+{
+
 }

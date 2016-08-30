@@ -20,7 +20,7 @@ public:
 	void AddGUI(GUI* gui);
 	void RemoveGUI(GUI* gui);
 
-	void RenderAllGUI();
+	void RenderAllGUI(int sceneID);
 
 	GUI* FindGUI(float screenX, float screenY); // Range of -0.5 - 0.5
 

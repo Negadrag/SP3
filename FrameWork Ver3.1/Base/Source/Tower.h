@@ -36,10 +36,10 @@ public:
 
 	STRATEGY strategy;
 	void SetType(GEOMETRY_TYPE meshID);
-	void SetCost(float c);
-	float GetCost();
-	void SetAtkDmg(float ad);
-	float GetAtkDmg();
+	void SetCost(int c);
+	int GetCost();
+	void SetAtkDmg(int ad);
+	int GetAtkDmg();
 	void SetSpdRate(float sr);
 	float GetSpdRate();
 	void SetRange(float r);
@@ -50,6 +50,7 @@ public:
 	void ClearProjectile();
 	vector<Enemy*> GetEnemyInRange();
 	virtual bool LevelUp();
+	virtual void UpdateMesh();
 
 	static string StrategyToString(STRATEGY strats);
 
@@ -70,13 +71,15 @@ public:
 
 	string upgrades[2];
 
-	float atkDamage;
+	int atkDamage;
 	float atkSpeed;
 	float atkRange;
 	int buffCounter;
+	bool b_isFrozen;
+	float f_frozenTimer;
 
 	ESSENCE_TYPE essence;
-	float essenceUpgradeCost;
+	int essenceUpgradeCost;
 private:
 
 protected:
@@ -87,7 +90,7 @@ protected:
 	
 	float p_frequency;
 	float p_spawnTimer;
-	float towerUpgradeCost;
+	int towerUpgradeCost;
 	
 
 	float p_speed;

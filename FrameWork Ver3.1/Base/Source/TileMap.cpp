@@ -32,8 +32,33 @@ bool TileMap::LoadMap(std::fstream &file)
 	{
 		string temp;
 		std::getline(file, temp,'\n');	
+		std::stringstream ss(temp);
 		if (temp[0] == 'e')
 		{
+			string temp2;
+			int counter = 0;
+			while (ss.good())
+			{
+				std::getline(ss, temp2, ',');
+				if (temp2 != "")
+				{
+					if (counter == 1)
+					{
+						waves.f_startingHp = atoi(temp2.c_str());
+						if (waves.f_startingHp <= 0.f)
+						{
+							waves.f_startingHp = 1.f;
+						}
+						waves.f_currScaling = waves.f_startingHp;
+					}
+					else if (counter == 2)
+					{
+						waves.f_hpScaling = atoi(temp2.c_str());
+					}
+				}
+				counter++;
+			}
+			
 			waveInput = true;
 			continue;
 		}
@@ -227,7 +252,7 @@ bool TileMap::LoadWaves(vector<string> wave)
 		bool checkFrequency = false;
 
 		int revolutions = 0;
-		float frequency = 0;
+		double frequency = 0;
 
 		vector<ENEMY_TYPE> enemyType;
 
@@ -257,6 +282,10 @@ bool TileMap::LoadWaves(vector<string> wave)
 				else if (temp2 == string("TANK"))
 				{
 					enemyType.push_back(TANK);
+				}
+				else if (temp2 == string("BOSS"))
+				{
+					enemyType.push_back(BOSS);
 				}
 				else // Default enemy
 				{
