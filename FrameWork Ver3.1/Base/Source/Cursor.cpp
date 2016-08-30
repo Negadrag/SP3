@@ -12,7 +12,7 @@ Cursor::~Cursor()
 {
 }
 
-void Cursor::Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt)
+void Cursor::Update(OrthoCamera &camera, const double &dt)
 {
 	double x, y;
 	Application::GetCursorPos(&x, &y);

@@ -65,13 +65,14 @@ public:
 	vector<Enemy*>* GetEnemyList();
 	
 	PlayerInfo* player;
+	int i_currentWave;
 private:
 	vector<Enemy*> enemyList;
 	vector<Wave> waveList;
 	
 	Node* root;
 	float f_spawnTimer;
-	int i_currentWave;
+	
 	int i_currentRevolution;
 protected:
 

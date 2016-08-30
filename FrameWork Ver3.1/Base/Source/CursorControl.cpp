@@ -102,7 +102,7 @@ static float debounce = 0.f;
 
 void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &dt)
 {
-	Cursor::Update(camera, tileMap, dt);
+	Cursor::Update(camera, dt);
 	debounce += (float)dt;
 	if (!bPlacingTower) // If LClick is NOT being held down
 	{
@@ -971,10 +971,12 @@ void CursorControl::Clear()
 		if (spawnTower[i] != nullptr)
 		{
 			delete spawnTower[i];
+			spawnTower[i] = nullptr;
 		}
 		if (towerCosts[i] != nullptr)
 		{
 			delete towerCosts[i];
+			towerCosts[i] = nullptr;
 		}
 	}
 
@@ -983,14 +985,17 @@ void CursorControl::Clear()
 		if (towerUpgrades[i] != nullptr)
 		{
 			delete towerUpgrades[i];
+			towerUpgrades[i] = nullptr;
 		}
 		if (upgradeCosts[i] != nullptr)
 		{
 			delete upgradeCosts[i];
+			upgradeCosts[i] = nullptr;
 		}
 		if (essenceCost[i] != nullptr)
 		{
 			delete essenceCost[i];
+			essenceCost[i] = nullptr;
 		}
 	}
 
@@ -999,31 +1004,38 @@ void CursorControl::Clear()
 		if (towerStats[i] != nullptr)
 		{
 			delete towerStats[i];
+			towerStats[i] = nullptr;
 		}
 	}
 
 	if (towerName != nullptr)
 	{
 		delete towerName;
+		towerName = nullptr;
 	}
 	if (background != nullptr)
 	{
 		delete background;
+		background = nullptr;
 	}
 	if (background2 != nullptr)
 	{
 		delete background2;
+		background2 = nullptr;
 	}
 	if (background3 != nullptr)
 	{
 		delete background3;
+		background3 = nullptr;
 	}
 	if (selling != nullptr)
 	{
 		delete selling;
+		selling = nullptr;
 	}
 	if (skip != nullptr)
 	{
 		delete skip;
+		skip = nullptr;
 	}
 }

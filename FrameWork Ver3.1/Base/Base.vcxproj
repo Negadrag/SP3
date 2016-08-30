@@ -39,6 +39,7 @@
     <ClCompile Include="Source\IceMonster.cpp" />
     <ClCompile Include="Source\IceProjectile.cpp" />
     <ClCompile Include="Source\IceTower.cpp" />
+    <ClCompile Include="Source\LevelTwo.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
@@ -56,6 +57,8 @@
     <ClCompile Include="Source\OrthoCamera.cpp" />
     <ClCompile Include="Source\ParticleGenerator.cpp" />
     <ClCompile Include="Source\Particles.cpp" />
+    <ClCompile Include="Source\Pause.cpp" />
+    <ClCompile Include="Source\PauseCursor.cpp" />
     <ClCompile Include="Source\PlayerInfo.cpp" />
     <ClCompile Include="Source\PoisonProjectile.cpp" />
     <ClCompile Include="Source\PoisonTower.cpp" />
@@ -109,6 +112,7 @@
     <ClInclude Include="Source\IceMonster.h" />
     <ClInclude Include="Source\IceProjectile.h" />
     <ClInclude Include="Source\IceTower.h" />
+    <ClInclude Include="Source\LevelTwo.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
@@ -127,6 +131,8 @@
     <ClInclude Include="Source\OrthoCamera.h" />
     <ClInclude Include="Source\ParticleGenerator.h" />
     <ClInclude Include="Source\Particles.h" />
+    <ClInclude Include="Source\Pause.h" />
+    <ClInclude Include="Source\PauseCursor.h" />
     <ClInclude Include="Source\PlayerInfo.h" />
     <ClInclude Include="Source\PoisonProjectile.h" />
     <ClInclude Include="Source\PoisonTower.h" />

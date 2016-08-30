@@ -64,7 +64,8 @@ void MapEditor::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	
+	RenderManager::GetInstance()->SetLight(Vector3(-0.5, -0.5, 1));
+
 	if (f_runTimer < 1.f)
 	{
 		f_runTimer += (float)dt;

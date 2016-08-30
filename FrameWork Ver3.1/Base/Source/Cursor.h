@@ -13,7 +13,7 @@ public:
 	~Cursor();
 
 	virtual void Clear();
-	void Update(OrthoCamera &camera, const TileMap &tileMap, const double &dt);
+	void Update(OrthoCamera &camera, const double &dt);
 	Vector3 worldCoords;
 	
 	float screenX, screenY;

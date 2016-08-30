@@ -306,9 +306,6 @@
     <ClCompile Include="Source\BuffTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="Source\MenuCursor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Display.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -326,6 +323,18 @@
     </ClCompile>
     <ClCompile Include="Source\Boss.cpp">
       <Filter>Source Files\ObjectClasses\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelTwo.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuCursor.cpp">
+      <Filter>Source Files\ObjectClasses\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pause.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PauseCursor.cpp">
+      <Filter>Source Files\ObjectClasses\Cursor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,9 +533,6 @@
     <ClInclude Include="Source\PoisonProjectile.h">
       <Filter>Header Files\ObjectClasses\Tower\SingleTarget</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MenuCursor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FixedProjectile.h">
       <Filter>Header Files\ObjectClasses\Tower\SplashTarget</Filter>
     </ClInclude>
@@ -538,6 +544,18 @@
     </ClInclude>
     <ClInclude Include="Source\Boss.h">
       <Filter>Header Files\ObjectClasses\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelTwo.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuCursor.h">
+      <Filter>Header Files\ObjectClasses\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pause.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PauseCursor.h">
+      <Filter>Header Files\ObjectClasses\Cursor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

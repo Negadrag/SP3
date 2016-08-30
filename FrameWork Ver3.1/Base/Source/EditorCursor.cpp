@@ -46,7 +46,7 @@ void EditorCursor::Init(TileMap *tileMap)
 
 void EditorCursor::Update(OrthoCamera &camera, const double &dt)
 {
-	Cursor::Update(camera, *tileMap, dt);
+	Cursor::Update(camera, dt);
 
 	checkPositionX = (int)Math::Clamp(worldCoords.x, 0.f, (float)tileMap->i_columns - 1.f);
 	checkPositionY = (int)Math::Clamp(worldCoords.y, 0.f, (float)tileMap->i_rows - 1.f);
@@ -95,7 +95,7 @@ void EditorCursor::Clicking()
 		{
 			if (temp->functionID == 0)
 			{
-				SceneManager::GetInstance()->ChangeScene(1, false);
+				SceneManager::GetInstance()->ChangeScene(8, false);
 			}
 		}
 		else if (tileMap != nullptr)

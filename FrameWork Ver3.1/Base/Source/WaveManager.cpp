@@ -110,7 +110,7 @@ void WaveManager::Update(double dt)
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
 				SceneManager::GetInstance()->ChangeScene(3,true);
 			}
-			if (f_waveStartTimer >= 10.f)
+			if (f_waveStartTimer >= 30.f)
 			{
 				f_currScaling *= (1.f + (f_hpScaling / 100.f));
 				player->i_currency += 5;
@@ -195,7 +195,7 @@ void WaveManager::ClearEnemyList()
 
 void WaveManager::StartWave()
 {
-	f_waveStartTimer = 10.f;
+	f_waveStartTimer = 30.f;
 }
 
 Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
