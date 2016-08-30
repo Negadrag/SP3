@@ -5,6 +5,7 @@
 #include "TankMonster.h"
 #include "PlayerInfo.h"
 #include "SceneManager.h"
+#include "Boss.h"
 
 Wave::Wave(vector<ENEMY_TYPE> typeVec,int revolution, float spawnFrequency)
 {
@@ -226,6 +227,12 @@ Enemy* WaveManager::SpawnEnemy(ENEMY_TYPE type)
 		case TANK:
 		{
 			enemy = new TankMonster(pos, root);
+		}
+			break;
+		case BOSS:
+		{
+			enemy = new Boss(pos, root,towerList);
+			
 		}
 			break;
 		case NUM_ENEMY:

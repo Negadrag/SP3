@@ -258,6 +258,9 @@ void RenderManager::InitMesh()
 	meshList[GEO_ICE]->material.kShininess = 0.8f;
 	meshList[GEO_ICE]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
 
+	meshList[GEO_DOGOO] = MeshBuilder::GenerateOBJ("Dogoo", "OBJ/Boss.obj");
+	meshList[GEO_DOGOO]->textureArray[0] = LoadTGA("Image//Boss.tga");
+
 
 	meshList[GEO_PATH] = MeshBuilder::GenerateQuad("Path", Color(1, 1, 1), 1.f);
 	meshList[GEO_PATH]->textureArray[0] = LoadTGA("Image//Path.tga");
@@ -309,7 +312,6 @@ void RenderManager::InitMesh()
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
 	meshList[GEO_CANNONBLAST] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	meshList[GEO_CANNONBLAST]->textureArray[0] = LoadTGA("Image//OrangeParticle.tga");
-
 
 	meshList[GEO_MORTARBASE] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARBASE.obj");
 	meshList[GEO_MORTARBASE]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");

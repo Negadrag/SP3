@@ -24,10 +24,11 @@ Assignment::~Assignment()
 void Assignment::Init()
 {
 	this->Init2();
-	testMap.LoadMap(std::fstream("Maps//Level-Easy.csv"));
+	testMap.LoadMap(std::fstream("Maps//BossTest.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
+	testMap.waves.towerList = &(this->towerList);
 
 	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 

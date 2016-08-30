@@ -20,6 +20,7 @@
 #include "PoisonTower.h"
 #include "MortarTower.h"
 #include "SpeedTower.h"
+#include "Boss.h"
 
 Display::Display() :Scene()
 {
@@ -45,7 +46,17 @@ void Display::Init()
 
 	b_initScene = false;
 	//std::cout << "entered";
-	CreateScene();
+	if (player.i_showcaseIndex >= player.enemyToShowcase.size())
+	{
+		player.i_showcaseIndex = 0;
+		SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
+		player.enemyToShowcase.clear();
+	}
+	else
+	{
+		CreateScene();
+	}
+	
 	RenderManager::GetInstance()->SetLight(Vector3(0, 2, 0));
 }
 
@@ -71,20 +82,6 @@ void Display::Update(double dt)
 
 	fps = (float)(1.f / dt);
 
-	/*redfall.Update(dt);
-
-
-	redfall.SetType(GEO_PARTICLE_RED);
-	redfall.SetFrequency(1);
-	redfall.SetCap(1000);
-	redfall.i_spawnAmount = 1;
-	redfall.f_lifeTime = 15.f;
-	redfall.minVel.Set(-800, -100, 0);
-	redfall.maxVel.Set(800, -100, 0);
-	redfall.scale.Set(10, 10, 10);
-	redfall.f_maxDist = 1500.f;
-	redfall.isActive = false;
-	redfall.SpawnParticle(Vector3(0, 1000, 1));*/
 
 
 	if (Application::IsKeyPressed('L'))
@@ -104,7 +101,7 @@ void Display::Update(double dt)
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	float skyboxsize = 10000.f;
-	if (f_timer >= 3.f)
+	if (f_timer >= 1.5f)
 	{
 		b_skipDebounce = true;
 	}
@@ -117,6 +114,7 @@ void Display::Update(double dt)
 	if (b_skipDebounce == true && (Application::IsKeyPressed('C') || f_timer >= 30.f))
 	{
 		SceneManager::GetInstance()->ReinstanceScene(7);
+
 	}
 	f_timer += dt;
 }
@@ -175,11 +173,7 @@ void Display::CreateScene()
 
 	if (player.b_showcaseEnemy == true)
 	{
-		if (player.i_showcaseIndex >= player.enemyToShowcase.size())
-		{
-			player.i_showcaseIndex = 0;
-			SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
-		}
+
 		ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
 		Vector3 pos(0, 1, 0);
 		if (showcase == MINION)
@@ -197,6 +191,10 @@ void Display::CreateScene()
 		else if (showcase == SPEED)
 		{
 			demoObject = new SpeedMonster(pos, nullptr);
+		}
+		if (showcase == BOSS)
+		{
+			demoObject = new Boss(pos, nullptr);
 		}
 		demoObject->rotation.x = -90.f;
 		demoObject->scale.Set(2, 2, 2);
@@ -229,12 +227,19 @@ void Display::CreateScene()
 			{
 				demoObject = new SpeedTower();
 			}
-			demoObject->rotation.x = -90.f;
+			else if (showcase == BOSS)
+			{
+				SceneManager::GetInstance()->ReinstanceScene(7);
+				player.i_showcaseIndex++;
+			}
+			if (demoObject != nullptr)
+			{
+				demoObject->rotation.x = -90.f;
+			}
+			
 		}
 		
 	}
-
-	
 	CreateSkybox();
 	player.i_showcaseIndex++;
 

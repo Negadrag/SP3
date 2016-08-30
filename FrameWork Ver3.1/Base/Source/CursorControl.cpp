@@ -30,6 +30,8 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	this->towerList = towerList;
 	this->enemyList = enemyList;
 
+	
+
 	aoe.b_isActive = false;
 	aoe.b_lightEnabled = false;
 	aoe.meshID = GEO_RING;
