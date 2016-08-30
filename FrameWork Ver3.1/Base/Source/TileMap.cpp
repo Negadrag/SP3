@@ -258,6 +258,10 @@ bool TileMap::LoadWaves(vector<string> wave)
 				{
 					enemyType.push_back(TANK);
 				}
+				else if (temp2 == string("BOSS"))
+				{
+					enemyType.push_back(BOSS);
+				}
 				else // Default enemy
 				{
 					enemyType.push_back(MINION);

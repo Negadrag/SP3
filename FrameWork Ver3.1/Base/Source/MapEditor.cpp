@@ -188,7 +188,7 @@ void MapEditor::HandleInput()
 		{
 			int enemy;
 			string input;
-			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION, 2 = ICE, 3 = SPEED, 4 = TANK):";
+			std::cout << "Enemy " << j << " (0 = STOP,1 = MINION, 2 = ICE, 3 = SPEED, 4 = TANK, 5 = BOSS):";
 			std::cin >> input;
 			enemy = atoi(input.c_str());
 			switch (enemy)
@@ -206,6 +206,9 @@ void MapEditor::HandleInput()
 				break;
 			case (4) :
 				ss << "TANK,";
+				break;
+			case (5) :
+				ss << "BOSS,";
 				break;
 			default:
 				ss << "MINION,";
