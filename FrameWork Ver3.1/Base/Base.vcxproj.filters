@@ -118,7 +118,7 @@
     <Filter Include="Source Files\System\Music">
       <UniqueIdentifier>{96dc96d6-f3fa-4b8a-97cf-97b940bf8cd9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\System\Render\Scene">
+    <Filter Include="Source Files\System\Scene">
       <UniqueIdentifier>{4e258923-854e-4a1c-9fa7-43a5a0326234}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -241,10 +241,10 @@
       <Filter>Source Files\System\Render</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
-      <Filter>Source Files\System\Render\Scene</Filter>
+      <Filter>Source Files\System\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source Files\System\Render\Scene</Filter>
+      <Filter>Source Files\System\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\ArrowTower.cpp">
       <Filter>Source Files\ObjectClasses\Tower\SingleTarget</Filter>
