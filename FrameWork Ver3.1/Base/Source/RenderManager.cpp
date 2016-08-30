@@ -306,16 +306,16 @@ void RenderManager::InitMesh()
 	//Tower
 	meshList[GEO_ARROWTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
 	meshList[GEO_ARROWTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW.tga");
-	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
+	meshList[GEO_ARROW] = MeshBuilder::GenerateOBJ("Arrow", "OBJ//Arrow.obj");
 
-	meshList[GEO_SPEEDMODEL] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-SpeedModel.obj");
+	meshList[GEO_SPEEDMODEL] = MeshBuilder::GenerateOBJ("SpeedTower", "OBJ//Tower-SpeedModel.obj");
 	meshList[GEO_SPEEDMODEL]->textureArray[0] = LoadTGA("Image//SpeedModel.tga");
-	meshList[GEO_SPEEDTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-SPEED.obj");
+	meshList[GEO_SPEEDTOWER] = MeshBuilder::GenerateOBJ("SpeedTowerBase", "OBJ//Tower-SPEED.obj");
 	meshList[GEO_SPEEDTOWER]->textureArray[0] = LoadTGA("Image//Tower-SPEED.tga");
-	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Bullet.obj");
+	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("Bullet", "OBJ//Bullet.obj");
 	meshList[GEO_BULLET]->textureArray[0] = LoadTGA("Image//Bullet.tga");
 
-	meshList[GEO_ICETOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ICE.obj");
+	meshList[GEO_ICETOWER] = MeshBuilder::GenerateOBJ("IceTower", "OBJ//Tower-ICE.obj");
 	meshList[GEO_ICETOWER]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
 	meshList[GEO_ICETOWER]->material.kShininess = 0.8f;
 	meshList[GEO_ICETOWER]->material.kSpecular.Set(0.5f, 0.5f, 0.5f);
@@ -328,22 +328,22 @@ void RenderManager::InitMesh()
 	meshList[GEO_ICESHOT]->textureArray[0] = LoadTGA("Image//IceShard.tga");
 	meshList[GEO_ICEPARTICLE] = MeshBuilder::GenerateSphere("sphere", Color(0.057f, 0.964f, 0.933f), 18, 36, 1.f);
 
-	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW+BASIC.obj");
+	meshList[GEO_POISONTOWER] = MeshBuilder::GenerateOBJ("PoisonTower", "OBJ//Tower-ARROW+BASIC.obj");
 	meshList[GEO_POISONTOWER]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
-	meshList[GEO_POISONBASE] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-POISONBASE.obj");
+	meshList[GEO_POISONBASE] = MeshBuilder::GenerateOBJ("PoisonTower", "OBJ//Tower-POISONBASE.obj");
 	meshList[GEO_POISONBASE]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
-	meshList[GEO_POISONARROW] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Arrow.obj");
+	meshList[GEO_POISONARROW] = MeshBuilder::GenerateOBJ("PoisonTower", "OBJ//Arrow.obj");
 	meshList[GEO_POISONARROW]->textureArray[0] = LoadTGA("Image//PoisonArrow.tga");
 
-	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-CANNON.obj");
+	meshList[GEO_CANNONTOWER] = MeshBuilder::GenerateOBJ("CannonTower", "OBJ//Tower-CANNON.obj");
 	meshList[GEO_CANNONTOWER]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
 	meshList[GEO_CANNON] = MeshBuilder::GenerateSphere("cannon", Color(0, 0, 0), 18, 36, 0.5f);
 	meshList[GEO_CANNONBLAST] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	meshList[GEO_CANNONBLAST]->textureArray[0] = LoadTGA("Image//OrangeParticle.tga");
 
-	meshList[GEO_MORTARBASE] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARBASE.obj");
+	meshList[GEO_MORTARBASE] = MeshBuilder::GenerateOBJ("MortarTower", "OBJ//Tower-MORTARBASE.obj");
 	meshList[GEO_MORTARBASE]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
-	meshList[GEO_MORTARCANNON] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-MORTARCANNON.obj");
+	meshList[GEO_MORTARCANNON] = MeshBuilder::GenerateOBJ("MortarTower", "OBJ//Tower-MORTARCANNON.obj");
 	meshList[GEO_MORTARCANNON]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
 
 	meshList[GEO_CAPTURETOWER] = MeshBuilder::GenerateOBJ("CaptureTower", "OBJ//Tower-CAPTURE.obj");
@@ -357,8 +357,28 @@ void RenderManager::InitMesh()
 	meshList[GEO_CAPTUREORB]->material.kShininess = 0.5f;
 	meshList[GEO_CAPTUREORB]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 
-	meshList[GEO_BUFFTOWER] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-BUFF.obj");
+	meshList[GEO_BUFFTOWER] = MeshBuilder::GenerateOBJ("BuffTower", "OBJ//Tower-BUFF.obj");
 	meshList[GEO_BUFFTOWER]->textureArray[0] = LoadTGA("Image//Tower-BUFF.tga");
+
+	meshList[GEO_ARROWTOWER_FROST] = MeshBuilder::GenerateOBJ("Arrowtower", "OBJ//Tower-ARROW.obj");
+	meshList[GEO_ARROWTOWER_FROST]->textureArray[0] = LoadTGA("Image//Tower-ARROW.tga");
+	meshList[GEO_ARROWTOWER_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_SPEEDTOWER_FROST] = MeshBuilder::GenerateOBJ("SpeedTower", "OBJ//Tower-SPEED.obj");
+	meshList[GEO_SPEEDTOWER_FROST]->textureArray[0] = LoadTGA("Image//Tower-SPEED.tga");
+	meshList[GEO_SPEEDTOWER_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_CANNONTOWER_FROST] = MeshBuilder::GenerateOBJ("CannonTower", "OBJ//Tower-CANNON.obj");
+	meshList[GEO_CANNONTOWER_FROST]->textureArray[0] = LoadTGA("Image//Tower-CANNON.tga");
+	meshList[GEO_CANNONTOWER_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_POISONTOWER_FROST] = MeshBuilder::GenerateOBJ("PoisonTower", "OBJ//Tower-POISONBASE.obj");
+	meshList[GEO_POISONTOWER_FROST]->textureArray[0] = LoadTGA("Image//Tower-ARROW+BASIC.tga");
+	meshList[GEO_POISONTOWER_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_ICETOWER_FROST] = MeshBuilder::GenerateOBJ("IcetowerBase", "OBJ//Tower-ICEBASE.obj");
+	meshList[GEO_ICETOWER_FROST]->textureArray[0] = LoadTGA("Image//Tower-ICE.tga");
+	meshList[GEO_ICETOWER_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_MORTARTOWER_FROST] = MeshBuilder::GenerateOBJ("Mortar Tower", "OBJ//Tower-MORTARBASE.obj");
+	meshList[GEO_MORTARTOWER_FROST]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
+	meshList[GEO_MORTARTOWER_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+
 	//Particles
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);
 	meshList[GEO_SMOKEPARTICLES]->textureArray[0] = LoadTGA("Image//smokeParticle.tga");

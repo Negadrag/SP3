@@ -116,3 +116,15 @@ bool ArrowTower::LevelUp()
 
 	
 }
+
+void ArrowTower::UpdateMesh()
+{
+	if (b_isFrozen == true)
+	{
+		meshID = GEO_ARROWTOWER_FROST;
+	}
+	else
+	{
+		meshID = GEO_ARROWTOWER;
+	}
+}
