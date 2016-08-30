@@ -28,6 +28,8 @@ Tower::Tower()
 	upgrades[1] = "";
 	fullMeshID = GEO_NULL;
 	this->buffCounter = 0;
+	b_isFrozen = false;
+	f_frozenTimer = 0.f;
 }
 
 Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
@@ -57,6 +59,8 @@ Tower::Tower(Vector3 pos, Vector3 scale, Vector3 heightOffset)
 	child.SetParent(this);
 	fullMeshID = GEO_NULL;
 	this->buffCounter = 0;
+	b_isFrozen = false;
+	f_frozenTimer = 0.f;
 }
 
 Tower::~Tower()
@@ -134,7 +138,16 @@ Projectile* Tower::GetProjectile()
 
 void Tower::Update(double dt)
 {
-
+	if (b_isFrozen == true)
+	{
+		f_frozenTimer -= dt;
+		if (f_frozenTimer < 0.f)
+		{
+			f_frozenTimer = 0.f;
+			b_isFrozen = false;
+		}
+		return;
+	}
 	p_spawnTimer += (float)dt;
 	if (p_spawnTimer >= 1.f /this->atkSpeed)// p_frequency) && p_projectileCount<p_maxProjectile)
 	{

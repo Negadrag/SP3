@@ -74,6 +74,8 @@ public:
 	float atkSpeed;
 	float atkRange;
 	int buffCounter;
+	bool b_isFrozen;
+	float f_frozenTimer;
 
 	ESSENCE_TYPE essence;
 	int essenceUpgradeCost;
