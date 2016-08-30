@@ -24,6 +24,7 @@ Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 	this->i_defence = 50;
 	this->i_currency = 50;
 	this->scale.Set(1.5f,1.5f,1.5f);
+	this->hp.pos.z = 2.f;
 }
 
 Boss::~Boss()
@@ -233,9 +234,10 @@ void Boss::MoveTo(Vector2 dest, double dt)
 	view.Normalize();
 	if (this->f_showHealthTimer > 0.f)
 	{
-		hp.pos.Set(0, 0, 1);
 		hp.b_Render = true;
-		hp.pos = this->pos + Vector3(0, 0, 1);
+		hp.pos.x = this->pos.x;
+		hp.pos.y = this->pos.y;
+		hp.pos.z = this->pos.z + 2.f;
 		hp.rotation.z = this->rotation.z;
 		hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
 	}

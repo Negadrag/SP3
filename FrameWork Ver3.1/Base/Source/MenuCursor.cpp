@@ -91,7 +91,7 @@ void MenuCursor::Update(const double &dt)
 
 
 	}
-	std::cout << Music::GetInstance()->f_masterVolume << std::endl;
+
 	if (menu_states == 3)
 	{
 		SceneMoveRight(CAMERA_SPEED, dt);

@@ -15,11 +15,13 @@
 #include "IceMonster.h"
 #include "TankMonster.h"
 #include "SpeedMonster.h"
+#include "Boss.h"
 
 #include "IceTower.h"
 #include "PoisonTower.h"
 #include "MortarTower.h"
 #include "SpeedTower.h"
+
 
 Display::Display() :Scene()
 {
@@ -276,46 +278,59 @@ void Display::CreateScene()
 
 
 
+
+
+	if (player.i_showcaseIndex >= player.enemyToShowcase.size())
+	{
+		SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
+		player.i_showcaseIndex = 0;
+		if (player.b_showcaseEnemy == false)
+		{
+			player.enemyToShowcase.clear();
+		}
+
+		
+	}
 	if (player.b_showcaseEnemy == true)
 	{
-		if (player.i_showcaseIndex >= player.enemyToShowcase.size())
+		if (player.enemyToShowcase.empty() == false)
 		{
-			player.i_showcaseIndex = 0;
-			SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
+			
+			ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
+			Vector3 pos(0, 1, 0);
+			if (showcase == MINION)
+			{
+				demoObject = new Minion(pos, nullptr);
+				i_diplayedObject = 1;
+			}
+			else if (showcase == ICE_MONSTER)
+			{
+				demoObject = new IceMonster(pos, nullptr);
+				i_diplayedObject = 2;
+			}
+			else if (showcase == TANK)
+			{
+				demoObject = new TankMonster(pos, nullptr);
+				i_diplayedObject = 3;
+			}
+			else if (showcase == SPEED)
+			{
+				demoObject = new SpeedMonster(pos, nullptr);
+				i_diplayedObject = 4;
+			}
+			if (showcase == BOSS)
+			{
+				demoObject = new Boss(pos, nullptr, nullptr);
+			}
+			demoObject->rotation.x = -90.f;
+			demoObject->scale.Set(2, 2, 2);
 		}
-		ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
-		Vector3 pos(0, 1, 0);
-		if (showcase == MINION)
-		{
-			demoObject = new Minion(pos, nullptr);
-			i_diplayedObject = 1;
-		}
-		else if (showcase == ICE_MONSTER)
-		{
-			demoObject = new IceMonster(pos, nullptr);
-			i_diplayedObject = 2;
-		}
-		else if (showcase == TANK)
-		{
-			demoObject = new TankMonster(pos, nullptr);
-			i_diplayedObject = 3;
-		}
-		else if (showcase == SPEED)
-		{
-			demoObject = new SpeedMonster(pos, nullptr);
-			i_diplayedObject = 4;
-		}
-		demoObject->rotation.x = -90.f;
-		demoObject->scale.Set(2, 2, 2);
+
 	}
 	else
 	{
-		if (player.i_showcaseIndex >= player.enemyToShowcase.size())
-		{
-			SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
-			player.i_showcaseIndex = 0;
-			player.enemyToShowcase.clear();
-		}
+		
+		
 		if (player.enemyToShowcase.empty() == false)
 		{
 			ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
@@ -340,7 +355,15 @@ void Display::CreateScene()
 				demoObject = new SpeedTower();
 				i_diplayedObject = 14;
 			}
-			demoObject->rotation.x = -90.f;
+			else if (showcase == BOSS)
+			{
+				SceneManager::GetInstance()->ReinstanceScene(7);
+				player.i_showcaseIndex++;
+			}
+			if (demoObject != nullptr)
+			{
+				demoObject->rotation.x = -90.f;
+			}
 		}
 
 	}
