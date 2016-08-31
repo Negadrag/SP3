@@ -112,7 +112,7 @@ void CaptureTower::Fire(double dt)
 			particleGenerator.minVel = (this->pos - enemy->pos).Normalize() * p_speed;
 			particleGenerator.SpawnParticle();
 			enemy->GiveEssence();
-			//Music::GetInstance()->PlayMusic(2, false, 0.15f);
+			Music::GetInstance()->PlayMusic(2, false, 0.15f);
 		}
 	}
 }

@@ -33,7 +33,7 @@ void Assignment::Init()
 	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
 	player.Init();
-	player.i_currency = 10000;
+	player.i_currency = 30;
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	camera.b_ortho = true;
 	camera.orthoSize = ((float)testMap.i_rows / 2.f) + 1.f;
