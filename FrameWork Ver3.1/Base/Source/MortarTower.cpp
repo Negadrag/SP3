@@ -13,7 +13,7 @@ MortarTower::MortarTower()
 	this->i_level = 1;
 	SetAtkDmg(400);
 	SetRange(10);
-	SetSpdRate(0.1f);
+	SetSpdRate(0.2f);
 	this->p_speed = 5.f;
 	this->towerUpgradeCost = cost;
 	this->essenceUpgradeCost = 100;
@@ -115,7 +115,14 @@ bool MortarTower::LevelUp()
 	if (this->i_level <= 2)
 	{
 		this->i_level++;
-		this->atkSpeed += 0.1f;
+		if (i_level == 2)
+		{
+			this->atkSpeed = 0.3f;
+		}
+		if (i_level == 3)
+		{
+			this->atkSpeed = 0.5f;
+		}
 		return true;
 	}
 	return false;

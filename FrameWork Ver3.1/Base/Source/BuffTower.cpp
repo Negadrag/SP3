@@ -98,9 +98,17 @@ void BuffTower::Buff()
 				}
 				if (temp->buffCounter < 1)
 				{
-					temp->atkDamage += f_increaseATK;
-					temp->atkSpeed += f_increaseRATE;
-					temp->atkRange += f_increaseRANGE;
+					if (temp->meshID != GEO_MORTARBASE)
+					{
+						temp->atkDamage += f_increaseATK;
+						temp->atkSpeed += f_increaseRATE;
+						temp->atkRange += f_increaseRANGE;
+					}
+					else
+					{
+						temp->atkDamage += f_increaseATK;
+						temp->atkRange += f_increaseRANGE;
+					}
 				}
 				temp->buffCounter++;
 				buffedTowers.push_back(temp);
