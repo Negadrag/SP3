@@ -1,4 +1,3 @@
-
 #include "Display.h"
 #include "GL\glew.h"
 #include "LoadHmap.h"
@@ -112,12 +111,7 @@ void Display::Update(double dt)
 
 	if (camera.showcase_intro == true)
 	{
-//		descriptBG->b_isActive = true;
-	//	descriptBG->b_textActive = true;
-
 		b_opendescript = true;
-		//descriptBG->scale.x = testy;	//20
-		//descriptBG->scale.y = testx;	//30
 	}
 	if (b_opendescript == true)
 	{
@@ -142,7 +136,7 @@ void Display::Update(double dt)
 
 
 
-	if (b_skipDebounce == true && (Application::IsKeyPressed('C') || f_timer >= 30.f))
+	if ((Application::IsKeyPressed('C') && b_skipDebounce == true ) || f_timer >= 30.f)
 	{
 		SceneManager::GetInstance()->ReinstanceScene(7);
 	}
@@ -277,23 +271,18 @@ void Display::CreateScene()
 	grass.b_lightEnabled = false;
 
 
-
-
-
 	if (player.i_showcaseIndex >= player.enemyToShowcase.size())
 	{
 		SceneManager::GetInstance()->ChangeScene(player.m_sceneID, false);
-		player.i_showcaseIndex = 0;
+		//player.i_showcaseIndex = 0;
 		if (player.b_showcaseEnemy == false)
 		{
 			player.enemyToShowcase.clear();
 		}
-
-		
 	}
 	if (player.b_showcaseEnemy == true)
 	{
-		if (player.enemyToShowcase.empty() == false)
+		if (player.enemyToShowcase.empty() == false && player.i_showcaseIndex < player.enemyToShowcase.size())
 		{
 			
 			ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
@@ -327,11 +316,9 @@ void Display::CreateScene()
 		}
 
 	}
-	else
+	else 
 	{
-		
-		
-		if (player.enemyToShowcase.empty() == false)
+		if (player.enemyToShowcase.empty() == false && player.i_showcaseIndex < player.enemyToShowcase.size())
 		{
 			ENEMY_TYPE showcase = player.enemyToShowcase[player.i_showcaseIndex];
 			Vector3 pos(0, 1, 0);
@@ -357,8 +344,9 @@ void Display::CreateScene()
 			}
 			else if (showcase == BOSS)
 			{
+				//player.i_showcaseIndex++;
 				SceneManager::GetInstance()->ReinstanceScene(7);
-				player.i_showcaseIndex++;
+		
 			}
 			if (demoObject != nullptr)
 			{

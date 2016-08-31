@@ -108,6 +108,7 @@ void WaveManager::Update(double dt)
 			{
 				b_miniGame = false;
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
+
 				SceneManager::GetInstance()->ChangeScene(3,true);
 			}
 			if (f_waveStartTimer >= 30.f)
@@ -163,7 +164,7 @@ void WaveManager::Update(double dt)
 		if (b_waveEnded == true)
 		{
 			ClearEnemyList();
-			if (player->enemyToShowcase.size() > 0)
+			if (player->enemyToShowcase.empty() == false)
 			{
 				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
 				player->b_showcaseEnemy = false;
