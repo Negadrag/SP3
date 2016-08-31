@@ -3,6 +3,7 @@
 #include "MathUtility.h"
 #include "GUI.h"
 #include "SceneManager.h"
+#include "MainMenu.h"
 
 MenuCursor::MenuCursor()
 {
@@ -59,9 +60,7 @@ void MenuCursor::Update(const double &dt)
 	screenX = x / w - 0.5f; // -0.5 - 0.5
 	screenY = 1.f - (y / h) - 0.5f; // -0.5 - 0.5
 
-	smoke1.Update(dt);
-	smoke2.Update(dt);
-	smoke3.Update(dt);
+	
 
 
 	if (Application::IsKeyPressed('L'))
@@ -78,81 +77,82 @@ void MenuCursor::Update(const double &dt)
 		testz -= dt * 10.f;
 
 	
-
-
-	static const float CAMERA_SPEED = 60.f;
-
-	if (menu_states == 5) //4 is used for exit
+	if (MainMenu::b_isSplash == false)
 	{
-		SceneLevelSelect(CAMERA_SPEED, dt);//
+		smoke1.Update(dt);
+		smoke2.Update(dt);
+		smoke3.Update(dt);
 
-		SmokeInit();
+		static const float CAMERA_SPEED = 60.f;
 
-
-
-	}
-
-	if (menu_states == 3)
-	{
-		SceneMoveRight(CAMERA_SPEED, dt);
-		//option_6->scale.x += testx;
-
-		if (holdingdrag)
+		if (menu_states == 5) //4 is used for exit
 		{
-			float mouseX = (screenX + 0.5f) * 80.f;
-			//float mouseY = (screenY + 0.5f) * 60.f;
+			SceneLevelSelect(CAMERA_SPEED, dt);//
 
-			float buttonPosX = option_6->position.x;
-			//float buttonPosY = option_6->position.y;
-
-			clickoffsetX = mouseX - buttonPosX;		//dist of click from button pos
-
-			if (option_6->scale.x >= clickoffsetX && option_6->scale.x >= 1)
-			{
-				option_6->scale.x -= 20.f * dt;
-			}
-			if (option_6->scale.x <= clickoffsetX && option_6->scale.x <= adjsizeX)
-			{
-				option_6->scale.x += 20.f * dt;
-			}
-
-			Music::GetInstance()->f_masterVolume = (option_6->scale.x / adjsizeX) * 4;
-
+			SmokeInit();
 		}
+
+		if (menu_states == 3)
+		{
+			SceneMoveRight(CAMERA_SPEED, dt);
+			//option_6->scale.x += testx;
+
+			if (holdingdrag)
+			{
+				float mouseX = (screenX + 0.5f) * 80.f;
+				//float mouseY = (screenY + 0.5f) * 60.f;
+
+				float buttonPosX = option_6->position.x;
+				//float buttonPosY = option_6->position.y;
+
+				clickoffsetX = mouseX - buttonPosX;		//dist of click from button pos
+
+				if (option_6->scale.x >= clickoffsetX && option_6->scale.x >= 1)
+				{
+					option_6->scale.x -= 20.f * dt;
+				}
+				if (option_6->scale.x <= clickoffsetX && option_6->scale.x <= adjsizeX)
+				{
+					option_6->scale.x += 20.f * dt;
+				}
+
+				Music::GetInstance()->f_masterVolume = (option_6->scale.x / adjsizeX) * 4;
+
+			}
+		}
+		if (menu_states == 2)
+		{
+			SceneMoveNorth(CAMERA_SPEED, dt);
+
+			SmokeInit();
+		}
+
+		if (menu_states == 1)
+			SceneMoveDark(CAMERA_SPEED, dt);
+
+		if (menu_states == 0)
+		{
+			SceneMoveBack(CAMERA_SPEED, dt);
+
+			SmokeInit();
+		}
+
+
+		if (istransition)
+			ButtonDeactivator();
+		else
+		{
+			//MainButtonRender();
+			//InstructionsRender();
+			ButtonManager();
+		}
+
+
+
+		Clicking(dt);
+		HotKeys();
+
 	}
-	if (menu_states == 2)
-	{
-		SceneMoveNorth(CAMERA_SPEED, dt);
-
-		SmokeInit();
-	}
-
-	if (menu_states == 1)
-		SceneMoveDark(CAMERA_SPEED, dt);
-
-	if (menu_states == 0)
-	{
-		SceneMoveBack(CAMERA_SPEED, dt);
-
-		SmokeInit();
-	}
-
-
-	if (istransition)
-		ButtonDeactivator();
-	else
-	{
-		//MainButtonRender();
-		//InstructionsRender();
-		ButtonManager();
-	}
-
-
-
-	Clicking(dt);
-	HotKeys();
-
-
 
 }
 
@@ -402,16 +402,19 @@ void MenuCursor::SceneMoveBack(float cam_spd, double dt)
 
 void MenuCursor::ButtonManager()
 {
-	if (menu_states == 0)
-		MainButtonRender();
-	else if (menu_states == 2)
-		InstructionsRender();
-	else if (menu_states == 3)
-		OptionsRender();
-	else if (menu_states == 1)
-		SceneManager::GetInstance()->ChangeScene(scene_change, false);
-	else if (menu_states == 5)
-		LvlSelectRender();
+	if (MainMenu::b_isSplash == false)
+	{
+		if (menu_states == 0)
+			MainButtonRender();
+		else if (menu_states == 2)
+			InstructionsRender();
+		else if (menu_states == 3)
+			OptionsRender();
+		else if (menu_states == 1)
+			SceneManager::GetInstance()->ChangeScene(scene_change, false);
+		else if (menu_states == 5)
+			LvlSelectRender();
+	}
 }
 
 void MenuCursor::MainButtonsInit()
@@ -422,30 +425,40 @@ void MenuCursor::MainButtonsInit()
 	btn_play->SetTextSize(3);
 	btn_play->buttonSize.Set(15, 5);
 	btn_play->functionID = 0;
+	btn_play->b_isActive = false;
+	btn_play->b_textActive = false;
 
 	btn_editor = new GUI("Level Editor");
 	btn_editor->position.Set(3, 25);
 	btn_editor->SetTextSize(3);
 	btn_editor->buttonSize.Set(20, 5);
 	btn_editor->functionID = 1;
+	btn_editor->b_isActive = false;
+	btn_editor->b_textActive = false;
 
 	btn_instructions = new GUI("Instructions");
 	btn_instructions->position.Set(3, 20);
 	btn_instructions->SetTextSize(3);
 	btn_instructions->buttonSize.Set(20, 5);
 	btn_instructions->functionID = 2;
+	btn_instructions->b_isActive = false;
+	btn_instructions->b_textActive = false;
 
 	btn_option = new GUI("Options");
 	btn_option->position.Set(3, 15);
 	btn_option->SetTextSize(3);
 	btn_option->buttonSize.Set(10, 5);
 	btn_option->functionID = 3;
+	btn_option->b_isActive = false;
+	btn_option->b_textActive = false;
 
 	btn_exit = new GUI("Exit");
 	btn_exit->position.Set(3, 10);
 	btn_exit->SetTextSize(3);
 	btn_exit->buttonSize.Set(5, 5);
 	btn_exit->functionID = 4;
+	btn_exit->b_isActive = false;
+	btn_exit->b_textActive = false;
 
 
 }
@@ -572,13 +585,7 @@ void MenuCursor::InstructionsRender()
 void MenuCursor::OptionsInit()
 {
 
-	option_1 = new GUI("Shadow Options...");
-	option_1->position.Set(10, 40);
-	option_1->SetTextSize(3);
-	option_1->buttonSize.Set(15, 5);
-	option_1->functionID = 9;
-	option_1->b_isActive = false;
-	option_1->b_textActive = false;
+
 
 	option_2 = new GUI("Volume Options...");
 	option_2->position.Set(10, 30);
@@ -589,14 +596,6 @@ void MenuCursor::OptionsInit()
 	option_2->b_textActive = false;
 
 
-
-	option_5 = new GUI("Set Shadow...");
-	option_5->position.Set(40, 40);
-	option_5->SetTextSize(3);
-	option_5->buttonSize.Set(15, 5);
-	option_5->functionID = 9;
-	option_5->b_isActive = false;
-	option_5->b_textActive = false;
 
 	
 	adjsizeX = 25;
@@ -636,15 +635,13 @@ void MenuCursor::OptionsInit()
 
 void MenuCursor::OptionsRender()
 {
-	option_1->b_isActive = true;
-	option_1->b_textActive = true;
+	
 
 	option_2->b_isActive = true;
 	option_2->b_textActive = true;
 
 
-	option_5->b_isActive = true;
-	option_5->b_textActive = true;
+	
 
 	option_6->b_isActive = true;
 	option_6->b_textActive = true;
@@ -791,14 +788,12 @@ void MenuCursor::ButtonDeactivator()
 	instr_title->b_textActive = false;
 
 		//option buttons
-		option_1->b_isActive = false;
-		option_1->b_textActive = false;
+		
 
 		option_2->b_isActive = false;
 		option_2->b_textActive = false;
 
-		option_5->b_isActive = false;
-		option_5->b_textActive = false;
+		
 
 		option_6->b_isActive = false;
 		option_6->b_textActive = false;

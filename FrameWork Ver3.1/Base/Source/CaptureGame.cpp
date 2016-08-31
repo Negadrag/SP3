@@ -1099,6 +1099,8 @@ void CaptureGame::CreateScene()
 {
 	Mtx44 rotate;
 
+	
+
 	for (vector<ENEMY_TYPE>::iterator it = player.encounteredEnemies.begin(); it != player.encounteredEnemies.end(); ++it)
 	{
 		if (*it == ICE_MONSTER)
@@ -1129,6 +1131,14 @@ void CaptureGame::CreateScene()
 	grass.rotation.Set(0, 0, 0);
 	grass.b_shadows = true;
 	grass.b_lightEnabled = true;
+
+	pot.meshID = GEO_POT;
+	pot.pos.Set(0, 10, 0);					
+	pot.scale.Set(500, 500, 500);
+	pot.rotation.Set(0, 0, 0);
+	pot.rotation.Set(0, 0, 0);
+	pot.b_shadows = true;
+	pot.b_lightEnabled = true;
 
 	/*forValor.meshID = GEO_FOR_VALOR;
 	forValor.pos.Set(0, 0.5, 0);
@@ -1205,6 +1215,8 @@ void CaptureGame::CreateScene()
 	pad->pos.Set(0, -620, 0);
 	pad->scale.Set(200, 50, 15);
 	pad->rotation.Set(0, 0, 0);
+
+	
 }
 
 void CaptureGame::ClearScene()

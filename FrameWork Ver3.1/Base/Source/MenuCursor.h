@@ -4,6 +4,7 @@
 #include "Cursor.h"
 #include "GameplayCam.h"
 #include "GUI.h"
+
 #include "RenderManager.h"
 #include "ParticleGenerator.h"
 #include "Music.h"
@@ -69,10 +70,7 @@ private:
 
 	GUI* instr_title;
 
-	GUI* option_1;
 	GUI* option_2;
-
-	GUI* option_5;
 	GUI* option_6;
 	GUI* optionborder;	//bar border
 	

@@ -12,6 +12,7 @@
 #include "SceneManager.h"
 #include "Music.h"
 
+bool MainMenu::b_isSplash = true;
 
 MainMenu::MainMenu() :Scene()
 {
@@ -31,12 +32,17 @@ void MainMenu::Init()
 	banner_forward = -45;
 	banner_backward = 80;
 
-	camera.Init(Vector3(0, 4, 11), Vector3(0, 4, 10), Vector3(0, 1, 0), 1);
+	camera.Init(Vector3(0, 4, 11), Vector3(0, 4, 10), Vector3(0, 1, 0), 0);
 	camera.b_ortho = false;
 	camera.farPlane = 100000.f;
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	b_initScene = false;
+	b_splashdisable = false;
+	b_isSplash = true;
+
+	splashposY = 0;
+	
 	std::cout << "entered";
 	
 	CreateScene();
@@ -70,38 +76,52 @@ void MainMenu::Update(double dt)
 
 	fps = (float)(1.f / dt);
 
-	/*redfall.Update(dt);
+	if (b_isSplash == false)
+	{
+		rain.Update(dt);
 
+		rain.SetType(GEO_PARTICLE_BLUE);
+		rain.SetFrequency(1);
+		rain.SetCap(1000);
+		rain.i_spawnAmount = 1;
+		rain.f_lifeTime = 5.f;
+		rain.minVel.Set(0, -500, 0);
+		rain.maxVel.Set(0, -50, 0);
+		rain.scale.Set(1, 1, 1);
+		rain.f_maxDist = 1500.f;
+		rain.isActive = false;
+		rain.SpawnParticle(Vector3(Math::RandFloatMinMax(-50, 100), 100, Math::RandFloatMinMax(-500, 100)));
 
-	redfall.SetType(GEO_PARTICLE_RED);
-	redfall.SetFrequency(1);
-	redfall.SetCap(1000);
-	redfall.i_spawnAmount = 1;
-	redfall.f_lifeTime = 15.f;
-	redfall.minVel.Set(-800, -100, 0);
-	redfall.maxVel.Set(800, -100, 0);
-	redfall.scale.Set(10, 10, 10);
-	redfall.f_maxDist = 1500.f;
-	redfall.isActive = false;
-	redfall.SpawnParticle(Vector3(0, 1000, 1));*/
+		waterfountain.Update(dt);
 
-	waterfountain.Update(dt);
-	
+		waterfountain.SetType(GEO_PARTICLE_BLUE);
+		waterfountain.SetFrequency(1);
+		waterfountain.SetCap(1000);
+		waterfountain.i_spawnAmount = 1;
+		waterfountain.f_lifeTime = 1.f;
+		waterfountain.minVel.Set(-4, 10, -4);
+		waterfountain.maxVel.Set(4, 30, 4);
+		waterfountain.scale.Set(2, 2, 2);
+		waterfountain.f_maxDist = 1500.f;
+		waterfountain.b_gravity = true;
+		waterfountain.isActive = false;
+		waterfountain.SpawnParticle(Vector3(-0.4f, 2.f, -119.5f));
 
-	waterfountain.SetType(GEO_PARTICLE_BLUE);
-	waterfountain.SetFrequency(1);
-	waterfountain.SetCap(1000);
-	waterfountain.i_spawnAmount = 1;
-	waterfountain.f_lifeTime = 1.f;
-	waterfountain.minVel.Set(-4, 10, -4);
-	waterfountain.maxVel.Set(4, 30, 4);
-	waterfountain.scale.Set(2, 2, 2);
-	waterfountain.f_maxDist = 1500.f;
-	waterfountain.b_gravity = true;
-	waterfountain.isActive = false;
-	waterfountain.SpawnParticle(Vector3(-0.4f, 2.f, -119.5f));
+		if (splashposY <= 100)
+		{
+			splashposY += 30 * dt;
+		}
+		else
+		{
+			b_splashdisable = true;
+		}
 
-	
+	}
+	else
+	{
+		splashposY = 30;
+	}
+
 
 	if (Application::IsKeyPressed('L'))
 		testx += dt * 10.f;
@@ -115,6 +135,10 @@ void MainMenu::Update(double dt)
 		testz += dt * 10.f;
 	if (Application::IsKeyPressed('O'))
 		testz -= dt * 10.f;
+
+
+	if (Application::IsKeyPressed(VK_SPACE))
+		b_isSplash = false;
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
@@ -134,11 +158,21 @@ void MainMenu::Render()
 	int spacing = 13;
 
 	//-45 , 80
-	RenderManager::GetInstance()->RenderTextOnScreen("CAPTURE DEFENCE ", Color(0.7f, 0.7f, 1.f), 5, 18, 50);
+	RenderManager::GetInstance()->RenderTextOnScreen("CAPTURE DEFENCE ", Color(0.7f, 0.7f, 1.f), 5, 20, 50);
 
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(fps), Color(1, 1, 1), 2, 45, 55);
+	//RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(fps), Color(1, 1, 1), 2, 45, 55);
 
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testx), Color(1, 1, 1), 2, 45, 15);
+	if (!b_splashdisable)
+	{
+		RenderManager::GetInstance()->RenderMeshOnScreen(GEO_SPLASH, false, Vector3(40, splashposY, 0), Vector3(90, 65, 10), Vector3(0, 0, 0));
+	}
+	if (b_isSplash)
+	{
+
+		RenderManager::GetInstance()->RenderTextOnScreen("Press SPACE to begin", Color(1, 1, 0.3f), 4, 20, 10);
+	}
+	
+	/*RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testx), Color(1, 1, 1), 2, 45, 15);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testy), Color(1, 1, 1), 2, 45, 10);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(testz), Color(1, 1, 1), 2, 45, 5);
 
@@ -148,7 +182,7 @@ void MainMenu::Render()
 
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.target.x), Color(1, 0, 0), 2, 65, 15);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.target.y), Color(1, 0, 0), 2, 65, 10);
-	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.target.z), Color(1, 0, 0), 2, 65, 5);
+	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(camera.target.z), Color(1, 0, 0), 2, 65, 5);*/
 
 
 	/*cam pos
@@ -166,6 +200,8 @@ void MainMenu::Render()
 	//grass.rotation.Set(0, 0, 0);
 	grass.b_shadows = true;
 	grass.b_lightEnabled = false;
+
+	
 }
 
 
@@ -254,5 +290,5 @@ void MainMenu::SceneDeco()
 void MainMenu::Exit()
 {
 
-	redfall.ClearParticles();
+	rain.ClearParticles();
 }
