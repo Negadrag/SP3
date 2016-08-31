@@ -43,7 +43,6 @@ void MainMenu::Init()
 
 	splashposY = 0;
 	
-	std::cout << "entered";
 	
 	CreateScene();
 	

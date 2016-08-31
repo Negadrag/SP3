@@ -174,33 +174,28 @@ void MenuCursor::Clicking(double dt)
 
 			if (temp->functionID == 0)
 			{
-				std::cout << "BUTTON PLAY" << std::endl;
 				menu_states = 5;
 				//scene_change = 1;
 				istransition = true;
 			}
 			if (temp->functionID == 1)
 			{
-				std::cout << "BUTTON EDITING" << std::endl;
 				menu_states = 1;
 				scene_change = 4;
 				istransition = true;
 			}
 			if (temp->functionID == 2)
 			{
-				std::cout << "BUTTON TUTORIAL" << std::endl;
 				menu_states = 2;
 				istransition = true;
 			}
 			if (temp->functionID == 3)
 			{
-				std::cout << "BUTTON OPTIONS" << std::endl;
 				menu_states = 3;
 				istransition = true;
 			}
 			if (temp->functionID == 4)
 			{
-				std::cout << "BUTTON EXIT" << std::endl;
 				menu_states = 1;
 				istransition = true;
 				Application::GetInstance().b_Exit = true;
