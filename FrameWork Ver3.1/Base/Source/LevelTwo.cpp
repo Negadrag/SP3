@@ -24,7 +24,7 @@ LevelTwo::~LevelTwo()
 void LevelTwo::Init()
 {
 	this->Init2();
-	testMap.LoadMap(std::fstream("Maps//LevelTwo.csv"));
+	testMap.LoadMap(std::fstream("Maps//Level_Two.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);

@@ -51,7 +51,10 @@ private:
 
 	Terrain terrain;
 
-	bool invalidFile;
+	bool b_invalidFile;
+	bool b_closingFile;
+
+	string HandleInput();
 
 	vector<Tower*> towerList;
 };

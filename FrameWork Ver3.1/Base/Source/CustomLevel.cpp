@@ -15,6 +15,7 @@
 
 CustomLevel::CustomLevel() :Scene()
 {
+	b_invalidFile = false;
 }
 
 CustomLevel::~CustomLevel()
@@ -24,21 +25,22 @@ CustomLevel::~CustomLevel()
 void CustomLevel::Init()
 {
 	this->Init2();
-	invalidFile = false;
-	string customFilePath;
-	ifstream infile;
-	infile.open("Maps//Custom.txt");
-	getline(infile, customFilePath);
-	infile.close();
 
-	ifstream cfile(("Maps//" + customFilePath).c_str(), ifstream::in);
+	b_invalidFile = false;
+
+	HWND hwnd = GetConsoleWindow();
+	SetForegroundWindow(hwnd);
+
+	string customFilePath = HandleInput();
+
+	ifstream cfile(("Maps//" + customFilePath + ".csv").c_str(), ifstream::in);
 	if (cfile.fail())
 	{
 		SceneManager::GetInstance()->ChangeScene(8, false);
-		invalidFile = true;
+		b_invalidFile = true;
 	}
 
-	testMap.LoadMap(std::fstream("Maps//" + customFilePath));
+	testMap.LoadMap(std::fstream("Maps//" + customFilePath + ".csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -71,7 +73,7 @@ void CustomLevel::Init2()
 
 void CustomLevel::Update(double dt)
 {
-	if (invalidFile)
+	if (b_invalidFile || b_closingFile)
 	{
 		return;
 	}
@@ -120,7 +122,7 @@ void CustomLevel::Update(double dt)
 
 void CustomLevel::Render()
 {
-	if (invalidFile)
+	if (b_invalidFile || b_closingFile)
 	{
 		return;
 	}
@@ -214,6 +216,8 @@ void CustomLevel::Render()
 
 void CustomLevel::Exit()
 {
+	b_invalidFile = true;
+	b_closingFile = true;
 	//clean Up scene Variables
 	for (vector<Tower*>::iterator it = towerList.begin(); it != towerList.end(); ++it)
 	{
@@ -230,4 +234,12 @@ void CustomLevel::Exit()
 	towerList.clear();
 	cursor.Clear();
 	testMap.Exit();
+}
+
+string CustomLevel::HandleInput()
+{
+	string input;
+	std::cout << "Enter map name:";
+	std::cin >> input;
+	return input;
 }

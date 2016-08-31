@@ -24,7 +24,7 @@ Assignment::~Assignment()
 void Assignment::Init()
 {
 	this->Init2();
-	testMap.LoadMap(std::fstream("Maps//Level-Easy.csv"));
+	testMap.LoadMap(std::fstream("Maps//Level_One.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
