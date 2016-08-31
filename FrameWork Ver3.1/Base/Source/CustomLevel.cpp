@@ -24,17 +24,25 @@ CustomLevel::~CustomLevel()
 void CustomLevel::Init()
 {
 	this->Init2();
-
+	invalidFile = false;
 	string customFilePath;
 	ifstream infile;
 	infile.open("Maps//Custom.txt");
 	getline(infile, customFilePath);
 	infile.close();
 
+	ifstream cfile(("Maps//" + customFilePath).c_str(), ifstream::in);
+	if (cfile.fail())
+	{
+		SceneManager::GetInstance()->ChangeScene(8, false);
+		invalidFile = true;
+	}
+
 	testMap.LoadMap(std::fstream("Maps//" + customFilePath));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
+	testMap.waves.towerList = &(this->towerList);
 
 	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
@@ -63,6 +71,11 @@ void CustomLevel::Init2()
 
 void CustomLevel::Update(double dt)
 {
+	if (invalidFile)
+	{
+		return;
+	}
+
 	if (Application::IsKeyPressed('1'))
 		glEnable(GL_CULL_FACE);
 	if (Application::IsKeyPressed('2'))
@@ -107,6 +120,10 @@ void CustomLevel::Update(double dt)
 
 void CustomLevel::Render()
 {
+	if (invalidFile)
+	{
+		return;
+	}
 	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.f, 1.5f, 1.f), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
