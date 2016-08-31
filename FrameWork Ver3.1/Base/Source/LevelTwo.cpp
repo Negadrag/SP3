@@ -48,6 +48,8 @@ void LevelTwo::Init()
 	grass.rotation.Set(0, 0, 0);
 
 	cursor.Init(&towerList,testMap.waves.GetEnemyList());
+
+	player.i_currency = 50;
 }
 
 void LevelTwo::Init2()
