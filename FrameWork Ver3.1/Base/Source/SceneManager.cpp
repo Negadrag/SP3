@@ -16,6 +16,7 @@
 #include "LevelTwo.h"
 #include "Pause.h"
 #include "CustomLevel.h"
+#include "LevelFour.h"
 
 
 SceneManager* SceneManager::instance = nullptr;
@@ -58,6 +59,8 @@ void SceneManager::Init()
 	CreateScene(new Pause());
 	// Scene ID 11
 	CreateScene(new CustomLevel());
+	// Scene ID 12
+	CreateScene(new LevelFour());
 
 	this->m_currentSceneID = 8;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;

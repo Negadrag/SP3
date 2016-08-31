@@ -14,6 +14,9 @@ public:
 	list<Scene*> sceneList;
 	int m_currentSceneID;
 	int m_nxtSceneID;
+	bool b_reinstanceScene;
+	int i_SceneToReinstance;
+
 	void Init();
 	void Update(double dt);
 	void Render();

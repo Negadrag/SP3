@@ -134,6 +134,7 @@ void Display::Update(double dt)
 	}
 
 	float skyboxsize = 10000.f;
+	f_timer += dt;
 	if (f_timer >= 3.f)
 	{
 		b_skipDebounce = true;
@@ -141,11 +142,11 @@ void Display::Update(double dt)
 
 
 
-	if (b_skipDebounce == true && (Application::IsKeyPressed('C') || f_timer >= 30.f))
+	if ((Application::IsKeyPressed('C') && b_skipDebounce == true) || f_timer >= 30.f)
 	{
 		SceneManager::GetInstance()->ReinstanceScene(7);
 	}
-	f_timer += dt;
+	
 }
 
 void Display::Render()
