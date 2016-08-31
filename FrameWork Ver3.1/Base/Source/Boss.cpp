@@ -211,7 +211,7 @@ void Boss::Update(double dt)
 
 void Boss::UpdateAnim(double dt)
 {
-	this->zVel -= 4 * dt;
+	this->zVel -= 8 * dt;
 	this->pos.z += this->zVel * dt;
 	if (this->pos.z <= 0.f)
 	{

@@ -191,7 +191,7 @@ void SceneManager::CreateScene(Scene* scene)
 
 void SceneManager::ReinstanceScene(int sceneID)
 {
-	ChangeScene(7, false);
+	ChangeScene(sceneID, false);
 }
 
 void SceneManager::Exit()
