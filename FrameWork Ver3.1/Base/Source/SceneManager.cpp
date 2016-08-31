@@ -32,7 +32,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
-
+	sceneToExit = nullptr;
 	RenderManager::GetInstance()->Init();
 	Music::GetInstance()->Init();
 	//create scenes here
@@ -128,6 +128,13 @@ void SceneManager::Update(double dt)
 			nxtScene->Init2();
 		}
 	}
+
+	if (sceneToExit != nullptr)
+	{
+		sceneToExit->Exit();
+		sceneToExit = nullptr;
+	}
+
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
 	EntityManager::GetInstance()->UpdateAllEntity(dt, m_currentSceneID);
 	RenderManager::GetInstance()->Update(dt);
@@ -201,6 +208,21 @@ void SceneManager::ReinstanceScene(int sceneID)
 				EntityManager::GetInstance()->m_currentSceneID = sceneID;
 				(*it)->Exit();
 				(*it)->Init();
+			}
+		}
+	}
+}
+
+void SceneManager::ExitScene(int sceneID)
+{
+	if (SceneExist(sceneID) == true)
+	{
+		for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
+		{
+			if ((*it)->m_sceneID == sceneID)
+			{
+				sceneToExit = *it;
+				(*it)->b_frozen = false;
 			}
 		}
 	}

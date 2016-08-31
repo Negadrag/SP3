@@ -73,7 +73,7 @@ void CustomLevel::Init2()
 
 void CustomLevel::Update(double dt)
 {
-	if (b_invalidFile || b_closingFile)
+	if (b_invalidFile)
 	{
 		return;
 	}
@@ -122,7 +122,7 @@ void CustomLevel::Update(double dt)
 
 void CustomLevel::Render()
 {
-	if (b_invalidFile || b_closingFile)
+	if (b_invalidFile)
 	{
 		return;
 	}
@@ -216,8 +216,6 @@ void CustomLevel::Render()
 
 void CustomLevel::Exit()
 {
-	b_invalidFile = true;
-	b_closingFile = true;
 	//clean Up scene Variables
 	for (vector<Tower*>::iterator it = towerList.begin(); it != towerList.end(); ++it)
 	{

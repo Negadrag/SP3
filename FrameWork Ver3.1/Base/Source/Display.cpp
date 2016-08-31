@@ -1,4 +1,3 @@
-
 #include "Display.h"
 #include "GL\glew.h"
 #include "LoadHmap.h"
