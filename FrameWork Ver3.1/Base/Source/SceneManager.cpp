@@ -191,19 +191,7 @@ void SceneManager::CreateScene(Scene* scene)
 
 void SceneManager::ReinstanceScene(int sceneID)
 {
-	if (SceneExist(sceneID) == true)
-	{
-		for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
-		{
-			if ((*it)->m_sceneID == sceneID)
-			{
-				GUIManager::GetInstance()->m_currentSceneID = sceneID;
-				EntityManager::GetInstance()->m_currentSceneID = sceneID;
-				(*it)->Exit();
-				(*it)->Init();
-			}
-		}
-	}
+	ChangeScene(7, false);
 }
 
 void SceneManager::Exit()
@@ -220,10 +208,6 @@ void SceneManager::Exit()
 
 bool SceneManager::ChangeScene(int sceneID,bool freezeScene)
 {
-	if (sceneID == m_currentSceneID)
-	{
-		return false;
-	}
 	Music::GetInstance()->StopAllSound(); 
 	// stop the music that are playing in the current scene
 
