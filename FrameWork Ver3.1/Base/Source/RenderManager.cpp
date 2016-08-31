@@ -187,18 +187,22 @@ void RenderManager::InitMesh()
 
 	meshList[GEO_DUNGEONWALL] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
 	meshList[GEO_DUNGEONWALL]->textureArray[0] = LoadTGA("Image//dungeonwall2.tga");
+	meshList[GEO_SPLASH] = MeshBuilder::GenerateQuad("SplashScreen", Color(1, 1, 1), 1.f);
+	meshList[GEO_SPLASH]->textureArray[0] = LoadTGA("Image//splash.tga");
 	meshList[GEO_MENUTOWN] = MeshBuilder::GenerateOBJ("Cube", "OBJ/SSS.obj");
 	meshList[GEO_MENUTOWN]->textureArray[0] = LoadTGA("Image//menutown_tga.tga");
 	meshList[GEO_HUD_BG] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	meshList[GEO_HUD_BG]->textureArray[0] = LoadTGA("Image//HUD_BG.tga");
+	meshList[GEO_POT] = MeshBuilder::GenerateQuad("potholder", Color(1, 1, 1), 1.f);
+	meshList[GEO_POT]->textureArray[0] = LoadTGA("Image//pot.tga"); 
 
 	meshList[GEO_CUBE] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2] = MeshBuilder::GenerateOBJ("Cube", "OBJ/Cube.obj");
 	meshList[GEO_CUBE2]->textureArray[0] = LoadTGA("Image//Face.tga");
 
 	//load texture and mesh for skyplane
-	meshList[GEO_SKYPLANE] = MeshBuilder::GenerateSkyPlane("skyplane", Color(1, 1, 1), 128, 500.0f, 300.f, 5.f, 5.f);
-	meshList[GEO_SKYPLANE]->textureArray[0] = LoadTGA("Image//sky.tga");
+	//meshList[GEO_SKYPLANE] = MeshBuilder::GenerateSkyPlane("skyplane", Color(1, 1, 1), 128, 500.0f, 300.f, 5.f, 5.f);
+	//meshList[GEO_SKYPLANE]->textureArray[0] = LoadTGA("Image//sky.tga");
 	//meshList[GEO_SKYPLANE]->textureArray[1] = LoadTGA("Image//sunsetsky.tga");
 
 	// Load the ground mesh and texture
@@ -209,17 +213,17 @@ void RenderManager::InitMesh()
 	meshList[GEO_GRASS_DARKGREEN]->textureArray[0] = LoadTGA("Image//ground.tga");
 
 	//for terrain
-	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerain("Terrain", "Image//heightmap4.raw");
-	meshList[GEO_TERRAIN]->textureArray[0] = LoadTGA("Image//soil_texture.tga");
-	meshList[GEO_TERRAIN]->textureArray[1] = LoadTGA("Image//grass2.tga");
+	//meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerain("Terrain", "Image//heightmap4.raw");
+	//meshList[GEO_TERRAIN]->textureArray[0] = LoadTGA("Image//soil_texture.tga");
+	//meshList[GEO_TERRAIN]->textureArray[1] = LoadTGA("Image//grass2.tga");
 	/*meshList[GEO_TERRAIN]->material.kDiffuse.Set(0.5f, 0.5f, 0.5f);
 	meshList[GEO_TERRAIN]->material.kAmbient.Set(0.3f, 0.3f, 0.3f);
 	meshList[GEO_TERRAIN]->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	meshList[GEO_TERRAIN]->material.kShininess = 0.5f;*/
-	meshList[GEO_TERRAIN]->material.kDiffuse.Set(0.95f, 0.95f, 0.95f);
-	meshList[GEO_TERRAIN]->material.kAmbient.Set(0.3f, 0.3f, 0.3f);
-	meshList[GEO_TERRAIN]->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
-	meshList[GEO_TERRAIN]->material.kShininess = 1.0f;
+	//meshList[GEO_TERRAIN]->material.kDiffuse.Set(0.95f, 0.95f, 0.95f);
+	//meshList[GEO_TERRAIN]->material.kAmbient.Set(0.3f, 0.3f, 0.3f);
+	//meshList[GEO_TERRAIN]->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	//meshList[GEO_TERRAIN]->material.kShininess = 1.0f;
 
 	//For Skybox
 	meshList[GEO_SKYTOP] = MeshBuilder::GenerateQuad("Sky", Color(1, 1, 1), 1.f);
@@ -378,6 +382,9 @@ void RenderManager::InitMesh()
 	meshList[GEO_MORTARTOWER_FROST] = MeshBuilder::GenerateOBJ("Mortar Tower", "OBJ//Tower-MORTARBASE.obj");
 	meshList[GEO_MORTARTOWER_FROST]->textureArray[0] = LoadTGA("Image//Tower-MORTAR.tga");
 	meshList[GEO_MORTARTOWER_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
+	meshList[GEO_MORTARCANNON_FROST] = MeshBuilder::GenerateOBJ("Mortar Tower", "OBJ//Tower-MORTARCANNON.obj");
+	meshList[GEO_MORTARCANNON_FROST]->textureArray[0] = LoadTGA("Image//Tower-MORTARCANNON.tga");
+	meshList[GEO_MORTARCANNON_FROST]->textureArray[1] = LoadTGA("Image//Frost.tga");
 
 	//Particles
 	meshList[GEO_SMOKEPARTICLES] = MeshBuilder::GenerateQuad("smoke particle", Color(1, 1, 1), 1.f);

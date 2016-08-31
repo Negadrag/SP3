@@ -193,7 +193,14 @@ void Display::Render()
 			RenderManager::GetInstance()->RenderTextOnScreen("Notes: ", Color(0.6, 0.6, 0.6), 2, 55, 24);
 			RenderManager::GetInstance()->RenderTextOnScreen("  Its fast but weak.", Color(0.6, 0.6, 0.6), 2, 55, 21);
 			break;
-
+		case 5:
+			RenderManager::GetInstance()->RenderTextOnScreen("BOSS", Color(0.6, 0.6, 0.6), 3, 60, 40);
+			RenderManager::GetInstance()->RenderTextOnScreen("Speed:   Slow", Color(0.6, 0.6, 0.6), 2, 55, 33);
+			RenderManager::GetInstance()->RenderTextOnScreen("Base HP: Too high!", Color(0.6, 0.6, 0.6), 2, 55, 30);
+			RenderManager::GetInstance()->RenderTextOnScreen("Def: Also very high!", Color(0.6, 0.6, 0.6), 2, 55, 27);
+			RenderManager::GetInstance()->RenderTextOnScreen("Notes: ", Color(0.6, 0.6, 0.6), 2, 55, 24);
+			RenderManager::GetInstance()->RenderTextOnScreen("  The jumping thing.", Color(0.6, 0.6, 0.6), 2, 55, 21);
+			break;
 		case 11:
 			RenderManager::GetInstance()->RenderTextOnScreen("PoisonTower", Color(0.3, 1, 0.3), 3, 57, 41);
 			RenderManager::GetInstance()->RenderTextOnScreen("Description: ", Color(0.3, 1, 0.3), 2, 55, 35);
@@ -321,6 +328,7 @@ void Display::CreateScene()
 			if (showcase == BOSS)
 			{
 				demoObject = new Boss(pos, nullptr, nullptr);
+				i_diplayedObject = 5;
 			}
 			demoObject->rotation.x = -90.f;
 			demoObject->scale.Set(2, 2, 2);

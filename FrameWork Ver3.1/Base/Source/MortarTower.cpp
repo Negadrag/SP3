@@ -126,7 +126,7 @@ void MortarTower::UpdateMesh()
 	if (b_isFrozen == true)
 	{
 		meshID = GEO_MORTARTOWER_FROST;
-		child.meshID = GEO_TANKY_FROST;
+		child.meshID = GEO_MORTARCANNON_FROST;
 	}
 	else
 	{
