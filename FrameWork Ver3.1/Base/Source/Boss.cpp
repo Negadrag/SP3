@@ -21,7 +21,7 @@ Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 
 	this->towerList = towerlist;
 	this->i_damage = 10;
-	this->i_defence = 40;
+	this->i_defence = 25;
 	this->i_currency = 100;
 	this->scale.Set(1.5f,1.5f,1.5f);
 	this->hp.pos.z = 2.f;

@@ -55,7 +55,6 @@ void CaptureGame::Init()
 
 	b_initScene = false;
 	f_ballSpawnTimer = 0.f;
-	std::cout << "entered";
 
 }
 
@@ -88,10 +87,7 @@ void CaptureGame::Update(double dt)
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);
-	if (Application::IsKeyPressed('B'))
-	{
-		std::cout << "hi" << std::endl;
-	}
+
 
 	static bool bLButtonState = false;
 	//if (!bLButtonState && Application::IsMousePressed(0))
@@ -636,7 +632,6 @@ void CaptureGame::SwitchInitializer()
 		CreateTypeONE(temp1);
 	}
 	
-	std::cout << top_rarest << std::endl;
 }
 
 void CaptureGame::CreateTypeONE(int type)

@@ -154,7 +154,7 @@ void CustomLevel::Render()
 			}
 		}
 	}
-
+	
 	float tempStatsX = 68;
 	float tempStatsY = 30;
 

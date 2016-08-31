@@ -32,7 +32,6 @@ void LoseScene::Init()
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	b_initScene = false;
-	std::cout << "entered";
 
 }
 
