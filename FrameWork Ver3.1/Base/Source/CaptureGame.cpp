@@ -328,7 +328,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(90, 0, 0);
+		go->rotation.Set(-90, 0, 0);
 		go->score = &resource1;
 		go->particleGenerator = &bluebang;
 		m_goList.push_back(go);
@@ -343,7 +343,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(90, 0, 0);
+		go->rotation.Set(-90, 0, 0);
 		go->score = &resource2;
 		go->particleGenerator = &redbang;
 		m_goList.push_back(go);
@@ -358,7 +358,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(90, 0, 0);
+		go->rotation.Set(-90, 0, 0);
 		go->score = &resource3;
 		go->particleGenerator = &yellowbang;
 		m_goList.push_back(go);
@@ -373,7 +373,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(90, 0, 0);
+		go->rotation.Set(-90, 0, 0);
 		go->score = &resource4;
 		go->particleGenerator = &greenbang;
 		m_goList.push_back(go);
