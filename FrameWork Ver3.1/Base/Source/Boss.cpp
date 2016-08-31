@@ -14,14 +14,14 @@ Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 	this->b_onGround = true;
 	this->meshID = GEO_BOSS;
 	this->f_movSpeed = 1.5f;
-	this->f_maxHealth = 500.f;
+	this->f_maxHealth = 1000.f;
 	this->f_health = f_maxHealth;
 	this->f_freezeTimer = 0.f;
 	this->f_freezeFrequency = 1.f;
 
 	this->towerList = towerlist;
 	this->i_damage = 1;
-	this->i_defence = 50;
+	this->i_defence = 75;
 	this->i_currency = 50;
 	this->scale.Set(1.5f,1.5f,1.5f);
 	this->hp.pos.z = 2.f;
