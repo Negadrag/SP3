@@ -41,7 +41,7 @@ Projectile* SpeedTower::GetProjectile()
 		{
 			projectile->b_isActive = true;
 			projectile->meshID = projectile_meshID;
-			Music::GetInstance()->PlayMusic(5, false, 0.15f);
+			Music::GetInstance()->PlayMusic(5, false, 0.075f);
 			return projectile;
 
 		}
