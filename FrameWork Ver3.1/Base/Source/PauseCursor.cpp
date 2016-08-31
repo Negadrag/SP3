@@ -37,7 +37,7 @@ void PauseCursor::HotKeys()
 	}
 	else if (Application::IsKeyPressed('M'))
 	{
-		SceneManager::GetInstance()->ReinstanceScene(Scene::player.m_sceneID);
+		SceneManager::GetInstance()->ExitScene(Scene::player.m_sceneID);
 		SceneManager::GetInstance()->ChangeScene(8, false);
 	}
 }

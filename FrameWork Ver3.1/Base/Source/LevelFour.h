@@ -1,5 +1,5 @@
-#ifndef CUSTOMLEVEL_H
-#define CUSTOMLEVEL_H
+#ifndef LEVEL_FOUR_H
+#define LEVEL_FOUR_H
 
 #include "Scene.h"
 #include "Mtx44.h"
@@ -18,12 +18,12 @@
 
 using std::vector;
 
-class CustomLevel : public Scene
+class LevelFour : public Scene
 {
-	
+
 public:
-	CustomLevel();
-	~CustomLevel();
+	LevelFour();
+	~LevelFour();
 
 	virtual void Init();
 	virtual void Init2();
@@ -50,11 +50,6 @@ private:
 	float fps;
 
 	Terrain terrain;
-
-	bool b_invalidFile;
-	bool b_closingFile;
-
-	string HandleInput();
 
 	vector<Tower*> towerList;
 };

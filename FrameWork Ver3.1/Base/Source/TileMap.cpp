@@ -336,5 +336,8 @@ void TileMap::Exit()
 		root = nullptr;
 	}
 
+	i_rows = i_columns = 0;
+	numCounter = 1;
+
 	waves.Exit();
 }

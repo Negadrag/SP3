@@ -1,4 +1,4 @@
-#include "CustomLevel.h"
+#include "LevelFour.h"
 #include "GL\glew.h"
 #include "LoadHmap.h"
 
@@ -13,34 +13,18 @@
 #include "BuffTower.h"
 
 
-CustomLevel::CustomLevel() :Scene()
-{
-	b_invalidFile = false;
-}
-
-CustomLevel::~CustomLevel()
+LevelFour::LevelFour() :Scene()
 {
 }
 
-void CustomLevel::Init()
+LevelFour::~LevelFour()
+{
+}
+
+void LevelFour::Init()
 {
 	this->Init2();
-
-	b_invalidFile = false;
-
-	HWND hwnd = GetConsoleWindow();
-	SetForegroundWindow(hwnd);
-
-	string customFilePath = HandleInput();
-
-	ifstream cfile(("Maps//" + customFilePath + ".csv").c_str(), ifstream::in);
-	if (cfile.fail())
-	{
-		SceneManager::GetInstance()->ChangeScene(8, false);
-		b_invalidFile = true;
-	}
-
-	testMap.LoadMap(std::fstream("Maps//" + customFilePath + ".csv"));
+	testMap.LoadMap(std::fstream("Maps//Level_Four.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -66,18 +50,13 @@ void CustomLevel::Init()
 	cursor.Init(&towerList, testMap.waves.GetEnemyList());
 }
 
-void CustomLevel::Init2()
+void LevelFour::Init2()
 {
 	//Music::GetInstance()->PlayMusic(6, true, 0.2f);
 }
 
-void CustomLevel::Update(double dt)
+void LevelFour::Update(double dt)
 {
-	if (b_invalidFile)
-	{
-		return;
-	}
-
 	if (Application::IsKeyPressed('1'))
 		glEnable(GL_CULL_FACE);
 	if (Application::IsKeyPressed('2'))
@@ -120,12 +99,8 @@ void CustomLevel::Update(double dt)
 	RenderManager::GetInstance()->SetCamera(&camera);
 }
 
-void CustomLevel::Render()
+void LevelFour::Render()
 {
-	if (b_invalidFile)
-	{
-		return;
-	}
 	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.f, 1.5f, 1.f), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
@@ -143,14 +118,6 @@ void CustomLevel::Render()
 			else if (testMap.screenMap[j][i] == 0 || testMap.screenMap[j][i] == -3)
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
-			}
-			else if (testMap.screenMap[j][i] == 1)
-			{
-				RenderManager::GetInstance()->RenderMesh(GEO_START, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
-			}
-			else if (testMap.screenMap[j][i] == 2)
-			{
-				RenderManager::GetInstance()->RenderMesh(GEO_END, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
 		}
 	}
@@ -222,7 +189,7 @@ void CustomLevel::Render()
 	}
 }
 
-void CustomLevel::Exit()
+void LevelFour::Exit()
 {
 	//clean Up scene Variables
 	for (vector<Tower*>::iterator it = towerList.begin(); it != towerList.end(); ++it)
@@ -240,12 +207,4 @@ void CustomLevel::Exit()
 	towerList.clear();
 	cursor.Clear();
 	testMap.Exit();
-}
-
-string CustomLevel::HandleInput()
-{
-	string input;
-	std::cout << "Enter map name:";
-	std::cin >> input;
-	return input;
 }
