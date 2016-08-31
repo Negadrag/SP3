@@ -74,6 +74,7 @@ void Display::Update(double dt)
 	if (banner_backward <= -45)
 		banner_backward = 80;
 
+	RenderManager::GetInstance()->SetLight(Vector3(0, 2, 0));
 
 	fps = (float)(1.f / dt);
 
@@ -93,18 +94,18 @@ void Display::Update(double dt)
 	redfall.SpawnParticle(Vector3(0, 1000, 1));*/
 
 
-	if (Application::IsKeyPressed('L'))
-		testx += dt * 50;
-	if (Application::IsKeyPressed('J'))
-		testx -= dt * 50;
-	if (Application::IsKeyPressed('I'))
-		testy += dt * 50;
-	if (Application::IsKeyPressed('K'))
-		testy -= dt * 50;
-	if (Application::IsKeyPressed('P'))
-		testz += dt * 50;
-	if (Application::IsKeyPressed('O'))
-		testz -= dt * 50;
+	//if (Application::IsKeyPressed('L'))
+	//	testx += dt * 50;
+	//if (Application::IsKeyPressed('J'))
+	//	testx -= dt * 50;
+	//if (Application::IsKeyPressed('I'))
+	//	testy += dt * 50;
+	//if (Application::IsKeyPressed('K'))
+	//	testy -= dt * 50;
+	//if (Application::IsKeyPressed('P'))
+	//	testz += dt * 50;
+	//if (Application::IsKeyPressed('O'))
+	//	testz -= dt * 50;
 
 	camera.Update(dt);
 	RenderManager::GetInstance()->SetCamera(&camera);

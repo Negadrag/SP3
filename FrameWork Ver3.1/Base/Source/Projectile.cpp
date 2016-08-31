@@ -40,7 +40,7 @@ void Projectile::Update(double dt)
 			rotation.z = Math::RadianToDegree(atan2(this->vel.y, this->vel.x));
 			this->pos += vel * dt;
 			
-			float distanceToCheck = 0.04f * p_speed;
+			float distanceToCheck = 0.06f * p_speed;
 			if (d.LengthSquared() <= distanceToCheck * distanceToCheck)
 			{
 				this->b_isActive = false;

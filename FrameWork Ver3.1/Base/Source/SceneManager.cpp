@@ -94,7 +94,7 @@ void SceneManager::Update(double dt)
 	}
 	if (Application::IsKeyPressed('B'))
 	{
-		dt *= 3;
+		dt *= 2.f;
 	}
 	Scene* currScene;
 	for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)

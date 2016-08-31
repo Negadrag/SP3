@@ -113,6 +113,7 @@ void WaveManager::Update(double dt)
 			}
 			if (f_waveStartTimer >= 30.f)
 			{
+				b_lastWave = false;
 				f_currScaling *= (1.f + (f_hpScaling / 100.f));
 				player->i_currency += 5;
 				b_miniGame = true;

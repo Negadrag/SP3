@@ -23,6 +23,10 @@ Enemy::Enemy()
 	hp.b_Render = false;
 	hp2.b_Render = false;
 	f_showHealthTimer = 0.f;
+
+	f_poisonTimer = 0.f;
+	f_slowTimer = 0.f;
+	f_poisonDps = 0.f;
 }
 
 Enemy::Enemy(Vector3 pos, Node* root)
@@ -51,6 +55,9 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	hp2.b_Render = false;
 	f_showHealthTimer = 0.f;
 	
+	f_poisonTimer = 0.f;
+	f_slowTimer = 0.f;
+	f_poisonDps = 0.f;
 }
 
 Enemy::~Enemy()

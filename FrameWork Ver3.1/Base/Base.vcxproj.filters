@@ -566,13 +566,13 @@
     <ClInclude Include="Source\PauseCursor.h">
       <Filter>Header Files\ObjectClasses\Cursor</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CustomLevel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\LevelFour.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\LevelThree.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CustomLevel.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>

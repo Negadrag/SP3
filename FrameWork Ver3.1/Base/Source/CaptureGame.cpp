@@ -55,7 +55,6 @@ void CaptureGame::Init()
 
 	b_initScene = false;
 	f_ballSpawnTimer = 0.f;
-
 }
 
 void CaptureGame::Update(double dt)
@@ -74,11 +73,11 @@ void CaptureGame::Update(double dt)
 	//	
 	//	b_initScene = true;
 	//}
-	if (Application::IsKeyPressed('U'))
-	{
-		balls = 30;
-		b_allBallsdespawned = false;
-	}
+	//if (Application::IsKeyPressed('U'))
+	//{
+	//	balls = 30;
+	//	b_allBallsdespawned = false;
+	//}
 	
 
 	fps = (float)(1.f / dt);
@@ -134,9 +133,6 @@ void CaptureGame::Update(double dt)
 		y = m_worldHeight * ((h - y) / h);
 
 //		bonuscount = 0;
-
-	
-
 
 		EstimatedTime = -1;
 		TimeTaken = 0;
@@ -248,14 +244,14 @@ void CaptureGame::Update(double dt)
 
 	}
 
-	if (Application::IsKeyPressed('M'))
-	{
-		SceneManager::GetInstance()->ChangeScene(1, false);
-	}
-	if (Application::IsKeyPressed(VK_SPACE))
-	{
-		SceneManager::GetInstance()->ChangeScene(5, false);
-	}
+	//if (Application::IsKeyPressed('M'))
+	//{
+	//	SceneManager::GetInstance()->ChangeScene(1, false);
+	//}
+	//if (Application::IsKeyPressed(VK_SPACE))
+	//{
+	//	SceneManager::GetInstance()->ChangeScene(5, false);
+	//}
 
 }
 

@@ -172,7 +172,7 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		}
 	}
 
-	if (!tileMap.waves.b_waveEnded)
+	if (!tileMap.waves.b_waveEnded || tileMap.waves.f_waveStartTimer < 2.5f)
 	{
 		skip->b_isActive = false;
 	}
@@ -931,7 +931,7 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 
 		if (b_warning)
 		{
-			Music::GetInstance()->PlayMusic(10, false, 0.1);
+			Music::GetInstance()->PlayMusic(10, false, 0.2);
 		}
 	}
 }

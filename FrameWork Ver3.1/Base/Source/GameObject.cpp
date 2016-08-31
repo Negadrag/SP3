@@ -180,6 +180,7 @@ bool GameObject::CheckCollision(GameObject* go2 , double dt)
 			return ((p2 - p1).LengthSquared() < combinedR * combinedR && (p2 - p1).Dot(u) > 0);
 		}
 	}
+	return false;
 }
 
 void GameObject::CollisionResponse(GameObject* go2)

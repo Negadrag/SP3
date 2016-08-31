@@ -820,18 +820,18 @@ void Swap(Renderable* obj, Renderable* obj2)
 
 void RenderManager::Update(double dt)
 {
-	if (Application::IsKeyPressed('I'))
-		lights[0].position.z -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('K'))
-		lights[0].position.z += (float)(10.f * dt);
-	if (Application::IsKeyPressed('J'))
-		lights[0].position.x -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('L'))
-		lights[0].position.x += (float)(10.f * dt);
-	if (Application::IsKeyPressed('O'))
-		lights[0].position.y -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('P'))
-		lights[0].position.y += (float)(10.f * dt);	
+	//if (Application::IsKeyPressed('I'))
+	//	lights[0].position.z -= (float)(10.f * dt);
+	//if (Application::IsKeyPressed('K'))
+	//	lights[0].position.z += (float)(10.f * dt);
+	//if (Application::IsKeyPressed('J'))
+	//	lights[0].position.x -= (float)(10.f * dt);
+	//if (Application::IsKeyPressed('L'))
+	//	lights[0].position.x += (float)(10.f * dt);
+	//if (Application::IsKeyPressed('O'))
+	//	lights[0].position.y -= (float)(10.f * dt);
+	//if (Application::IsKeyPressed('P'))
+	//	lights[0].position.y += (float)(10.f * dt);	
 	
 	if (Application::IsKeyPressed('B'))
 	{

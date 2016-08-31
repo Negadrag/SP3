@@ -14,8 +14,6 @@ GameplayCam::~GameplayCam()
 
 void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up, int cameratype)
 {
-	
-
 	this->position = defaultPosition = pos;
 	this->target = defaultTarget = target;
 	Vector3 view = (target - position).Normalized();
@@ -27,8 +25,9 @@ void GameplayCam::Init(const Vector3& pos, const Vector3& target, Vector3& up, i
 	this->aspectRatio.Set(4, 3);
 	this->FOV = 45.f;
 	this->orthoSize = 750.f;
-	this->nearPlane = 0.1;
-	this->farPlane = 10000;
+	this->defaultOrtho = orthoSize;
+	this->nearPlane = 0.1f;
+	this->farPlane = 10000.f;
 
 	this->cameratype_no = cameratype;
 
