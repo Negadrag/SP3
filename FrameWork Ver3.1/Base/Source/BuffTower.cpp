@@ -16,7 +16,7 @@ BuffTower::BuffTower(vector<Tower*> *tower)
 	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	f_increaseATK = 10.f;
-	f_increaseRANGE = 5.f;
+	f_increaseRANGE = 2.5f;
 	f_increaseRATE = 2.f;
 
 	this->meshID = GEO_BUFFTOWER;
@@ -99,6 +99,8 @@ void BuffTower::Buff()
 				if (temp->buffCounter < 1)
 				{
 					temp->atkDamage += f_increaseATK;
+					temp->atkSpeed += f_increaseRATE;
+					temp->atkRange += f_increaseRANGE;
 				}
 				temp->buffCounter++;
 				buffedTowers.push_back(temp);
