@@ -339,6 +339,9 @@
     <ClCompile Include="Source\CustomLevel.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LevelFour.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -562,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="Source\CustomLevel.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelFour.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

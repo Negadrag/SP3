@@ -24,7 +24,7 @@ Assignment::~Assignment()
 void Assignment::Init()
 {
 	this->Init2();
-	testMap.LoadMap(std::fstream("Maps//Level-Easy.csv"));
+	testMap.LoadMap(std::fstream("Maps//Level_One.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -33,7 +33,7 @@ void Assignment::Init()
 	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
 	player.Init();
-	player.i_currency = 30;
+
 	//camera.Init(Vector3(0,-5,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	camera.b_ortho = true;
 	camera.orthoSize = ((float)testMap.i_rows / 2.f) + 1.f;
@@ -118,6 +118,14 @@ void Assignment::Render()
 			else if (testMap.screenMap[j][i] == 0 || testMap.screenMap[j][i] == -3)
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+			}
+			else if (testMap.screenMap[j][i] == 1)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_START, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+			}
+			else if (testMap.screenMap[j][i] == 2)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_END, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
 		}
 	}

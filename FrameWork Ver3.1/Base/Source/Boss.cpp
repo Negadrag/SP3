@@ -14,7 +14,7 @@ Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 	this->b_onGround = true;
 	this->meshID = GEO_BOSS;
 	this->f_movSpeed = 1.5f;
-	this->f_maxHealth = 1500.f;
+	this->f_maxHealth = 1300.f;
 	this->f_health = f_maxHealth;
 	this->f_freezeTimer = 0.f;
 	this->f_freezeFrequency = 1.f;
@@ -22,7 +22,7 @@ Boss::Boss(Vector3 pos, Node* root, vector<Tower*>* towerlist) :Enemy(pos, root)
 	this->towerList = towerlist;
 	this->i_damage = 10;
 	this->i_defence = 40;
-	this->i_currency = 50;
+	this->i_currency = 100;
 	this->scale.Set(1.5f,1.5f,1.5f);
 	this->hp.pos.z = 2.f;
 }
@@ -222,6 +222,7 @@ void Boss::UpdateAnim(double dt)
 
 void Boss::GiveEssence()
 {
+	player->i_currency += 1.f;
 }
 
 void Boss::MoveTo(Vector2 dest, double dt)

@@ -24,7 +24,7 @@ LevelTwo::~LevelTwo()
 void LevelTwo::Init()
 {
 	this->Init2();
-	testMap.LoadMap(std::fstream("Maps//LevelTwo.csv"));
+	testMap.LoadMap(std::fstream("Maps//Level_Two.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -48,6 +48,8 @@ void LevelTwo::Init()
 	grass.rotation.Set(0, 0, 0);
 
 	cursor.Init(&towerList,testMap.waves.GetEnemyList());
+
+	player.i_currency = 50;
 }
 
 void LevelTwo::Init2()
@@ -118,6 +120,14 @@ void LevelTwo::Render()
 			else if (testMap.screenMap[j][i] == 0 || testMap.screenMap[j][i] == -3)
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+			}
+			else if (testMap.screenMap[j][i] == 1)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_START, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+			}
+			else if (testMap.screenMap[j][i] == 2)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_END, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
 		}
 	}

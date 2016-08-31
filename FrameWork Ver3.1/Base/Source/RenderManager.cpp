@@ -420,6 +420,12 @@ void RenderManager::InitMesh()
 
 	meshList[GEO_SAVE] = MeshBuilder::GenerateQuad("Save", Color(1, 1, 1), 1.f);
 	meshList[GEO_SAVE]->textureArray[0] = LoadTGA("Image//save.tga");
+
+	meshList[GEO_START] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 0), 1.f);
+	meshList[GEO_START]->textureArray[0] = LoadTGA("Image//Start.tga");
+
+	meshList[GEO_END] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 0), 1.f);
+	meshList[GEO_END]->textureArray[0] = LoadTGA("Image//End.tga");
 }
 
 RenderManager* RenderManager::GetInstance()
