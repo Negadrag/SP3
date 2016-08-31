@@ -30,7 +30,8 @@ void CursorControl::Init(vector<Tower*> *towerList, vector<Enemy*> *enemyList)
 	this->towerList = towerList;
 	this->enemyList = enemyList;
 
-	
+	f_warningDebounce = 0.f;
+	b_warning = false;
 
 	aoe.b_isActive = false;
 	aoe.b_lightEnabled = false;
@@ -192,6 +193,16 @@ void CursorControl::Update(OrthoCamera &camera, TileMap &tileMap, const double &
 		skip->rotation.Set(0, 0, 0);
 	}
 
+	if (b_warning)
+	{
+		f_warningDebounce += (float)dt;
+		if (f_warningDebounce > 0.8f)
+		{
+			b_warning = false;
+			f_warningDebounce = 0.f;
+		}
+	}
+
 	AOEDisplay(tower);
 	Clicking(tileMap);
 	CameraBounds(camera);
@@ -223,6 +234,7 @@ bool CursorControl::SpawnTower(string name)
 		tempTower = nullptr;
 	if (tempTower != nullptr)
 	{
+		Music::GetInstance()->PlayMusic(9, false, 0.5);
 		tempTower->pos.Set(checkPositionX, checkPositionY, 0);
 		tempTower->scale.Set(1, 1, 1);
 		tempTower->enemyList = enemyList;
@@ -400,20 +412,13 @@ void CursorControl::HotKeys(TileMap &tileMap)
 		if (bLButtonState && FindTower(checkPositionX,checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
-			if (Scene::player.i_currency >= ArrowTower::cost)
+			HandleButton(tileMap, spawnTower[0]);
+			for (int i = 0; i < 4; ++i)
 			{
-				Scene::player.i_currency -= ArrowTower::cost;
-				SpawnTower("Arrow");
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-				bLButtonState = false;
-
-				for (int i = 0; i < 4; ++i)
-				{
-					spawnTower[i]->b_isActive = false;
-					towerCosts[i]->b_isActive = false;
-				}
-				background->b_isActive = false;
+				spawnTower[i]->b_isActive = false;
+				towerCosts[i]->b_isActive = false;
 			}
+			background->b_isActive = false;
 		}
 		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
 		{
@@ -435,20 +440,13 @@ void CursorControl::HotKeys(TileMap &tileMap)
 		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
-			if (Scene::player.i_currency >= CannonTower::cost)
+			HandleButton(tileMap, spawnTower[1]);
+			for (int i = 0; i < 4; ++i)
 			{
-				Scene::player.i_currency -= CannonTower::cost;
-				SpawnTower("Cannon");
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-				bLButtonState = false;
-
-				for (int i = 0; i < 4; ++i)
-				{
-					spawnTower[i]->b_isActive = false;
-					towerCosts[i]->b_isActive = false;
-				}
-				background->b_isActive = false;
+				spawnTower[i]->b_isActive = false;
+				towerCosts[i]->b_isActive = false;
 			}
+			background->b_isActive = false;
 		}
 		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
 		{
@@ -473,20 +471,13 @@ void CursorControl::HotKeys(TileMap &tileMap)
 		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -2 && debounce > cooldown)
 		{
 			debounce = 0.f;
-			if (Scene::player.i_currency >= CaptureTower::cost)
+			HandleButton(tileMap, spawnTower[2]);
+			for (int i = 0; i < 4; ++i)
 			{
-				Scene::player.i_currency -= CaptureTower::cost;
-				SpawnTower("Capture");
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-				bLButtonState = false;
-
-				for (int i = 0; i < 4; ++i)
-				{
-					spawnTower[i]->b_isActive = false;
-					towerCosts[i]->b_isActive = false;
-				}
-				background->b_isActive = false;
+				spawnTower[i]->b_isActive = false;
+				towerCosts[i]->b_isActive = false;
 			}
+			background->b_isActive = false;
 		}
 		else if (bPlacingTower && FindTower(checkPositionX, checkPositionY) != nullptr && debounce > cooldown)
 		{
@@ -511,20 +502,13 @@ void CursorControl::HotKeys(TileMap &tileMap)
 		if (bLButtonState && FindTower(checkPositionX, checkPositionY) == nullptr && debounce > cooldown)
 		{
 			debounce = 0.f;
-			if (Scene::player.i_currency >= BuffTower::cost)
+			HandleButton(tileMap, spawnTower[3]);
+			for (int i = 0; i < 4; ++i)
 			{
-				Scene::player.i_currency -= BuffTower::cost;
-				SpawnTower("Buff");
-				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-				bLButtonState = false;
-
-				for (int i = 0; i < 4; ++i)
-				{
-					spawnTower[i]->b_isActive = false;
-					towerCosts[i]->b_isActive = false;
-				}
-				background->b_isActive = false;
+				spawnTower[i]->b_isActive = false;
+				towerCosts[i]->b_isActive = false;
 			}
+			background->b_isActive = false;
 		}
 	}
 	if (Application::IsKeyPressed('F'))
@@ -768,6 +752,10 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			Scene::player.i_currency -= ArrowTower::cost;
 		}
+		else
+		{
+			b_warning = true;
+		}
 	}
 	else if (button->functionID == 1)
 	{
@@ -776,6 +764,10 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 			SpawnTower(string("Cannon"));
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			Scene::player.i_currency -= CannonTower::cost;
+		}
+		else
+		{
+			b_warning = true;
 		}
 	}
 	else if (button->functionID == 2)
@@ -786,6 +778,10 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			Scene::player.i_currency -= CaptureTower::cost;
 		}
+		else
+		{
+			b_warning = true;
+		}
 	}
 	else if (button->functionID == 3)
 	{
@@ -794,6 +790,10 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 			SpawnTower(string("Buff"));
 			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
 			Scene::player.i_currency -= BuffTower::cost;
+		}
+		else
+		{
+			b_warning = true;
 		}
 	}
 	else if (button->functionID == 5) // Level up
@@ -810,6 +810,14 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 					temp->SetCost(temp->GetCost() * 2);
 				}
 			}
+			else
+			{
+				b_warning = true;
+			}
+		}
+		else
+		{
+			b_warning = true;
 		}
 	}
 	else if (button->functionID == 6)
@@ -826,6 +834,14 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 					SpawnTower("Ice");
 					Scene::player.i_currency -= IceTower::cost;
 				}
+				else
+				{
+					b_warning = true;
+				}
+			}
+			else
+			{
+				b_warning = true;
 			}
 		}
 	}
@@ -843,6 +859,14 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 					SpawnTower("Poison");
 					Scene::player.i_currency -= PoisonTower::cost;
 				}
+				else
+				{
+					b_warning = true;
+				}
+			}
+			else
+			{
+				b_warning = true;
 			}
 		}
 	}
@@ -860,6 +884,14 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 					SpawnTower("Mortar");
 					Scene::player.i_currency -= MortarTower::cost;
 				}
+				else
+				{
+					b_warning = true;
+				}
+			}
+			else
+			{
+				b_warning = true;
 			}
 		}
 	}
@@ -877,6 +909,14 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 					SpawnTower("Speed");
 					Scene::player.i_currency -= SpeedTower::cost;
 				}
+				else
+				{
+					b_warning = true;
+				}
+			}
+			else
+			{
+				b_warning = true;
 			}
 		}
 	}
@@ -884,6 +924,12 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 	{
 		tileMap.waves.StartWave();
 		//std::cout << "WAVE STARTED" << std::endl;
+		return;
+	}
+
+	if (b_warning)
+	{
+		Music::GetInstance()->PlayMusic(10, false, 0.1);
 	}
 }
 

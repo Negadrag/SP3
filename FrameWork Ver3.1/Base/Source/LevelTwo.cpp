@@ -28,6 +28,7 @@ void LevelTwo::Init()
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
+	testMap.waves.towerList = &(this->towerList);
 
 	camera.Init(Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 10.f), Vector3((float)(testMap.i_columns - 1) / 2.f, (float)testMap.i_rows / 2.f, 0.f), Vector3(0, 1, 0), 30.f);
 
@@ -76,6 +77,10 @@ void LevelTwo::Update(double dt)
 		player.m_sceneID = this->m_sceneID;
 		player.tempCamera = &this->camera;
 		SceneManager::GetInstance()->ChangeScene(10, true);
+	}
+
+	if (Application::IsKeyPressed('M'))
+	{
 	}
 
 	testMap.waves.Update(dt);
@@ -134,7 +139,7 @@ void LevelTwo::Render()
 	ss.str("");
 	ss.precision(1);
 	{
-		int timer = 10.f - testMap.waves.f_waveStartTimer;
+		int timer = 30.f - testMap.waves.f_waveStartTimer;
 		if (timer > 0 && testMap.waves.b_waveEnded)
 		{
 			ss << "Time: " << timer;
@@ -177,6 +182,11 @@ void LevelTwo::Render()
 	ss.precision(5);
 	ss << "Wave :" << testMap.waves.i_currentWave;
 	RenderManager::GetInstance()->RenderTextOnScreen(ss.str(), Color(0, 1, 0), 3, 1, 3);
+
+	if (cursor.b_warning)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("Not enough resources!", Color(1, 0, 0), 3, 23, 30);
+	}
 }
 
 void LevelTwo::Exit()

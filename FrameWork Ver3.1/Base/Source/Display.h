@@ -53,7 +53,6 @@ private:
 	Renderable skyback;
 	//Renderable forValor;
 
-	GUI* descriptBG;
 
 	bool bLightEnabled;
 	Vector3 distance;
@@ -65,6 +64,9 @@ private:
 
 	float testx, testy, testz;
 	float f_timer;
+
+	float descriptscaleX;
+	float descriptscaleY;
 
 	bool b_skipDebounce;
 	bool b_opendescript;
