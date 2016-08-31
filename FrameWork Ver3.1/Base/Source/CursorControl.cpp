@@ -511,7 +511,7 @@ void CursorControl::HotKeys(TileMap &tileMap)
 			background->b_isActive = false;
 		}
 	}
-	if (Application::IsKeyPressed('F'))
+	else if (Application::IsKeyPressed('F'))
 	{
 		if (FindTower(checkPositionX, checkPositionY) != nullptr && tileMap.screenMap[checkPositionX][checkPositionY] == -3)
 		{
@@ -744,95 +744,73 @@ void CursorControl::SetUpgradeButtons(GUI* button,GUI* cost,GUI* ecost, string t
 
 void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 {
-	if (button->functionID == 0)
+	if (button->b_isActive)
 	{
-		if (Scene::player.i_currency >= ArrowTower::cost)
+		if (button->functionID == 0)
 		{
-			SpawnTower(string("Arrow"));
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			Scene::player.i_currency -= ArrowTower::cost;
-		}
-		else
-		{
-			b_warning = true;
-		}
-	}
-	else if (button->functionID == 1)
-	{
-		if (Scene::player.i_currency >= CannonTower::cost)
-		{
-			SpawnTower(string("Cannon"));
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			Scene::player.i_currency -= CannonTower::cost;
-		}
-		else
-		{
-			b_warning = true;
-		}
-	}
-	else if (button->functionID == 2)
-	{
-		if (Scene::player.i_currency >= CaptureTower::cost)
-		{
-			SpawnTower(string("Capture"));
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			Scene::player.i_currency -= CaptureTower::cost;
-		}
-		else
-		{
-			b_warning = true;
-		}
-	}
-	else if (button->functionID == 3)
-	{
-		if (Scene::player.i_currency >= BuffTower::cost)
-		{
-			SpawnTower(string("Buff"));
-			tileMap.screenMap[checkPositionX][checkPositionY] = -3;
-			Scene::player.i_currency -= BuffTower::cost;
-		}
-		else
-		{
-			b_warning = true;
-		}
-	}
-	else if (button->functionID == 5) // Level up
-	{
-		Tower* temp = FindTower(checkPositionX, checkPositionY);
-		if (Scene::player.i_currency >= temp->GetCost())
-		{
-			if (CheckPlayerEssence(temp->essence, temp->essenceUpgradeCost))
+			if (Scene::player.i_currency >= ArrowTower::cost)
 			{
-				if (temp->LevelUp())
-				{
-					RemovePlayerEssence(temp->essence, temp->essenceUpgradeCost);
-					Scene::player.i_currency -= temp->GetCost();
-					temp->SetCost(temp->GetCost() * 2);
-				}
+				SpawnTower(string("Arrow"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				Scene::player.i_currency -= ArrowTower::cost;
 			}
 			else
 			{
 				b_warning = true;
 			}
 		}
-		else
+		else if (button->functionID == 1)
 		{
-			b_warning = true;
-		}
-	}
-	else if (button->functionID == 6)
-	{
-		Tower* temp = FindTower(checkPositionX, checkPositionY);
-		if (temp != nullptr)
-		{
-			if (Scene::player.i_currency >= IceTower::cost)
+			if (Scene::player.i_currency >= CannonTower::cost)
 			{
-				if (CheckPlayerEssence(IceTower::type, IceTower::ecost))
+				SpawnTower(string("Cannon"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				Scene::player.i_currency -= CannonTower::cost;
+			}
+			else
+			{
+				b_warning = true;
+			}
+		}
+		else if (button->functionID == 2)
+		{
+			if (Scene::player.i_currency >= CaptureTower::cost)
+			{
+				SpawnTower(string("Capture"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				Scene::player.i_currency -= CaptureTower::cost;
+			}
+			else
+			{
+				b_warning = true;
+			}
+		}
+		else if (button->functionID == 3)
+		{
+			if (Scene::player.i_currency >= BuffTower::cost)
+			{
+				SpawnTower(string("Buff"));
+				tileMap.screenMap[checkPositionX][checkPositionY] = -3;
+				Scene::player.i_currency -= BuffTower::cost;
+			}
+			else
+			{
+				b_warning = true;
+			}
+		}
+		else if (button->functionID == 5) // Level up
+		{
+			Tower* temp = FindTower(checkPositionX, checkPositionY);
+			if (Scene::player.i_currency >= temp->GetCost())
+			{
+				if (CheckPlayerEssence(temp->essence, temp->essenceUpgradeCost))
 				{
-					RemovePlayerEssence(IceTower::type, IceTower::ecost);
-					RemoveTower(temp);
-					SpawnTower("Ice");
-					Scene::player.i_currency -= IceTower::cost;
+					if (temp->LevelUp())
+					{
+						RemovePlayerEssence(temp->essence, temp->essenceUpgradeCost);
+						Scene::player.i_currency -= temp->GetCost();
+						temp->SetCost(temp->GetCost() * 2);
+					}
 				}
 				else
 				{
@@ -844,92 +822,117 @@ void CursorControl::HandleButton(TileMap &tileMap,GUI* button)
 				b_warning = true;
 			}
 		}
-	}
-	else if (button->functionID == 7)
-	{
-		Tower* temp = FindTower(checkPositionX, checkPositionY);
-		if (temp != nullptr)
+		else if (button->functionID == 6)
 		{
-			if (Scene::player.i_currency >= PoisonTower::cost)
+			Tower* temp = FindTower(checkPositionX, checkPositionY);
+			if (temp != nullptr)
 			{
-				if (CheckPlayerEssence(PoisonTower::type, PoisonTower::ecost))
+				if (Scene::player.i_currency >= IceTower::cost)
 				{
-					RemovePlayerEssence(PoisonTower::type, PoisonTower::ecost);
-					RemoveTower(temp);
-					SpawnTower("Poison");
-					Scene::player.i_currency -= PoisonTower::cost;
+					if (CheckPlayerEssence(IceTower::type, IceTower::ecost))
+					{
+						RemovePlayerEssence(IceTower::type, IceTower::ecost);
+						RemoveTower(temp);
+						SpawnTower("Ice");
+						Scene::player.i_currency -= IceTower::cost;
+					}
+					else
+					{
+						b_warning = true;
+					}
 				}
 				else
 				{
 					b_warning = true;
 				}
 			}
-			else
-			{
-				b_warning = true;
-			}
 		}
-	}
-	else if (button->functionID == 8)
-	{
-		Tower* temp = FindTower(checkPositionX, checkPositionY);
-		if (temp != nullptr)
+		else if (button->functionID == 7)
 		{
-			if (Scene::player.i_currency >= MortarTower::cost)
+			Tower* temp = FindTower(checkPositionX, checkPositionY);
+			if (temp != nullptr)
 			{
-				if (CheckPlayerEssence(MortarTower::type, MortarTower::ecost))
+				if (Scene::player.i_currency >= PoisonTower::cost)
 				{
-					RemovePlayerEssence(MortarTower::type, MortarTower::ecost);
-					RemoveTower(temp);
-					SpawnTower("Mortar");
-					Scene::player.i_currency -= MortarTower::cost;
+					if (CheckPlayerEssence(PoisonTower::type, PoisonTower::ecost))
+					{
+						RemovePlayerEssence(PoisonTower::type, PoisonTower::ecost);
+						RemoveTower(temp);
+						SpawnTower("Poison");
+						Scene::player.i_currency -= PoisonTower::cost;
+					}
+					else
+					{
+						b_warning = true;
+					}
 				}
 				else
 				{
 					b_warning = true;
 				}
 			}
-			else
-			{
-				b_warning = true;
-			}
 		}
-	}
-	else if (button->functionID == 9)
-	{
-		Tower* temp = FindTower(checkPositionX, checkPositionY);
-		if (temp != nullptr)
+		else if (button->functionID == 8)
 		{
-			if (Scene::player.i_currency >= SpeedTower::cost)
+			Tower* temp = FindTower(checkPositionX, checkPositionY);
+			if (temp != nullptr)
 			{
-				if (CheckPlayerEssence(SpeedTower::type, SpeedTower::ecost))
+				if (Scene::player.i_currency >= MortarTower::cost)
 				{
-					RemovePlayerEssence(SpeedTower::type, SpeedTower::ecost);
-					RemoveTower(temp);
-					SpawnTower("Speed");
-					Scene::player.i_currency -= SpeedTower::cost;
+					if (CheckPlayerEssence(MortarTower::type, MortarTower::ecost))
+					{
+						RemovePlayerEssence(MortarTower::type, MortarTower::ecost);
+						RemoveTower(temp);
+						SpawnTower("Mortar");
+						Scene::player.i_currency -= MortarTower::cost;
+					}
+					else
+					{
+						b_warning = true;
+					}
 				}
 				else
 				{
 					b_warning = true;
 				}
 			}
-			else
+		}
+		else if (button->functionID == 9)
+		{
+			Tower* temp = FindTower(checkPositionX, checkPositionY);
+			if (temp != nullptr)
 			{
-				b_warning = true;
+				if (Scene::player.i_currency >= SpeedTower::cost)
+				{
+					if (CheckPlayerEssence(SpeedTower::type, SpeedTower::ecost))
+					{
+						RemovePlayerEssence(SpeedTower::type, SpeedTower::ecost);
+						RemoveTower(temp);
+						SpawnTower("Speed");
+						Scene::player.i_currency -= SpeedTower::cost;
+					}
+					else
+					{
+						b_warning = true;
+					}
+				}
+				else
+				{
+					b_warning = true;
+				}
 			}
 		}
-	}
-	else if (button->functionID == 10)
-	{
-		tileMap.waves.StartWave();
-		//std::cout << "WAVE STARTED" << std::endl;
-		return;
-	}
+		else if (button->functionID == 10)
+		{
+			tileMap.waves.StartWave();
+			//std::cout << "WAVE STARTED" << std::endl;
+			return;
+		}
 
-	if (b_warning)
-	{
-		Music::GetInstance()->PlayMusic(10, false, 0.1);
+		if (b_warning)
+		{
+			Music::GetInstance()->PlayMusic(10, false, 0.1);
+		}
 	}
 }
 
