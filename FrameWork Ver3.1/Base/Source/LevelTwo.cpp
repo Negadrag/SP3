@@ -119,6 +119,14 @@ void LevelTwo::Render()
 			{
 				RenderManager::GetInstance()->RenderMesh(GEO_GRASS, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
 			}
+			else if (testMap.screenMap[j][i] == 1)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_START, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+			}
+			else if (testMap.screenMap[j][i] == 2)
+			{
+				RenderManager::GetInstance()->RenderMesh(GEO_END, Vector3(j * testMap.i_tileSize, i  * testMap.i_tileSize, 0.1), Vector3(1, 1, 1), Vector3(0, 0, 0), true, false);
+			}
 		}
 	}
 

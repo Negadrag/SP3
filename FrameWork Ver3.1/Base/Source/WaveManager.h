@@ -64,6 +64,7 @@ public:
 	void Exit();
 	void Update(double dt);
 	vector<Enemy*>* GetEnemyList();
+	bool b_lastWave;
 	
 	PlayerInfo* player;
 	int i_currentWave;

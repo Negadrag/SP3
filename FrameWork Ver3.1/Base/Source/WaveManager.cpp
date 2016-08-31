@@ -35,6 +35,7 @@ WaveManager::WaveManager(Node* root)
 	this->root = root;
 	this->b_allWaveEnded = false;
 	this->player = nullptr;
+	this->b_lastWave = false;
 	b_miniGame = true;
 }
 
@@ -118,6 +119,10 @@ void WaveManager::Update(double dt)
 				player->i_currency += 5;
 				f_waveStartTimer = 0.f;
 				i_currentRevolution = 0;
+				if (i_currentWave >= waveList.size()-2)
+				{
+					b_lastWave = true;
+				}
 				i_currentWave++;
 				b_waveEnded = false;
 				if (i_currentWave >= waveList.size())
@@ -173,7 +178,7 @@ void WaveManager::Update(double dt)
 			}
 		}
 	}
-	if (b_allWaveEnded)
+	if (b_lastWave == true && WaveEnded(waveList.size()-1))
 	{
 		SceneManager::GetInstance()->ChangeScene(5, false);
 	}
