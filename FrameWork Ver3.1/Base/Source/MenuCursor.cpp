@@ -174,33 +174,28 @@ void MenuCursor::Clicking(double dt)
 
 			if (temp->functionID == 0)
 			{
-				std::cout << "BUTTON PLAY" << std::endl;
 				menu_states = 5;
 				//scene_change = 1;
 				istransition = true;
 			}
 			if (temp->functionID == 1)
 			{
-				std::cout << "BUTTON EDITING" << std::endl;
 				menu_states = 1;
 				scene_change = 4;
 				istransition = true;
 			}
 			if (temp->functionID == 2)
 			{
-				std::cout << "BUTTON TUTORIAL" << std::endl;
 				menu_states = 2;
 				istransition = true;
 			}
 			if (temp->functionID == 3)
 			{
-				std::cout << "BUTTON OPTIONS" << std::endl;
 				menu_states = 3;
 				istransition = true;
 			}
 			if (temp->functionID == 4)
 			{
-				std::cout << "BUTTON EXIT" << std::endl;
 				menu_states = 1;
 				istransition = true;
 				Application::GetInstance().b_Exit = true;
@@ -234,7 +229,7 @@ void MenuCursor::Clicking(double dt)
 			{
 				std::cout << "Level 3 Entered" << std::endl;
 				menu_states = 1;
-				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				scene_change = 13;		//SCENE CHANGE FOR LEVEL SELECTION HERE
 				istransition = true;
 
 			}
@@ -596,8 +591,6 @@ void MenuCursor::OptionsInit()
 	option_2->b_textActive = false;
 
 
-
-	
 	adjsizeX = 25;
 	adjsizeY = 5;
 	float adjposX = 40;
@@ -605,7 +598,7 @@ void MenuCursor::OptionsInit()
 
 	option_6 = new GUI();
 	option_6->meshID = GEO_ADJUSTBAR;
-	option_6->scale.Set(adjsizeX, 3, 1);
+	option_6->scale.Set(25.f * (Music::GetInstance()->f_masterVolume/4.f), 3, 1);
 	option_6->position.Set(adjposX, adjposY);
 	option_6->SetTextSize(3);
 	option_6->buttonSize.Set(adjsizeX, adjsizeY);

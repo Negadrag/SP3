@@ -1,4 +1,4 @@
-#include "CustomLevel.h"
+#include "LevelThree.h"
 #include "GL\glew.h"
 #include "LoadHmap.h"
 
@@ -13,34 +13,18 @@
 #include "BuffTower.h"
 
 
-CustomLevel::CustomLevel() :Scene()
-{
-	b_invalidFile = false;
-}
-
-CustomLevel::~CustomLevel()
+LevelThree::LevelThree() :Scene()
 {
 }
 
-void CustomLevel::Init()
+LevelThree::~LevelThree()
+{
+}
+
+void LevelThree::Init()
 {
 	this->Init2();
-
-	b_invalidFile = false;
-
-	HWND hwnd = GetConsoleWindow();
-	SetForegroundWindow(hwnd);
-
-	string customFilePath = HandleInput();
-
-	ifstream cfile(("Maps//" + customFilePath + ".csv").c_str(), ifstream::in);
-	if (cfile.fail())
-	{
-		SceneManager::GetInstance()->ChangeScene(8, false);
-		b_invalidFile = true;
-	}
-
-	testMap.LoadMap(std::fstream("Maps//" + customFilePath + ".csv"));
+	testMap.LoadMap(std::fstream("Maps//Level_Three.csv"));
 	//this->m_sceneID = 1;
 
 	testMap.waves.player = &(this->player);
@@ -64,20 +48,17 @@ void CustomLevel::Init()
 	grass.rotation.Set(0, 0, 0);
 
 	cursor.Init(&towerList, testMap.waves.GetEnemyList());
+
+	player.i_currency = 50;
 }
 
-void CustomLevel::Init2()
+void LevelThree::Init2()
 {
 	//Music::GetInstance()->PlayMusic(6, true, 0.2f);
 }
 
-void CustomLevel::Update(double dt)
+void LevelThree::Update(double dt)
 {
-	if (b_invalidFile)
-	{
-		return;
-	}
-
 	if (Application::IsKeyPressed('1'))
 		glEnable(GL_CULL_FACE);
 	if (Application::IsKeyPressed('2'))
@@ -120,12 +101,8 @@ void CustomLevel::Update(double dt)
 	RenderManager::GetInstance()->SetCamera(&camera);
 }
 
-void CustomLevel::Render()
+void LevelThree::Render()
 {
-	if (b_invalidFile)
-	{
-		return;
-	}
 	RenderManager::GetInstance()->RenderMesh(GEO_CONE, Vector3(cursor.checkPositionX, cursor.checkPositionY, 0), Vector3(1.f, 1.5f, 1.f), Vector3(90, 0, 0), false, false);
 
 	for (int i = 0; i < testMap.i_rows; ++i) // y - axis
@@ -154,7 +131,7 @@ void CustomLevel::Render()
 			}
 		}
 	}
-	
+
 	float tempStatsX = 68;
 	float tempStatsY = 30;
 
@@ -222,7 +199,7 @@ void CustomLevel::Render()
 	}
 }
 
-void CustomLevel::Exit()
+void LevelThree::Exit()
 {
 	//clean Up scene Variables
 	for (vector<Tower*>::iterator it = towerList.begin(); it != towerList.end(); ++it)
@@ -240,12 +217,4 @@ void CustomLevel::Exit()
 	towerList.clear();
 	cursor.Clear();
 	testMap.Exit();
-}
-
-string CustomLevel::HandleInput()
-{
-	string input;
-	std::cout << "Enter map name:";
-	std::cin >> input;
-	return input;
 }
