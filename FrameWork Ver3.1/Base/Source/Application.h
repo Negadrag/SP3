@@ -34,8 +34,8 @@ private:
 
 	// Declare the window width and height as constant integer
 	const static int m_window_deadzone = 30;
-	const static int m_window_width = 1024;
-	const static int m_window_height = 800;
+	const static int m_window_width = 1920;
+	const static int m_window_height = 1080;
 	//Declare a window object
 
 	StopWatch m_timer;

@@ -108,7 +108,7 @@ void MainMenu::Update(double dt)
 
 		if (splashposY <= 100)
 		{
-			splashposY += 30 * dt;
+			splashposY += 60 * dt;
 		}
 		else
 		{

@@ -150,8 +150,8 @@ void Application::Init()
 
 
 	//Create a window and create its OpenGL context
-	m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", NULL, NULL);
-	//m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", glfwGetPrimaryMonitor(), NULL);
+	//m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", NULL, NULL);
+	m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", glfwGetPrimaryMonitor(), NULL);
 
 	glfwSetScrollCallback(m_window, scroll_callback);
 

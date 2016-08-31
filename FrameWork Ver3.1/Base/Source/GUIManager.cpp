@@ -106,4 +106,5 @@ GUI* GUIManager::FindGUI(float screenX, float screenY)
 			}
 		}
 	}
+	return nullptr;
 }
