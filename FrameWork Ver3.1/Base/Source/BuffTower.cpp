@@ -16,8 +16,8 @@ BuffTower::BuffTower(vector<Tower*> *tower)
 	this->essenceUpgradeCost = ecost;
 	this->essence = type;
 	f_increaseATK = 10.f;
-	f_increaseRANGE = 2.5f;
-	f_increaseRATE = 2.f;
+	f_increaseRANGE = 1.f;
+	f_increaseRATE = 1.f;
 
 	this->meshID = GEO_BUFFTOWER;
 	this->fullMeshID = GEO_BUFFTOWER;

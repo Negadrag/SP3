@@ -72,11 +72,11 @@ bool SpeedTower::LevelUp()
 		this->atkDamage += 1;
 		if (i_level == 2)
 		{
-			this->atkSpeed = 8;
+			this->atkSpeed += 1;
 		}
 		if (i_level == 3)
 		{
-			this->atkSpeed = 10;
+			this->atkSpeed += 3;
 		}
 		return true;
 	}
