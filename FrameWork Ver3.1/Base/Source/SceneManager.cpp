@@ -16,6 +16,7 @@
 #include "LevelTwo.h"
 #include "Pause.h"
 #include "CustomLevel.h"
+#include "LevelFour.h"
 
 
 SceneManager* SceneManager::instance = nullptr;
@@ -32,7 +33,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
-
+	sceneToExit = nullptr;
 	RenderManager::GetInstance()->Init();
 	Music::GetInstance()->Init();
 	//create scenes here
@@ -58,6 +59,8 @@ void SceneManager::Init()
 	CreateScene(new Pause());
 	// Scene ID 11
 	CreateScene(new CustomLevel());
+	// Scene ID 12
+	CreateScene(new LevelFour());
 
 	this->m_currentSceneID = 8;
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
@@ -128,6 +131,13 @@ void SceneManager::Update(double dt)
 			nxtScene->Init2();
 		}
 	}
+
+	if (sceneToExit != nullptr)
+	{
+		sceneToExit->Exit();
+		sceneToExit = nullptr;
+	}
+
 	EntityManager::GetInstance()->m_currentSceneID = this->m_currentSceneID;
 	EntityManager::GetInstance()->UpdateAllEntity(dt, m_currentSceneID);
 	RenderManager::GetInstance()->Update(dt);
@@ -192,6 +202,21 @@ void SceneManager::CreateScene(Scene* scene)
 void SceneManager::ReinstanceScene(int sceneID)
 {
 	ChangeScene(sceneID, false);
+}
+
+void SceneManager::ExitScene(int sceneID)
+{
+	if (SceneExist(sceneID) == true)
+	{
+		for (list<Scene*>::iterator it = sceneList.begin(); it != sceneList.end(); ++it)
+		{
+			if ((*it)->m_sceneID == sceneID)
+			{
+				sceneToExit = *it;
+				(*it)->b_frozen = false;
+			}
+		}
+	}
 }
 
 void SceneManager::Exit()

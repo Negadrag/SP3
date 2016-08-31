@@ -242,7 +242,7 @@ void MenuCursor::Clicking(double dt)
 			{
 				std::cout << "Level 4 Entered" << std::endl;
 				menu_states = 1;
-				scene_change = 1;		//SCENE CHANGE FOR LEVEL SELECTION HERE
+				scene_change = 12;		//SCENE CHANGE FOR LEVEL SELECTION HERE
 				istransition = true;
 
 			}

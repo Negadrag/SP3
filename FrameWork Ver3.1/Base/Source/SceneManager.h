@@ -24,10 +24,11 @@ public:
 	void CreateScene(Scene* scene);
 	bool SceneExist(int sceneID);
 	void ReinstanceScene(int sceneID);
+	void ExitScene(int sceneID);
 	bool ChangeScene(int sceneID,bool freezeScene);
 	void Exit();
 	static SceneManager* GetInstance();
-
+	Scene *sceneToExit;
 private:
 	SceneManager();
 	static SceneManager* instance;
