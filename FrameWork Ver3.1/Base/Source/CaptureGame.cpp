@@ -267,16 +267,16 @@ void CaptureGame::Render()
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(balls), Color(1, 1, 1), 2, spacing, 40);
 
 
-	RenderManager::GetInstance()->RenderTextOnScreen("Blue Items: ", Color(0, 0.5, 1), 2, 0, 35);
+	RenderManager::GetInstance()->RenderTextOnScreen("IceEssence: ", Color(0, 0.5, 1), 2, 0, 35);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource1), Color(0, 0.5, 1), 2, spacing, 35);
 
-	RenderManager::GetInstance()->RenderTextOnScreen("Red Items: ", Color(1, 0, 0), 2, 0, 20);
+	RenderManager::GetInstance()->RenderTextOnScreen("TankEssence: ", Color(1, 0, 0), 2, 0, 20);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource2), Color(1, 0, 0), 2, spacing, 20);
 
-	RenderManager::GetInstance()->RenderTextOnScreen("YellowItems: ", Color(1, 1, 0), 2, 0, 30);
+	RenderManager::GetInstance()->RenderTextOnScreen("SpeedEssence: ", Color(1, 1, 0), 2, 0, 30);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource3), Color(1, 1, 0), 2, spacing, 30);
 
-	RenderManager::GetInstance()->RenderTextOnScreen("Green Items: ", Color(0, 0.7, 0), 2, 0, 25);
+	RenderManager::GetInstance()->RenderTextOnScreen("PoisonEssence: ", Color(0, 0.7, 0), 2, 0, 25);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(resource4), Color(0, 0.7, 0), 2, spacing, 25);
 
 	RenderManager::GetInstance()->RenderTextOnScreen("FPS: ", Color(1, 1, 1), 2, 0, 15);
@@ -323,12 +323,12 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE1;
-		go->meshID = GEO_BLUECUBE;
+		go->meshID = GEO_ICE;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(0, 0, 90);
+		go->rotation.Set(90, 0, 0);
 		go->score = &resource1;
 		go->particleGenerator = &bluebang;
 		m_goList.push_back(go);
@@ -338,12 +338,12 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE2;
-		go->meshID = GEO_REDCUBE;
+		go->meshID = GEO_TANKY;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(0, 0, 90);
+		go->rotation.Set(90, 0, 0);
 		go->score = &resource2;
 		go->particleGenerator = &redbang;
 		m_goList.push_back(go);
@@ -353,12 +353,12 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE3;
-		go->meshID = GEO_YELLOWCUBE;
+		go->meshID = GEO_SPEED;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(0, 0, 90);
+		go->rotation.Set(90, 0, 0);
 		go->score = &resource3;
 		go->particleGenerator = &yellowbang;
 		m_goList.push_back(go);
@@ -368,12 +368,12 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE4;
-		go->meshID = GEO_GREENCUBE;
+		go->meshID = GEO_BASIC;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
 		go->normal.Set(0, 1, 0);
-		go->rotation.Set(0, 0, 90);
+		go->rotation.Set(90, 0, 0);
 		go->score = &resource4;
 		go->particleGenerator = &greenbang;
 		m_goList.push_back(go);

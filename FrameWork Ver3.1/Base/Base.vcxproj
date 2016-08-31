@@ -41,6 +41,7 @@
     <ClCompile Include="Source\IceProjectile.cpp" />
     <ClCompile Include="Source\IceTower.cpp" />
     <ClCompile Include="Source\LevelFour.cpp" />
+    <ClCompile Include="Source\LevelThree.cpp" />
     <ClCompile Include="Source\LevelTwo.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Source\IceProjectile.h" />
     <ClInclude Include="Source\IceTower.h" />
     <ClInclude Include="Source\LevelFour.h" />
+    <ClInclude Include="Source\LevelThree.h" />
     <ClInclude Include="Source\LevelTwo.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
