@@ -591,8 +591,6 @@ void MenuCursor::OptionsInit()
 	option_2->b_textActive = false;
 
 
-
-	
 	adjsizeX = 25;
 	adjsizeY = 5;
 	float adjposX = 40;
@@ -600,7 +598,7 @@ void MenuCursor::OptionsInit()
 
 	option_6 = new GUI();
 	option_6->meshID = GEO_ADJUSTBAR;
-	option_6->scale.Set(adjsizeX, 3, 1);
+	option_6->scale.Set(25.f * (Music::GetInstance()->f_masterVolume/4.f), 3, 1);
 	option_6->position.Set(adjposX, adjposY);
 	option_6->SetTextSize(3);
 	option_6->buttonSize.Set(adjsizeX, adjsizeY);

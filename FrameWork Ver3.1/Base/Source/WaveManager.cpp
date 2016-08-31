@@ -170,11 +170,21 @@ void WaveManager::Update(double dt)
 			ClearEnemyList();
 			if (player->enemyToShowcase.size() > 0)
 			{
-				player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
-				player->b_showcaseEnemy = false;
-				player->i_showcaseIndex = 0;
-				SceneManager::GetInstance()->ChangeScene(7, true);//change to display Scene;x`
-				
+				for (vector<ENEMY_TYPE>::iterator it = player->enemyToShowcase.begin(); it != player->enemyToShowcase.end(); ++it)
+				{
+					if (*it == BOSS)
+					{
+						player->enemyToShowcase.erase(it);
+						break;
+					}
+				}
+				if (player->enemyToShowcase.empty() == false)
+				{
+					player->m_sceneID = SceneManager::GetInstance()->m_currentSceneID;
+					player->b_showcaseEnemy = false;
+					player->i_showcaseIndex = 0;
+					SceneManager::GetInstance()->ChangeScene(7, true);//change to display Scene;x`
+				}
 			}
 		}
 	}
