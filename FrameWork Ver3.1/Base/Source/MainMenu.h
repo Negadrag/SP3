@@ -43,6 +43,8 @@ public:
 
 	GameplayCam camera;
 
+	static bool b_isSplash;
+
 private:
 	
 
@@ -69,14 +71,16 @@ private:
 	MenuCursor cursor;
 
 	bool bLightEnabled;
+	bool b_initScene;
+	bool b_splashdisable;
 	Vector3 distance;
 	float angle;
 	float fps;
-	bool b_initScene;
-	//Terrain terrain;
-	ParticleGenerator redfall;
-	ParticleGenerator waterfountain;
+	float splashposY;
 	
+	//Terrain terrain;
+	ParticleGenerator rain;
+	ParticleGenerator waterfountain;
 
 	float testx, testy, testz;
 };

@@ -53,6 +53,7 @@ private:
 	float windmillRotateAngle;
 
 	Renderable grass;
+	Renderable pot;
 	//Renderable forValor;
 
 	bool bLightEnabled;
