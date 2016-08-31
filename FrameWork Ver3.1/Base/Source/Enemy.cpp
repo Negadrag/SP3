@@ -152,7 +152,7 @@ void Enemy::Update(double dt)
 
 	if (nxtTile != nullptr)
 	{
-		if ((Vector3(nxtTile->coords.x, nxtTile->coords.y, 0) - Vector3(this->pos.x, this->pos.y, 0)).LengthSquared() < 0.1f*0.1f)
+		if ((Vector3(nxtTile->coords.x, nxtTile->coords.y, 0) - Vector3(this->pos.x, this->pos.y, 0)).LengthSquared() < 0.2f*0.2f)
 		{
 			nxtTile = nxtTile->next;
 			if (nxtTile == nullptr)
