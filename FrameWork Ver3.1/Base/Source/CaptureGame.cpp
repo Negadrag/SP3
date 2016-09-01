@@ -46,6 +46,7 @@ void CaptureGame::Init()
 	isrunning = false;
 	b_allBallsdespawned = false;
 	f_ballSpawnDebounceTimer = 0.f;
+	bannerpos = 0;
 
 	//SwitchInitializer();
 
@@ -54,6 +55,7 @@ void CaptureGame::Init()
 	RenderManager::GetInstance()->SetCamera(&camera);
 
 	b_initScene = false;
+	b_showBanner = false;
 	f_ballSpawnTimer = 0.f;
 }
 
@@ -68,16 +70,26 @@ void CaptureGame::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	//if (b_initScene == false)
-	//{
-	//	
-	//	b_initScene = true;
-	//}
-	//if (Application::IsKeyPressed('U'))
-	//{
-	//	balls = 30;
-	//	b_allBallsdespawned = false;
-	//}
+
+
+	if (b_showBanner == true)
+	{
+		if (bannerpos > 23 && bannerpos < 33)
+			bannerpos += 5 * dt;
+		else
+			bannerpos += 120 * dt;
+	}
+	else
+		bannerpos = -30;
+
+	if (bannerpos > 100)
+	{
+		b_showBanner = false;
+		b_initScene = true;
+	}
+
+	if (b_initScene == false)
+		b_showBanner = true;
 	
 
 	fps = (float)(1.f / dt);
@@ -241,6 +253,7 @@ void CaptureGame::Update(double dt)
 		balls = bonuscount;
 		bonuscount = 0;
 		b_allBallsdespawned = false;
+		b_showBanner = true;
 
 	}
 
@@ -282,6 +295,17 @@ void CaptureGame::Render()
 	RenderManager::GetInstance()->RenderTextOnScreen("BonusCount: ", Color(1, 1, 1), 2, 0, 45);
 	RenderManager::GetInstance()->RenderTextOnScreen(std::to_string(bonuscount), Color(1, 1, 1), 2, spacing, 45);
 
+	RenderManager::GetInstance()->RenderTextOnScreen("BONUS", Color(1, 1, 0), 2, 37.5, 4);
+
+	if (b_initScene == false)
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("Click Here!", Color(1, 1, 0), 5, bannerpos, 50);
+	}
+	else
+	{
+		RenderManager::GetInstance()->RenderTextOnScreen("EXTRA BALLS!", Color(1, 1, 0), 5, bannerpos, 50);
+
+	}
 }
 
 GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
@@ -319,7 +343,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE1;
-		go->meshID = GEO_ICE;
+		go->meshID = GEO_BLUECUBE;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
@@ -334,7 +358,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE2;
-		go->meshID = GEO_TANKY;
+		go->meshID = GEO_REDCUBE;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
@@ -349,7 +373,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE3;
-		go->meshID = GEO_SPEED;
+		go->meshID = GEO_YELLOWCUBE;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
@@ -364,7 +388,7 @@ GameObject* CaptureGame::FetchGO(GameObject::GAMEOBJECT_TYPE type)
 	{
 		go = new GameObject();
 		go->type = GameObject::GO_RESOURCE4;
-		go->meshID = GEO_BASIC;
+		go->meshID = GEO_GREENCUBE;
 		go->pos.Set(0, -300, 0);
 		go->scale.Set(105, 15, 15);
 		go->b_isActive = true;
