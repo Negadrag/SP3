@@ -308,7 +308,8 @@ bool TileMap::LoadWaves(vector<string> wave)
 			}
 		}
 
-		waves.AddWave(enemyType, revolutions, frequency);
+		if (*it != "")
+			waves.AddWave(enemyType, revolutions, frequency);
 	}
 	return true;
 }
