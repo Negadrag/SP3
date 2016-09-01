@@ -26,10 +26,11 @@ IceMonster::IceMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->i_damage = 1;
 	this->i_defence = 0;
 	this->f_rotateSpeed = 90.f;
-	i_currency = 2;
+	this->i_currency = 2;
 	this->f_floatSpeed = 3.f;
 	this->b_floatUp = true;
 	this->f_translateTimer = 0.f;
+	this->f_rotationZToBe = 0.f;
 }
 
 IceMonster::~IceMonster()
@@ -44,47 +45,47 @@ void IceMonster::MoveTo(Vector2 dest, double dt)
 		return;
 	}
 	view.Normalize();
-	float rotationZToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
+	f_rotationZToBe = Math::RadianToDegree(atan2(view.y, view.x)); // the rotation that we want it to be at;
 	float rotationSpeed = 360.f;
-	rotationZToBe = round(rotationZToBe);
+	f_rotationZToBe = round(f_rotationZToBe);
 	if (this->f_showHealthTimer > 0.f)
 	{
-		if (this->hp.rotation.z != rotationZToBe)// to rotate the model if the enemy is turning
+		if (this->hp.rotation.z != f_rotationZToBe)// to rotate the model if the enemy is turning
 		{
-			if (rotationZToBe < 0) // making sure rotationZToBe is withiin 0 and 360
+			if (f_rotationZToBe < 0) // making sure f_rotationZToBe is withiin 0 and 360
 			{
-				rotationZToBe += 360;
+				f_rotationZToBe += 360;
 			}
-			else if (rotationZToBe == -0)
+			else if (f_rotationZToBe == -0)
 			{
-				rotationZToBe = 0;
+				f_rotationZToBe = 0;
 			}
 
-			if (abs(rotationZToBe - hp.rotation.z) <180)
+			if (abs(f_rotationZToBe - hp.rotation.z) <180)
 			{
-				if (rotationZToBe > hp.rotation.z)
+				if (f_rotationZToBe > hp.rotation.z)
 				{
 
 					hp.rotation.z += rotationSpeed * dt;
-					if (rotationZToBe < hp.rotation.z)
+					if (f_rotationZToBe < hp.rotation.z)
 					{
-						hp.rotation.z = rotationZToBe;
+						hp.rotation.z = f_rotationZToBe;
 					}
 
 
 				}
-				else if (rotationZToBe < hp.rotation.z)
+				else if (f_rotationZToBe < hp.rotation.z)
 				{
 					hp.rotation.z -= rotationSpeed * dt;
-					if (rotationZToBe > hp.rotation.z)
+					if (f_rotationZToBe > hp.rotation.z)
 					{
-						hp.rotation.z = rotationZToBe;
+						hp.rotation.z = f_rotationZToBe;
 					}
 				}
 			}
 			else
 			{
-				if (rotationZToBe > hp.rotation.z)
+				if (f_rotationZToBe > hp.rotation.z)
 				{
 
 					hp.rotation.z -= rotationSpeed * dt;
@@ -98,7 +99,7 @@ void IceMonster::MoveTo(Vector2 dest, double dt)
 					}
 
 				}
-				else if (rotationZToBe < hp.rotation.z)
+				else if (f_rotationZToBe < hp.rotation.z)
 				{
 					hp.rotation.z += rotationSpeed * dt;
 					if (hp.rotation.z >360.f)
@@ -112,7 +113,7 @@ void IceMonster::MoveTo(Vector2 dest, double dt)
 		hp.pos.Set(0, 0, 1);
 		hp.b_Render = true;
 		hp.pos = this->pos + Vector3(0, 0, 1);
-		//hp.rotation.z = rotationZToBe;
+		//hp.rotation.z = f_rotationZToBe;
 		hp.scale = Vector3(0.2f, f_health / f_maxHealth, 0.1f);
 	}
 	view = view * f_movSpeed *((float)(100 - f_slow) / 100.f) * dt;
@@ -172,5 +173,45 @@ void  IceMonster::UpdateMesh()
 	else
 	{
 		this->meshID = GEO_ICE;
+	}
+}
+
+void IceMonster::ReceiveDamage(float damage)
+{
+	float dmg = damage * ((100.f - (float)i_defence) / 100.f);
+	this->f_health -= dmg;
+	if (f_health <= 0)
+	{
+		this->GiveCurrency();
+		this->hp.b_isActive = false;
+		this->b_isActive = false;
+	}
+	else
+	{
+		if (f_showHealthTimer <= 0.1f)
+		{
+			this->hp.rotation.z = f_rotationZToBe;
+		}
+		f_showHealthTimer = 1.5f;
+	}
+}
+
+void IceMonster::ReceivePoisonDamage(float damage)
+{
+
+	this->f_health -= damage;
+	if (f_health <= 0)
+	{
+		this->GiveCurrency();
+		this->hp.b_isActive = false;
+		this->b_isActive = false;
+	}
+	else
+	{
+		if (f_showHealthTimer < 0.1f)
+		{
+			this->hp.rotation.z = f_rotationZToBe;
+		}
+		f_showHealthTimer = 1.5f;
 	}
 }

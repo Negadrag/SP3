@@ -18,6 +18,8 @@ private:
 
 protected:
 	float f_rotateSpeed;
+	bool b_rotateUp;
+	float f_clampRotate;
 
 };
 

@@ -24,9 +24,9 @@ Minion::Minion(Vector3 pos, Node* root) :Enemy(pos, root)
 	this->i_damage = 1;
 	this->i_defence = 10;
 	this->b_rotateUp = true;
-	this->f_rotateSpeed = 90.f;
 	this->f_clampRotate = 20.f;
-	i_currency = 1;
+	this->i_currency = 1;
+	this->f_rotateSpeed = 90.f;
 }
 
 Minion::~Minion()

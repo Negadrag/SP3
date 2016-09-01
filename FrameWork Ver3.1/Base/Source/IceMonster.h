@@ -15,6 +15,8 @@ public:
 	virtual void GiveEssence();
 	virtual void ReceiveSlowStatus(float slowAmount, float slowDuration);
 	virtual void UpdateMesh();
+	virtual void ReceiveDamage(float damage);
+	virtual void ReceivePoisonDamage(float damage);
 private:
 	
 protected:
@@ -22,6 +24,7 @@ protected:
 	bool b_floatUp;
 	float f_translateTimer;
 	float f_rotateSpeed;
+	float f_rotationZToBe;
 
 };
 

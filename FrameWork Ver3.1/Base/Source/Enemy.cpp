@@ -17,13 +17,9 @@ Enemy::Enemy()
 	this->player = nullptr;
 
 	hp.meshID = GEO_HP;
-	hp2.meshID = GEO_HP2;
 	hp.b_lightEnabled = false;
-	hp2.b_lightEnabled = false;
 	hp.b_Render = false;
-	hp2.b_Render = false;
 	f_showHealthTimer = 0.f;
-
 	f_poisonTimer = 0.f;
 	f_slowTimer = 0.f;
 	f_poisonDps = 0.f;
@@ -45,14 +41,10 @@ Enemy::Enemy(Vector3 pos, Node* root)
 	this->player = nullptr;
 
 	hp.meshID = GEO_HP;
-	hp2.meshID = GEO_HP2;
 	hp.pos.z = 1.f;
 	hp.b_shadows = false;
-	hp2.b_shadows = false;
 	hp.b_lightEnabled = false;
-	hp2.b_lightEnabled = false;
 	hp.b_Render = false;
-	hp2.b_Render = false;
 	f_showHealthTimer = 0.f;
 	
 	f_poisonTimer = 0.f;
@@ -205,7 +197,6 @@ void Enemy::Update(double dt)
 		{
 			player->i_health -= this->i_damage;
 			this->hp.b_isActive = false;
-			this->hp2.b_isActive = false;
 			this->b_isActive = false;
 			Music::GetInstance()->PlayMusic(7, false, 0.5);
 		}
@@ -226,7 +217,6 @@ void Enemy::ReceiveDamage(float damage)
 	{
 		this->GiveCurrency();
 		this->hp.b_isActive = false;
-		this->hp2.b_isActive = false;
 		this->b_isActive = false;
 	}
 	else
@@ -243,7 +233,7 @@ void Enemy::ReceivePoisonDamage(float damage)
 	{
 		this->GiveCurrency();
 		this->hp.b_isActive = false;
-		this->hp2.b_isActive = false;
+		
 		this->b_isActive = false;
 	}
 	else

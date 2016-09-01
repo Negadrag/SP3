@@ -14,9 +14,11 @@ TankMonster::TankMonster(Vector3 pos, Node* root) :Enemy(pos, root)
 
 	this->i_damage = 1;
 	this->i_defence = 30;
-	this->f_rotateSpeed = 90.f;
-	i_currency = 2;
+	this->i_currency = 2;
 	this->scale.Set(0.75f, 0.75f, 0.75f);
+	this->b_rotateUp = true;
+	this->f_clampRotate = 20.f;
+	this->f_rotateSpeed = 50.f;
 }
 
 TankMonster::~TankMonster()
@@ -25,6 +27,25 @@ TankMonster::~TankMonster()
 
 void TankMonster::UpdateAnim(double dt)
 {
+	if (b_rotateUp == true)
+	{
+		this->rotation.y += f_rotateSpeed * ((100.f - f_slow) / 100.f) * dt;
+		if (this->rotation.y >= f_clampRotate)
+		{
+			b_rotateUp = false;
+			this->rotation.y = f_clampRotate;
+		}
+
+	}
+	else
+	{
+		this->rotation.y -= f_rotateSpeed * ((100.f - f_slow) / 100.f) * dt;
+		if (this->rotation.y <= -f_clampRotate)
+		{
+			b_rotateUp = true;
+			this->rotation.y = -f_clampRotate;
+		}
+	}
 }
 
 void TankMonster::GiveEssence()

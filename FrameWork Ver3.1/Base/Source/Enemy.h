@@ -21,7 +21,6 @@ public:
 	PlayerInfo* player;
 
 	Renderable hp;
-	Renderable hp2;
 
 	float f_showHealthTimer;
 
@@ -30,8 +29,8 @@ public:
 	//to move the enemy to a specific point handles rotation based on vel as well. Rotation speed set within the function
 	virtual void MoveTo(Vector2 dest,double dt);
 	virtual void Update(double dt);
-	void ReceiveDamage(float damage);
-	void ReceivePoisonDamage(float damage);
+	virtual void ReceiveDamage(float damage);
+	virtual void ReceivePoisonDamage(float damage);
 	virtual void ReceiveSlowStatus(float slowAmount, float slowDuration);
 	virtual void ReceivePoisonStatus(float poisonDamage,float slowAmount,float duration);
 	virtual void UpdateAnim(double dt);
