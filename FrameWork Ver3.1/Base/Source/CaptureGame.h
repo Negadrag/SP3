@@ -82,7 +82,10 @@ protected:
 	
 	bool isrunning;
 	bool b_allBallsdespawned;
+	bool b_showBanner;
 	float f_ballSpawnTimer;
+	float bannerpos;
+	//25, 50
 
 	int balls;
 	int bonuscount;
