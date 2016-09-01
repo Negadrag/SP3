@@ -258,13 +258,17 @@ void MapEditor::WriteToFile()
 {
 	std::ofstream file;
 	file.open("Maps//" + s_mapName + ".csv");
-	for (int i = tileMap.i_rows - 1; i >= 0; --i)
+	for (int i = tileMap.i_rows - 1; i >= 0; --i) //y - axis
 	{
-		for (int j = 0; j < tileMap.i_columns; ++j)
+		for (int j = 0; j < tileMap.i_columns; ++j) // x-axis
 		{
 			int num = tileMap.screenMap[j][i];
 			if (num != 0)
 				file << num;
+			else if ((j == 0 && i == tileMap.i_rows - 1) || (j == tileMap.i_columns - 1 && i == 0))
+			{
+				file << num;
+			}
 			if (j != tileMap.i_columns - 1)
 				file << ',';
 		}
